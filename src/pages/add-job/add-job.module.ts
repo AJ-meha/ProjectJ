@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { IonicPageModule } from 'ionic-angular';
-import { AddJobPage } from './add-job';
+import { AddJobPage } from '../add-job/add-job';
 
 @NgModule({
   declarations: [
