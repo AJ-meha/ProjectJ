@@ -1,0 +1,68 @@
+<!--
+  Generated template for the AdminCreateJobsPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>admin-create-jobs</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+    <form novalidate>
+  
+        <ion-item>
+          <ion-label stacked>Applications to be sent to</ion-label>
+          <ion-input #application_sent_mail type="email" placeholder="Email Address"
+            ></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label stacked>Workplace</ion-label>
+          <ion-select #workplace>
+              <ion-option value="f">Building</ion-option>
+              <ion-option value="m">Factory</ion-option>
+            </ion-select>
+          <ion-input #workplace type="text" placeholder="Workplace"
+            ></ion-input>
+        </ion-item>
+
+        <ion-item>
+            <ion-label stacked>Workplace Name</ion-label>
+            <ion-input #workplace_name type="text" placeholder="Workplace Name"
+              ></ion-input>
+          </ion-item>
+
+          <ion-item>
+              <ion-label stacked>Address</ion-label>
+              <ion-input #workplace_address type="text" placeholder="Workplace Full Address"
+                ></ion-input>
+            </ion-item>
+
+            <ion-item>
+                <ion-label stacked>Mobile</ion-label>
+                <ion-input #mobile type="number" placeholder="Mobile"
+                  ></ion-input>
+              </ion-item>
+            
+              <ion-item>
+                  <ion-label stacked>Contact via</ion-label>
+                  <ion-checkbox #email></ion-checkbox><ion-label>Email</ion-label>
+                  <ion-checkbox #whatsapp></ion-checkbox><ion-label>WhatsApp</ion-label>
+                  <ion-checkbox #wechat></ion-checkbox><ion-label>WeChat</ion-label>
+                  <ion-checkbox #line></ion-checkbox><ion-label>Line</ion-label>
+                  <ion-checkbox #phone></ion-checkbox><ion-label>Phone</ion-label>
+                </ion-item>
+    
+        <button ion-button block type="submit">
+          Save
+        </button>
+    
+      </form>
+
+</ion-content>
