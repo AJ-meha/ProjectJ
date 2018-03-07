@@ -43,6 +43,7 @@ export class AdminLoginPage {
         console.log("providerId="+self.authData.afAuth.auth.currentUser.providerId);
         console.log(authData);
         self.email=self.authData.afAuth.auth.currentUser.email;
+        this.authData.loginWithEmail(self.email);
         this.navCtrl.setRoot(AdminDashboardPage);
       },error=>{
         this.loading.dismiss().then(()=>{

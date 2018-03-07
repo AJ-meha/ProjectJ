@@ -18,6 +18,8 @@ import { AngularFireModule } from 'angularfire2';
 import { AngularFireAuthModule } from 'angularfire2/auth';
 import { AuthProvider } from '../providers/auth/auth';
 
+import { IonicStorageModule } from '@ionic/storage';
+
 // AF2 Settings
 const firebaseConfig = {
   apiKey: "AIzaSyAYyvV52MZ6hOag6q411xOAoPQQ3rkVTV8",
@@ -44,7 +46,8 @@ const firebaseConfig = {
     BrowserModule,
     IonicModule.forRoot(MyApp),
     AngularFireModule.initializeApp(firebaseConfig),
-    AngularFireAuthModule
+    AngularFireAuthModule,
+    IonicStorageModule.forRoot()
   ],
   bootstrap: [IonicApp],
   entryComponents: [
