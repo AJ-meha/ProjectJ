@@ -7,62 +7,327 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>admin-create-jobs</ion-title>
+    <ion-title>Add a Job</ion-title>
   </ion-navbar>
 
 </ion-header>
 
 
 <ion-content padding>
-    <form novalidate>
-  
-        <ion-item>
-          <ion-label stacked>Applications to be sent to</ion-label>
-          <ion-input #application_sent_mail type="email" placeholder="Email Address"
-            ></ion-input>
-        </ion-item>
+  <form novalidate>
 
-        <ion-item>
-          <ion-label stacked>Workplace</ion-label>
-          <ion-select #workplace>
-              <ion-option value="f">Building</ion-option>
-              <ion-option value="m">Factory</ion-option>
-            </ion-select>
-          <ion-input #workplace type="text" placeholder="Workplace"
-            ></ion-input>
-        </ion-item>
-
-        <ion-item>
-            <ion-label stacked>Workplace Name</ion-label>
-            <ion-input #workplace_name type="text" placeholder="Workplace Name"
-              ></ion-input>
-          </ion-item>
-
-          <ion-item>
-              <ion-label stacked>Address</ion-label>
-              <ion-input #workplace_address type="text" placeholder="Workplace Full Address"
-                ></ion-input>
-            </ion-item>
-
-            <ion-item>
-                <ion-label stacked>Mobile</ion-label>
-                <ion-input #mobile type="number" placeholder="Mobile"
-                  ></ion-input>
-              </ion-item>
-            
+    <ion-card>
+        <ion-card-header padding-left no-margin>Contact &amp; Workplace Info</ion-card-header>
+        <ion-grid>
+          <ion-row>
+            <ion-col col-12 col-md-6>
               <ion-item>
-                  <ion-label stacked>Contact via</ion-label>
-                  <ion-checkbox #email></ion-checkbox><ion-label>Email</ion-label>
-                  <ion-checkbox #whatsapp></ion-checkbox><ion-label>WhatsApp</ion-label>
-                  <ion-checkbox #wechat></ion-checkbox><ion-label>WeChat</ion-label>
-                  <ion-checkbox #line></ion-checkbox><ion-label>Line</ion-label>
-                  <ion-checkbox #phone></ion-checkbox><ion-label>Phone</ion-label>
-                </ion-item>
-    
-        <button ion-button block type="submit">
-          Save
-        </button>
-    
-      </form>
+                <ion-label stacked>Applications to be sent to</ion-label>
+                <ion-input type="email" placeholder="Enter Email Address"></ion-input>
+              </ion-item>
+            </ion-col>
 
+            <ion-col col-12 col-md-6>
+              <ion-item>
+                <ion-label stacked>Workplace</ion-label>
+                <ion-input type="text" placeholder="Enter the Workplace"></ion-input>
+              </ion-item>
+            </ion-col>
+
+            <ion-col col-12 col-md-6>
+              <ion-item>
+                <ion-label stacked>Workplace Name</ion-label>
+                <ion-input type="text" placeholder="Enter Workplace name"></ion-input>
+              </ion-item>
+            </ion-col>
+
+            <ion-col col-12 col-md-6>
+              <ion-item>
+                <ion-label stacked>Address</ion-label>
+                <ion-input type="text" placeholder="Enter Address"></ion-input>
+              </ion-item>
+            </ion-col>
+
+            <ion-col col-12 col-md-6>
+              <ion-item>
+                <ion-label stacked>Mobile</ion-label>
+                <ion-input type="tel" placeholder="Enter Mobile number"></ion-input>
+            </ion-item>
+            </ion-col>
+          </ion-row>
+
+
+          <ion-label padding-left>
+            Contact via
+          </ion-label>
+          <ion-row>
+              <ion-col col-12 col-sm>
+              <ion-item>
+              <ion-label>Email</ion-label>
+                <ion-checkbox  checked="true"></ion-checkbox>
+              </ion-item>
+          </ion-col>
+          <ion-col col-12 col-sm>
+              <ion-item>
+              <ion-label>Whatsapp</ion-label>
+                <ion-checkbox ></ion-checkbox>
+              </ion-item>
+          </ion-col>
+          <ion-col col-12 col-sm>
+                <ion-item>
+                <ion-label>WeChat</ion-label>
+                  <ion-checkbox ></ion-checkbox>
+                </ion-item>
+          </ion-col>
+          <ion-col col-12 col-sm>
+                <ion-item>
+                <ion-label>Line</ion-label>
+                  <ion-checkbox ></ion-checkbox>
+                </ion-item>
+          </ion-col>
+          <ion-col col-12 col-sm>
+                <ion-item>
+                <ion-label>Phone</ion-label>
+                  <ion-checkbox ></ion-checkbox>
+                </ion-item>
+          </ion-col>
+        </ion-row>
+        </ion-grid>
+    </ion-card>
+
+    <ion-card>
+      <ion-card-header padding-left margin-top>Job Details</ion-card-header>
+      <ion-grid>
+        <ion-row>
+            <ion-col col-12 col-md-6>
+              <ion-item>
+                <ion-label stacked>Designation</ion-label>
+                <ion-input type="text" placeholder="Enter Designation"></ion-input>
+              </ion-item>
+            </ion-col>
+            <ion-col col-12 col-md-6>
+              <ion-item>
+                <ion-label>Industry</ion-label>
+                <ion-select [(ngModel)]="industry" name="industry" interface="popover" placeholder="--">
+                      <ion-option value="1">Industry 1</ion-option>
+                      <ion-option value="2">Industry 2</ion-option>
+                </ion-select>
+              </ion-item>
+            </ion-col>
+            <ion-col col-12 col-md-6>
+              <ion-item>
+                <ion-label>Sub-Industry</ion-label>
+                <ion-select [(ngModel)]="subindustry" name="subindustry" interface="popover" placeholder="--">
+                      <ion-option value="1">Sub-Industry 1</ion-option>
+                      <ion-option value="2">Sub-Industry 2</ion-option>
+                </ion-select>
+              </ion-item>
+            </ion-col>
+            <ion-col col-12 col-md-6>
+              <ion-item>
+                <ion-label>Type</ion-label>
+                <ion-select [(ngModel)]="type" name="type" interface="popover" placeholder="--">
+                      <ion-option value="1">Type 1</ion-option>
+                      <ion-option value="2">Type 2</ion-option>
+                </ion-select>
+              </ion-item>
+            </ion-col>
+        </ion-row>
+
+        <ion-row>
+            <ion-col col-12 col-md-6>
+              <ion-label padding-left >Employment Type</ion-label>
+              <ion-list radio-group>
+
+                <ion-item>
+                  <ion-label>Permanent</ion-label>
+                  <ion-radio checked="true" value="permanent"></ion-radio>
+                </ion-item>
+
+                <ion-item>
+                  <ion-label>Part-time</ion-label>
+                  <ion-radio value="parttime"></ion-radio>
+                </ion-item>
+
+                <ion-item>
+                  <ion-label>Contract Based</ion-label>
+                  <ion-radio value="contract"></ion-radio>
+                </ion-item>
+              </ion-list>
+            </ion-col>
+            <ion-col col-12 col-md-6>
+              <ion-item>
+                <ion-label>Salary</ion-label>
+                <ion-select [(ngModel)]="salary" name="salary" interface="popover" placeholder="--">
+                      <ion-option value="1">10k</ion-option>
+                      <ion-option value="2">20k</ion-option>
+                </ion-select>
+              </ion-item>
+            </ion-col>
+        </ion-row>
+
+          <ion-label padding-left no-margin>Work Schedule</ion-label>
+
+          <ion-row>
+              <ion-col col-12 col-md-3>
+            <ion-card>
+                <ion-list>
+                  <ion-list-header no-margin>
+                    Mon
+                  </ion-list-header>
+                  <ion-item>
+                    <ion-label>Start Time</ion-label>
+                    <ion-datetime displayFormat="h:mm A" pickerFormat="h mm A" placeholder="--"></ion-datetime>
+                  </ion-item>
+                  <ion-item>
+                    <ion-label>End Time</ion-label>
+                    <ion-datetime displayFormat="h:mm A" pickerFormat="h mm A" placeholder="--"></ion-datetime>
+                  </ion-item>
+                  <ion-item>
+                    <ion-label>Holiday</ion-label>
+                    <ion-checkbox></ion-checkbox>
+                  </ion-item>
+                </ion-list>
+            </ion-card>
+          </ion-col>
+
+          <ion-col col-12 col-md-3>
+            <ion-card>
+                <ion-list>
+                  <ion-list-header no-margin>
+                    Tue
+                  </ion-list-header>
+                  <ion-item>
+                    <ion-label>Start Time</ion-label>
+                    <ion-datetime displayFormat="h:mm A" pickerFormat="h mm A" placeholder="--" ></ion-datetime>
+                  </ion-item>
+                  <ion-item>
+                    <ion-label>End Time</ion-label>
+                    <ion-datetime displayFormat="h:mm A" pickerFormat="h mm A" placeholder="--" ></ion-datetime>
+                  </ion-item>
+                  <ion-item>
+                    <ion-label>Holiday</ion-label>
+                    <ion-checkbox></ion-checkbox>
+                  </ion-item>
+                </ion-list>
+              </ion-card>
+          </ion-col>
+
+          <ion-col col-12 col-md-3>
+              <ion-card>
+                <ion-list>
+                  <ion-list-header no-margin>
+                    Wed
+                  </ion-list-header>
+                  <ion-item>
+                    <ion-label>Start Time</ion-label>
+                    <ion-datetime displayFormat="h:mm A" pickerFormat="h mm A" placeholder="--" ></ion-datetime>
+                  </ion-item>
+                  <ion-item>
+                    <ion-label>End Time</ion-label>
+                    <ion-datetime displayFormat="h:mm A" pickerFormat="h mm A" placeholder="--" ></ion-datetime>
+                  </ion-item>
+                  <ion-item>
+                    <ion-label>Holiday</ion-label>
+                    <ion-checkbox></ion-checkbox>
+                  </ion-item>
+                </ion-list>
+              </ion-card>
+          </ion-col>
+
+          <ion-col col-12 col-md-3>
+              <ion-card>
+                <ion-list>
+                  <ion-list-header no-margin>
+                    Thu
+                  </ion-list-header>
+                  <ion-item>
+                    <ion-label>Start Time</ion-label>
+                    <ion-datetime displayFormat="h:mm A" pickerFormat="h mm A" placeholder="--" ></ion-datetime>
+                  </ion-item>
+                  <ion-item>
+                    <ion-label>End Time</ion-label>
+                    <ion-datetime displayFormat="h:mm A" pickerFormat="h mm A" placeholder="--" ></ion-datetime>
+                  </ion-item>
+                  <ion-item>
+                    <ion-label>Holiday</ion-label>
+                    <ion-checkbox></ion-checkbox>
+                  </ion-item>
+                </ion-list>
+              </ion-card>
+          </ion-col>
+
+          <ion-col col-12 col-md-3>
+              <ion-card>
+                <ion-list>
+                  <ion-list-header no-margin>
+                    Fri
+                  </ion-list-header>
+                  <ion-item>
+                    <ion-label>Start Time</ion-label>
+                    <ion-datetime displayFormat="h:mm A" pickerFormat="h mm A" placeholder="--" ></ion-datetime>
+                  </ion-item>
+                  <ion-item>
+                    <ion-label>End Time</ion-label>
+                    <ion-datetime displayFormat="h:mm A" pickerFormat="h mm A" placeholder="--" ></ion-datetime>
+                  </ion-item>
+                  <ion-item>
+                    <ion-label>Holiday</ion-label>
+                    <ion-checkbox></ion-checkbox>
+                  </ion-item>
+                </ion-list>
+              </ion-card>
+          </ion-col>
+
+          <ion-col col-12 col-md-3>
+              <ion-card>
+                <ion-list>
+                  <ion-list-header no-margin>
+                    Sat
+                  </ion-list-header>
+                  <ion-item>
+                    <ion-label>Start Time</ion-label>
+                    <ion-datetime displayFormat="h:mm A" pickerFormat="h mm A" placeholder="--" ></ion-datetime>
+                  </ion-item>
+                  <ion-item>
+                    <ion-label>End Time</ion-label>
+                    <ion-datetime displayFormat="h:mm A" pickerFormat="h mm A" placeholder="--" ></ion-datetime>
+                  </ion-item>
+                  <ion-item>
+                    <ion-label>Holiday</ion-label>
+                    <ion-checkbox></ion-checkbox>
+                  </ion-item>
+                </ion-list>
+              </ion-card>
+          </ion-col>
+
+          <ion-col col-12 col-md-3>
+              <ion-card>
+                <ion-list>
+                  <ion-list-header no-margin>
+                    Sun
+                  </ion-list-header>
+                  <ion-item>
+                    <ion-label>Start Time</ion-label>
+                    <ion-datetime displayFormat="h:mm A" pickerFormat="h mm A" placeholder="--" ></ion-datetime>
+                  </ion-item>
+                  <ion-item>
+                    <ion-label>End Time</ion-label>
+                    <ion-datetime displayFormat="h:mm A" pickerFormat="h mm A" placeholder="--" ></ion-datetime>
+                  </ion-item>
+                  <ion-item>
+                    <ion-label>Holiday</ion-label>
+                    <ion-checkbox></ion-checkbox>
+                  </ion-item>
+                </ion-list>
+              </ion-card>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-card>
+
+    <button ion-button block type="submit">
+      Save
+    </button>
+  </form>
 </ion-content>
