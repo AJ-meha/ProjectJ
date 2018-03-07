@@ -19,35 +19,35 @@
 	    <ion-card-header padding-left no-margin>Contact &amp; Workplace Info</ion-card-header>
 	  	<ion-grid>
 		  	<ion-row>
-		      <ion-col col-6>
+		      <ion-col col-12 col-md-6>
 		      	<ion-item>
 			        <ion-label stacked>Applications to be sent to</ion-label>
 			        <ion-input type="email" placeholder="Enter Email Address"></ion-input>
 		      	</ion-item>
 		      </ion-col>
 
-		      <ion-col col-6>
+		      <ion-col col-12 col-md-6>
 		      	<ion-item>
 			        <ion-label stacked>Workplace</ion-label>
 			        <ion-input type="text" placeholder="Enter the Workplace"></ion-input>
 		        </ion-item>
 		      </ion-col>
 
-		      <ion-col col-6>
+		      <ion-col col-12 col-md-6>
 		      	<ion-item>
 			        <ion-label stacked>Workplace Name</ion-label>
 			        <ion-input type="text" placeholder="Enter Workplace name"></ion-input>
 		        </ion-item>
 		      </ion-col>
 
-		      <ion-col col-6>
+		      <ion-col col-12 col-md-6>
 		      	<ion-item>
 			        <ion-label stacked>Address</ion-label>
 			        <ion-input type="text" placeholder="Enter Address"></ion-input>
 		        </ion-item>
 		      </ion-col>
 
-		      <ion-col col-6>
+		      <ion-col col-12 col-md-6>
 		      	<ion-item>
 			        <ion-label stacked>Mobile</ion-label>
 			        <ion-input type="tel" placeholder="Enter Mobile number"></ion-input>
@@ -56,35 +56,35 @@
 		    </ion-row>
 
 
-	    	<ion-label>
+	    	<ion-label padding-left>
 	    	  Contact via
 	    	</ion-label>
 		    <ion-row>
-		      	<ion-col col-2>
+		      	<ion-col col-12 col-sm>
 			      <ion-item>
 			    	<ion-label>Email</ion-label>
 			      	<ion-checkbox  checked="true"></ion-checkbox>
 			      </ion-item>
 				</ion-col>
-				<ion-col col-2>
+				<ion-col col-12 col-sm>
 			      <ion-item>
 			    	<ion-label>Whatsapp</ion-label>
 			      	<ion-checkbox ></ion-checkbox>
 			      </ion-item>
 				</ion-col>
-				<ion-col col-2>
+				<ion-col col-12 col-sm>
 				      <ion-item>
 				    	<ion-label>WeChat</ion-label>
 				      	<ion-checkbox ></ion-checkbox>
 				      </ion-item>
 				</ion-col>
-				<ion-col col-2>
+				<ion-col col-12 col-sm>
 				      <ion-item>
 				    	<ion-label>Line</ion-label>
 				      	<ion-checkbox ></ion-checkbox>
 				      </ion-item>
 				</ion-col>
-				<ion-col col-2>
+				<ion-col col-12 col-sm>
 				      <ion-item>
 				    	<ion-label>Phone</ion-label>
 				      	<ion-checkbox ></ion-checkbox>
@@ -99,13 +99,13 @@
 		<ion-card-header padding-left margin-top>Job Details</ion-card-header>
 		<ion-grid>
 			<ion-row>
-			    <ion-col col-6>
+			    <ion-col col-12 col-md-6>
 			  	  <ion-item>
 			  	    <ion-label stacked>Designation</ion-label>
 			  	    <ion-input type="text" placeholder="Enter Designation"></ion-input>
 			  	  </ion-item>
 			    </ion-col>
-			    <ion-col col-6>
+			    <ion-col col-12 col-md-6>
 			  	  <ion-item>
 			  	    <ion-label>Industry</ion-label>
 			  	    <ion-select [(ngModel)]="industry" interface="popover" placeholder="--">
@@ -114,7 +114,7 @@
 			  	    </ion-select>
 			  	  </ion-item>
 			    </ion-col>
-			    <ion-col col-6>
+			    <ion-col col-12 col-md-6>
 			  	  <ion-item>
 			  	    <ion-label>Sub-Industry</ion-label>
 			  	    <ion-select [(ngModel)]="subindustry" interface="popover" placeholder="--">
@@ -123,7 +123,7 @@
 			  	    </ion-select>
 			  	  </ion-item>
 			    </ion-col>
-			    <ion-col col-6>
+			    <ion-col col-12 col-md-6>
 			  	  <ion-item>
 			  	    <ion-label>Type</ion-label>
 			  	    <ion-select [(ngModel)]="type" interface="popover" placeholder="--">
@@ -135,7 +135,7 @@
 			</ion-row>
 
 			<ion-row>
-			    <ion-col col-6>
+			    <ion-col col-12 col-md-6>
 			      <ion-label padding-left >Employment Type</ion-label>
 				    <ion-list radio-group>
 
@@ -155,7 +155,7 @@
 				      </ion-item>
 				    </ion-list>
 			    </ion-col>
-			    <ion-col col-6>
+			    <ion-col col-12 col-md-6>
 			  	  <ion-item>
 			  	  	<ion-label>Salary</ion-label>
 			  	  	<ion-select [(ngModel)]="salary" interface="popover" placeholder="--">
@@ -169,7 +169,7 @@
 		  	<ion-label padding-left no-margin>Work Schedule</ion-label>
 
 		  	<ion-row>
-		  	    <ion-col col-3>
+		  	    <ion-col col-12 col-md-3>
 					<ion-card>
 					  	<ion-list>
 					  		<ion-list-header no-margin>
@@ -191,7 +191,7 @@
 					</ion-card>
 				</ion-col>
 
-				<ion-col col-3>
+				<ion-col col-12 col-md-3>
 					<ion-card>
 					  	<ion-list>
 					  		<ion-list-header no-margin>
@@ -213,7 +213,7 @@
 				  	</ion-card>
 				</ion-col>
 
-				<ion-col col-3>
+				<ion-col col-12 col-md-3>
 				  	<ion-card>
 					  	<ion-list>
 					  		<ion-list-header no-margin>
@@ -235,7 +235,7 @@
 				  	</ion-card>
 				</ion-col>
 
-				<ion-col col-3>
+				<ion-col col-12 col-md-3>
 				  	<ion-card>
 					  	<ion-list>
 					  		<ion-list-header no-margin>
@@ -257,7 +257,7 @@
 				  	</ion-card>
 				</ion-col>
 
-				<ion-col col-3>
+				<ion-col col-12 col-md-3>
 				  	<ion-card>
 					  	<ion-list>
 					  		<ion-list-header no-margin>
@@ -279,7 +279,7 @@
 				  	</ion-card>
 				</ion-col>
 
-				<ion-col col-3>
+				<ion-col col-12 col-md-3>
 				  	<ion-card>
 					  	<ion-list>
 					  		<ion-list-header no-margin>
@@ -301,7 +301,7 @@
 				  	</ion-card>
 				</ion-col>
 
-				<ion-col col-3>
+				<ion-col col-12 col-md-3>
 				  	<ion-card>
 					  	<ion-list>
 					  		<ion-list-header no-margin>
