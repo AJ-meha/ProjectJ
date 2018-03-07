@@ -3,6 +3,7 @@ import { IonicPage, NavController, NavParams, Loading, AlertController, LoadingC
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { AuthProvider } from '../../providers/auth/auth';
 import { EmailValidator } from '../../validators/email';
+import { AdminDashboardPage } from '../admin-dashboard/admin-dashboard';
 
 /**
  * Generated class for the AdminLoginPage page.
@@ -42,18 +43,7 @@ export class AdminLoginPage {
         console.log("providerId="+self.authData.afAuth.auth.currentUser.providerId);
         console.log(authData);
         self.email=self.authData.afAuth.auth.currentUser.email;
-        this.loading.dismiss().then(()=>{
-          let alert=this.alertCtrl.create({
-            message:"Login Successful",
-            buttons:[{
-              text:"Ok",
-              role:'cancel'
-            }
-              
-            ]
-          });
-          alert.present();
-        });
+        this.navCtrl.setRoot(AdminDashboardPage);
       },error=>{
         this.loading.dismiss().then(()=>{
           let alert=this.alertCtrl.create({
