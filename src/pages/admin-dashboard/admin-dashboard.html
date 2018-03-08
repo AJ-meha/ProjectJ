@@ -1,0 +1,38 @@
+<!--
+  Generated template for the AdminDashboardPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+  <ion-navbar>
+    <ion-grid>
+        <ion-row>
+            <ion-col col-1>
+              <ion-buttons>
+                <button ion-button menuToggle>
+                  <ion-icon name="menu"></ion-icon>
+                </button>
+              </ion-buttons>
+            </ion-col>
+            <ion-col>
+              <div>
+                <ion-title>admin-dashboard</ion-title>
+              </div>   
+            </ion-col>
+            <ion-col>
+              <ion-buttons end>
+                <button ion-button  block type="button" (click)="logOut()">
+                  Logout
+                </button>
+              </ion-buttons>   
+            </ion-col>
+          </ion-row>
+    </ion-grid>  
+  </ion-navbar>
+</ion-header>
+
+
+<ion-content padding>
+  <p>Welcome {{useremail}}</p>
+</ion-content>
