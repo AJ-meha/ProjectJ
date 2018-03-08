@@ -2,38 +2,38 @@ import { Component, ViewChild } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 
 import { TabsPage } from '../tabs/tabs';
-import { ListJobsPage } from '../list-jobs/list-jobs';
+import { AddJobPage } from '../add-job/add-job';
 
 /**
- * Generated class for the AddJobPage page.
+ * Generated class for the ListJobsPage page.
  *
  * See https://ionicframework.com/docs/components/#navigation for more info on
  * Ionic pages and navigation.
  */
 
 @IonicPage({
-    name: 'add',
-    segment:'add-job'
+    name: 'list',
+    segment:'list-jobs'
   }
  )
 @Component({
-  selector: 'page-add-job',
-  templateUrl: 'add-job.html',
+  selector: 'page-list-jobs',
+  templateUrl: 'list-jobs.html',
 })
-export class AddJobPage {
+export class ListJobsPage {
 	@ViewChild(NavController) nav: NavController;
-	pages: Array<{title: string, component: any}>;
+  pages: Array<{title: string, component: any}>;
 
   constructor(public navCtrl: NavController, public navParams: NavParams) {
   	this.pages = [
   	  { title: 'Home', component: TabsPage },
-  	  { title: 'List Jobs', component: ListJobsPage },
+      { title: 'List Jobs', component: ListJobsPage },
   	  { title: 'Add a Job', component: AddJobPage }
   	];
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad AddJobPage');
+    console.log('ionViewDidLoad ListJobsPage');
   }
 
   openPage(page) {

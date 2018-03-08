@@ -1,0 +1,45 @@
+<ion-split-pane>
+
+	<ion-menu [content]="content">
+		<ion-card-header padding-left padding-top padding-bottom text-uppercase class="card-wp-primary">
+			<div padding-top padding-bottom margin-top margin-bottom text-center style="font-weight: bold">
+				Project J
+			</div>
+		</ion-card-header>
+
+	    <ion-list>
+	      <button menuClose ion-item *ngFor="let p of pages" (click)="openPage(p)">
+	        {{p.title}}
+	      </button>
+	    </ion-list>
+
+	</ion-menu>
+
+	<ion-content main #content swipeBackEnabled="false">
+		<ion-header>
+
+		  <ion-navbar>
+		  	<button ion-button menuToggle>
+		      <ion-icon name="menu"></ion-icon>
+		    </button>
+		    <ion-title>List Jobs</ion-title>
+		  </ion-navbar>
+
+		</ion-header>
+
+
+		<ion-content padding>
+
+			<ion-list>
+			  <ion-item>
+			    <h2>My Neighbor Totoro</h2>
+			    <p>Hayao Miyazaki • 1988</p>
+			    <button ion-button clear item-end>View</button>
+			  </ion-item>
+			</ion-list>
+
+		</ion-content>
+	</ion-content>
+
+</ion-split-pane>
+
