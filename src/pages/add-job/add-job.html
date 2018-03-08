@@ -1,6 +1,11 @@
 <ion-split-pane>
 
 	<ion-menu [content]="content">
+		<ion-card-header padding-left padding-top padding-bottom text-uppercase class="card-wp-primary">
+			<div padding-top padding-bottom margin-top margin-bottom text-center style="font-weight: bold">
+				Project J
+			</div>
+		</ion-card-header>
 
 	    <ion-list>
 	      <button menuClose ion-item *ngFor="let p of pages" (click)="openPage(p)">
@@ -344,7 +349,7 @@
 			</ion-card>
 
 			<ion-card margin-top>
-				<ion-card-header padding-left margin-top text-uppercase class="card-wp-primary">Employee Benefits</ion-card-header>
+				<ion-card-header padding-left text-uppercase class="card-wp-primary">Employee Benefits</ion-card-header>
 				<ion-grid>
 					<ion-row>
 					    <ion-col col-12 col-md-4>
@@ -419,7 +424,56 @@
 					    		<ion-input type="text" placeholder="Say something about this"></ion-input>
 					    	</ion-item>
 						</ion-col>
+					    <ion-col col-12 col-md-4>
+					    	<ion-label padding-left>More about this role</ion-label>
+					    	<ion-item>
+					    		<ion-input type="text" placeholder="Additional Information"></ion-input>
+					    	</ion-item>
+						</ion-col>
 					</ion-row>
+				</ion-grid>
+			</ion-card>
+
+			<ion-card margin-top>
+				<ion-card-header padding-left text-uppercase class="card-wp-primary">Questions</ion-card-header>
+				<ion-grid>
+					<ion-row radio-group>
+						<ion-col col-12 col-md-4>
+							<ion-label padding-left>
+								Ask a question?
+							</ion-label>
+						</ion-col>
+				    	<ion-col col-12 col-md-4>
+						      <ion-item>
+						        <ion-label>Yes</ion-label>
+						        <ion-radio checked="true" value="yes"></ion-radio>
+						      </ion-item>
+						</ion-col>
+
+						<ion-col col-12 col-md-4>
+					      <ion-item>
+					        <ion-label>No</ion-label>
+					        <ion-radio value="no"></ion-radio>
+					      </ion-item>
+					    </ion-col>
+				    </ion-row>
+
+				    <ion-row>
+				    	<ion-col col-12 col-md-6>
+				    		<ion-select [(ngModel)]="question" name="question" interface="popover" placeholder="Select a Question">
+				    		      <ion-option value="1">Question 1</ion-option>
+				    		      <ion-option value="2">Question 2</ion-option>
+				    		</ion-select>
+				    	</ion-col>
+				    	<ion-col col-12 col-md-6>
+				    		<ion-item>
+					    		<ion-select [(ngModel)]="question_type" name="question_type" interface="popover" placeholder="--">
+					    		      <ion-option value="1" selected>Multiple Choice</ion-option>
+					    		      <ion-option value="2">Radio Buttons</ion-option>
+					    		</ion-select>
+					    	</ion-item>
+				    	</ion-col>
+				    </ion-row>
 				</ion-grid>
 			</ion-card>
 
