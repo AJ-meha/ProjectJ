@@ -5,6 +5,7 @@ import { AngularFireDatabase } from 'angularfire2/database';
 import { CommonFunctionsProvider } from '../../providers/common-functions/common-functions';
 import firebase  from 'firebase';
 import { GlobalVarsProvider } from '../../providers/global-vars/global-vars';
+import { TabsPage } from '../tabs/tabs';
 /**
  * Generated class for the AdminCreateJobsPage page.
  *
@@ -31,13 +32,14 @@ export class AdminCreateJobsPage {
   salaryUnits: Array<any> = [];
   contactViaList:FormArray;
   contactViaArray = [];
+  pages: Array<{title: string, component: any}>;
   public jobContactViaRef: firebase.database.Reference = firebase.database().ref('job_contact_via');
   public workplacetypeViaRef: firebase.database.Reference = firebase.database().ref('workplace_type');
   public emptypeViaRef: firebase.database.Reference = firebase.database().ref('employment_type');
   public typeRef: firebase.database.Reference = firebase.database().ref('type');
   public salaryUnitRef: firebase.database.Reference = firebase.database().ref('salary_unit');
   constructor(public navCtrl: NavController, public navParams: NavParams,private af: AngularFireDatabase,public formBuilder:FormBuilder,public commonfunc:CommonFunctionsProvider) {
-   
+
     // console.log("jobss---")
 
     this.jobsForm=this.formBuilder.group({
@@ -48,9 +50,14 @@ export class AdminCreateJobsPage {
       mobile:['',Validators.compose([Validators.required])],
       // contactViaList:this.formBuilder.array([])
       // contactViaList:this.formBuilder.array([])
-      
+
     });
-    
+
+    this.pages = [
+      { title: 'Home', component: TabsPage },
+      { title: 'Add Job', component: AdminCreateJobsPage }
+    ];
+
   }
 
   ionViewDidLoad() {
@@ -62,7 +69,7 @@ export class AdminCreateJobsPage {
     console.log("mail=="+GlobalVarsProvider.from_email)
     let contactViaArray = [];
     // console.log('ionViewDidLoad AdminCreateJobsPage');
-    this.workplacetypeViaRef.on('value', itemSnapshot => { 
+    this.workplacetypeViaRef.on('value', itemSnapshot => {
       itemSnapshot.forEach( itemSnap => {
         let ikey=itemSnap.key
         let ival=itemSnap.val()
@@ -71,7 +78,7 @@ export class AdminCreateJobsPage {
       });
       console.log(this.workplaceTypes)
     });
-    this.emptypeViaRef.on('value', itemSnapshot => { 
+    this.emptypeViaRef.on('value', itemSnapshot => {
       itemSnapshot.forEach( itemSnap => {
         let ikey=itemSnap.key
         let ival=itemSnap.val()
@@ -80,7 +87,7 @@ export class AdminCreateJobsPage {
       });
     });
 
-    this.typeRef.on('value', itemSnapshot => { 
+    this.typeRef.on('value', itemSnapshot => {
       itemSnapshot.forEach( itemSnap => {
         let ikey=itemSnap.key
         let ival=itemSnap.val()
@@ -88,8 +95,8 @@ export class AdminCreateJobsPage {
         return false;
       });
     });
-    
-    this.salaryUnitRef.on('value', itemSnapshot => { 
+
+    this.salaryUnitRef.on('value', itemSnapshot => {
       itemSnapshot.forEach( itemSnap => {
         let ikey=itemSnap.key
         let ival=itemSnap.val()
@@ -98,9 +105,9 @@ export class AdminCreateJobsPage {
       });
     });
 
-    this.jobContactViaRef.on('value', itemSnapshot => { 
+    this.jobContactViaRef.on('value', itemSnapshot => {
       itemSnapshot.forEach( itemSnap => {
-        
+
         console.log(itemSnap.key+"=="+itemSnap.val())
         let ikey=itemSnap.key
         let ival=itemSnap.val()
@@ -114,22 +121,22 @@ export class AdminCreateJobsPage {
         return false;
       });
       console.log("list====")
-      
+
       // this.contactViaList=this.formBuilder.array(this.contactViaArray)
       // console.log(this.contactViaList)
     });
-    
+
     // let cformContact=this.jobsForm.get('contactViaList') as FormArray
     // console.log(cformContact)
     // console.log(contactViaArray)
-    
+
     // let cformContact=this.jobsForm.get('contactViaList') as FormArray
     // console.log(cformContact)
     // this.contactViaList=cformContact
     // for (let contactVia of this.contactViaList.controls) {
     //   console.log(contactVia)
     // }
-    
+
   }
 
   saveJob(){
@@ -139,7 +146,7 @@ export class AdminCreateJobsPage {
     else{
       console.log("VALIOD=====")
       console.log(this.jobsForm.value);
-      
+
       let application_sent_mail=this.jobsForm.value.application_sent_mail
       let workplace=this.jobsForm.value.workplace
       let workplace_name=this.jobsForm.value.workplace_name
