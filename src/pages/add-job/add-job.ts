@@ -10,7 +10,11 @@ import { TabsPage } from '../tabs/tabs';
  * Ionic pages and navigation.
  */
 
-@IonicPage()
+@IonicPage({
+    name: 'add',
+    segment:'add-job'
+  }
+ )
 @Component({
   selector: 'page-add-job',
   templateUrl: 'add-job.html',
