@@ -14,7 +14,7 @@
 
 
 <ion-content padding>
-  <form novalidate>
+  <form [formGroup]="jobsForm" (submit)="saveJob()" novalidate>
 
     <ion-card>
         <ion-card-header padding-left no-margin>Contact &amp; Workplace Info</ion-card-header>
@@ -23,35 +23,38 @@
             <ion-col col-12 col-md-6>
               <ion-item>
                 <ion-label stacked>Applications to be sent to</ion-label>
-                <ion-input type="email" placeholder="Enter Email Address"></ion-input>
+                <ion-input #application_sent_mail formControlName="application_sent_mail" type="email" placeholder="Enter Email Address"></ion-input>
               </ion-item>
             </ion-col>
 
             <ion-col col-12 col-md-6>
               <ion-item>
                 <ion-label stacked>Workplace</ion-label>
-                <ion-input type="text" placeholder="Enter the Workplace"></ion-input>
+                <ion-select #workplace formControlName="workplace">
+                    <ion-option value="domestic">Domestic</ion-option>
+                    <ion-option value="company">Company</ion-option>
+                </ion-select>
               </ion-item>
             </ion-col>
 
             <ion-col col-12 col-md-6>
               <ion-item>
                 <ion-label stacked>Workplace Name</ion-label>
-                <ion-input type="text" placeholder="Enter Workplace name"></ion-input>
+                <ion-input #workplace_name formControlName="workplace_name" type="text" placeholder="Enter Workplace name" ></ion-input>
               </ion-item>
             </ion-col>
 
             <ion-col col-12 col-md-6>
               <ion-item>
                 <ion-label stacked>Address</ion-label>
-                <ion-input type="text" placeholder="Enter Address"></ion-input>
+                <ion-input #workplace_address formControlName="workplace_address" type="text" placeholder="Enter Address"></ion-input>
               </ion-item>
             </ion-col>
 
             <ion-col col-12 col-md-6>
               <ion-item>
                 <ion-label stacked>Mobile</ion-label>
-                <ion-input type="tel" placeholder="Enter Mobile number"></ion-input>
+                <ion-input #mobile formControlName="mobile" type="tel" placeholder="Enter Mobile number"></ion-input>
             </ion-item>
             </ion-col>
           </ion-row>
@@ -60,38 +63,49 @@
           <ion-label padding-left>
             Contact via
           </ion-label>
-          <ion-row>
+          <ion-row >
+                  <ion-col *ngFor="let contactVia of contactViaList.controls"  col-12 col-sm>
+                    <!-- <input type="checkbox" formControlName="isChosen" /> {{hobby.controls.name.value}} -->
+                    <ion-item>
+                      <ion-label>{{contactVia.controls.name.value}}</ion-label>
+                        <!-- <ion-checkbox #contact_via formControlName="contact_via"  checked="true" value="email"></ion-checkbox> -->
+                      </ion-item>
+                  
+                </ion-col> 
+          </ion-row>
+          
+          <!-- <ion-row>
               <ion-col col-12 col-sm>
               <ion-item>
               <ion-label>Email</ion-label>
-                <ion-checkbox  checked="true"></ion-checkbox>
+                <ion-checkbox #contact_via formControlName="contact_via"  checked="true" value="email"></ion-checkbox>
               </ion-item>
           </ion-col>
           <ion-col col-12 col-sm>
               <ion-item>
               <ion-label>Whatsapp</ion-label>
-                <ion-checkbox ></ion-checkbox>
+                <ion-checkbox   #contact_via formControlName="contact_via" value="whatsapp"></ion-checkbox>
               </ion-item>
           </ion-col>
           <ion-col col-12 col-sm>
                 <ion-item>
                 <ion-label>WeChat</ion-label>
-                  <ion-checkbox ></ion-checkbox>
+                  <ion-checkbox   #contact_via formControlName="contact_via" value="wechat"></ion-checkbox>
                 </ion-item>
           </ion-col>
           <ion-col col-12 col-sm>
                 <ion-item>
                 <ion-label>Line</ion-label>
-                  <ion-checkbox ></ion-checkbox>
+                  <ion-checkbox  #contact_via formControlName="contact_via" value="line"></ion-checkbox>
                 </ion-item>
           </ion-col>
           <ion-col col-12 col-sm>
                 <ion-item>
                 <ion-label>Phone</ion-label>
-                  <ion-checkbox ></ion-checkbox>
+                  <ion-checkbox  #contact_via formControlName="contact_via" value="phone"></ion-checkbox>
                 </ion-item>
           </ion-col>
-        </ion-row>
+        </ion-row> -->
         </ion-grid>
     </ion-card>
 
@@ -108,7 +122,8 @@
             <ion-col col-12 col-md-6>
               <ion-item>
                 <ion-label>Industry</ion-label>
-                <ion-select [(ngModel)]="industry" name="industry" interface="popover" placeholder="--">
+                <ion-select  name="industry" interface="popover" placeholder="--">
+                    <!-- <ion-select [(ngModel)]="industry" name="industry" interface="popover" placeholder="--"> -->
                       <ion-option value="1">Industry 1</ion-option>
                       <ion-option value="2">Industry 2</ion-option>
                 </ion-select>
@@ -117,7 +132,7 @@
             <ion-col col-12 col-md-6>
               <ion-item>
                 <ion-label>Sub-Industry</ion-label>
-                <ion-select [(ngModel)]="subindustry" name="subindustry" interface="popover" placeholder="--">
+                <ion-select  name="subindustry" interface="popover" placeholder="--">
                       <ion-option value="1">Sub-Industry 1</ion-option>
                       <ion-option value="2">Sub-Industry 2</ion-option>
                 </ion-select>
@@ -126,7 +141,7 @@
             <ion-col col-12 col-md-6>
               <ion-item>
                 <ion-label>Type</ion-label>
-                <ion-select [(ngModel)]="type" name="type" interface="popover" placeholder="--">
+                <ion-select  name="type" interface="popover" placeholder="--">
                       <ion-option value="1">Type 1</ion-option>
                       <ion-option value="2">Type 2</ion-option>
                 </ion-select>
@@ -158,7 +173,7 @@
             <ion-col col-12 col-md-6>
               <ion-item>
                 <ion-label>Salary</ion-label>
-                <ion-select [(ngModel)]="salary" name="salary" interface="popover" placeholder="--">
+                <ion-select name="salary" interface="popover" placeholder="--">
                       <ion-option value="1">10k</ion-option>
                       <ion-option value="2">20k</ion-option>
                 </ion-select>
