@@ -5,6 +5,8 @@ import { AngularFireDatabase } from 'angularfire2/database';
 import { CommonFunctionsProvider } from '../../providers/common-functions/common-functions';
 import firebase  from 'firebase';
 import { GlobalVarsProvider } from '../../providers/global-vars/global-vars';
+
+import { TabsPage } from '../tabs/tabs';
 /**
  * Generated class for the AdminCreateJobsPage page.
  *
@@ -26,13 +28,18 @@ export class AdminCreateJobsPage {
   jobsForm:FormGroup;
   contactVias: Array<any> = [];
   contactViaList:FormArray;
+  pages: Array<{title: string, component: any}>;
+
   public jobContactViaRef: firebase.database.Reference = firebase.database().ref('job_contact_via');
   constructor(public navCtrl: NavController, public navParams: NavParams,private af: AngularFireDatabase,public formBuilder:FormBuilder,public commonfunc:CommonFunctionsProvider) {
-   
+
     // console.log("jobss---")
-    
-    
-    
+    this.pages = [
+      { title: 'Home', component: TabsPage },
+      { title: 'Add Job', component: AdminCreateJobsPage }
+    ];
+
+
   }
 
   ionViewDidLoad() {
@@ -44,9 +51,9 @@ export class AdminCreateJobsPage {
     console.log("mail=="+GlobalVarsProvider.from_email)
     let contactViaArray = [];
     // console.log('ionViewDidLoad AdminCreateJobsPage');
-    this.jobContactViaRef.on('value', itemSnapshot => { 
+    this.jobContactViaRef.on('value', itemSnapshot => {
       itemSnapshot.forEach( itemSnap => {
-        
+
         console.log(itemSnap.key+"=="+itemSnap.val())
         let ikey=itemSnap.key
         let ival=itemSnap.val()
@@ -58,7 +65,7 @@ export class AdminCreateJobsPage {
         }));
         return false;
       });
-     
+
     });
     console.log(contactViaArray)
     this.jobsForm=this.formBuilder.group({
@@ -75,7 +82,7 @@ export class AdminCreateJobsPage {
     for (let contactVia of this.contactViaList.controls) {
       console.log(contactVia)
     }
-    
+
   }
 
   saveJob(){
@@ -85,7 +92,7 @@ export class AdminCreateJobsPage {
     else{
       console.log("VALIOD=====")
       console.log(this.jobsForm.value);
-      
+
       let application_sent_mail=this.jobsForm.value.application_sent_mail
       let workplace=this.jobsForm.value.workplace
       let workplace_name=this.jobsForm.value.workplace_name
