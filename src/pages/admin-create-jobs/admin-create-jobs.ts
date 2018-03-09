@@ -30,6 +30,8 @@ export class AdminCreateJobsPage {
   empTypes: Array<any> = [];
   types: Array<any> = [];
   salaryUnits: Array<any> = [];
+  industries: Array<any> = [];
+  subindustries: Array<any> = [];
   contactViaList:FormArray;
   contactViaArray = [];
   pages: Array<{title: string, component: any}>;
@@ -38,6 +40,8 @@ export class AdminCreateJobsPage {
   public emptypeViaRef: firebase.database.Reference = firebase.database().ref('employment_type');
   public typeRef: firebase.database.Reference = firebase.database().ref('type');
   public salaryUnitRef: firebase.database.Reference = firebase.database().ref('salary_unit');
+  public industryRef: firebase.database.Reference = firebase.database().ref('industry');
+  
   constructor(public navCtrl: NavController, public navParams: NavParams,private af: AngularFireDatabase,public formBuilder:FormBuilder,public commonfunc:CommonFunctionsProvider) {
 
     // console.log("jobss---")
@@ -47,7 +51,15 @@ export class AdminCreateJobsPage {
       workplace:['',Validators.compose([Validators.required])],
       workplace_name:['',Validators.compose([Validators.required])],
       workplace_address:['',Validators.compose([Validators.required])],
+      workplace_latitude:['',Validators.compose([Validators.required])],
+      workplace_longitude:['',Validators.compose([Validators.required])],
       mobile:['',Validators.compose([Validators.required])],
+      designation:['',Validators.compose([Validators.required])],
+      type:['',Validators.compose([Validators.required])],
+      salary_amount:['',Validators.compose([Validators.required])],
+      salary_unit:['',Validators.compose([Validators.required])],
+      industry:['',Validators.compose([Validators.required])],
+      sub_industry:['',Validators.compose([Validators.required])],
       // contactViaList:this.formBuilder.array([])
       // contactViaList:this.formBuilder.array([])
 
@@ -78,6 +90,17 @@ export class AdminCreateJobsPage {
       });
       console.log(this.workplaceTypes)
     });
+
+    this.industryRef.on('value', itemSnapshot => {
+      itemSnapshot.forEach( itemSnap => {
+        let ikey=itemSnap.key
+        let ival=itemSnap.val()
+        this.industries.push({"key":ikey,"value":ival})
+        return false;
+      });
+      console.log(this.industries)
+    });
+
     this.emptypeViaRef.on('value', itemSnapshot => {
       itemSnapshot.forEach( itemSnap => {
         let ikey=itemSnap.key
@@ -144,7 +167,6 @@ export class AdminCreateJobsPage {
       console.log(this.jobsForm.value);
     }
     else{
-      console.log("VALIOD=====")
       console.log(this.jobsForm.value);
 
       let application_sent_mail=this.jobsForm.value.application_sent_mail
@@ -152,11 +174,17 @@ export class AdminCreateJobsPage {
       let workplace_name=this.jobsForm.value.workplace_name
       let workplace_address=this.jobsForm.value.workplace_address
       let mobile=this.jobsForm.value.mobile
+      let designation=this.jobsForm.value.designation
+      let type=this.jobsForm.value.type
+      let salary_amount=this.jobsForm.value.salary_amount
+      let salary_unit=this.jobsForm.value.salary_unit
       // let contact_via=this.jobsForm.value.contact_via
       let jobs_contact_workplace_ref=this.af.list('jobs_contact_workplace').push({ application_sent_mail,workplace,workplace_name,workplace_address,mobile})
+      let job_details_ref=this.af.list('job_details').push({ designation,type,salary_amount,salary_unit})
       console.log("jobs_contact_workplace_id=="+jobs_contact_workplace_ref.key)
       let jobs_contact_workplace_id=jobs_contact_workplace_ref.key
-      this.af.list('jobs').push({jobs_contact_workplace_id})
+      let job_details_id=job_details_ref.key
+      this.af.list('jobs').push({jobs_contact_workplace_id,job_details_id})
       this.commonfunc.presentToast("Job added Successfully!!!");
     }
   }
@@ -165,4 +193,19 @@ export class AdminCreateJobsPage {
   //   return this.jobsForm.get('contactViaList') as FormArray;
   // };
 
+
+  populateSubIndustry(industry){
+    this.subindustries=[]
+    let industrySubindustryRef: firebase.database.Reference = firebase.database().ref('industry_subindustry/'+industry);
+    industrySubindustryRef.on('value', itemSnapshot => {
+      itemSnapshot.forEach( itemSnap => {
+        let ikey=itemSnap.key
+        let ival=itemSnap.val()
+        this.subindustries.push({"key":ikey,"value":ival})
+        return false;
+      });
+      console.log("subindustry=====")
+      console.log(this.subindustries)
+    });
+  }
 }

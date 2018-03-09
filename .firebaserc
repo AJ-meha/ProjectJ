@@ -1,0 +1,6 @@
+{
+  "projects": {
+    "default": "project-j-main",
+    "staging": "project-j-main"
+  }
+}

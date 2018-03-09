@@ -67,6 +67,7 @@
                 </ion-item>
                 </ion-col>
 
+
                 <ion-col col-12 col-md-6>
                   <ion-item>
                     <ion-label stacked>Address</ion-label>
@@ -76,13 +77,13 @@
                 <ion-col col-12 col-md-3>
                   <ion-item>
                     <ion-label stacked>Latitude</ion-label>
-                    <ion-input  type="text" placeholder="Enter Latitude"></ion-input>
+                    <ion-input  #workplace_latitude formControlName="workplace_latitude" type="text" placeholder="Enter Latitude"></ion-input>
                   </ion-item>
                 </ion-col>
                 <ion-col col-12 col-md-3>
                   <ion-item>
                     <ion-label stacked>Longitude</ion-label>
-                    <ion-input  type="text" placeholder="Enter Longitude"></ion-input>
+                    <ion-input  #workplace_longitude formControlName="workplace_longitude" type="text" placeholder="Enter Longitude"></ion-input>
                   </ion-item>
                 </ion-col>
 
@@ -145,32 +146,39 @@
                 <ion-col col-12 col-md-6>
                   <ion-item>
                     <ion-label stacked>Designation</ion-label>
-                    <ion-input #workplace_address formControlName="workplace_address" type="text" placeholder="Enter Designation"></ion-input>
+                    <ion-input #designation formControlName="designation" type="text" placeholder="Enter Designation"></ion-input>
                   </ion-item>
                 </ion-col>
                 <ion-col col-12 col-md-6>
                   <ion-item>
                     <ion-label>Industry</ion-label>
-                    <ion-select  name="industry" interface="popover" placeholder="--">
+                    <ion-select #industry formControlName="industry" interface="popover" placeholder="--" (ionChange)="populateSubIndustry(industry.value)">
                         <!-- <ion-select [(ngModel)]="industry" name="industry" interface="popover" placeholder="--"> -->
-                          <ion-option value="1">Industry 1</ion-option>
-                          <ion-option value="2">Industry 2</ion-option>
+                          
+                          <ion-option *ngFor="let industry of industries" value="{{industry.key}}">{{industry.value}}</ion-option>
+                          
+                          <!-- <ion-option value="1">Industry 1</ion-option>
+                          <ion-option value="2">Industry 2</ion-option> -->
                     </ion-select>
                   </ion-item>
                 </ion-col>
                 <ion-col col-12 col-md-6>
                   <ion-item>
                     <ion-label>Sub-Industry</ion-label>
-                    <ion-select  name="subindustry" interface="popover" placeholder="--">
-                          <ion-option value="1">Sub-Industry 1</ion-option>
-                          <ion-option value="2">Sub-Industry 2</ion-option>
+                    <ion-select  #sub_industry formControlName="sub_industry" name="subindustry" interface="popover" placeholder="--">
+                        <!-- <ng-container *ngIf="subindustry?.length > 0"> -->
+                          <ion-option *ngFor="let subindustry of subindustries" value="{{subindustry.key}}">{{subindustry.value}}</ion-option>
+                        <!-- </ng-container>   -->
+                        
+                          <!-- <ion-option value="1">Sub-Industry 1</ion-option>
+                          <ion-option value="2">Sub-Industry 2</ion-option> -->
                     </ion-select>
                   </ion-item>
                 </ion-col>
                 <ion-col col-12 col-md-6>
                   <ion-item>
                     <ion-label>Type</ion-label>
-                    <ion-select  name="type" interface="popover" placeholder="--">
+                    <ion-select  #type formControlName="type" name="type" interface="popover" placeholder="--">
                         <ion-option *ngFor="let type of types" value="{{type.key}}">{{type.value['text']}}</ion-option>
                           <!-- <ion-option value="1">Type 1</ion-option>
                           <ion-option value="2">Type 2</ion-option> -->
@@ -212,13 +220,13 @@
                     <ion-col col-6>
                       <ion-item>
                         <ion-label stacked>Salary</ion-label>
-                        <ion-input type="number" placeholder="Enter Salary"></ion-input>
+                        <ion-input #salary_amount formControlName="salary_amount" type="number" placeholder="Enter Salary"></ion-input>
                       </ion-item>
                     </ion-col>
                     <ion-col col-6>
                       <ion-item padding-top>
                         <ion-label>per</ion-label>
-                        <ion-select name="salary" interface="popover" placeholder="--">
+                        <ion-select #salary_unit formControlName="salary_unit" name="salary" interface="popover" placeholder="--">
 
                              <ion-option *ngFor="let salaryUnit of salaryUnits" value="{{salaryUnit.key}}">{{salaryUnit.value}}</ion-option>
                              <!-- <ion-option value="1">10k</ion-option>
