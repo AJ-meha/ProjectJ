@@ -32,6 +32,17 @@ export class ListJobsPage {
   	];
   }
 
+  private filterOptions: any = {
+    role: {
+    },
+    status: {
+    }
+  }
+
+  private toggleDrop(filtertype: string): void{
+    this.filterOptions[filtertype].open = !this.filterOptions[filtertype].open;
+  }
+
   ionViewDidLoad() {
     console.log('ionViewDidLoad ListJobsPage');
   }
