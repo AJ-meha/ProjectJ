@@ -25,26 +25,19 @@ export class AdminLoginPage {
   loading:Loading;
   email:string;
   constructor(public navCtrl: NavController, public navParams: NavParams,public authData:AuthProvider,public formBuilder:FormBuilder,public alertCtrl:AlertController,public loadingCtrl:LoadingController) {
+
+    this.connectfirebase();
+
     this.loginForm=formBuilder.group({
       email:['',Validators.compose([Validators.required,EmailValidator.isValid])],
       password:['',Validators.compose([Validators.required,Validators.minLength(6)])]
     });
   }
 
-  loginUser(){
-    let self=this;
-    if(!this.loginForm.valid){
-      console.log(this.loginForm.value);
-    }
-    else{
-      this.authData.loginUser(this.loginForm.value.email,this.loginForm.value.password).then(authData=>{
-        console.log("email="+self.authData.afAuth.auth.currentUser.email);
-        console.log("displayName="+self.authData.afAuth.auth.currentUser.displayName);
-        console.log("providerId="+self.authData.afAuth.auth.currentUser.providerId);
+  connectfirebase(){
+      this.authData.loginUser("viraj@ajency.in","qwertyuiop").then(authData=>{
+        this.loading.dismiss();
         console.log(authData);
-        self.email=self.authData.afAuth.auth.currentUser.email;
-        this.authData.loginWithEmail(self.email);
-        this.navCtrl.setRoot(AdminDashboardPage);
       },error=>{
         this.loading.dismiss().then(()=>{
           let alert=this.alertCtrl.create({
@@ -63,6 +56,42 @@ export class AdminLoginPage {
         dismissOnPageChange:true
       });
       this.loading.present();
+  }
+
+  loginUser(){
+    let self=this;
+    if(!this.loginForm.valid){
+      console.log(this.loginForm.value);
+    }
+    else{
+
+      this.loading=this.loadingCtrl.create({
+        dismissOnPageChange:true
+      });
+      this.loading.present();
+
+      let x=this.authData.loginAdmin(this.loginForm.value.email,this.loginForm.value.password);
+      if(x.code==1)
+      {
+        this.loading.dismiss();
+        self.email=x.msg.email;
+        this.authData.loginWithEmail(x.msg);
+        this.navCtrl.setRoot(AdminDashboardPage);
+      }
+      else
+      {
+        this.loading.dismiss().then(()=>{
+          let alert=this.alertCtrl.create({
+            message:x.msg,
+            buttons:[{
+              text:"Ok",
+              role:'cancel'
+            }
+            ]
+          });
+          alert.present();
+        });
+      }
     }
   }
 
