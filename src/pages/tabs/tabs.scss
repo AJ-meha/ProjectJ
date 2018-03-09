@@ -1,0 +1,147 @@
+.footer-md::before{
+  top: 0;
+  height: 0;
+}
+
+.tabs-md{
+  .tab-button{
+    min-height: 4rem;
+  }
+  .tabbar{
+    background: #ffffff;
+    border-top: 1px solid #cecccb;
+  }
+}
+
+.tabbar, .tabs-ios, .tabs-md , .tabs-wp{
+  .tab-button-icon {
+      background-repeat:no-repeat;
+      background-position:center;
+      height:44px;
+      width:44px;
+      background-size:120%;
+      -webkit-background-size: 120%;
+      -moz-background-size: 120%;
+      -o-background-size: 120%;
+      &:before {
+          display:none;
+      }
+  }
+}
+
+.has-icon .tab-badge {
+    right: calc(50% - 20px);
+}
+.tab-badge{
+  top: 14%;
+  &.badge-md{
+    border-radius: 50%;
+  }
+}
+
+.tabs-ios {
+  a[aria-selected=false]{
+     .tab-button-icon[ng-reflect-name=search], .tab-button-icon[aria-label="search"] {
+      background-image: url(../assets/imgs/Search-Thin.png);
+    }
+    .tab-button-icon[ng-reflect-name=heart], .tab-button-icon[aria-label=heart] {
+      background-image: url(../assets/imgs/Saved-jobs-Thin.png);
+    }
+    .tab-button-icon[ng-reflect-name=mail], .tab-button-icon[aria-label=mail] {
+      background-image: url(../assets/imgs/Messages-Thin.png);
+    }
+    .tab-button-icon[ng-reflect-name=person], .tab-button-icon[aria-label=person] {
+      background-image: url(../assets/imgs/Account-Thin.png);
+    }
+  }
+ a[aria-selected=true] {
+   //führ eventuellen text
+   //span {
+      //color: #f00; //whatever colour you want to use for the text
+    //}
+    .tab-button-icon[ng-reflect-name=search], .tab-button-icon[aria-label=search] {
+      background-image: url(../assets/imgs/Search-Bold.png);
+    }
+    .tab-button-icon[ng-reflect-name=heart], .tab-button-icon[aria-label=heart] {
+      background-image: url(../assets/imgs/Saved-jobs-Bold.png);
+    }
+    .tab-button-icon[ng-reflect-name=mail], .tab-button-icon[aria-label=mail] {
+      background-image: url(../assets/imgs/Messages-Bold.png);
+    }
+    .tab-button-icon[ng-reflect-name=person], .tab-button-icon[aria-label=person] {
+      background-image: url(../assets/imgs/Account-Bold.png);
+    }
+  }
+}
+
+.tabs-md {
+  a[aria-selected=false]{
+     .tab-button-icon[ng-reflect-name=search], .tab-button-icon[aria-label="search"] {
+      background-image: url(../assets/imgs/Search-Thin.png);
+    }
+    .tab-button-icon[ng-reflect-name=heart], .tab-button-icon[aria-label=heart] {
+      background-image: url(../assets/imgs/Saved-jobs-Thin.png);
+    }
+    .tab-button-icon[ng-reflect-name=mail], .tab-button-icon[aria-label=mail] {
+      background-image: url(../assets/imgs/Messages-Thin.png);
+    }
+    .tab-button-icon[ng-reflect-name=person], .tab-button-icon[aria-label=person] {
+      background-image: url(../assets/imgs/Account-Thin.png);
+    }
+  }
+
+ a[aria-selected=true] {
+   //führ eventuellen text
+   //span {
+      //color: #f00; //whatever colour you want to use for the text
+    //}
+    .tab-button-icon[ng-reflect-name=search], .tab-button-icon[aria-label=search] {
+      background-image: url(../assets/imgs/Search-Bold.png);
+    }
+    .tab-button-icon[ng-reflect-name=heart], .tab-button-icon[aria-label=heart] {
+      background-image: url(../assets/imgs/Saved-jobs-Bold.png);
+    }
+    .tab-button-icon[ng-reflect-name=mail], .tab-button-icon[aria-label=mail] {
+      background-image: url(../assets/imgs/Messages-Bold.png);
+    }
+    .tab-button-icon[ng-reflect-name=person], .tab-button-icon[aria-label=person] {
+      background-image: url(../assets/imgs/Account-Bold.png);
+    }
+  }
+}
+
+.tabs-wp {
+  a[aria-selected=false]{
+     .tab-button-icon[ng-reflect-name=search], .tab-button-icon[aria-label="search"] {
+      background-image: url(../assets/imgs/Search-Thin.png);
+    }
+    .tab-button-icon[ng-reflect-name=heart], .tab-button-icon[aria-label=heart] {
+      background-image: url(../assets/imgs/Saved-jobs-Thin.png);
+    }
+    .tab-button-icon[ng-reflect-name=mail], .tab-button-icon[aria-label=mail] {
+      background-image: url(../assets/imgs/Messages-Thin.png);
+    }
+    .tab-button-icon[ng-reflect-name=person], .tab-button-icon[aria-label=person] {
+      background-image: url(../assets/imgs/Account-Thin.png);
+    }
+  }
+
+ a[aria-selected=true] {
+   //führ eventuellen text
+   //span {
+      //color: #f00; //whatever colour you want to use for the text
+    //}
+    .tab-button-icon[ng-reflect-name=search], .tab-button-icon[aria-label=search] {
+      background-image: url(../assets/imgs/Search-Bold.png);
+    }
+    .tab-button-icon[ng-reflect-name=heart], .tab-button-icon[aria-label=heart] {
+      background-image: url(../assets/imgs/Saved-jobs-Bold.png);
+    }
+    .tab-button-icon[ng-reflect-name=mail], .tab-button-icon[aria-label=mail] {
+      background-image: url(../assets/imgs/Messages-Bold.png);
+    }
+    .tab-button-icon[ng-reflect-name=person], .tab-button-icon[aria-label=person] {
+      background-image: url(../assets/imgs/Account-Bold.png);
+    }
+  }
+}
