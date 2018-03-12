@@ -163,8 +163,11 @@ export class AdminCreateJobsPage {
   }
 
   saveJob(){
+    
     if(!this.jobsForm.valid){
+      this.validateAllFormFields(this.jobsForm);
       console.log(this.jobsForm.value);
+      console.log("valid=="+this.jobsForm.controls.application_sent_mail.valid+"==="+this.jobsForm.controls.application_sent_mail.dirty)
     }
     else{
       console.log(this.jobsForm.value);
@@ -186,6 +189,7 @@ export class AdminCreateJobsPage {
       let job_details_id=job_details_ref.key
       this.af.list('jobs').push({jobs_contact_workplace_id,job_details_id})
       this.commonfunc.presentToast("Job added Successfully!!!");
+      this.jobsForm.reset();
     }
   }
 
@@ -208,4 +212,15 @@ export class AdminCreateJobsPage {
       console.log(this.subindustries)
     });
   }
+
+  validateAllFormFields(formGroup: FormGroup) {         //{1}
+  Object.keys(formGroup.controls).forEach(field => {  //{2}
+    const control = formGroup.get(field);             //{3}
+    if (control instanceof FormControl) {             //{4}
+      control.markAsTouched({ onlySelf: true });
+    } else if (control instanceof FormGroup) {        //{5}
+      this.validateAllFormFields(control);            //{6}
+    }
+  });
+}
 }

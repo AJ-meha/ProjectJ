@@ -1,3 +1,12 @@
 page-admin-create-jobs {
-
+    .invalid {
+        border-bottom: 1px solid #FF6153;
+      }
+    
+      .error-message .label p{
+          color:#FF6153;
+      }
+      .error-message .item-inner {
+        border-bottom: 0 !important;
+      }
 }

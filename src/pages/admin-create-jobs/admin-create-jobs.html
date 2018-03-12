@@ -38,52 +38,74 @@
                 <ion-col col-12 col-md-6>
                   <ion-item>
                     <ion-label stacked>Applications to be sent to</ion-label>
-                    <ion-input #application_sent_mail formControlName="application_sent_mail" type="email" placeholder="Enter Email Address"></ion-input>
+                    <ion-input autofocus #application_sent_mail formControlName="application_sent_mail" type="email" placeholder="Enter Email Address" [class.invalid]="!jobsForm.controls.application_sent_mail.valid && (jobsForm.controls.application_sent_mail.dirty  || jobsForm.controls.application_sent_mail.touched)"></ion-input>
                   </ion-item>
+                  <ion-item class="error-message" *ngIf="!jobsForm.controls.application_sent_mail.valid  && (jobsForm.controls.application_sent_mail.dirty  || jobsForm.controls.application_sent_mail.touched)">
+                    <p>Please enter a valid email address.</p>
+                  </ion-item>
+            
                 </ion-col>
 
                 <ion-col col-12 col-md-6>
                   <ion-item>
                     <ion-label stacked>Workplace</ion-label>
-                    <ion-select #workplace formControlName="workplace" >
-                        <ion-option *ngFor="let workplaceType of workplaceTypes" value="{{workplaceType.key}}">{{workplaceType.value}}</ion-option>
+                    <ion-select #workplace formControlName="workplace" [class.invalid]="!jobsForm.controls.workplace.valid && (jobsForm.controls.workplace.dirty  || jobsForm.controls.workplace.touched)">
+                        <ion-option *ngFor="let workplaceType of workplaceTypes" value="{{workplaceType.key}}" [selected]="workplaceType.key == company">{{workplaceType.value}}</ion-option>
                         <!-- <ion-option value="domestic">Domestic</ion-option>
                         <ion-option value="company">Company</ion-option> -->
                     </ion-select>
+                  </ion-item>
+                  <ion-item class="error-message" *ngIf="!jobsForm.controls.workplace.valid  && (jobsForm.controls.workplace.dirty  || jobsForm.controls.workplace.touched)">
+                    <p>Please enter a valid workplace.</p>
                   </ion-item>
                 </ion-col>
 
                 <ion-col col-12 col-md-6>
                   <ion-item>
                     <ion-label stacked>Workplace Name</ion-label>
-                    <ion-input #workplace_name formControlName="workplace_name" type="text" placeholder="Enter Workplace name" ></ion-input>
+                    <ion-input #workplace_name formControlName="workplace_name" type="text" placeholder="Enter Workplace name" [class.invalid]="!jobsForm.controls.workplace_name.valid && (jobsForm.controls.workplace_name.dirty  || jobsForm.controls.workplace_name.touched)"></ion-input>
+                  </ion-item>
+                  <ion-item class="error-message" *ngIf="!jobsForm.controls.workplace_name.valid  && (jobsForm.controls.workplace_name.dirty  || jobsForm.controls.workplace_name.touched)">
+                    <p>Please enter a valid workplace name.</p>
                   </ion-item>
                 </ion-col>
 
                 <ion-col col-12 col-md-6>
                   <ion-item>
                     <ion-label stacked>Mobile</ion-label>
-                    <ion-input #mobile formControlName="mobile" type="tel" placeholder="Enter Mobile number"></ion-input>
-                </ion-item>
+                    <ion-input #mobile formControlName="mobile" type="tel" placeholder="Enter Mobile number" [class.invalid]="!jobsForm.controls.mobile.valid && (jobsForm.controls.mobile.dirty  || jobsForm.controls.mobile.touched)"></ion-input>
+                  </ion-item>
+                  <ion-item class="error-message" *ngIf="!jobsForm.controls.mobile.valid  && (jobsForm.controls.mobile.dirty  || jobsForm.controls.mobile.touched)">
+                    <p>Please enter a valid mobile number.</p>
+                  </ion-item>
                 </ion-col>
 
 
                 <ion-col col-12 col-md-6>
                   <ion-item>
                     <ion-label stacked>Address</ion-label>
-                    <ion-input #workplace_address formControlName="workplace_address" type="text" placeholder="Enter Address"></ion-input>
+                    <ion-input #workplace_address formControlName="workplace_address" type="text" placeholder="Enter Address" [class.invalid]="!jobsForm.controls.workplace_address.valid && (jobsForm.controls.workplace_address.dirty  || jobsForm.controls.workplace_address.touched)"></ion-input>
+                  </ion-item>
+                  <ion-item class="error-message" *ngIf="!jobsForm.controls.workplace_address.valid  && (jobsForm.controls.workplace_address.dirty  || jobsForm.controls.workplace_address.touched)">
+                    <p>Please enter a valid address.</p>
                   </ion-item>
                 </ion-col>
                 <ion-col col-12 col-md-3>
                   <ion-item>
                     <ion-label stacked>Latitude</ion-label>
-                    <ion-input  #workplace_latitude formControlName="workplace_latitude" type="text" placeholder="Enter Latitude"></ion-input>
+                    <ion-input  #workplace_latitude formControlName="workplace_latitude" type="text" placeholder="Enter Latitude" [class.invalid]="!jobsForm.controls.workplace_latitude.valid && (jobsForm.controls.workplace_latitude.dirty  || jobsForm.controls.workplace_latitude.touched)"></ion-input>
+                  </ion-item>
+                  <ion-item class="error-message" *ngIf="!jobsForm.controls.workplace_latitude.valid  && (jobsForm.controls.workplace_latitude.dirty  || jobsForm.controls.workplace_latitude.touched)">
+                    <p>Please enter a valid latitude.</p>
                   </ion-item>
                 </ion-col>
                 <ion-col col-12 col-md-3>
                   <ion-item>
                     <ion-label stacked>Longitude</ion-label>
-                    <ion-input  #workplace_longitude formControlName="workplace_longitude" type="text" placeholder="Enter Longitude"></ion-input>
+                    <ion-input  #workplace_longitude formControlName="workplace_longitude" type="text" placeholder="Enter Longitude" [class.invalid]="!jobsForm.controls.workplace_longitude.valid && (jobsForm.controls.workplace_longitude.dirty  || jobsForm.controls.workplace_longitude.touched)"></ion-input>
+                  </ion-item>
+                  <ion-item class="error-message" *ngIf="!jobsForm.controls.workplace_longitude.valid  && (jobsForm.controls.workplace_longitude.dirty  || jobsForm.controls.workplace_longitude.touched)">
+                    <p>Please enter a valid longitude.</p>
                   </ion-item>
                 </ion-col>
 
@@ -146,13 +168,16 @@
                 <ion-col col-12 col-md-6>
                   <ion-item>
                     <ion-label stacked>Designation</ion-label>
-                    <ion-input #designation formControlName="designation" type="text" placeholder="Enter Designation"></ion-input>
+                    <ion-input [class.invalid]="!jobsForm.controls.designation.valid && (jobsForm.controls.designation.dirty  || jobsForm.controls.designation.touched)" #designation formControlName="designation" type="text" placeholder="Enter Designation"></ion-input>
+                  </ion-item>
+                  <ion-item class="error-message" *ngIf="!jobsForm.controls.designation.valid  && (jobsForm.controls.designation.dirty  || jobsForm.controls.designation.touched)">
+                    <p>Please enter a valid designation.</p>
                   </ion-item>
                 </ion-col>
                 <ion-col col-12 col-md-6>
                   <ion-item>
                     <ion-label>Industry</ion-label>
-                    <ion-select #industry formControlName="industry" interface="popover" placeholder="--" (ionChange)="populateSubIndustry(industry.value)">
+                    <ion-select [class.invalid]="!jobsForm.controls.industry.valid && (jobsForm.controls.industry.dirty  || jobsForm.controls.industry.touched)" #industry formControlName="industry" interface="popover" placeholder="--" (ionChange)="populateSubIndustry(industry.value)">
                         <!-- <ion-select [(ngModel)]="industry" name="industry" interface="popover" placeholder="--"> -->
                           
                           <ion-option *ngFor="let industry of industries" value="{{industry.key}}">{{industry.value}}</ion-option>
@@ -161,11 +186,14 @@
                           <ion-option value="2">Industry 2</ion-option> -->
                     </ion-select>
                   </ion-item>
+                  <ion-item class="error-message" *ngIf="!jobsForm.controls.industry.valid  && (jobsForm.controls.industry.dirty  || jobsForm.controls.industry.touched)">
+                    <p>Please enter a valid industry.</p>
+                  </ion-item>
                 </ion-col>
                 <ion-col col-12 col-md-6>
                   <ion-item>
                     <ion-label>Sub-Industry</ion-label>
-                    <ion-select  #sub_industry formControlName="sub_industry" name="subindustry" interface="popover" placeholder="--">
+                    <ion-select  [class.invalid]="!jobsForm.controls.sub_industry.valid && (jobsForm.controls.sub_industry.dirty  || jobsForm.controls.sub_industry.touched)" #sub_industry formControlName="sub_industry" name="subindustry" interface="popover" placeholder="--">
                         <!-- <ng-container *ngIf="subindustry?.length > 0"> -->
                           <ion-option *ngFor="let subindustry of subindustries" value="{{subindustry.key}}">{{subindustry.value}}</ion-option>
                         <!-- </ng-container>   -->
@@ -174,15 +202,21 @@
                           <ion-option value="2">Sub-Industry 2</ion-option> -->
                     </ion-select>
                   </ion-item>
+                  <ion-item class="error-message" *ngIf="!jobsForm.controls.sub_industry.valid  && (jobsForm.controls.sub_industry.dirty  || jobsForm.controls.sub_industry.touched)">
+                    <p>Please enter a valid sub industry.</p>
+                  </ion-item>
                 </ion-col>
                 <ion-col col-12 col-md-6>
                   <ion-item>
                     <ion-label>Type</ion-label>
-                    <ion-select  #type formControlName="type" name="type" interface="popover" placeholder="--">
+                    <ion-select  [class.invalid]="!jobsForm.controls.type.valid && (jobsForm.controls.type.dirty  || jobsForm.controls.type.touched)" #type formControlName="type" name="type" interface="popover" placeholder="--">
                         <ion-option *ngFor="let type of types" value="{{type.key}}">{{type.value['text']}}</ion-option>
                           <!-- <ion-option value="1">Type 1</ion-option>
                           <ion-option value="2">Type 2</ion-option> -->
                     </ion-select>
+                  </ion-item>
+                  <ion-item class="error-message" *ngIf="!jobsForm.controls.type.valid  && (jobsForm.controls.type.dirty  || jobsForm.controls.type.touched)">
+                    <p>Please enter a valid type.</p>
                   </ion-item>
                 </ion-col>
             </ion-row>
@@ -220,18 +254,24 @@
                     <ion-col col-6>
                       <ion-item>
                         <ion-label stacked>Salary</ion-label>
-                        <ion-input #salary_amount formControlName="salary_amount" type="number" placeholder="Enter Salary"></ion-input>
+                        <ion-input [class.invalid]="!jobsForm.controls.salary_amount.valid && (jobsForm.controls.salary_amount.dirty  || jobsForm.controls.salary_amount.touched)" #salary_amount formControlName="salary_amount" type="number" placeholder="Enter Salary"></ion-input>
+                      </ion-item>
+                      <ion-item class="error-message" *ngIf="!jobsForm.controls.salary_amount.valid  && (jobsForm.controls.salary_amount.dirty  || jobsForm.controls.salary_amount.touched)">
+                        <p>Please enter valid salary amount.</p>
                       </ion-item>
                     </ion-col>
                     <ion-col col-6>
                       <ion-item padding-top>
                         <ion-label>per</ion-label>
-                        <ion-select #salary_unit formControlName="salary_unit" name="salary" interface="popover" placeholder="--">
+                        <ion-select [class.invalid]="!jobsForm.controls.salary_unit.valid && (jobsForm.controls.salary_unit.dirty  || jobsForm.controls.salary_unit.touched)" #salary_unit formControlName="salary_unit" name="salary" interface="popover" placeholder="--">
 
                              <ion-option *ngFor="let salaryUnit of salaryUnits" value="{{salaryUnit.key}}">{{salaryUnit.value}}</ion-option>
                              <!-- <ion-option value="1">10k</ion-option>
                               <ion-option value="2">20k</ion-option> -->
                         </ion-select>
+                      </ion-item>
+                      <ion-item class="error-message" *ngIf="!jobsForm.controls.salary_unit.valid  && (jobsForm.controls.salary_unit.dirty  || jobsForm.controls.salary_unit.touched)">
+                        <p>Please enter a valid salary unit.</p>
                       </ion-item>
                     </ion-col>
                   </ion-row>
