@@ -9,6 +9,8 @@ import { AdminDashboardPage } from '../pages/admin-dashboard/admin-dashboard';
 
 import { AngularFireAuth } from 'angularfire2/auth';
 
+import { AuthProvider } from '../providers/auth/auth';
+
 @Component({
   templateUrl: 'app.html'
 })
@@ -17,15 +19,25 @@ export class MyApp {
   rootPage:any;
   pages: Array<{title:string,component:any}>;
 
-  constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen, afAuth: AngularFireAuth) {
+  constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen, afAuth: AngularFireAuth,public authData:AuthProvider) {
     this.pages=[
       {title:'Dashboard',component:AdminDashboardPage}
     ];
 
     const authObserver=afAuth.authState.subscribe(user=>{
       if(user){
-        this.rootPage=AdminDashboardPage;
-        authObserver.unsubscribe();
+        this.authData.getUserEmail().then(userename=>{
+          if(userename!=null)
+          {
+            this.rootPage=AdminDashboardPage;
+            authObserver.unsubscribe();
+          }
+          else
+          {
+            this.rootPage=AdminLoginPage;
+            authObserver.unsubscribe();
+          }
+        });
       }
       else{
         this.rootPage=AdminLoginPage;

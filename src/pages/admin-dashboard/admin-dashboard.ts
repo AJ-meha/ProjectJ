@@ -21,16 +21,15 @@ import { AdminLoginPage } from '../admin-login/admin-login';
 })
 export class AdminDashboardPage {
 
-  useremail:string;
+  userename:string;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public authData: AuthProvider) {
-    this.getUserEmail();
+    this.getUserName();
   }
 
-  getUserEmail(){
-    this.authData.getUserEmail().then(useremail=>{
-      this.useremail=useremail;
-      console.log("useremail=="+useremail);
+  getUserName(){
+    this.authData.getUserName().then(userename=>{
+      this.userename=userename;
     })
   }
 

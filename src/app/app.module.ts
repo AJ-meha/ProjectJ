@@ -34,6 +34,7 @@ const firebaseConfig = {
   projectId: "project-j-2018",
   storageBucket: "project-j-2018.appspot.com",
   messagingSenderId: "374829001586"
+
 };
 
 @NgModule({
