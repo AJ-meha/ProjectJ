@@ -115,6 +115,24 @@
               <ion-label padding-left>
                 Contact via
               </ion-label>
+              <ion-row >
+                <ion-col class="item item-checkbox" *ngFor="let contactVia of contactVias;let ind=index"  col-12 col-sm>
+                  <!-- <ion-item-group  > -->
+                  <!-- <input type="checkbox" formControlName="isChosen" /> {{hobby.controls.name.value}} -->
+                    <ion-item  >
+                        {{contactVia.value}}
+                      <label class = "checkbox">
+                          <input #contact_via formControlName="contact_via" type="checkbox" value="{{contactVia.key}}" [checked]="ind == 0" /> 
+                      </label>
+                      
+                      <!-- <ion-checkbox value="{{contactVia.key}}"></ion-checkbox> -->
+                    </ion-item>
+                  <!-- </ion-item-group> -->
+              </ion-col>
+              <ion-item class="error-message" *ngIf="!jobsForm.controls.contact_via.valid  && (jobsForm.controls.contact_via.dirty  || jobsForm.controls.contact_via.touched)">
+                  <p>Please enter a valid contact means.</p>
+                </ion-item>
+            </ion-row>
               <!-- <ion-row formArrayName="contactViaList">
                       <ion-col *ngFor="let contactVia of contactViaList.controls"  col-12 col-sm>
                         <!-- <input type="checkbox" formControlName="isChosen" /> {{hobby.controls.name.value}} -->
@@ -224,13 +242,17 @@
             <ion-row>
                 <ion-col col-12 >
                   <ion-label padding-left >Employment Type</ion-label>
-                  <ion-row radio-group>
-                    <ion-col col-12 col-md-4 *ngFor="let empType of empTypes;let idx = index">
+                  <ion-row radio-group #employment_type formControlName="employment_type">
+                    <ion-col  col-12 col-md-4 *ngFor="let empType of empTypes;let idx = index">
                       <ion-item>
                         <ion-label>{{empType.value}}</ion-label>
-                        <ion-radio value="{{empType.key}}" [checked]="idx === 0"></ion-radio>
+                        <ion-radio  value="{{empType.key}}" [checked]="idx === 0"></ion-radio>
                       </ion-item>
+                      
                     </ion-col>
+                    <ion-item class="error-message" *ngIf="!jobsForm.controls.employment_type.valid  && (jobsForm.controls.employment_type.dirty  || jobsForm.controls.employment_type.touched)">
+                      <p>Please enter a valid employment type.</p>
+                    </ion-item>
 
                     <!-- <ion-item>
                       <ion-label>Permanent</ion-label>

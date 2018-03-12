@@ -60,6 +60,8 @@ export class AdminCreateJobsPage {
       salary_unit:['',Validators.compose([Validators.required])],
       industry:['',Validators.compose([Validators.required])],
       sub_industry:['',Validators.compose([Validators.required])],
+      employment_type:['',Validators.compose([Validators.required])],
+      contact_via:['',Validators.compose([Validators.required])],
       // contactViaList:this.formBuilder.array([])
       // contactViaList:this.formBuilder.array([])
 
@@ -181,9 +183,10 @@ export class AdminCreateJobsPage {
       let type=this.jobsForm.value.type
       let salary_amount=this.jobsForm.value.salary_amount
       let salary_unit=this.jobsForm.value.salary_unit
+      let employment_type=this.jobsForm.value.employment_type
       // let contact_via=this.jobsForm.value.contact_via
       let jobs_contact_workplace_ref=this.af.list('jobs_contact_workplace').push({ application_sent_mail,workplace,workplace_name,workplace_address,mobile})
-      let job_details_ref=this.af.list('job_details').push({ designation,type,salary_amount,salary_unit})
+      let job_details_ref=this.af.list('job_details').push({ designation,type,employment_type,salary_amount,salary_unit})
       console.log("jobs_contact_workplace_id=="+jobs_contact_workplace_ref.key)
       let jobs_contact_workplace_id=jobs_contact_workplace_ref.key
       let job_details_id=job_details_ref.key
