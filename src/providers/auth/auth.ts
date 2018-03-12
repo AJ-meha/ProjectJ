@@ -24,8 +24,6 @@ export class AuthProvider {
   }
 
   loginUser(newEmail: string, newPassword: string): Promise<any> {
-    this.passwordcheck.on('value', itemSnapshot => { 
-    });
     return this.afAuth.auth.signInWithEmailAndPassword(newEmail, newPassword);
   }
 
@@ -35,6 +33,11 @@ export class AuthProvider {
     this.storage.remove('username');
 
     return this.afAuth.auth.signOut();
+  }
+
+  GetUsersTable(){
+    this.passwordcheck.on('value', itemSnapshot => { 
+    });
   }
 
   loginAdmin(newEmail: string, newPassword: string) {
