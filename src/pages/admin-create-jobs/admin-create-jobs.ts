@@ -60,6 +60,8 @@ export class AdminCreateJobsPage {
       salary_unit:['',Validators.compose([Validators.required])],
       industry:['',Validators.compose([Validators.required])],
       sub_industry:['',Validators.compose([Validators.required])],
+      employment_type:['',Validators.compose([Validators.required])],
+      contact_via:['',Validators.compose([Validators.required])],
       // contactViaList:this.formBuilder.array([])
       // contactViaList:this.formBuilder.array([])
 
@@ -163,8 +165,11 @@ export class AdminCreateJobsPage {
   }
 
   saveJob(){
+    
     if(!this.jobsForm.valid){
+      this.validateAllFormFields(this.jobsForm);
       console.log(this.jobsForm.value);
+      console.log("valid=="+this.jobsForm.controls.application_sent_mail.valid+"==="+this.jobsForm.controls.application_sent_mail.dirty)
     }
     else{
       console.log(this.jobsForm.value);
@@ -178,14 +183,16 @@ export class AdminCreateJobsPage {
       let type=this.jobsForm.value.type
       let salary_amount=this.jobsForm.value.salary_amount
       let salary_unit=this.jobsForm.value.salary_unit
+      let employment_type=this.jobsForm.value.employment_type
       // let contact_via=this.jobsForm.value.contact_via
       let jobs_contact_workplace_ref=this.af.list('jobs_contact_workplace').push({ application_sent_mail,workplace,workplace_name,workplace_address,mobile})
-      let job_details_ref=this.af.list('job_details').push({ designation,type,salary_amount,salary_unit})
+      let job_details_ref=this.af.list('job_details').push({ designation,type,employment_type,salary_amount,salary_unit})
       console.log("jobs_contact_workplace_id=="+jobs_contact_workplace_ref.key)
       let jobs_contact_workplace_id=jobs_contact_workplace_ref.key
       let job_details_id=job_details_ref.key
       this.af.list('jobs').push({jobs_contact_workplace_id,job_details_id})
       this.commonfunc.presentToast("Job added Successfully!!!");
+      this.jobsForm.reset();
     }
   }
 
@@ -208,4 +215,15 @@ export class AdminCreateJobsPage {
       console.log(this.subindustries)
     });
   }
+
+  validateAllFormFields(formGroup: FormGroup) {         //{1}
+  Object.keys(formGroup.controls).forEach(field => {  //{2}
+    const control = formGroup.get(field);             //{3}
+    if (control instanceof FormControl) {             //{4}
+      control.markAsTouched({ onlySelf: true });
+    } else if (control instanceof FormGroup) {        //{5}
+      this.validateAllFormFields(control);            //{6}
+    }
+  });
+}
 }
