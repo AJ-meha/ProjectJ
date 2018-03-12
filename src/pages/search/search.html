@@ -1,4 +1,4 @@
-<ion-header>
+<ion-header no-border>
   <ion-navbar>
     <ion-title>Search</ion-title>
   </ion-navbar>
@@ -8,4 +8,12 @@
   <p>
     List of jobs
   </p>
+
+  <button ion-button small (click)="openModal()">
+      View Modal
+  </button>
+
+  <button ion-button small (click)="openDetails()">
+      View Page
+  </button>
 </ion-content>
