@@ -4,6 +4,8 @@ import firebase from 'firebase/app';
 
 import { Storage } from '@ionic/storage';
 
+import {Md5} from 'ts-md5/dist/md5';
+
 /*
   Generated class for the AuthProvider provider.
 
@@ -37,19 +39,20 @@ export class AuthProvider {
 
   loginAdmin(newEmail: string, newPassword: string) {
   let pass:any;
-  let z=0;
+  let z = 0;
+  let passwordhash = Md5.hashStr(newPassword)
     this.passwordcheck.on('value', itemSnapshot => { 
       try {
         itemSnapshot.forEach( itemSnap => {
           let ival=itemSnap.val()
-          if(ival.email==newEmail && ival.password==newPassword)
+          if(ival.email==newEmail && ival.password==passwordhash)
           {
             pass=ival;
             z=1;
             throw 1;
           }
 
-          if(ival.email==newEmail && ival.password!=newPassword)
+          if(ival.email==newEmail && ival.password!=passwordhash)
           {
             z=2;
             throw 1;
