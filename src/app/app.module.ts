@@ -24,6 +24,7 @@ import { GlobalVarsProvider } from '../providers/global-vars/global-vars';
 import { AuthProvider } from '../providers/auth/auth';
 
 import { IonicStorageModule } from '@ionic/storage';
+import { AdminCreateJobsPage } from '../pages/admin-create-jobs/admin-create-jobs';
 
 
 // AF2 Settings
@@ -46,7 +47,8 @@ const firebaseConfig = {
     ProfilePage,
     TabsPage,
     AdminLoginPage,
-    AdminDashboardPage
+    AdminDashboardPage,
+    AdminCreateJobsPage
   ],
   imports: [
     BrowserModule,
@@ -65,7 +67,8 @@ const firebaseConfig = {
     ProfilePage,
     TabsPage,
     AdminLoginPage,
-    AdminDashboardPage
+    AdminDashboardPage,
+    AdminCreateJobsPage
   ],
   providers: [
     StatusBar,
