@@ -29,8 +29,8 @@
 
 
     <ion-content padding>
-      <form [formGroup]="jobsForm" (submit)="saveJob(this.jobsForm,this.jobsSubForm)" novalidate>
-        <div [formGroup]="jobsSubForm" >
+      <form [formGroup]="jobsForm" (submit)="saveJob(this.jobsForm)" novalidate>
+        <div>
         <ion-card>
           <ion-card-header padding-left class="card-wp-primary">Contact &amp; Workplace Info</ion-card-header>
             <ion-grid>
@@ -41,10 +41,6 @@
                     <ion-input autofocus #application_sent_mail formControlName="application_sent_mail" type="email" placeholder="Enter Email Address" [class.invalid]="!jobsForm.controls.application_sent_mail.valid && (jobsForm.controls.application_sent_mail.dirty  || jobsForm.controls.application_sent_mail.touched)"></ion-input>
                   </ion-item>
                   <ion-item class="error-message" *ngIf="!jobsForm.controls.application_sent_mail.valid  && (jobsForm.controls.application_sent_mail.dirty  || jobsForm.controls.application_sent_mail.touched)">
-                    <p>Please enter a valid email address.</p>
-                  </ion-item>
-
-                  <ion-item class="error-message" *ngIf="!jobsSubForm.controls.application_sent_mail.valid  && (jobsSubForm.controls.application_sent_mail.dirty  || jobsSubForm.controls.application_sent_mail.touched)">
                     <p>Please enter a valid email address.</p>
                   </ion-item>
 
@@ -60,9 +56,6 @@
                     </ion-select>
                   </ion-item>
                   <ion-item class="error-message" *ngIf="!jobsForm.controls.workplace.valid  && (jobsForm.controls.workplace.dirty  || jobsForm.controls.workplace.touched)">
-                    <p>Please enter a valid workplace.</p>
-                  </ion-item>
-                  <ion-item class="error-message" *ngIf="!jobsSubForm.controls.workplace.valid  && (jobsSubForm.controls.workplace.dirty  || jobsSubForm.controls.workplace.touched)">
                     <p>Please enter a valid workplace.</p>
                   </ion-item>
                 </ion-col>
@@ -287,7 +280,7 @@
                         <ion-label stacked>Salary</ion-label>
                         <ion-input [class.invalid]="!jobsForm.controls.salary_amount.valid && (jobsForm.controls.salary_amount.dirty  || jobsForm.controls.salary_amount.touched)" #salary_amount formControlName="salary_amount" type="number" placeholder="Enter Salary"></ion-input>
                       </ion-item>
-                      <ion-item class="error-message" *ngIf="!jobsForm.controls.salary_amount.valid  && (jobsForm.controls.salary_amount.dirty  || jobsForm.controls.salary_amount.touched)">
+                      <ion-item class="error-message" *ngIf="!jobsForm.controls.salary_amount.valid  && (jobsForm.controls.salary_amount.dirty  || jobsForm.controls.salary_amount.touched)model">
                         <p>Please enter valid salary amount.</p>
                       </ion-item>
                     </ion-col>
@@ -321,15 +314,15 @@
                       </ion-list-header>
                       <ion-item>
                         <ion-label>Start Time</ion-label>
-                        <ion-datetime displayFormat="h:mm A" pickerFormat="h mm A" placeholder="--"></ion-datetime>
+                        <ion-datetime [disabled]="checkboxMon" displayFormat="h:mm A" pickerFormat="h mm A" placeholder="--"></ion-datetime>
                       </ion-item>
                       <ion-item>
                         <ion-label>End Time</ion-label>
-                        <ion-datetime displayFormat="h:mm A" pickerFormat="h mm A" placeholder="--"></ion-datetime>
+                        <ion-datetime [disabled]="checkboxMon" displayFormat="h:mm A" pickerFormat="h mm A" placeholder="--"></ion-datetime>
                       </ion-item>
                       <ion-item>
                         <ion-label>Holiday</ion-label>
-                        <ion-checkbox></ion-checkbox>
+                        <ion-checkbox [(ngModel)]="checkboxMon" [ngModelOptions]="{standalone: true}"></ion-checkbox>
                       </ion-item>
                     </ion-list>
                 </ion-card>
@@ -343,15 +336,15 @@
                       </ion-list-header>
                       <ion-item>
                         <ion-label>Start Time</ion-label>
-                        <ion-datetime displayFormat="h:mm A" pickerFormat="h mm A" placeholder="--" ></ion-datetime>
+                        <ion-datetime [disabled]="checkboxTue" displayFormat="h:mm A" pickerFormat="h mm A" placeholder="--" ></ion-datetime>
                       </ion-item>
                       <ion-item>
                         <ion-label>End Time</ion-label>
-                        <ion-datetime displayFormat="h:mm A" pickerFormat="h mm A" placeholder="--" ></ion-datetime>
+                        <ion-datetime [disabled]="checkboxTue" displayFormat="h:mm A" pickerFormat="h mm A" placeholder="--" ></ion-datetime>
                       </ion-item>
                       <ion-item>
                         <ion-label>Holiday</ion-label>
-                        <ion-checkbox></ion-checkbox>
+                        <ion-checkbox [(ngModel)]="checkboxTue" [ngModelOptions]="{standalone: true}"></ion-checkbox>
                       </ion-item>
                     </ion-list>
                   </ion-card>
@@ -365,15 +358,15 @@
                       </ion-list-header>
                       <ion-item>
                         <ion-label>Start Time</ion-label>
-                        <ion-datetime displayFormat="h:mm A" pickerFormat="h mm A" placeholder="--" ></ion-datetime>
+                        <ion-datetime [disabled]="checkboxWed" displayFormat="h:mm A" pickerFormat="h mm A" placeholder="--" ></ion-datetime>
                       </ion-item>
                       <ion-item>
                         <ion-label>End Time</ion-label>
-                        <ion-datetime displayFormat="h:mm A" pickerFormat="h mm A" placeholder="--" ></ion-datetime>
+                        <ion-datetime [disabled]="checkboxWed" displayFormat="h:mm A" pickerFormat="h mm A" placeholder="--" ></ion-datetime>
                       </ion-item>
                       <ion-item>
                         <ion-label>Holiday</ion-label>
-                        <ion-checkbox></ion-checkbox>
+                        <ion-checkbox [(ngModel)]="checkboxWed" [ngModelOptions]="{standalone: true}"></ion-checkbox>
                       </ion-item>
                     </ion-list>
                   </ion-card>
@@ -387,15 +380,15 @@
                       </ion-list-header>
                       <ion-item>
                         <ion-label>Start Time</ion-label>
-                        <ion-datetime displayFormat="h:mm A" pickerFormat="h mm A" placeholder="--" ></ion-datetime>
+                        <ion-datetime [disabled]="checkboxThu" displayFormat="h:mm A" pickerFormat="h mm A" placeholder="--" ></ion-datetime>
                       </ion-item>
                       <ion-item>
                         <ion-label>End Time</ion-label>
-                        <ion-datetime displayFormat="h:mm A" pickerFormat="h mm A" placeholder="--" ></ion-datetime>
+                        <ion-datetime [disabled]="checkboxThu" displayFormat="h:mm A" pickerFormat="h mm A" placeholder="--" ></ion-datetime>
                       </ion-item>
                       <ion-item>
                         <ion-label>Holiday</ion-label>
-                        <ion-checkbox></ion-checkbox>
+                        <ion-checkbox [(ngModel)]="checkboxThu" [ngModelOptions]="{standalone: true}"></ion-checkbox>
                       </ion-item>
                     </ion-list>
                   </ion-card>
@@ -409,15 +402,15 @@
                       </ion-list-header>
                       <ion-item>
                         <ion-label>Start Time</ion-label>
-                        <ion-datetime displayFormat="h:mm A" pickerFormat="h mm A" placeholder="--" ></ion-datetime>
+                        <ion-datetime [disabled]="checkboxFri" displayFormat="h:mm A" pickerFormat="h mm A" placeholder="--" ></ion-datetime>
                       </ion-item>
                       <ion-item>
                         <ion-label>End Time</ion-label>
-                        <ion-datetime displayFormat="h:mm A" pickerFormat="h mm A" placeholder="--" ></ion-datetime>
+                        <ion-datetime [disabled]="checkboxFri" displayFormat="h:mm A" pickerFormat="h mm A" placeholder="--" ></ion-datetime>
                       </ion-item>
                       <ion-item>
                         <ion-label>Holiday</ion-label>
-                        <ion-checkbox></ion-checkbox>
+                        <ion-checkbox [(ngModel)]="checkboxFri" [ngModelOptions]="{standalone: true}"></ion-checkbox>
                       </ion-item>
                     </ion-list>
                   </ion-card>
@@ -431,15 +424,15 @@
                       </ion-list-header>
                       <ion-item>
                         <ion-label>Start Time</ion-label>
-                        <ion-datetime displayFormat="h:mm A" pickerFormat="h mm A" placeholder="--" ></ion-datetime>
+                        <ion-datetime [disabled]="checkboxSat" displayFormat="h:mm A" pickerFormat="h mm A" placeholder="--" ></ion-datetime>
                       </ion-item>
                       <ion-item>
                         <ion-label>End Time</ion-label>
-                        <ion-datetime displayFormat="h:mm A" pickerFormat="h mm A" placeholder="--" ></ion-datetime>
+                        <ion-datetime [disabled]="checkboxSat" displayFormat="h:mm A" pickerFormat="h mm A" placeholder="--" ></ion-datetime>
                       </ion-item>
                       <ion-item>
                         <ion-label>Holiday</ion-label>
-                        <ion-checkbox></ion-checkbox>
+                        <ion-checkbox [(ngModel)]="checkboxSat" [ngModelOptions]="{standalone: true}"></ion-checkbox>
                       </ion-item>
                     </ion-list>
                   </ion-card>
@@ -453,15 +446,15 @@
                       </ion-list-header>
                       <ion-item>
                         <ion-label>Start Time</ion-label>
-                        <ion-datetime displayFormat="h:mm A" pickerFormat="h mm A" placeholder="--" ></ion-datetime>
+                        <ion-datetime [disabled]="checkboxSun" displayFormat="h:mm A" pickerFormat="h mm A" placeholder="--" ></ion-datetime>
                       </ion-item>
                       <ion-item>
                         <ion-label>End Time</ion-label>
-                        <ion-datetime displayFormat="h:mm A" pickerFormat="h mm A" placeholder="--" ></ion-datetime>
+                        <ion-datetime [disabled]="checkboxSun" displayFormat="h:mm A" pickerFormat="h mm A" placeholder="--" ></ion-datetime>
                       </ion-item>
                       <ion-item>
                         <ion-label>Holiday</ion-label>
-                        <ion-checkbox></ion-checkbox>
+                        <ion-checkbox [(ngModel)]="checkboxSun" [ngModelOptions]="{standalone: true}"></ion-checkbox>
                       </ion-item>
                     </ion-list>
                   </ion-card>
@@ -647,7 +640,7 @@
             <ion-col col-12 col-md-6>
 
               <ion-buttons end>
-                <button ion-button type="button" (click)="saveJob(this.jobsSubForm,this.jobsForm)">
+                <button ion-button type="button" (click)="saveJob(this.jobsForm)">
                   Save
                 </button>
 

@@ -6,6 +6,9 @@ import { CommonFunctionsProvider } from '../../providers/common-functions/common
 import firebase  from 'firebase';
 import { GlobalVarsProvider } from '../../providers/global-vars/global-vars';
 import { TabsPage } from '../tabs/tabs';
+
+import { EmailValidator } from '../../validators/email';
+
 /**
  * Generated class for the AdminCreateJobsPage page.
  *
@@ -25,7 +28,6 @@ import { TabsPage } from '../tabs/tabs';
 })
 export class AdminCreateJobsPage {
   jobsForm:FormGroup;
-  jobsSubForm:FormGroup;
   contactVias: Array<any> = [];
   workplaceTypes: Array<any> = [];
   empTypes: Array<any> = [];
@@ -49,16 +51,16 @@ export class AdminCreateJobsPage {
     // console.log("jobss---")
     
     this.jobsForm=this.formBuilder.group({
-      application_sent_mail:['',Validators.compose([Validators.required])],
+      application_sent_mail:['',Validators.compose([Validators.required,EmailValidator.isValid])],
       workplace:['',Validators.compose([Validators.required])],
       workplace_name:['',Validators.compose([Validators.required])],
       workplace_address:['',Validators.compose([Validators.required])],
       workplace_latitude:['',Validators.compose([Validators.required])],
       workplace_longitude:['',Validators.compose([Validators.required])],
-      mobile:['',Validators.compose([Validators.required])],
+      mobile:['',Validators.compose([Validators.required,Validators.pattern('(\\+852[- ]?)?\\d{10}$')])],
       designation:['',Validators.compose([Validators.required])],
       type:['',Validators.compose([Validators.required])],
-      salary_amount:['',Validators.compose([Validators.required])],
+      salary_amount:['',Validators.compose([Validators.required,Validators.pattern('[1-9]+[0-9]*')])],
       salary_unit:['',Validators.compose([Validators.required])],
       industry:['',Validators.compose([Validators.required])],
       sub_industry:['',Validators.compose([Validators.required])],
@@ -68,25 +70,6 @@ export class AdminCreateJobsPage {
       // contactViaList:this.formBuilder.array([])
       // contactViaList:this.formBuilder.array([])
 
-    });
-
-    this.jobsSubForm=this.formBuilder.group({
-      application_sent_mail:['',Validators.compose([Validators.required])],
-      workplace:['',Validators.compose([Validators.required])],
-      workplace_name:['',Validators.compose([Validators.required])],
-      workplace_address:['',Validators.compose([Validators.required])],
-      workplace_latitude:['',Validators.compose([Validators.required])],
-      workplace_longitude:['',Validators.compose([Validators.required])],
-      mobile:['',Validators.compose([Validators.required])],
-      designation:'',
-      type:'',
-      salary_amount:'',
-      salary_unit:'',
-      industry:'',
-      sub_industry:'',
-      employment_type:'',
-      contact_via:'',
-      additional_info:''
     });
 
     this.pages = [
@@ -191,8 +174,7 @@ export class AdminCreateJobsPage {
 
   }
 
-  saveJob(form,otherform){
-    otherform.reset()
+  saveJob(form){
     if(!form.valid){
       this.validateAllFormFields(form);
       console.log(form.value);
@@ -200,6 +182,7 @@ export class AdminCreateJobsPage {
     }
     else{
       console.log(form.value);
+      console.log("form.validated");
       this.saveJobDetails(form)
 
       
