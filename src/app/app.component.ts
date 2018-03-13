@@ -23,7 +23,8 @@ export class MyApp {
   constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen, afAuth: AngularFireAuth,public authData:AuthProvider) {
     this.pages=[
       {title:'Dashboard',component:AdminDashboardPage},
-      {title:'Add Job',component:AdminCreateJobsPage}
+      {title:'Add Job',component:AdminCreateJobsPage},
+      {title:'View Jobs',component:TabsPage}
     ];
 
     const authObserver=afAuth.authState.subscribe(user=>{
