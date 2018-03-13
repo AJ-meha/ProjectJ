@@ -29,8 +29,8 @@
 
 
     <ion-content padding>
-      <form [formGroup]="jobsForm" (submit)="saveJob()" novalidate>
-
+      <form [formGroup]="jobsForm" (submit)="saveJob(this.jobsForm,this.jobsSubForm)" novalidate>
+        <div [formGroup]="jobsSubForm" >
         <ion-card>
           <ion-card-header padding-left class="card-wp-primary">Contact &amp; Workplace Info</ion-card-header>
             <ion-grid>
@@ -41,6 +41,10 @@
                     <ion-input autofocus #application_sent_mail formControlName="application_sent_mail" type="email" placeholder="Enter Email Address" [class.invalid]="!jobsForm.controls.application_sent_mail.valid && (jobsForm.controls.application_sent_mail.dirty  || jobsForm.controls.application_sent_mail.touched)"></ion-input>
                   </ion-item>
                   <ion-item class="error-message" *ngIf="!jobsForm.controls.application_sent_mail.valid  && (jobsForm.controls.application_sent_mail.dirty  || jobsForm.controls.application_sent_mail.touched)">
+                    <p>Please enter a valid email address.</p>
+                  </ion-item>
+
+                  <ion-item class="error-message" *ngIf="!jobsSubForm.controls.application_sent_mail.valid  && (jobsSubForm.controls.application_sent_mail.dirty  || jobsSubForm.controls.application_sent_mail.touched)">
                     <p>Please enter a valid email address.</p>
                   </ion-item>
 
@@ -56,6 +60,9 @@
                     </ion-select>
                   </ion-item>
                   <ion-item class="error-message" *ngIf="!jobsForm.controls.workplace.valid  && (jobsForm.controls.workplace.dirty  || jobsForm.controls.workplace.touched)">
+                    <p>Please enter a valid workplace.</p>
+                  </ion-item>
+                  <ion-item class="error-message" *ngIf="!jobsSubForm.controls.workplace.valid  && (jobsSubForm.controls.workplace.dirty  || jobsSubForm.controls.workplace.touched)">
                     <p>Please enter a valid workplace.</p>
                   </ion-item>
                 </ion-col>
@@ -102,7 +109,7 @@
                 <ion-col col-12 col-md-3>
                   <ion-item>
                     <ion-label stacked>Longitude</ion-label>
-                    <ion-input  #workplace_longitude formControlName="workplace_longitude" type="text" placeholder="Enter Longitude" [class.invalid]="!jobsForm.controls.workplace_longitude.valid && (jobsForm.controls.workplace_longitude.dirty  || jobsForm.controls.workplace_longitude.touched)"></ion-input>
+                    <ion-input  #workplace_longitude value="fdsfds" formControlName="workplace_longitude" type="text" placeholder="Enter Longitude" [class.invalid]="!jobsForm.controls.workplace_longitude.valid && (jobsForm.controls.workplace_longitude.dirty  || jobsForm.controls.workplace_longitude.touched)"></ion-input>
                   </ion-item>
                   <ion-item class="error-message" *ngIf="!jobsForm.controls.workplace_longitude.valid  && (jobsForm.controls.workplace_longitude.dirty  || jobsForm.controls.workplace_longitude.touched)">
                     <p>Please enter a valid longitude.</p>
@@ -124,7 +131,7 @@
                     <ion-item  >
                         {{contactVia.value}}
                       <label class = "checkbox">
-                          <input #contact_via formControlName="contact_via" type="checkbox" value="{{contactVia.key}}" [checked]="ind == 0" />
+                          <input #contact_via formControlName="contact_via" type="checkbox" value="{{contactVia.key}}" [checked]="ind === 0"  (change)="updateContactViaList(contactVia.key, $event.target.checked, ind)"/>
                       </label>
 
                       <!-- <ion-checkbox value="{{contactVia.key}}"></ion-checkbox> -->
@@ -542,7 +549,9 @@
                 <ion-col col-12>
                   <ion-label padding-left>More about this role</ion-label>
                   <ion-item>
-                    <ion-textarea placeholder="Additional Information"></ion-textarea>
+
+                    <ion-textarea #additional_info formControlName="additional_info" placeholder="Additional Information"></ion-textarea>
+
                   </ion-item>
               </ion-col>
             </ion-row>
@@ -631,14 +640,14 @@
         <ion-grid>
           <ion-row>
             <ion-col col-12 col-md-6>
-              <button ion-button outline type="button">
+              <button ion-button outline type="submit">
                 Send for Approval
               </button>
             </ion-col>
             <ion-col col-12 col-md-6>
 
               <ion-buttons end>
-                <button ion-button type="submit">
+                <button ion-button type="button" (click)="saveJob(this.jobsSubForm,this.jobsForm)">
                   Save
                 </button>
 
@@ -649,7 +658,7 @@
             </ion-col>
           </ion-row>
         </ion-grid>
-
+        </div>
       </form>
     </ion-content>
   </ion-content>

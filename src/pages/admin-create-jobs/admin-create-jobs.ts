@@ -16,7 +16,7 @@ import { TabsPage } from '../tabs/tabs';
 @IonicPage(
   {
     name: 'create',
-    segment:'admin/jobs/create'
+    segment:'admin/jobs/:action/:id'
   }
 )
 @Component({
@@ -25,6 +25,7 @@ import { TabsPage } from '../tabs/tabs';
 })
 export class AdminCreateJobsPage {
   jobsForm:FormGroup;
+  jobsSubForm:FormGroup;
   contactVias: Array<any> = [];
   workplaceTypes: Array<any> = [];
   empTypes: Array<any> = [];
@@ -34,6 +35,7 @@ export class AdminCreateJobsPage {
   subindustries: Array<any> = [];
   contactViaList:FormArray;
   contactViaArray = [];
+  selectedContactViaArray = [];
   pages: Array<{title: string, component: any}>;
   public jobContactViaRef: firebase.database.Reference = firebase.database().ref('job_contact_via');
   public workplacetypeViaRef: firebase.database.Reference = firebase.database().ref('workplace_type');
@@ -45,7 +47,7 @@ export class AdminCreateJobsPage {
   constructor(public navCtrl: NavController, public navParams: NavParams,private af: AngularFireDatabase,public formBuilder:FormBuilder,public commonfunc:CommonFunctionsProvider) {
 
     // console.log("jobss---")
-
+    
     this.jobsForm=this.formBuilder.group({
       application_sent_mail:['',Validators.compose([Validators.required])],
       workplace:['',Validators.compose([Validators.required])],
@@ -62,9 +64,29 @@ export class AdminCreateJobsPage {
       sub_industry:['',Validators.compose([Validators.required])],
       employment_type:['',Validators.compose([Validators.required])],
       contact_via:['',Validators.compose([Validators.required])],
+      additional_info:''
       // contactViaList:this.formBuilder.array([])
       // contactViaList:this.formBuilder.array([])
 
+    });
+
+    this.jobsSubForm=this.formBuilder.group({
+      application_sent_mail:['',Validators.compose([Validators.required])],
+      workplace:['',Validators.compose([Validators.required])],
+      workplace_name:['',Validators.compose([Validators.required])],
+      workplace_address:['',Validators.compose([Validators.required])],
+      workplace_latitude:['',Validators.compose([Validators.required])],
+      workplace_longitude:['',Validators.compose([Validators.required])],
+      mobile:['',Validators.compose([Validators.required])],
+      designation:'',
+      type:'',
+      salary_amount:'',
+      salary_unit:'',
+      industry:'',
+      sub_industry:'',
+      employment_type:'',
+      contact_via:'',
+      additional_info:''
     });
 
     this.pages = [
@@ -129,7 +151,7 @@ export class AdminCreateJobsPage {
         return false;
       });
     });
-
+    let stepCounter=0;
     this.jobContactViaRef.on('value', itemSnapshot => {
       itemSnapshot.forEach( itemSnap => {
 
@@ -137,6 +159,11 @@ export class AdminCreateJobsPage {
         let ikey=itemSnap.key
         let ival=itemSnap.val()
         this.contactVias.push({"key":ikey,"value":ival})
+        if(stepCounter == 0){
+          this.selectedContactViaArray.push(ikey)
+        }
+        
+        stepCounter +=1;
         let cform=this.formBuilder.group({
           contact_via: false,
           name: ival,
@@ -164,36 +191,44 @@ export class AdminCreateJobsPage {
 
   }
 
-  saveJob(){
-    
-    if(!this.jobsForm.valid){
-      this.validateAllFormFields(this.jobsForm);
-      console.log(this.jobsForm.value);
-      console.log("valid=="+this.jobsForm.controls.application_sent_mail.valid+"==="+this.jobsForm.controls.application_sent_mail.dirty)
+  saveJob(form,otherform){
+    otherform.reset()
+    if(!form.valid){
+      this.validateAllFormFields(form);
+      console.log(form.value);
+      console.log("valid=="+form.controls.contact_via.valid+"==="+form.controls.contact_via.dirty)
     }
     else{
-      console.log(this.jobsForm.value);
+      console.log(form.value);
+      this.saveJobDetails(form)
 
-      let application_sent_mail=this.jobsForm.value.application_sent_mail
-      let workplace=this.jobsForm.value.workplace
-      let workplace_name=this.jobsForm.value.workplace_name
-      let workplace_address=this.jobsForm.value.workplace_address
-      let mobile=this.jobsForm.value.mobile
-      let designation=this.jobsForm.value.designation
-      let type=this.jobsForm.value.type
-      let salary_amount=this.jobsForm.value.salary_amount
-      let salary_unit=this.jobsForm.value.salary_unit
-      let employment_type=this.jobsForm.value.employment_type
-      // let contact_via=this.jobsForm.value.contact_via
-      let jobs_contact_workplace_ref=this.af.list('jobs_contact_workplace').push({ application_sent_mail,workplace,workplace_name,workplace_address,mobile})
-      let job_details_ref=this.af.list('job_details').push({ designation,type,employment_type,salary_amount,salary_unit})
-      console.log("jobs_contact_workplace_id=="+jobs_contact_workplace_ref.key)
-      let jobs_contact_workplace_id=jobs_contact_workplace_ref.key
-      let job_details_id=job_details_ref.key
-      this.af.list('jobs').push({jobs_contact_workplace_id,job_details_id})
-      this.commonfunc.presentToast("Job added Successfully!!!");
-      this.jobsForm.reset();
+      
     }
+  }
+
+  saveJobDetails(form){
+    let application_sent_mail=form.value.application_sent_mail
+    let workplace=form.value.workplace
+    let workplace_name=form.value.workplace_name
+    let workplace_address=form.value.workplace_address
+    let mobile=form.value.mobile
+    let designation=form.value.designation
+    let type=form.value.type
+    let salary_amount=form.value.salary_amount
+    let salary_unit=form.value.salary_unit
+    let employment_type=form.value.employment_type
+    let contact_via=this.selectedContactViaArray
+    let additional_info=form.value.additional_info
+    let jobs_contact_workplace_ref=this.af.list('jobs_contact_workplace').push({ application_sent_mail,workplace,workplace_name,workplace_address,mobile,contact_via})
+    let job_details_ref=this.af.list('job_details').push({ designation,type,employment_type,salary_amount,salary_unit})
+    let job_emp_benefits_ref=this.af.list('job_employee_benefits').push({ additional_info})
+    console.log("jobs_contact_workplace_id=="+jobs_contact_workplace_ref.key)
+    let jobs_contact_workplace_id=jobs_contact_workplace_ref.key
+    let job_details_id=job_details_ref.key
+    let job_emp_benefits_id=job_emp_benefits_ref.key
+    this.af.list('jobs').push({jobs_contact_workplace_id,job_details_id,job_emp_benefits_id})
+    this.commonfunc.presentToast("Job added Successfully!!!");
+    form.reset();
   }
 
   // get contactViaList(): FormArray {
@@ -217,13 +252,27 @@ export class AdminCreateJobsPage {
   }
 
   validateAllFormFields(formGroup: FormGroup) {         //{1}
-  Object.keys(formGroup.controls).forEach(field => {  //{2}
-    const control = formGroup.get(field);             //{3}
-    if (control instanceof FormControl) {             //{4}
-      control.markAsTouched({ onlySelf: true });
-    } else if (control instanceof FormGroup) {        //{5}
-      this.validateAllFormFields(control);            //{6}
-    }
-  });
-}
+    Object.keys(formGroup.controls).forEach(field => {  //{2}
+      const control = formGroup.get(field);             //{3}
+      if (control instanceof FormControl) {             //{4}
+        control.markAsTouched({ onlySelf: true });
+      } else if (control instanceof FormGroup) {        //{5}
+        this.validateAllFormFields(control);            //{6}
+      }
+    });
+  }
+
+  updateContactViaList(key, isChecked, index) {
+    console.log("ischecked=="+isChecked)
+   if(isChecked) {
+    this.selectedContactViaArray.push(key)
+   } else {
+    const index: number = this.selectedContactViaArray.indexOf(key);
+    if (index !== -1) {
+        this.selectedContactViaArray.splice(index, 1);
+    }   
+   }
+   console.log(this.selectedContactViaArray)
+ }
+
 }
