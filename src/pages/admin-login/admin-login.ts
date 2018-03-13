@@ -5,6 +5,9 @@ import { AuthProvider } from '../../providers/auth/auth';
 import { EmailValidator } from '../../validators/email';
 import { AdminDashboardPage } from '../admin-dashboard/admin-dashboard';
 
+import { Http, Headers, Response, URLSearchParams } from '@angular/http';
+import 'rxjs/add/operator/toPromise';
+
 /**
  * Generated class for the AdminLoginPage page.
  *
@@ -24,7 +27,7 @@ export class AdminLoginPage {
   loginForm:FormGroup;
   loading:Loading;
   email:string;
-  constructor(public navCtrl: NavController, public navParams: NavParams,public authData:AuthProvider,public formBuilder:FormBuilder,public alertCtrl:AlertController,public loadingCtrl:LoadingController) {
+  constructor(public navCtrl: NavController, public navParams: NavParams,public authData:AuthProvider,public formBuilder:FormBuilder,public alertCtrl:AlertController,public loadingCtrl:LoadingController,private http: Http) {
 
     this.connectfirebase();
 
@@ -93,6 +96,28 @@ export class AdminLoginPage {
         });
       }
     }
+  }
+
+  sendEmail() {
+
+    let url = `https://us-central1-project-j-2018.cloudfunctions.net/httpEmail`
+    let params: URLSearchParams = new URLSearchParams();
+    let headers = new Headers({'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' });
+
+    params.set('to', 'tanvi.s@ajency.in');
+    params.set('from', 'viraj@ajency.in');
+    params.set('subject', 'test-email');
+    params.set('content', 'Hello World');
+
+    return this.http.post(url, params)
+                    .toPromise()
+                    .then( res => {
+                      console.log(res)
+                    })
+                    .catch(err => {
+                      console.log(err)
+                    })
+
   }
 
   ionViewDidLoad() {
