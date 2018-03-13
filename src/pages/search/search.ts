@@ -16,8 +16,8 @@ export class SearchPage {
 	    modal.present();
 	}
 
-	openDetails() {
-	    this.navCtrl.push('DemoPage');
+	openJob() {
+	    this.navCtrl.push('singleJob');
 	}
 
 }
