@@ -7,6 +7,10 @@ import { AdminLoginPage } from '../admin-login/admin-login';
 import firebase from 'firebase/app';
 import {Md5} from 'ts-md5/dist/md5';
 
+import { FormGroup, FormBuilder, Validators, FormControl, FormArray } from '@angular/forms';
+
+import { CommonFunctionsProvider } from '../../providers/common-functions/common-functions';
+
 /**
  * Generated class for the AdminSetpasswordPage page.
  *
@@ -24,18 +28,26 @@ import {Md5} from 'ts-md5/dist/md5';
 })
 export class AdminSetpasswordPage {
 
+  resetForm:FormGroup;
+
   public usercheck: firebase.database.Reference = firebase.database().ref('users');
 
   emailid:any;
   uid:any;
+  key:any;
   loading:Loading;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public authData:AuthProvider, public alertCtrl:AlertController, public loadingCtrl:LoadingController) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public authData:AuthProvider, public alertCtrl:AlertController, public loadingCtrl:LoadingController, public formBuilder:FormBuilder, public commonfunc:CommonFunctionsProvider) {
 
   	this.emailid = navParams.data['email'];
   	this.uid = navParams.data['uid'];
 
   	this.connectfirebase();
+
+    this.resetForm=this.formBuilder.group({
+      password:['',Validators.compose([Validators.required,Validators.minLength(6)])]
+    });
+
   }
 
   connectfirebase(){
@@ -44,12 +56,13 @@ export class AdminSetpasswordPage {
         this.usercheck.on('value', itemSnapshot => {
           try {
             itemSnapshot.forEach( itemSnap => {
+              let ikey=itemSnap.key
               let ival=itemSnap.val()
               if(ival.email==this.emailid && ival.uid==this.uid)
               {
                 this.loading.dismiss();
                 x=1;
-                console.log("true");
+                this.key = ikey;
                 throw 1;
               }
 
@@ -113,6 +126,18 @@ export class AdminSetpasswordPage {
         dismissOnPageChange:true
       });
       this.loading.present();
+  }
+
+  resetpassword() {
+    if(!this.resetForm.valid){
+      console.log(this.resetForm.value);
+    }
+    else{
+      let passwordhash = Md5.hashStr(this.resetForm.value.password)
+      firebase.database().ref('users/'+this.key+'/password').set(passwordhash);
+      this.commonfunc.presentToast("Password Set Successfully!!!");
+      this.resetForm.reset();
+    }
   }
 
   ionViewDidLoad() {
