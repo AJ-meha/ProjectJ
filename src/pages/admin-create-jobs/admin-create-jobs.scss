@@ -1,12 +1,26 @@
 page-admin-create-jobs {
-    .invalid {
-        border-bottom: 1px solid #FF6153;
-      }
-    
-      .error-message .label p{
-          color:#FF6153;
-      }
-      .error-message .item-inner {
-        border-bottom: 0 !important;
-      }
+	.invalid {
+		border-bottom: 1px solid #FF6153;
+	}
+
+	.error-message .label p{
+		color:#FF6153;
+	}
+	.error-message .item-inner {
+		border-bottom: 0 !important;
+	}
+
+	.label-md[stacked], .label-ios[stacked]{
+		font-size: 1.4rem;
+		color: #000;
+	}
+	.text-input{
+		font-size: 1.6rem;
+	}
+
+	.item-md .radio-md[item-left],
+	.item-md .radio-md[item-start],
+	.item.item-md .checkbox-md{
+		margin-right: 10px
+	}
 }

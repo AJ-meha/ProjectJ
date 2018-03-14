@@ -10,6 +10,7 @@ import { AdminDashboardPage } from '../pages/admin-dashboard/admin-dashboard';
 import { AngularFireAuth } from 'angularfire2/auth';
 
 import { AuthProvider } from '../providers/auth/auth';
+import { AdminCreateJobsPage } from '../pages/admin-create-jobs/admin-create-jobs';
 
 @Component({
   templateUrl: 'app.html'
@@ -21,7 +22,8 @@ export class MyApp {
 
   constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen, afAuth: AngularFireAuth,public authData:AuthProvider) {
     this.pages=[
-      {title:'Dashboard',component:AdminDashboardPage}
+      {title:'Dashboard',component:AdminDashboardPage},
+      {title:'Add Job',component:AdminCreateJobsPage}
     ];
 
     const authObserver=afAuth.authState.subscribe(user=>{
