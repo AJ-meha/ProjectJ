@@ -5,6 +5,7 @@ import { AuthProvider } from '../../providers/auth/auth';
 import { EmailValidator } from '../../validators/email';
 import { AdminDashboardPage } from '../admin-dashboard/admin-dashboard';
 import firebase from 'firebase/app';
+import { GlobalVarsProvider } from '../../providers/global-vars/global-vars';
 /**
  * Generated class for the AdminLoginPage page.
  *
@@ -35,7 +36,7 @@ export class AdminLoginPage {
   }
 
   connectfirebase(){
-      this.authData.loginUser("viraj@ajency.in","qwertyuiop").then(authData=>{
+      this.authData.loginUser(GlobalVarsProvider.config_email,GlobalVarsProvider.config_pass).then(authData=>{
         this.loading.dismiss();
         console.log(authData);
       },error=>{
@@ -59,9 +60,9 @@ export class AdminLoginPage {
   }
 
   loginUser(){
-    firebase.database().ref('sendmail').push({
-      emailid: this.loginForm.value.email
-    });
+    // firebase.database().ref('sendmail').push({
+    //   emailid: this.loginForm.value.email
+    // });
     console.log("enters==="+this.loginForm.value.email)
     let self=this;
     if(!this.loginForm.valid){

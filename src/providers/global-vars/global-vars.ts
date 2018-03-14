@@ -11,6 +11,8 @@ import { Injectable } from '@angular/core';
 export class GlobalVarsProvider {
   /* GLOBAL constants,variable to be declared here*/
   static from_email: string= "jobsproject2018@gmail.com";
+  static config_email: string= "jobsproject2018@gmail.com";
+  static config_pass: string= "Jobsproject2018!@#";
 
   constructor() {
   }
