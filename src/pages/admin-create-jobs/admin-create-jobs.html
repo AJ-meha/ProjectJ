@@ -29,7 +29,7 @@
 
 
     <ion-content padding>
-      <form [formGroup]="jobsForm" (submit)="submitJob(this.jobsForm)" novalidate>
+      <form [formGroup]="jobsForm" (submit)="formsubmitted=true;formsaved=false;submitJob(this.jobsForm)" novalidate>
         <div>
         <ion-card>
           <ion-card-header padding-left class="card-wp-primary">Contact &amp; Workplace Info</ion-card-header>
@@ -642,7 +642,7 @@
         <ion-grid>
           <ion-row>
             <ion-col col-12 col-md-6>
-              <button ion-button outline type="submit" (click)="formsubmitted=true;formsaved=false;">
+              <button ion-button outline type="submit">
                 Send for Approval
               </button>
             </ion-col>
