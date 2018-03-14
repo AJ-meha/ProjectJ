@@ -240,7 +240,7 @@ export class AdminCreateJobsPage {
     let job_details_id=job_details_ref.key
     let job_emp_benefits_id=job_emp_benefits_ref.key
     let job_status='draft'
-    this.af.list('jobs').push({jobs_contact_workplace_id,job_details_id,job_emp_benefits_id})
+    this.af.list('jobs').push({jobs_contact_workplace_id,job_details_id,job_emp_benefits_id,job_status})
     this.commonfunc.presentToast("Job added Successfully!!!");
     form.reset();
   }
