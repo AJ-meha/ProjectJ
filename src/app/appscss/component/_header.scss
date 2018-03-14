@@ -1,0 +1,24 @@
+.header{
+	.toolbar{
+		padding: 8px;
+		// margin-top: 20px;
+		.toolbar-background{
+			background-color: #fff;
+			border-color: $lining;
+			border-width: 0.55px 0 0.55px !important;
+			border-style: solid;
+		}
+		.bar-button{
+			font-size: 2.2rem;
+		}
+		.toolbar-title{
+			font-weight: 500;
+			font-size: 1.52rem;
+			color: $dark-text;
+		}
+	}
+
+	.bar-buttons-md{
+		// order: 1;
+	}
+}
