@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { FormGroup, FormBuilder, Validators, FormControl, FormArray } from '@angular/forms';
 import { AngularFireDatabase } from 'angularfire2/database';
 import { CommonFunctionsProvider } from '../../providers/common-functions/common-functions';
@@ -46,7 +46,7 @@ export class AdminCreateJobsPage {
   public salaryUnitRef: firebase.database.Reference = firebase.database().ref('salary_unit');
   public industryRef: firebase.database.Reference = firebase.database().ref('industry');
   
-  constructor(public navCtrl: NavController, public navParams: NavParams,private af: AngularFireDatabase,public formBuilder:FormBuilder,public commonfunc:CommonFunctionsProvider,public alertCtrl:AlertController) {
+  constructor(public navCtrl: NavController, public navParams: NavParams,private af: AngularFireDatabase,public formBuilder:FormBuilder,public commonfunc:CommonFunctionsProvider) {
 
     // console.log("jobss---")
     
@@ -190,43 +190,16 @@ export class AdminCreateJobsPage {
   saveJob(form){
     console.log("application_sent_mail=="+form.value.application_sent_mail+"==="+form.controls.application_sent_mail.valid+"==="+form.controls.application_sent_mail.dirty);
     if(form.value.application_sent_mail!='' && !form.controls.application_sent_mail.valid){
-      let alert=this.alertCtrl.create({
-        message:"Enter Valid Email",
-        buttons:[{
-          text:"Ok",
-          role:'cancel'
-        }
-        ]
-      });
-      alert.present();
       return false;
     }
 
     console.log("mobile=="+form.value.mobile+"==="+form.controls.mobile.valid+"==="+form.controls.mobile.dirty);
     if(form.value.mobile!='' && !form.controls.mobile.valid){
-      let alert=this.alertCtrl.create({
-        message:"Enter Valid Mobile Number",
-        buttons:[{
-          text:"Ok",
-          role:'cancel'
-        }
-        ]
-      });
-      alert.present();
       return false;
     }
 
     console.log("salary_amount=="+form.value.salary_amount+"==="+form.controls.salary_amount.valid+"==="+form.controls.salary_amount.dirty);
     if(form.value.salary_amount!='' && !form.controls.salary_amount.valid){
-      let alert=this.alertCtrl.create({
-        message:"Salary should be greater than 0.",
-        buttons:[{
-          text:"Ok",
-          role:'cancel'
-        }
-        ]
-      });
-      alert.present();
       return false;
     }
 
