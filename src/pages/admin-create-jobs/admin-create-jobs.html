@@ -254,7 +254,7 @@
                   <ion-row radio-group #employment_type formControlName="employment_type">
                     <ion-col  col-12 col-md-4 *ngFor="let empType of empTypes;let idx = index">
                       <ion-item>
-                        <ion-radio item-left value="{{empType.key}}" [checked]="idx === 0"></ion-radio>
+                        <ion-radio mode="md" item-left value="{{empType.key}}" [checked]="idx === 0"></ion-radio>
                         <ion-label>{{empType.value}}</ion-label>
                       </ion-item>
 
@@ -569,15 +569,15 @@
               </ion-col>
                 <ion-col col-12 col-md-4>
                     <ion-item>
+                      <ion-radio mode="md" item-left checked="true" value="yes"></ion-radio>
                       <ion-label>Yes</ion-label>
-                      <ion-radio item-left checked="true" value="yes"></ion-radio>
                     </ion-item>
               </ion-col>
 
               <ion-col col-12 col-md-4>
                   <ion-item>
+                    <ion-radio mode="md" item-left value="no"></ion-radio>
                     <ion-label>No</ion-label>
-                    <ion-radio item-left value="no"></ion-radio>
                   </ion-item>
                 </ion-col>
               </ion-row>
@@ -602,7 +602,7 @@
               <ion-row>
                 <ion-col col-2 col-md-1>
                   <ion-item>
-                    <ion-radio value="value"></ion-radio>
+                    <ion-radio mode="md" item-left value="value"></ion-radio>
                   </ion-item>
                 </ion-col>
                 <ion-col col-10 col-md-8>
@@ -614,7 +614,7 @@
               <ion-row>
                 <ion-col col-2 col-md-1>
                   <ion-item>
-                    <ion-radio value="value"></ion-radio>
+                    <ion-radio mode="md" item-left value="value"></ion-radio>
                   </ion-item>
                 </ion-col>
                 <ion-col col-10 col-md-8>
