@@ -467,7 +467,16 @@
           <ion-card-header padding-left class="card-wp-primary">Employee Benefits</ion-card-header>
           <ion-grid>
             <ion-row>
-                <ion-col col-12 col-md-4>
+                <ion-col *ngFor="let employeeBenefit of employeeBenefits;"  col-12 col-md-4>
+                  <ion-item>
+                    <ion-label>{{employeeBenefit.value.text}}</ion-label>
+                    <ion-checkbox [(ngModel)]="employeeBenefit.key" [ngModelOptions]="{standalone: true}" (click)="employeeBenefit.keydet=''"></ion-checkbox>
+                  </ion-item>
+                  <ion-item>
+                    <ion-input [disabled]="employeeBenefit.key!=true" [(ngModel)]=employeeBenefit.keydet [ngModelOptions]="{standalone: true}" type="text" placeholder="Say something about this"></ion-input>
+                  </ion-item>
+                </ion-col>
+                <!--ion-col col-12 col-md-4>
                   <ion-item>
                     <ion-label>Meal at work</ion-label>
                     <ion-checkbox [(ngModel)]="mealAtWork" [ngModelOptions]="{standalone: true}"></ion-checkbox>
@@ -538,7 +547,7 @@
                   <ion-item>
                     <ion-input [disabled]="!performanceBenefits" type="text" placeholder="Say something about this"></ion-input>
                   </ion-item>
-              </ion-col>
+              </ion-col-->
                 <ion-col col-12>
                   <ion-label padding-left>More about this role</ion-label>
                   <ion-item>

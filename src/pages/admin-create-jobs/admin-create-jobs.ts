@@ -33,6 +33,7 @@ export class AdminCreateJobsPage {
   empTypes: Array<any> = [];
   types: Array<any> = [];
   salaryUnits: Array<any> = [];
+  employeeBenefits: Array<any> = [];
   industries: Array<any> = [];
   subindustries: Array<any> = [];
   contactViaList:FormArray;
@@ -45,6 +46,7 @@ export class AdminCreateJobsPage {
   public typeRef: firebase.database.Reference = firebase.database().ref('type');
   public salaryUnitRef: firebase.database.Reference = firebase.database().ref('salary_unit');
   public industryRef: firebase.database.Reference = firebase.database().ref('industry');
+  public employeeBenefitsRef: firebase.database.Reference = firebase.database().ref('employee_benefits');
   
   constructor(public navCtrl: NavController, public navParams: NavParams,private af: AngularFireDatabase,public formBuilder:FormBuilder,public commonfunc:CommonFunctionsProvider) {
 
@@ -161,6 +163,16 @@ export class AdminCreateJobsPage {
       // console.log(this.contactViaList)
     });
 
+    this.employeeBenefitsRef.on('value', itemSnapshot => {
+      itemSnapshot.forEach( itemSnap => {
+        let ikey=itemSnap.key
+        let ival=itemSnap.val()
+        this.employeeBenefits.push({"key":ikey,"keydet":"","value":ival})
+        return false;
+      });
+      console.log(this.employeeBenefits);
+    });
+
     // let cformContact=this.jobsForm.get('contactViaList') as FormArray
     // console.log(cformContact)
     // console.log(contactViaArray)
@@ -227,6 +239,7 @@ export class AdminCreateJobsPage {
     let jobs_contact_workplace_id=jobs_contact_workplace_ref.key
     let job_details_id=job_details_ref.key
     let job_emp_benefits_id=job_emp_benefits_ref.key
+    let job_status='draft'
     this.af.list('jobs').push({jobs_contact_workplace_id,job_details_id,job_emp_benefits_id})
     this.commonfunc.presentToast("Job added Successfully!!!");
     form.reset();
