@@ -60,6 +60,7 @@ export class AuthProvider {
 
           return false;
         });
+        
       } catch (e) {
         if (e !== 1) throw e;
       }
@@ -69,6 +70,7 @@ export class AuthProvider {
     if(z==0) return {"code":0,msg:"Incorrect Email"};
     if(z==1) return {"code":1,msg:pass};
     if(z==2) return {"code":2,msg:"Incorrect Password"};
+    
   }
 
   loginWithEmail(data) {

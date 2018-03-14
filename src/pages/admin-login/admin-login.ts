@@ -4,7 +4,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { AuthProvider } from '../../providers/auth/auth';
 import { EmailValidator } from '../../validators/email';
 import { AdminDashboardPage } from '../admin-dashboard/admin-dashboard';
-
+import firebase from 'firebase/app';
 /**
  * Generated class for the AdminLoginPage page.
  *
@@ -59,6 +59,10 @@ export class AdminLoginPage {
   }
 
   loginUser(){
+    firebase.database().ref('sendmail').push({
+      emailid: this.loginForm.value.email
+    });
+    console.log("enters==="+this.loginForm.value.email)
     let self=this;
     if(!this.loginForm.valid){
       console.log(this.loginForm.value);

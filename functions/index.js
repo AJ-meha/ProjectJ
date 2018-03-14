@@ -1,58 +1,23 @@
-const functions = require('firebase-functions');
+var functions = require('firebase-functions');
 
-// // Create and Deploy Your First Cloud Functions
-// // https://firebase.google.com/docs/functions/write-firebase-functions
-//
-// exports.helloWorld = functions.https.onRequest((request, response) => {
-//  response.send("Hello from Firebase!");
-// });
+var emailjs=require('emailjs/email')
 
-const sendgrid = require('sendgrid')
-const client = sendgrid("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")
-
-function parseBody(body) {
-  var helper = sendgrid.mail;
-  var fromEmail = new helper.Email(body.from);
-  var toEmail = new helper.Email(body.to);
-  var subject = body.subject;
-  var content = new helper.Content('text/html', body.content);
-  var mail = new helper.Mail(fromEmail, subject, toEmail, content);
-  return  mail.toJSON();
-}
-
-
-exports.httpEmail = functions.https.onRequest((req, res) => {
-  return Promise.resolve()
-    .then(() => {
-      if (req.method !== 'POST') {
-        const error = new Error('Only POST requests are accepted');
-        error.code = 405;
-        throw error;
-      }
-
-
-      const request = client.emptyRequest({
-        method: 'POST',
-        path: '/v3/mail/send',
-        body: parseBody(req.body)
-      });
-
-      return client.API(request)
-
-
-    })
-    .then((response) => {
-      if (response.body) {
-        res.send(response.body);
-      } else {
-        res.end();
-      }
-    })
-
-    .catch((err) => {
-      console.error(err);
-      return Promise.reject(err);
-    });
-
-
+exports.sendmailfn=functions.database.ref('/sendmail/{emailkey}/').onWrite(event=>{
+    var email=event.data.val().emailid;
+    var server 	= emailjs.server.connect({
+        user:    "jobsproject2018@gmail.com", 
+        password: "Jobsproject2018!@#", 
+        host:    "smtp.gmail.com", 
+        ssl:     true
+     });
+     var message	= {
+        text:	"i hope this works", 
+        from:	"jobsproject2018@gmail.com", 
+        to:		email,
+        cc:		email,
+        subject:	"testing emailjs",
+        
+     };
+     // send the message and get a callback with an error or details of the message that was sent
+     server.send(message, function(err, message) { console.log(err || message); });
 })
