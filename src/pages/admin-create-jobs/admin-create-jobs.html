@@ -470,73 +470,73 @@
                 <ion-col col-12 col-md-4>
                   <ion-item>
                     <ion-label>Meal at work</ion-label>
-                    <ion-checkbox></ion-checkbox>
+                    <ion-checkbox [(ngModel)]="mealAtWork" [ngModelOptions]="{standalone: true}"></ion-checkbox>
                   </ion-item>
                   <ion-item>
-                    <ion-input type="text" placeholder="Say something about this"></ion-input>
+                    <ion-input [disabled]="!mealAtWork" type="text" placeholder="Say something about this"></ion-input>
                   </ion-item>
               </ion-col>
                 <ion-col col-12 col-md-4>
                   <ion-item>
                     <ion-label>Perks &amp; Bonus</ion-label>
-                    <ion-checkbox></ion-checkbox>
+                    <ion-checkbox [(ngModel)]="perks" [ngModelOptions]="{standalone: true}"></ion-checkbox>
                   </ion-item>
                   <ion-item>
-                    <ion-input type="text" placeholder="Say something about this"></ion-input>
+                    <ion-input [disabled]="!perks" type="text" placeholder="Say something about this"></ion-input>
                   </ion-item>
               </ion-col>
                 <ion-col col-12 col-md-4>
                   <ion-item>
                     <ion-label>Food Coupon</ion-label>
-                    <ion-checkbox></ion-checkbox>
+                    <ion-checkbox [(ngModel)]="foodCoupon" [ngModelOptions]="{standalone: true}"></ion-checkbox>
                   </ion-item>
                   <ion-item>
-                    <ion-input type="text" placeholder="Say something about this"></ion-input>
+                    <ion-input [disabled]="!foodCoupon" type="text" placeholder="Say something about this"></ion-input>
                   </ion-item>
               </ion-col>
                 <ion-col col-12 col-md-4>
                   <ion-item>
                     <ion-label>Increment</ion-label>
-                    <ion-checkbox></ion-checkbox>
+                    <ion-checkbox [(ngModel)]="increment" [ngModelOptions]="{standalone: true}"></ion-checkbox>
                   </ion-item>
                   <ion-item>
-                    <ion-input type="text" placeholder="Say something about this"></ion-input>
+                    <ion-input [disabled]="!increment" type="text" placeholder="Say something about this"></ion-input>
                   </ion-item>
               </ion-col>
                 <ion-col col-12 col-md-4>
                   <ion-item>
                     <ion-label>Health Insurance</ion-label>
-                    <ion-checkbox></ion-checkbox>
+                    <ion-checkbox [(ngModel)]="healthInsurance" [ngModelOptions]="{standalone: true}"></ion-checkbox>
                   </ion-item>
                   <ion-item>
-                    <ion-input type="text" placeholder="Say something about this"></ion-input>
+                    <ion-input [disabled]="!healthInsurance" type="text" placeholder="Say something about this"></ion-input>
                   </ion-item>
               </ion-col>
                 <ion-col col-12 col-md-4>
                   <ion-item>
                     <ion-label>Social Security</ion-label>
-                    <ion-checkbox></ion-checkbox>
+                    <ion-checkbox [(ngModel)]="socialSecurity" [ngModelOptions]="{standalone: true}"></ion-checkbox>
                   </ion-item>
                   <ion-item>
-                    <ion-input type="text" placeholder="Say something about this"></ion-input>
+                    <ion-input [disabled]="!socialSecurity" type="text" placeholder="Say something about this"></ion-input>
                   </ion-item>
               </ion-col>
                 <ion-col col-12 col-md-4>
                   <ion-item>
                     <ion-label>Travel Allowance</ion-label>
-                    <ion-checkbox></ion-checkbox>
+                    <ion-checkbox [(ngModel)]="travelAllowance" [ngModelOptions]="{standalone: true}"></ion-checkbox>
                   </ion-item>
                   <ion-item>
-                    <ion-input type="text" placeholder="Say something about this"></ion-input>
+                    <ion-input [disabled]="!travelAllowance" type="text" placeholder="Say something about this"></ion-input>
                   </ion-item>
               </ion-col>
                 <ion-col col-12 col-md-4>
                   <ion-item>
                     <ion-label>Performance Benefits</ion-label>
-                    <ion-checkbox></ion-checkbox>
+                    <ion-checkbox [(ngModel)]="performanceBenefits" [ngModelOptions]="{standalone: true}"></ion-checkbox>
                   </ion-item>
                   <ion-item>
-                    <ion-input type="text" placeholder="Say something about this"></ion-input>
+                    <ion-input [disabled]="!performanceBenefits" type="text" placeholder="Say something about this"></ion-input>
                   </ion-item>
               </ion-col>
                 <ion-col col-12>
