@@ -1,6 +1,6 @@
 import { NgModule, ErrorHandler } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
+import { IonicApp, IonicModule, IonicErrorHandler, DeepLinkConfig } from 'ionic-angular';
 import { MyApp } from './app.component';
 
 import { FavouritePage } from '../pages/favourite/favourite';
@@ -38,6 +38,13 @@ const firebaseConfig = {
 
 };
 
+export const deepLinkConfig: DeepLinkConfig = {
+  links: [
+    { component: AdminCreateJobsPage, name: "create-jobs", segment: "admin/jobs/add" },
+    { component: AdminCreateJobsPage, name: "create-jobs", segment: "admin/jobs/edit/:id" }
+  ]
+};
+
 @NgModule({
   declarations: [
     MyApp,
@@ -54,11 +61,11 @@ const firebaseConfig = {
     BrowserModule,
     IonicModule.forRoot(MyApp, {
       mode: 'ios'
-    }),
+    },deepLinkConfig),
     AngularFireModule.initializeApp(firebaseConfig),
     AngularFireAuthModule,
     AngularFireDatabaseModule,
-    IonicStorageModule.forRoot()
+    IonicStorageModule.forRoot(),
   ],
   bootstrap: [IonicApp],
   entryComponents: [
