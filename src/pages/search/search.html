@@ -1,11 +1,23 @@
-<ion-header>
+<ion-header no-border>
   <ion-navbar>
     <ion-title>Search</ion-title>
   </ion-navbar>
 </ion-header>
 
-<ion-content padding>
-  <p>
+<ion-content >
+  <p padding>
     List of jobs
   </p>
+
+  <!-- <button ion-button small (click)="openModal()">
+      View Modal
+  </button> -->
+
+  <ion-card padding>
+    <h5>Pacific Coffee</h5>
+    <button ion-button small (click)="openJob()">
+        View Job
+    </button>
+  </ion-card>
+
 </ion-content>
