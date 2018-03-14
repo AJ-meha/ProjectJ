@@ -174,19 +174,37 @@ export class AdminCreateJobsPage {
 
   }
 
-  saveJob(form){
+  submitJob(form){
     if(!form.valid){
       this.validateAllFormFields(form);
       console.log(form.value);
-      console.log("valid=="+form.controls.contact_via.valid+"==="+form.controls.contact_via.dirty)
     }
     else{
       console.log(form.value);
-      console.log("form.validated");
       this.saveJobDetails(form)
 
       
     }
+  }
+
+  saveJob(form){
+    console.log("application_sent_mail=="+form.value.application_sent_mail+"==="+form.controls.application_sent_mail.valid+"==="+form.controls.application_sent_mail.dirty);
+    if(form.value.application_sent_mail!='' && !form.controls.application_sent_mail.valid){
+      return false;
+    }
+
+    console.log("mobile=="+form.value.mobile+"==="+form.controls.mobile.valid+"==="+form.controls.mobile.dirty);
+    if(form.value.mobile!='' && !form.controls.mobile.valid){
+      return false;
+    }
+
+    console.log("salary_amount=="+form.value.salary_amount+"==="+form.controls.salary_amount.valid+"==="+form.controls.salary_amount.dirty);
+    if(form.value.salary_amount!='' && !form.controls.salary_amount.valid){
+      return false;
+    }
+
+    console.log(form.value);
+    this.saveJobDetails(form)
   }
 
   saveJobDetails(form){
