@@ -11,6 +11,7 @@ import { AngularFireAuth } from 'angularfire2/auth';
 
 import { AuthProvider } from '../providers/auth/auth';
 import { AdminCreateJobsPage } from '../pages/admin-create-jobs/admin-create-jobs';
+import { AdminListJobsPage } from '../pages/admin-list-jobs/admin-list-jobs';
 
 @Component({
   templateUrl: 'app.html'
@@ -24,7 +25,8 @@ export class MyApp {
     this.pages=[
       {title:'Dashboard',component:AdminDashboardPage},
       {title:'Add Job',component:AdminCreateJobsPage},
-      {title:'View Jobs',component:TabsPage}
+      {title:'View Jobs',component:TabsPage},
+      {title:'List Jobs',component:AdminListJobsPage}
     ];
 
     const authObserver=afAuth.authState.subscribe(user=>{

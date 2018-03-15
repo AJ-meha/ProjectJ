@@ -18,8 +18,8 @@ import { EmailValidator } from '../../validators/email';
 
 @IonicPage(
   {
-    name: 'create',
-    segment:'admin/jobs/:action/:id'
+    name: "create-jobs",
+    segment: "admin/jobs/add"
   }
 )
 @Component({
@@ -51,7 +51,7 @@ export class AdminCreateJobsPage {
   constructor(public navCtrl: NavController, public navParams: NavParams,private af: AngularFireDatabase,public formBuilder:FormBuilder,public commonfunc:CommonFunctionsProvider) {
 
     // console.log("jobss---")
-    
+    console.log("id="+ this.navParams.get('id'))
     this.jobsForm=this.formBuilder.group({
       application_sent_mail:['',Validators.compose([Validators.required,EmailValidator.isValid])],
       workplace:['',Validators.compose([Validators.required])],
