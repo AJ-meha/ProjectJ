@@ -26,6 +26,7 @@ import { AuthProvider } from '../providers/auth/auth';
 import { IonicStorageModule } from '@ionic/storage';
 import { AdminCreateJobsPage } from '../pages/admin-create-jobs/admin-create-jobs';
 import { AdminListJobsPage } from '../pages/admin-list-jobs/admin-list-jobs';
+import { SingleJobPage } from '../pages/single-job/single-job';
 
 
 // AF2 Settings
@@ -58,7 +59,8 @@ export const deepLinkConfig: DeepLinkConfig = {
     AdminLoginPage,
     AdminDashboardPage,
     AdminCreateJobsPage,
-    AdminListJobsPage
+    AdminListJobsPage,
+    SingleJobPage
   ],
   imports: [
     BrowserModule,
@@ -81,7 +83,8 @@ export const deepLinkConfig: DeepLinkConfig = {
     AdminLoginPage,
     AdminDashboardPage,
     AdminCreateJobsPage,
-    AdminListJobsPage
+    AdminListJobsPage,
+    SingleJobPage
   ],
   providers: [
     StatusBar,
