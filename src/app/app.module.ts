@@ -29,6 +29,7 @@ import { AdminListJobsPage } from '../pages/admin-list-jobs/admin-list-jobs';
 import { SingleJobPage } from '../pages/single-job/single-job';
 import { JobBenefitsPage } from '../pages/job-benefits/job-benefits';
 import { JobDetailsPage } from '../pages/job-details/job-details';
+import { SingleJob_2Page } from '../pages/single-job-2/single-job-2';
 
 
 // AF2 Settings
@@ -64,7 +65,8 @@ export const deepLinkConfig: DeepLinkConfig = {
     AdminListJobsPage,
     SingleJobPage,
     JobBenefitsPage,
-    JobDetailsPage
+    JobDetailsPage,
+    SingleJob_2Page
   ],
   imports: [
     BrowserModule,
@@ -90,7 +92,8 @@ export const deepLinkConfig: DeepLinkConfig = {
     AdminListJobsPage,
     SingleJobPage,
     JobBenefitsPage,
-    JobDetailsPage
+    JobDetailsPage,
+    SingleJob_2Page
   ],
   providers: [
     StatusBar,

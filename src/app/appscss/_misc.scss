@@ -1,7 +1,8 @@
 
 .show-page{
 	.content{
-		background-color: $background;
+		// background-color: $background;
+		color: $dark-text;
 	}
 }
 
@@ -19,7 +20,14 @@
 .font-weight-medium{
 	font-weight: 500 !important;
 }
+.font-weight-heavy{
+	font-weight: 700 !important;
+}
 
 .dark-text{
-	color: $dark-text;
+	color: $dark-text !important;
+}
+
+.swiper-wrapper{
+	align-items: center;
 }
