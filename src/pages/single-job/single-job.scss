@@ -9,6 +9,11 @@ page-single-job {
 	}
 
 	.page-banner-section{
-		margin-top: 12px;
+		margin-top: 11px;
+		&.list{
+			.item:after{
+				// height: 0;
+			}
+		}
 	}
 }
