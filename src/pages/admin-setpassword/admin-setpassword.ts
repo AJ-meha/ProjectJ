@@ -51,7 +51,7 @@ export class AdminSetpasswordPage {
   }
 
   connectfirebase(){
-      this.authData.loginUser("viraj@ajency.in","qwertyuiop").then(authData=>{
+      this.authData.loginUser("jobsproject2018@gmail.com","Jobsproject2018!@#").then(authData=>{
       let x=0;
         this.usercheck.on('value', itemSnapshot => {
           try {

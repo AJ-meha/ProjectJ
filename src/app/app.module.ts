@@ -28,12 +28,12 @@ import { IonicStorageModule } from '@ionic/storage';
 
 // AF2 Settings
 const firebaseConfig = {
-  apiKey: "AIzaSyAYyvV52MZ6hOag6q411xOAoPQQ3rkVTV8",
-  authDomain: "project-j-2018.firebaseapp.com",
-  databaseURL: "https://project-j-2018.firebaseio.com",
-  projectId: "project-j-2018",
-  storageBucket: "project-j-2018.appspot.com",
-  messagingSenderId: "374829001586"
+  apiKey: "AIzaSyDMk-KBiuYXavz6yvoUk85oZ32JhN1IVVM",
+  authDomain: "project-j-main.firebaseapp.com",
+  databaseURL: "https://project-j-main.firebaseio.com",
+  projectId: "project-j-main",
+  storageBucket: "project-j-main.appspot.com",
+  messagingSenderId: "569334041059"
 
 };
 

@@ -35,7 +35,7 @@ export class AdminLoginPage {
   }
 
   connectfirebase(){
-      this.authData.loginUser("viraj@ajency.in","qwertyuiop").then(authData=>{
+      this.authData.loginUser("jobsproject2018@gmail.com","Jobsproject2018!@#").then(authData=>{
         this.authData.GetUsersTable();
         this.loading.dismiss();
         console.log(authData);
