@@ -8,6 +8,7 @@ import { GlobalVarsProvider } from '../../providers/global-vars/global-vars';
 import { TabsPage } from '../tabs/tabs';
 
 import { EmailValidator } from '../../validators/email';
+import { AdminListJobsPage } from '../admin-list-jobs/admin-list-jobs'
 
 /**
  * Generated class for the AdminCreateJobsPage page.
@@ -27,6 +28,7 @@ import { EmailValidator } from '../../validators/email';
   templateUrl: 'admin-create-jobs.html',
 })
 export class AdminCreateJobsPage {
+  inputsArray = {application_sent_mail:'',mobile:'',workplace:'',workplace_address:'',workplace_name:'',designation:'',industry:'',salary_amount:'',salary_unit:'',sub_industry:'',type:'',employment_type:'',additional_info:''};
   employeeBenefitsArray: Array<any> = [];
   jobsForm:FormGroup;
   contactVias: Array<any> = [];
@@ -48,6 +50,8 @@ export class AdminCreateJobsPage {
   public salaryUnitRef: firebase.database.Reference = firebase.database().ref('salary_unit');
   public industryRef: firebase.database.Reference = firebase.database().ref('industry');
   public employeeBenefitsRef: firebase.database.Reference = firebase.database().ref('employee_benefits');
+
+  public savedJobsRef: firebase.database.Reference = firebase.database().ref('jobs');
   
   constructor(public navCtrl: NavController, public navParams: NavParams,private af: AngularFireDatabase,public formBuilder:FormBuilder,public commonfunc:CommonFunctionsProvider) {
 
@@ -169,14 +173,16 @@ export class AdminCreateJobsPage {
         let ikey=itemSnap.key
         let ival=itemSnap.val()
         this.employeeBenefits.push({"key":ikey,"value":ival});
-        this.employeeBenefitsArray.push({"checkbox":false,"details":""});
+        this.employeeBenefitsArray[ikey]={"checkbox":false,"details":""};
         return false;
       });
-      console.log("=z1z=");
-      console.log(this.employeeBenefits);
-      console.log("=z2z=");
-      console.log(this.employeeBenefitsArray);
-      console.log("=z3z=");
+      console.log("employeeBenefits===");
+
+      //VIRAJ - Put inside to get saved data after everything loads
+      if(this.navParams.get('id')!=undefined)
+      {
+        this.getData();
+      }
     });
 
     // let cformContact=this.jobsForm.get('contactViaList') as FormArray
@@ -190,6 +196,73 @@ export class AdminCreateJobsPage {
     //   console.log(contactVia)
     // }
 
+  }
+
+  getData(){
+    console.log("===getData===")
+    let redirect=0;
+    this.savedJobsRef.on('value', itemSnapshot => {
+      itemSnapshot.forEach( itemSnap => {
+        let ival=itemSnap.val()
+        
+        if(itemSnap.key==this.navParams.get('id'))
+        {
+          redirect=1;
+          firebase.database().ref('job_details/'+ival.job_details_id).on('value', itemSnapshot1 => {
+            itemSnapshot1.forEach( itemSnap1 => {
+              console.log(itemSnap1.key);
+              console.log(itemSnap1.val());
+              if(itemSnap1.key!='industry')
+              {
+                this.inputsArray[itemSnap1.key]=itemSnap1.val();
+              }
+              if(itemSnap1.key=='industry')
+              {
+                this.inputsArray[itemSnap1.key]=itemSnap1.val();
+                this.populateSubIndustry(itemSnap1.val());
+              }
+              return false;
+            });
+          });
+          firebase.database().ref('job_employee_benefits/'+ival.job_emp_benefits_id).on('value', itemSnapshot2 => {
+            itemSnapshot2.forEach( itemSnap2 => {
+              if(itemSnap2.key!='employee_benefits')
+              {
+                this.inputsArray[itemSnap2.key]=itemSnap2.val();
+              }
+              if(itemSnap2.key=='employee_benefits')
+              {
+                let emp_beneArr=itemSnap2.val();
+                for (let emp_bene in emp_beneArr) {
+                  this.employeeBenefitsArray[emp_bene].checkbox=true;
+                  this.employeeBenefitsArray[emp_bene].details=emp_beneArr[emp_bene];
+                }
+              }
+              return false;
+            });
+          });
+          firebase.database().ref('jobs_contact_workplace/'+ival.jobs_contact_workplace_id).on('value', itemSnapshot3 => {
+            itemSnapshot3.forEach( itemSnap3 => {
+              if(itemSnap3.key!='contact_via')
+              {
+                this.inputsArray[itemSnap3.key]=itemSnap3.val();
+              }
+              return false;
+            });
+          });
+        }
+        return false;
+      });
+
+      if(redirect==0)
+      {
+        this.navCtrl.setRoot(AdminListJobsPage);
+      }
+    });
+  }
+
+  clearField(key){
+    this.employeeBenefitsArray[key].details='';
   }
 
   submitJob(form){
@@ -206,6 +279,7 @@ export class AdminCreateJobsPage {
   }
 
   saveJob(form){
+    console.log(this.inputsArray);
     console.log("application_sent_mail=="+form.value.application_sent_mail+"==="+form.controls.application_sent_mail.valid+"==="+form.controls.application_sent_mail.dirty);
     if(form.value.application_sent_mail!='' && !form.controls.application_sent_mail.valid){
       return false;
@@ -225,10 +299,6 @@ export class AdminCreateJobsPage {
     this.saveJobDetails(form)
   }
 
-  clearField(ind){
-    this.employeeBenefitsArray[ind].details='';
-  }
-
   saveJobDetails(form){
     let application_sent_mail=form.value.application_sent_mail
     let workplace=form.value.workplace
@@ -240,32 +310,69 @@ export class AdminCreateJobsPage {
     let salary_amount=form.value.salary_amount
     let salary_unit=form.value.salary_unit
     let employment_type=form.value.employment_type
+    let industry=form.value.industry
+    let sub_industry=form.value.sub_industry
     let contact_via=this.selectedContactViaArray
     let additional_info=form.value.additional_info
-    let jobs_contact_workplace_ref=this.af.list('jobs_contact_workplace').push({ application_sent_mail,workplace,workplace_name,workplace_address,mobile,contact_via})
-    let job_details_ref=this.af.list('job_details').push({ designation,type,employment_type,salary_amount,salary_unit})
-    let ind=0;
     let employee_benefits: Array<any> = [];
-    this.employeeBenefitsArray.forEach( data => {
-      let ikey=data.checkbox;
-      let ival=data.details;
-      let iname=this.employeeBenefits[ind].key;
-      if(ikey==true)
+    for (let emp_bene in this.employeeBenefitsArray) {
+      if(this.employeeBenefitsArray[emp_bene].checkbox==true)
       {
-        employee_benefits[iname]=ival;
+        employee_benefits[emp_bene]=this.employeeBenefitsArray[emp_bene].details;
       }
-      ind++;
-      return false;
-    });
-    let job_emp_benefits_ref=this.af.list('job_employee_benefits').push({employee_benefits,additional_info})
+    }
 
-    let jobs_contact_workplace_id=jobs_contact_workplace_ref.key
-    let job_details_id=job_details_ref.key
-    let job_emp_benefits_id=job_emp_benefits_ref.key
-    let job_status='draft'
-    this.af.list('jobs').push({jobs_contact_workplace_id,job_details_id,job_emp_benefits_id,job_status})
-    this.commonfunc.presentToast("Job added Successfully!!!");
-    form.reset();
+
+        
+    if(this.navParams.get('id')!=undefined)
+    {
+      firebase.database().ref('jobs/'+this.navParams.get('id')).on('value', itemSnapshot => {
+        let idArr=itemSnapshot.val();
+        for (let itemSnap in idArr) {
+          if(itemSnap=='job_details_id')
+          {
+            firebase.database().ref('job_details/'+idArr[itemSnap]+'/designation').set(designation);
+            firebase.database().ref('job_details/'+idArr[itemSnap]+'/employment_type').set(employment_type);
+            firebase.database().ref('job_details/'+idArr[itemSnap]+'/industry').set(industry);
+            firebase.database().ref('job_details/'+idArr[itemSnap]+'/sub_industry').set(sub_industry);
+            firebase.database().ref('job_details/'+idArr[itemSnap]+'/salary_amount').set(salary_amount);
+            firebase.database().ref('job_details/'+idArr[itemSnap]+'/salary_unit').set(salary_unit);
+            firebase.database().ref('job_details/'+idArr[itemSnap]+'/type').set(type);
+          }
+          if(itemSnap=='job_emp_benefits_id')
+          {
+            firebase.database().ref('job_employee_benefits/'+idArr[itemSnap]+'/additional_info').set(additional_info);
+            firebase.database().ref('job_employee_benefits/'+idArr[itemSnap]+'/employee_benefits').set(employee_benefits);
+          }
+          if(itemSnap=='jobs_contact_workplace_id')
+          {
+            firebase.database().ref('jobs_contact_workplace/'+idArr[itemSnap]+'/application_sent_mail').set(application_sent_mail);
+            //firebase.database().ref('jobs_contact_workplace/'+idArr[itemSnap]+'/contact_via').set(contact_via);
+            firebase.database().ref('jobs_contact_workplace/'+idArr[itemSnap]+'/mobile').set(mobile);
+            firebase.database().ref('jobs_contact_workplace/'+idArr[itemSnap]+'/workplace').set(workplace);
+            firebase.database().ref('jobs_contact_workplace/'+idArr[itemSnap]+'/workplace_address').set(workplace_address);
+            firebase.database().ref('jobs_contact_workplace/'+idArr[itemSnap]+'/workplace_name').set(workplace_name);
+          }
+        }
+        this.commonfunc.presentToast("Job Updated Successfully!!!");
+        form.reset();
+      });
+    }
+    else
+    {
+      let jobs_contact_workplace_ref=this.af.list('jobs_contact_workplace').push({ application_sent_mail,workplace,workplace_name,workplace_address,mobile,contact_via})
+      let job_details_ref=this.af.list('job_details').push({ designation,type,employment_type,salary_amount,salary_unit,industry,sub_industry})
+      let job_emp_benefits_ref=this.af.list('job_employee_benefits').push({employee_benefits,additional_info})
+
+      let jobs_contact_workplace_id=jobs_contact_workplace_ref.key
+      let job_details_id=job_details_ref.key
+      let job_emp_benefits_id=job_emp_benefits_ref.key
+      let job_status='draft'
+      this.af.list('jobs').push({jobs_contact_workplace_id,job_details_id,job_emp_benefits_id,job_status})
+      this.commonfunc.presentToast("Job added Successfully!!!");
+      form.reset();
+    }
+
   }
 
   // get contactViaList(): FormArray {
