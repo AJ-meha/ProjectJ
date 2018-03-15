@@ -26,6 +26,8 @@ import { AuthProvider } from '../providers/auth/auth';
 import { IonicStorageModule } from '@ionic/storage';
 import { AdminCreateJobsPage } from '../pages/admin-create-jobs/admin-create-jobs';
 import { SingleJobPage } from '../pages/single-job/single-job';
+import { JobBenefitsPage } from '../pages/job-benefits/job-benefits';
+import { JobDetailsPage } from '../pages/job-details/job-details';
 
 
 // AF2 Settings
@@ -50,7 +52,9 @@ const firebaseConfig = {
     AdminLoginPage,
     AdminDashboardPage,
     AdminCreateJobsPage,
-    SingleJobPage
+    SingleJobPage,
+    JobBenefitsPage,
+    JobDetailsPage
   ],
   imports: [
     BrowserModule,
@@ -73,7 +77,9 @@ const firebaseConfig = {
     AdminLoginPage,
     AdminDashboardPage,
     AdminCreateJobsPage,
-    SingleJobPage
+    SingleJobPage,
+    JobBenefitsPage,
+    JobDetailsPage
   ],
   providers: [
     StatusBar,
