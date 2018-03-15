@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { NavController, ModalController } from 'ionic-angular';
+import { SingleJobPage } from '../single-job/single-job';
 
 @Component({
   selector: 'page-search',
@@ -17,7 +18,7 @@ export class SearchPage {
 	}
 
 	openJob() {
-	    this.navCtrl.push('singleJob');
+	    this.navCtrl.push(SingleJobPage);
 	}
 
 }
