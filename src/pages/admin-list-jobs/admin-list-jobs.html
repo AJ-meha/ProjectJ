@@ -155,12 +155,24 @@
 
 			<div class="tabular" margin-top>
 				<div class="tabular__header flex hidden-xs">
-					<div class="tabular__cell cell-half">Job Role</div>
-					<div class="tabular__cell cell-one-fourth">Sub-industry</div>
-					<div class="tabular__cell cell-one-fourth">Status</div>
+					<div class="tabular__cell cell-half">
+						Job Role
+					</div>
+					<div class="tabular__cell cell-one-fourth">Sub-industry
+							<ion-icon name="funnel" class="bt-dropdown__btn button-drop" (click)="toggleDrop('status')"></ion-icon>
+					</div>
+					<div class="tabular__cell cell-one-fourth">Status
+							<ion-icon name="funnel" class="bt-dropdown__btn button-drop" (click)="toggleDrop('status')"></ion-icon>
+					</div>
+				</div>
+				{{jobs}}
+				<div class="tabular__row flex" *ngFor="let job of jobs">
+					<div class="tabular__cell cell-half">{{job.designation}}</div>
+					<div class="tabular__cell cell-one-fourth">{{job.sub_industry}}</div>
+					<div class="tabular__cell cell-one-fourth">{{jobStatuses[job.value['job_status']]}}</div>
 				</div>
 
-				<div class="tabular__row flex">
+				<!-- <div class="tabular__row flex">
 					<div class="tabular__cell cell-half">Vegetarian Cook</div>
 					<div class="tabular__cell cell-one-fourth">Cook</div>
 					<div class="tabular__cell cell-one-fourth">Draft</div>
@@ -179,7 +191,7 @@
 					<div class="tabular__cell cell-half">House Maid</div>
 					<div class="tabular__cell cell-one-fourth">Maid</div>
 					<div class="tabular__cell cell-one-fourth">Pending Review</div>
-				</div>
+				</div> -->
 			</div>
 
 

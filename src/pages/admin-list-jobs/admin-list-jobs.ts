@@ -22,8 +22,12 @@ export class AdminListJobsPage {
   @ViewChild(NavController) nav: NavController;
   pages: Array<{title: string, component: any}>;
   public jobRef: firebase.database.Reference = firebase.database().ref('jobs');
+  public jobStatusRef: firebase.database.Reference = firebase.database().ref('jobs_status');
+  public indSubIndRef: firebase.database.Reference = firebase.database().ref('industry_subindustry');
   public jobDetailsRef: firebase.database.Reference = firebase.database().ref();
-  public job: Array<any> = [];
+  public jobs: Array<any> = [];
+  public jobStatuses: Array<any> = [];
+  public indSubInd: Array<any> = [];
 
   constructor(public navCtrl: NavController, public navParams: NavParams) {
   	this.pages = [
@@ -62,6 +66,7 @@ export class AdminListJobsPage {
 
   ngOnInit() {
     let self=this
+    // this.jobRef.su
     this.jobRef.on('value', function (snapshot) {
 
       snapshot.forEach( itemSnap => {
@@ -72,14 +77,44 @@ export class AdminListJobsPage {
         console.log("job_details_id=="+job_details_id)
         // console.log(this.jobDetailsRef.child('job_details').child(job_details_id).val())
         // console.log(self.jobDetailsRef.child('job_details'))
-        self.jobDetailsRef.child('job_details/').child(job_details_id).once('value', function(mediaSnap) {
-            // console.log(mediaSnap.val());
+        self.jobDetailsRef.child('job_details/').child(job_details_id).once('value').then( function(mediaSnap) {
+            console.log(mediaSnap.val());
             designation=mediaSnap.val().designation
+            let sub_industry=mediaSnap.val().sub_industry
+            let industry=mediaSnap.val().industry
+            self.jobDetailsRef.child('industry_subindustry').child(industry).child(sub_industry).once('value').then( function(subindSnap) {
+              console.log(subindSnap.val())
+              self.jobs.push({'key':itemSnap.key,'value':itemSnap.val(),'designation':designation,'industry':industry,'sub_industry':subindSnap.val()})
+            });
+            
         });
-        self.job.push({'key':itemSnap.key,'value':itemSnap.val(),'designation':designation})
+        // self.jobs.push({'key':itemSnap.key,'value':itemSnap.val()})
         return false;
       });
-      console.log(self.job)
+      
     });
+
+    this.jobStatusRef.on('value', itemSnapshot => {
+      itemSnapshot.forEach( itemSnap => {
+        let ikey=itemSnap.key
+        let ival=itemSnap.val()
+        this.jobStatuses[ikey]=ival
+        return false;
+      });
+      console.log(this.jobStatuses)
+      console.log("status=="+this.jobStatuses['draft'])
+    });
+
+    this.indSubIndRef.on('value', itemSnapshot => {
+      itemSnapshot.forEach( itemSnap => {
+        let ikey=itemSnap.key
+        let ival=itemSnap.val()
+        this.indSubInd[ikey]=ival
+        return false;
+      });
+      console.log(this.jobStatuses)
+      console.log("status=="+this.indSubInd['airport']['airport_ground_staff'])
+    });
+    
   }
 }

@@ -26,6 +26,7 @@ import { AuthProvider } from '../providers/auth/auth';
 import { IonicStorageModule } from '@ionic/storage';
 import { AdminCreateJobsPage } from '../pages/admin-create-jobs/admin-create-jobs';
 import { AdminListJobsPage } from '../pages/admin-list-jobs/admin-list-jobs';
+import { JobsProvider } from '../providers/jobs/jobs';
 
 
 // AF2 Settings
@@ -64,7 +65,7 @@ export const deepLinkConfig: DeepLinkConfig = {
     BrowserModule,
     IonicModule.forRoot(MyApp, {
       mode: 'ios'
-    },deepLinkConfig),
+    }),
     AngularFireModule.initializeApp(firebaseConfig),
     AngularFireAuthModule,
     AngularFireDatabaseModule,
@@ -89,7 +90,8 @@ export const deepLinkConfig: DeepLinkConfig = {
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     CommonFunctionsProvider,
     GlobalVarsProvider,
-    AuthProvider
+    AuthProvider,
+    JobsProvider
   ]
 })
 export class AppModule {}
