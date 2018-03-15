@@ -1,0 +1,33 @@
+@font-face {
+    font-family: 'AvenirNext';
+    src: url('../assets/fonts/Avenir_Next_Regular/Avenir_Next_Regular.otf') format('otf');
+    src: url('../assets/fonts/Avenir_Next_Regular/Avenir_Next_Regular.eot') format('embedded-opentype'),
+             url('../assets/fonts/Avenir_Next_Regular/Avenir_Next_Regular.woff2') format('woff2'),
+             url('../assets/fonts/Avenir_Next_Regular/Avenir_Next_Regular.woff') format('woff'),
+             url('../assets/fonts/Avenir_Next_Regular/Avenir_Next_Regular.ttf') format('truetype'),
+             url('../assets/fonts/Avenir_Next_Regular/Avenir_Next_Regular.svg#Avenir_Next_Regular') format('svg');
+    font-weight: 400;
+   	font-style: regular;
+}
+@font-face {
+    font-family: 'AvenirNext';
+    src: url('../assets/fonts/Avenir_Next_Medium/Avenir_Next_Medium.otf') format('otf');
+    src: url('../assets/fonts/Avenir_Next_Medium/Avenir_Next_Medium.eot') format('embedded-opentype'),
+             url('../assets/fonts/Avenir_Next_Medium/Avenir_Next_Medium.woff2') format('woff2'),
+             url('../assets/fonts/Avenir_Next_Medium/Avenir_Next_Medium.woff') format('woff'),
+             url('../assets/fonts/Avenir_Next_Medium/Avenir_Next_Medium.ttf') format('truetype'),
+             url('../assets/fonts/Avenir_Next_Medium/Avenir_Next_Medium.svg#Avenir_Next_Medium') format('svg');
+    font-weight: 500;
+   	font-style: regular;
+}
+@font-face {
+    font-family: 'AvenirNext';
+    src: url('../assets/fonts/Avenir_Next_Bold/Avenir_Next_Bold.otf') format('otf');
+    src: url('../assets/fonts/Avenir_Next_Bold/Avenir_Next_Bold.eot') format('embedded-opentype'),
+             url('../assets/fonts/Avenir_Next_Bold/Avenir_Next_Bold.woff2') format('woff2'),
+             url('../assets/fonts/Avenir_Next_Bold/Avenir_Next_Bold.woff') format('woff'),
+             url('../assets/fonts/Avenir_Next_Bold/Avenir_Next_Bold.ttf') format('truetype'),
+             url('../assets/fonts/Avenir_Next_Bold/Avenir_Next_Bold.svg#Avenir_Next_Bold') format('svg');
+    font-weight: 600;
+   	font-style: regular;
+}

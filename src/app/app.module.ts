@@ -1,6 +1,6 @@
 import { NgModule, ErrorHandler } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
+import { IonicApp, IonicModule, IonicErrorHandler, DeepLinkConfig } from 'ionic-angular';
 import { MyApp } from './app.component';
 
 import { FavouritePage } from '../pages/favourite/favourite';
@@ -25,6 +25,8 @@ import { AuthProvider } from '../providers/auth/auth';
 
 import { IonicStorageModule } from '@ionic/storage';
 import { AdminCreateJobsPage } from '../pages/admin-create-jobs/admin-create-jobs';
+import { AdminListJobsPage } from '../pages/admin-list-jobs/admin-list-jobs';
+import { SingleJobPage } from '../pages/single-job/single-job';
 
 
 // AF2 Settings
@@ -38,6 +40,14 @@ const firebaseConfig = {
 
 };
 
+export const deepLinkConfig: DeepLinkConfig = {
+  links: [
+    { component: AdminCreateJobsPage, name: "create-jobs", segment: "admin/jobs/add" },
+    { component: AdminCreateJobsPage, name: "create-jobs", segment: "admin/jobs/edit/:id" },
+    { component: AdminListJobsPage, name: "list-jobs", segment: "admin/jobs" },
+  ]
+};
+
 @NgModule({
   declarations: [
     MyApp,
@@ -48,15 +58,19 @@ const firebaseConfig = {
     TabsPage,
     AdminLoginPage,
     AdminDashboardPage,
-    AdminCreateJobsPage
+    AdminCreateJobsPage,
+    AdminListJobsPage,
+    SingleJobPage
   ],
   imports: [
     BrowserModule,
-    IonicModule.forRoot(MyApp),
+    IonicModule.forRoot(MyApp, {
+      mode: 'ios'
+    },deepLinkConfig),
     AngularFireModule.initializeApp(firebaseConfig),
     AngularFireAuthModule,
     AngularFireDatabaseModule,
-    IonicStorageModule.forRoot()
+    IonicStorageModule.forRoot(),
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -68,7 +82,9 @@ const firebaseConfig = {
     TabsPage,
     AdminLoginPage,
     AdminDashboardPage,
-    AdminCreateJobsPage
+    AdminCreateJobsPage,
+    AdminListJobsPage,
+    SingleJobPage
   ],
   providers: [
     StatusBar,

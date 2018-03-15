@@ -38,7 +38,7 @@ $colors: (
   secondary:  #ff5722,
   danger:     #f53d3d,
   light:      #f4f4f4,
-  dark:       #222
+  dark:       #1c232f
 );
 
 
@@ -87,3 +87,7 @@ $colors: (
 
 @import "roboto";
 @import "noto-sans";
+
+$font-family-ios-base: "AvenirNext";
+$font-family-md-base: "AvenirNext";
+$font-family-wp-base: "AvenirNext";

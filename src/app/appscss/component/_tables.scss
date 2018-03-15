@@ -25,14 +25,14 @@ $grid-cell-w: 100%/30;
 		font-size: 13px;
 		&.no-bg {
 			background: transparent;
-			border-bottom: 1px solid $border-base;
+			border-bottom: 1px solid $lining;
 		}
 	}
 	&__row {
 		padding: 15px 10px;
 		border: 1px solid transparent;
 		&:not(:last-child) {
-			border-bottom: 1px solid $border-base;
+			border-bottom: 1px solid $lining;
 		}
 		&:hover {
 			background: lighten($bt-grey, 3%);
@@ -42,7 +42,7 @@ $grid-cell-w: 100%/30;
 		z-index: 5;
 		// box-shadow: 0 2px 15px rgba(0,0,0,0.05), 0 0 5px rgba(0,0,0,0.1);
 		flex-wrap: wrap;
-		border: 1px solid $border-base;
+		border: 1px solid $lining;
 		&:not(:first-child) {
 			border-top-color: transparent;
 		}

@@ -15,4 +15,10 @@
 // for the .md, .ios, or .wp mode classes. The mode class is
 // automatically applied to the <body> element in the app.
 
+.show-page{
+	.content{
+		background-color: #f6f7f7;
+	}
+}
+
 @import 'appscss/all'
