@@ -27,6 +27,7 @@ import { EmailValidator } from '../../validators/email';
   templateUrl: 'admin-create-jobs.html',
 })
 export class AdminCreateJobsPage {
+  employeeBenefitsArray: Array<any> = [];
   jobsForm:FormGroup;
   contactVias: Array<any> = [];
   workplaceTypes: Array<any> = [];
@@ -167,10 +168,15 @@ export class AdminCreateJobsPage {
       itemSnapshot.forEach( itemSnap => {
         let ikey=itemSnap.key
         let ival=itemSnap.val()
-        this.employeeBenefits.push({"key":ikey,"keydet":"","value":ival})
+        this.employeeBenefits.push({"key":ikey,"value":ival});
+        this.employeeBenefitsArray.push({"checkbox":false,"details":""});
         return false;
       });
+      console.log("=z1z=");
       console.log(this.employeeBenefits);
+      console.log("=z2z=");
+      console.log(this.employeeBenefitsArray);
+      console.log("=z3z=");
     });
 
     // let cformContact=this.jobsForm.get('contactViaList') as FormArray
@@ -219,6 +225,10 @@ export class AdminCreateJobsPage {
     this.saveJobDetails(form)
   }
 
+  clearField(ind){
+    this.employeeBenefitsArray[ind].details='';
+  }
+
   saveJobDetails(form){
     let application_sent_mail=form.value.application_sent_mail
     let workplace=form.value.workplace
@@ -234,8 +244,21 @@ export class AdminCreateJobsPage {
     let additional_info=form.value.additional_info
     let jobs_contact_workplace_ref=this.af.list('jobs_contact_workplace').push({ application_sent_mail,workplace,workplace_name,workplace_address,mobile,contact_via})
     let job_details_ref=this.af.list('job_details').push({ designation,type,employment_type,salary_amount,salary_unit})
-    let job_emp_benefits_ref=this.af.list('job_employee_benefits').push({ additional_info})
-    console.log("jobs_contact_workplace_id=="+jobs_contact_workplace_ref.key)
+    let ind=0;
+    let employee_benefits: Array<any> = [];
+    this.employeeBenefitsArray.forEach( data => {
+      let ikey=data.checkbox;
+      let ival=data.details;
+      let iname=this.employeeBenefits[ind].key;
+      if(ikey==true)
+      {
+        employee_benefits[iname]=ival;
+      }
+      ind++;
+      return false;
+    });
+    let job_emp_benefits_ref=this.af.list('job_employee_benefits').push({employee_benefits,additional_info})
+
     let jobs_contact_workplace_id=jobs_contact_workplace_ref.key
     let job_details_id=job_details_ref.key
     let job_emp_benefits_id=job_emp_benefits_ref.key

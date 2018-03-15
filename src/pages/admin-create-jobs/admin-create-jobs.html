@@ -467,13 +467,13 @@
           <ion-card-header padding-left class="card-wp-primary">Employee Benefits</ion-card-header>
           <ion-grid>
             <ion-row>
-                <ion-col *ngFor="let employeeBenefit of employeeBenefits;"  col-12 col-md-4>
+                <ion-col *ngFor="let employeeBenefit of employeeBenefits;let i=index"  col-12 col-md-4>
                   <ion-item>
                     <ion-label>{{employeeBenefit.value.text}}</ion-label>
-                    <ion-checkbox [(ngModel)]="employeeBenefit.key" [ngModelOptions]="{standalone: true}" (click)="employeeBenefit.keydet=''"></ion-checkbox>
+                    <ion-checkbox [(ngModel)]="employeeBenefitsArray[i].checkbox" [ngModelOptions]="{standalone: true}" (click)="clearField(i);"></ion-checkbox>
                   </ion-item>
                   <ion-item>
-                    <ion-input [disabled]="employeeBenefit.key!=true" [(ngModel)]=employeeBenefit.keydet [ngModelOptions]="{standalone: true}" type="text" placeholder="Say something about this"></ion-input>
+                    <ion-input [(ngModel)]="employeeBenefitsArray[i].details" [ngModelOptions]="{standalone: true}" [disabled]="employeeBenefitsArray[i].checkbox!=true" type="text" placeholder="Say something about this"></ion-input>
                   </ion-item>
                 </ion-col>
                 <!--ion-col col-12 col-md-4>
