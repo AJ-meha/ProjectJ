@@ -3,20 +3,22 @@
   height: 0;
 }
 
-.tabs-md{
+.tabs{
   .tab-button{
     min-height: 4rem;
   }
   .tabbar{
     background: #ffffff;
-    border-top: 1px solid #cecccb;
+    border-top: 1px solid $lining;
   }
 }
 
 .tabbar, .tabs-ios, .tabs-md , .tabs-wp{
   .tab-button-icon {
-      height:44px;
-      width:44px;
+      height: 49px;
+      width: 49px;
+      background-size: 118%;
+      background-position: center;
       margin-top: 0;
       &:before {
           display:none;
@@ -29,24 +31,32 @@
 }
 .tab-badge{
   top: 14%;
-  &.badge-md{
+  &.badge{
     border-radius: 50%;
+    width: 19px;
+    height: 19px;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 20px;
+    background-color: $notifications;
+    padding: 0;
   }
 }
 
 .tabs-ios {
   a[aria-selected=false]{
      .tab-button-icon[ng-reflect-name=search], .tab-button-icon[aria-label="search"] {
-      content: url(../assets/svgs/Search-Thin.svg);
+      background-image: url(../assets/svgs/Search-Thin.svg);
     }
     .tab-button-icon[ng-reflect-name=heart], .tab-button-icon[aria-label=heart] {
-      content: url(../assets/svgs/Saved-Jobs-Thin.svg);
+      // content: url(../assets/svgs/Saved-Jobs-Thin.svg);
+      background-image: url(../assets/svgs/Saved-Jobs-Thin.svg);
     }
     .tab-button-icon[ng-reflect-name=mail], .tab-button-icon[aria-label=mail] {
-      content: url(../assets/svgs/Messages-Thin.svg);
+      background-image: url(../assets/svgs/Messages-Thin.svg);
     }
     .tab-button-icon[ng-reflect-name=person], .tab-button-icon[aria-label=person] {
-      content: url(../assets/svgs/Account-Thin.svg);
+      background-image: url(../assets/svgs/Account-Thin.svg);
     }
   }
  a[aria-selected=true] {
@@ -55,16 +65,16 @@
       //color: #f00; //whatever colour you want to use for the text
     //}
     .tab-button-icon[ng-reflect-name=search], .tab-button-icon[aria-label=search] {
-      content: url(../assets/svgs/Search-Bold.svg);
+      background-image: url(../assets/svgs/Search-Bold.svg);
     }
     .tab-button-icon[ng-reflect-name=heart], .tab-button-icon[aria-label=heart] {
-      content: url(../assets/svgs/Saved-Jobs-Bold.svg);
+      background-image: url(../assets/svgs/Saved-Jobs-Bold.svg);
     }
     .tab-button-icon[ng-reflect-name=mail], .tab-button-icon[aria-label=mail] {
-      content: url(../assets/svgs/Messages-Bold.svg);
+      background-image: url(../assets/svgs/Messages-Bold.svg);
     }
     .tab-button-icon[ng-reflect-name=person], .tab-button-icon[aria-label=person] {
-      content: url(../assets/svgs/Account-Bold.svg);
+      background-image: url(../assets/svgs/Account-Bold.svg);
     }
   }
 }
@@ -72,16 +82,16 @@
 .tabs-md {
   a[aria-selected=false]{
      .tab-button-icon[ng-reflect-name=search], .tab-button-icon[aria-label="search"] {
-      content: url(../assets/svgs/Search-Thin.svg);
+      background-image: url(../assets/svgs/Search-Thin.svg);
     }
     .tab-button-icon[ng-reflect-name=heart], .tab-button-icon[aria-label=heart] {
-      content: url(../assets/svgs/Saved-Jobs-Thin.svg);
+      background-image: url(../assets/svgs/Saved-Jobs-Thin.svg);
     }
     .tab-button-icon[ng-reflect-name=mail], .tab-button-icon[aria-label=mail] {
-      content: url(../assets/svgs/Messages-Thin.svg);
+      background-image: url(../assets/svgs/Messages-Thin.svg);
     }
     .tab-button-icon[ng-reflect-name=person], .tab-button-icon[aria-label=person] {
-      content: url(../assets/svgs/Account-Thin.svg);
+      background-image: url(../assets/svgs/Account-Thin.svg);
     }
   }
 
@@ -91,16 +101,16 @@
       //color: #f00; //whatever colour you want to use for the text
     //}
     .tab-button-icon[ng-reflect-name=search], .tab-button-icon[aria-label=search] {
-      content: url(../assets/svgs/Search-Bold.svg);
+      background-image: url(../assets/svgs/Search-Bold.svg);
     }
     .tab-button-icon[ng-reflect-name=heart], .tab-button-icon[aria-label=heart] {
-      content: url(../assets/svgs/Saved-Jobs-Bold.svg);
+      background-image: url(../assets/svgs/Saved-Jobs-Bold.svg);
     }
     .tab-button-icon[ng-reflect-name=mail], .tab-button-icon[aria-label=mail] {
-      content: url(../assets/svgs/Messages-Bold.svg);
+      background-image: url(../assets/svgs/Messages-Bold.svg);
     }
     .tab-button-icon[ng-reflect-name=person], .tab-button-icon[aria-label=person] {
-      content: url(../assets/svgs/Account-Bold.svg);
+      background-image: url(../assets/svgs/Account-Bold.svg);
     }
   }
 }
@@ -108,16 +118,16 @@
 .tabs-wp {
   a[aria-selected=false]{
      .tab-button-icon[ng-reflect-name=search], .tab-button-icon[aria-label="search"] {
-      content: url(../assets/svgs/Search-Thin.svg);
+      background-image: url(../assets/svgs/Search-Thin.svg);
     }
     .tab-button-icon[ng-reflect-name=heart], .tab-button-icon[aria-label=heart] {
-      content: url(../assets/svgs/Saved-Jobs-Thin.svg);
+      background-image: url(../assets/svgs/Saved-Jobs-Thin.svg);
     }
     .tab-button-icon[ng-reflect-name=mail], .tab-button-icon[aria-label=mail] {
-      content: url(../assets/svgs/Messages-Thin.svg);
+      background-image: url(../assets/svgs/Messages-Thin.svg);
     }
     .tab-button-icon[ng-reflect-name=person], .tab-button-icon[aria-label=person] {
-      content: url(../assets/svgs/Account-Thin.svg);
+      background-image: url(../assets/svgs/Account-Thin.svg);
     }
   }
 
@@ -127,16 +137,16 @@
       //color: #f00; //whatever colour you want to use for the text
     //}
     .tab-button-icon[ng-reflect-name=search], .tab-button-icon[aria-label=search] {
-      content: url(../assets/svgs/Search-Bold.svg);
+      background-image: url(../assets/svgs/Search-Bold.svg);
     }
     .tab-button-icon[ng-reflect-name=heart], .tab-button-icon[aria-label=heart] {
-      content: url(../assets/svgs/Saved-Jobs-Bold.svg);
+      background-image: url(../assets/svgs/Saved-Jobs-Bold.svg);
     }
     .tab-button-icon[ng-reflect-name=mail], .tab-button-icon[aria-label=mail] {
-      content: url(../assets/svgs/Messages-Bold.svg);
+      background-image: url(../assets/svgs/Messages-Bold.svg);
     }
     .tab-button-icon[ng-reflect-name=person], .tab-button-icon[aria-label=person] {
-      content: url(../assets/svgs/Account-Bold.svg);
+      background-image: url(../assets/svgs/Account-Bold.svg);
     }
   }
 }
