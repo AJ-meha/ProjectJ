@@ -262,7 +262,7 @@ export class AdminCreateJobsPage {
                 }
                 else
                 {
-                  if(itemSnap4.val()=='')
+                  if(timeArrayFetch[tkey]=='')
                   {
                     this.timeArray[itemSnap4.key][tkey]=itemSnap4.key;
                     this.inputsArray['night_shift']=false;
