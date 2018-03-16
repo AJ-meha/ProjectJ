@@ -16,7 +16,7 @@ import { CustomerLoginPage } from '../pages/customer-login/customer-login';
 import { CustomerSingleJobViewPage } from '../pages/customer-single-job-view/customer-single-job-view';
 import { CustomerAuthProvider } from '../providers/customer-auth/customer-auth';
 import { CustomerJobListingPage } from '../pages/customer-job-listing/customer-job-listing';
-import { CustomerJobListingPage } from '../pages/customer-job-listing/customer-job-listing';
+import { CustomerDashboardPage } from '../pages/customer-dashboard/customer-dashboard';
 
 @Component({
   templateUrl: 'app.html'
@@ -73,7 +73,7 @@ export class MyApp {
           else
           {
             if(this.is_admin ==false){
-              this.rootPage=CustomerJobListingPage;
+              this.rootPage=CustomerDashboardPage;
               authObserver.unsubscribe();
             }
             

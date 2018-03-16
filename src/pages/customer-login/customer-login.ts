@@ -4,6 +4,7 @@ import firebase from 'firebase';
 import { CustomerAuthProvider } from '../../providers/customer-auth/customer-auth';
 import { CustomerSingleJobViewPage } from '../customer-single-job-view/customer-single-job-view';
 import { CustomerJobListingPage } from '../customer-job-listing/customer-job-listing';
+import { CustomerDashboardPage } from '../customer-dashboard/customer-dashboard';
 /**
  * Generated class for the CustomerLoginPage page.
  *
@@ -58,7 +59,7 @@ export class CustomerLoginPage {
                   // console.log(result.user);
                   self.authData.loginWithPhone(firebase.auth().currentUser.phoneNumber);
                   prompt.dismiss().then(() => {
-                   self.navCtrl.setRoot(CustomerJobListingPage);
+                   self.navCtrl.setRoot(CustomerDashboardPage);
                   });
                   // ...
                 }).catch(function (error) {
