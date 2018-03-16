@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, ViewController } from 'ionic-angular';
+import { JobBenefitsPage } from '../job-benefits/job-benefits';
+import { JobDetailsPage } from '../job-details/job-details';
 
 /**
  * Generated class for the SingleJobPage page.
@@ -27,11 +29,11 @@ export class SingleJobPage {
   }
 
   openDetails() {
-      this.navCtrl.push('jobDetails');
+      this.navCtrl.push(JobDetailsPage);
   }
 
   openBenefits() {
-      this.navCtrl.push('jobBenefits');
+      this.navCtrl.push(JobBenefitsPage);
   }
 
   goBack() {
