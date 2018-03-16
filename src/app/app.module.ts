@@ -34,6 +34,7 @@ import { CustomerAuthProvider } from '../providers/customer-auth/customer-auth';
 import { CustomerLoginPage } from '../pages/customer-login/customer-login';
 import { CustomerSingleJobViewPage } from '../pages/customer-single-job-view/customer-single-job-view';
 import { CustomerJobListingPage } from '../pages/customer-job-listing/customer-job-listing';
+import { CustomerDashboardPage } from '../pages/customer-dashboard/customer-dashboard';
 
 
 // AF2 Settings
@@ -72,7 +73,8 @@ export const deepLinkConfig: DeepLinkConfig = {
     JobDetailsPage,
     CustomerLoginPage,
     CustomerSingleJobViewPage,
-    CustomerJobListingPage
+    CustomerJobListingPage,
+    CustomerDashboardPage
   ],
   imports: [
     BrowserModule,
@@ -101,7 +103,8 @@ export const deepLinkConfig: DeepLinkConfig = {
     JobDetailsPage,
     CustomerLoginPage,
     CustomerSingleJobViewPage,
-    CustomerJobListingPage
+    CustomerJobListingPage,
+    CustomerDashboardPage
   ],
   providers: [
     StatusBar,
