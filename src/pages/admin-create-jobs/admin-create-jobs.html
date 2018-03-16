@@ -32,7 +32,7 @@
       <form [formGroup]="jobsForm" (submit)="saveJob(this.jobsForm,this.jobsSubForm)" novalidate>
         <div [formGroup]="jobsSubForm" >
         <ion-card>
-          <ion-card-header padding-left class="card-wp-primary">Contact &amp; Workplace Info</ion-card-header>
+          <ion-card-header padding-left class="card-wp-admin">Contact &amp; Workplace Info</ion-card-header>
             <ion-grid>
               <ion-row>
                 <ion-col col-12 col-md-6>
@@ -96,26 +96,47 @@
                   <ion-item class="error-message" *ngIf="!jobsForm.controls.workplace_address.valid  && (jobsForm.controls.workplace_address.dirty  || jobsForm.controls.workplace_address.touched)">
                     <p>Please enter a valid address.</p>
                   </ion-item>
-                </ion-col>
-                <ion-col col-12 col-md-3>
-                  <ion-item>
-                    <ion-label stacked>Latitude</ion-label>
-                    <ion-input  #workplace_latitude formControlName="workplace_latitude" type="text" placeholder="Enter Latitude" [class.invalid]="!jobsForm.controls.workplace_latitude.valid && (jobsForm.controls.workplace_latitude.dirty  || jobsForm.controls.workplace_latitude.touched)"></ion-input>
-                  </ion-item>
-                  <ion-item class="error-message" *ngIf="!jobsForm.controls.workplace_latitude.valid  && (jobsForm.controls.workplace_latitude.dirty  || jobsForm.controls.workplace_latitude.touched)">
-                    <p>Please enter a valid latitude.</p>
-                  </ion-item>
-                </ion-col>
-                <ion-col col-12 col-md-3>
-                  <ion-item>
-                    <ion-label stacked>Longitude</ion-label>
-                    <ion-input  #workplace_longitude value="fdsfds" formControlName="workplace_longitude" type="text" placeholder="Enter Longitude" [class.invalid]="!jobsForm.controls.workplace_longitude.valid && (jobsForm.controls.workplace_longitude.dirty  || jobsForm.controls.workplace_longitude.touched)"></ion-input>
-                  </ion-item>
-                  <ion-item class="error-message" *ngIf="!jobsForm.controls.workplace_longitude.valid  && (jobsForm.controls.workplace_longitude.dirty  || jobsForm.controls.workplace_longitude.touched)">
-                    <p>Please enter a valid longitude.</p>
-                  </ion-item>
-                </ion-col>
 
+                  <ion-row>
+                    <ion-col col-12 col-md-6>
+                      <ion-item>
+                        <ion-label stacked>Latitude</ion-label>
+                        <ion-input  #workplace_latitude formControlName="workplace_latitude" type="text" placeholder="Enter Latitude" [class.invalid]="!jobsForm.controls.workplace_latitude.valid && (jobsForm.controls.workplace_latitude.dirty  || jobsForm.controls.workplace_latitude.touched)"></ion-input>
+                      </ion-item>
+                      <ion-item class="error-message" *ngIf="!jobsForm.controls.workplace_latitude.valid  && (jobsForm.controls.workplace_latitude.dirty  || jobsForm.controls.workplace_latitude.touched)">
+                        <p>Please enter a valid latitude.</p>
+                      </ion-item>
+                    </ion-col>
+                    <ion-col col-12 col-md-6>
+                      <ion-item>
+                        <ion-label stacked>Longitude</ion-label>
+                        <ion-input  #workplace_longitude value="fdsfds" formControlName="workplace_longitude" type="text" placeholder="Enter Longitude" [class.invalid]="!jobsForm.controls.workplace_longitude.valid && (jobsForm.controls.workplace_longitude.dirty  || jobsForm.controls.workplace_longitude.touched)"></ion-input>
+                      </ion-item>
+                      <ion-item class="error-message" *ngIf="!jobsForm.controls.workplace_longitude.valid  && (jobsForm.controls.workplace_longitude.dirty  || jobsForm.controls.workplace_longitude.touched)">
+                        <p>Please enter a valid longitude.</p>
+                      </ion-item>
+                    </ion-col>
+                  </ion-row>
+                </ion-col>
+                <ion-col col-12 col-md-6>
+                  <ion-item>
+                    <img src="assets/imgs/map-img.png">
+                  </ion-item>
+                </ion-col>
+              </ion-row>
+
+              <ion-row>
+                <ion-col col-8 col-md-3>
+                  <ion-item>
+                    <ion-label stacked>Upload Logo</ion-label>
+                    <ion-input  value="" type="file" placeholder="Select a file to upload" ></ion-input>
+                  </ion-item>
+                </ion-col>
+                <ion-col col-4 col-md-3 margin-top padding-top>
+                    <button margin-top ion-button small>
+                      Upload
+                    </button>
+                </ion-col>
               </ion-row>
 
 
@@ -129,10 +150,10 @@
                   <!-- <ion-item-group  > -->
                   <!-- <input type="checkbox" formControlName="isChosen" /> {{hobby.controls.name.value}} -->
                     <ion-item  >
-                        {{contactVia.value}}
                       <label class = "checkbox">
                           <input #contact_via formControlName="contact_via" type="checkbox" value="{{contactVia.key}}" [checked]="ind === 0"  (change)="updateContactViaList(contactVia.key, $event.target.checked, ind)"/>
                       </label>
+                        {{contactVia.value}}
 
                       <!-- <ion-checkbox value="{{contactVia.key}}"></ion-checkbox> -->
                     </ion-item>
@@ -189,7 +210,7 @@
         </ion-card>
 
         <ion-card margin-top>
-          <ion-card-header padding-left class="card-wp-primary">Job Details</ion-card-header>
+          <ion-card-header padding-left class="card-wp-admin">Job Details</ion-card-header>
           <ion-grid>
             <ion-row>
                 <ion-col col-12 col-md-6>
@@ -471,7 +492,7 @@
         </ion-card>
 
         <ion-card margin-top>
-          <ion-card-header padding-left class="card-wp-primary">Employee Benefits</ion-card-header>
+          <ion-card-header padding-left class="card-wp-admin">Employee Benefits</ion-card-header>
           <ion-grid>
             <ion-row>
                 <ion-col col-12 col-md-4>
@@ -559,7 +580,7 @@
         </ion-card>
 
         <ion-card margin-top>
-          <ion-card-header padding-left class="card-wp-primary">Questions</ion-card-header>
+          <ion-card-header padding-left class="card-wp-admin">Questions</ion-card-header>
           <ion-grid>
             <ion-row radio-group>
               <ion-col col-12 col-md-4>
