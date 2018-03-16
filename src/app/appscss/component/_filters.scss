@@ -12,15 +12,16 @@
 		transition: all 0.3s ease;
 		.button {
 			text-transform: none;
-			font-size: 13px;
-		}
-		.button-outline-md-dark {
-			border-color: $lining;
-			border-radius: 3px;
-			padding: 0 8px;
+			font-size: 14px;
 			.icon-small {
 				margin-left: 8px;
 			}
+		}
+		.button-outline {
+			border-color: $lining;
+			border-radius: 3px;
+			padding: 0 8px;
+			background: #fff;
 		}
 
 		&.collapsed{
@@ -33,11 +34,22 @@
 
 
 	&__search {
-		border: 1px solid $lining;
+		// border: 1px solid $lining;
 		border-radius: 3px;
 		margin: 0;
 		margin-right: 4px;
 		white-space: nowrap;
+
+		.searchbar{
+			background-color: transparent;
+			padding: 0;
+			border: 0;
+			min-height: 0;
+			.searchbar-input{
+				border: 1px solid $lining;
+			}
+		}
+
 		.btn-search {
 			padding: 8px;
 			background: lighten($lining, 3%);
@@ -76,7 +88,7 @@
 	}
 	@media (min-width: 768px) {
 		&__wrap {
-			margin-top: 15px;
+			// margin-top: 15px;
 			max-height: 60px;
 		}
 		&__multi{
@@ -170,7 +182,9 @@
 			// width: 86%;
 			border: 0;
 			border-radius: 0;
-			border-bottom: 1px solid $lining;
+			// border-bottom: 1px solid $lining;
+			margin: 0;
+			width: 100%;
 			.btn-search {
 				background: transparent;
 				height: 50px;
@@ -192,8 +206,8 @@
 			width: 100%;
 			position: relative;
 			&:before {
-				content: 'Filter by';
-				padding: 10px 0 4px;
+				content: 'Filters';
+				padding: 10px 0 12px;
 				display: block;
 				font-weight: bold;
 				text-transform: uppercase;
