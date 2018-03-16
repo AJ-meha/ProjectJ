@@ -29,6 +29,8 @@ import { AdminListJobsPage } from '../pages/admin-list-jobs/admin-list-jobs';
 import { SingleJobPage } from '../pages/single-job/single-job';
 import { JobBenefitsPage } from '../pages/job-benefits/job-benefits';
 import { JobDetailsPage } from '../pages/job-details/job-details';
+import { JobsProvider } from '../providers/jobs/jobs';
+
 
 
 // AF2 Settings
@@ -98,7 +100,8 @@ export const deepLinkConfig: DeepLinkConfig = {
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     CommonFunctionsProvider,
     GlobalVarsProvider,
-    AuthProvider
+    AuthProvider,
+    JobsProvider
   ]
 })
 export class AppModule {}
