@@ -30,7 +30,10 @@ import { SingleJobPage } from '../pages/single-job/single-job';
 import { JobBenefitsPage } from '../pages/job-benefits/job-benefits';
 import { JobDetailsPage } from '../pages/job-details/job-details';
 import { JobsProvider } from '../providers/jobs/jobs';
-
+import { CustomerAuthProvider } from '../providers/customer-auth/customer-auth';
+import { CustomerLoginPage } from '../pages/customer-login/customer-login';
+import { CustomerSingleJobViewPage } from '../pages/customer-single-job-view/customer-single-job-view';
+import { CustomerJobListingPage } from '../pages/customer-job-listing/customer-job-listing';
 
 
 // AF2 Settings
@@ -66,7 +69,10 @@ export const deepLinkConfig: DeepLinkConfig = {
     AdminListJobsPage,
     SingleJobPage,
     JobBenefitsPage,
-    JobDetailsPage
+    JobDetailsPage,
+    CustomerLoginPage,
+    CustomerSingleJobViewPage,
+    CustomerJobListingPage
   ],
   imports: [
     BrowserModule,
@@ -92,7 +98,10 @@ export const deepLinkConfig: DeepLinkConfig = {
     AdminListJobsPage,
     SingleJobPage,
     JobBenefitsPage,
-    JobDetailsPage
+    JobDetailsPage,
+    CustomerLoginPage,
+    CustomerSingleJobViewPage,
+    CustomerJobListingPage
   ],
   providers: [
     StatusBar,
@@ -101,7 +110,8 @@ export const deepLinkConfig: DeepLinkConfig = {
     CommonFunctionsProvider,
     GlobalVarsProvider,
     AuthProvider,
-    JobsProvider
+    JobsProvider,
+    CustomerAuthProvider
   ]
 })
 export class AppModule {}

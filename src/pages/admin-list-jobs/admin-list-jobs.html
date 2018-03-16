@@ -99,11 +99,11 @@
 						</div>
 					</div>
 					{{jobs}}
-					<div class="tabular__row flex" *ngFor="let job of jobs">
-						<div class="tabular__cell cell-half">{{job.designation}}</div>
-						<div class="tabular__cell cell-one-fourth">{{job.sub_industry}}</div>
-						<div class="tabular__cell cell-one-fourth">{{jobStatuses[job.value['job_status']]}}</div>
-					</div>
+				<div class="tabular__row flex" *ngFor="let job of jobs">
+					<div class="tabular__cell cell-half"><a href="#/admin/jobs/edit/{{job.key}}">{{job.designation}}</a></div>
+					<div class="tabular__cell cell-one-fourth">{{job.sub_industry}}</div>
+					<div class="tabular__cell cell-one-fourth">{{jobStatuses[job.value['job_status']]}}</div>
+				</div>
 				</div>
 			</ion-card>
 
