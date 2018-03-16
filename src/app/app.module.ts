@@ -65,7 +65,7 @@ export const deepLinkConfig: DeepLinkConfig = {
     BrowserModule,
     IonicModule.forRoot(MyApp, {
       mode: 'ios'
-    }),
+    },deepLinkConfig),
     AngularFireModule.initializeApp(firebaseConfig),
     AngularFireAuthModule,
     AngularFireDatabaseModule,
