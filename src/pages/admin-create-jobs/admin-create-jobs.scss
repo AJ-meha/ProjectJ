@@ -1,4 +1,11 @@
 page-admin-create-jobs {
+
+	&.show-page{
+		.content{
+			background-color: #fcfcfc;
+		}
+	}
+
 	.invalid {
 		border-bottom: 1px solid #FF6153;
 	}

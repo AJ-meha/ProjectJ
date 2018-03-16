@@ -38,7 +38,11 @@ $colors: (
   secondary:  #ff5722,
   danger:     #f53d3d,
   light:      #f4f4f4,
-  dark:       #1c232f
+  dark:       #1c232f,
+  admin: (
+  	base: #ffffff,
+  	contrast: #1c232f
+  	)
 );
 
 
