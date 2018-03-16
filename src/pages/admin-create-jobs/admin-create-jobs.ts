@@ -29,6 +29,8 @@ import { AdminListJobsPage } from '../admin-list-jobs/admin-list-jobs'
 })
 export class AdminCreateJobsPage {
   inputsArray = {application_sent_mail:'',mobile:'',workplace:'',workplace_address:'',workplace_name:'',designation:'',industry:'',salary_amount:'',salary_unit:'',sub_industry:'',type:'',employment_type:'',additional_info:''};
+  timeArray = {mon:{stime:"",etime:"",holiday:false},tue:{stime:"",etime:"",holiday:false},wed:{stime:"",etime:"",holiday:false},thu:{stime:"",etime:"",holiday:false},fri:{stime:"",etime:"",holiday:false},sat:{stime:"",etime:"",holiday:false},sun:{stime:"",etime:"",holiday:false}};
+  daysArray = GlobalVarsProvider.daysArray;
   employeeBenefitsArray: Array<any> = [];
   jobsForm:FormGroup;
   contactVias: Array<any> = [];
@@ -265,32 +267,40 @@ export class AdminCreateJobsPage {
     this.employeeBenefitsArray[key].details='';
   }
 
+  clearTime(key){
+    this.timeArray[key].stime='';
+    this.timeArray[key].etime='';
+  }
+
+  checkDates(){
+    for (let date in this.timeArray){
+      if(this.timeArray[date].holiday==false && (this.timeArray[date].stime=='' || this.timeArray[date].etime=='')){
+        return false;
+      }
+    }
+    return true;
+  }
+
   submitJob(form){
-    if(!form.valid){
+    if(!form.valid || this.checkDates()==false){
       this.validateAllFormFields(form);
       console.log(form.value);
     }
     else{
       console.log(form.value);
       this.saveJobDetails(form)
-
-      
     }
   }
 
   saveJob(form){
-    console.log(this.inputsArray);
-    console.log("application_sent_mail=="+form.value.application_sent_mail+"==="+form.controls.application_sent_mail.valid+"==="+form.controls.application_sent_mail.dirty);
     if(form.value.application_sent_mail!='' && !form.controls.application_sent_mail.valid){
       return false;
     }
 
-    console.log("mobile=="+form.value.mobile+"==="+form.controls.mobile.valid+"==="+form.controls.mobile.dirty);
     if(form.value.mobile!='' && !form.controls.mobile.valid){
       return false;
     }
 
-    console.log("salary_amount=="+form.value.salary_amount+"==="+form.controls.salary_amount.valid+"==="+form.controls.salary_amount.dirty);
     if(form.value.salary_amount!='' && !form.controls.salary_amount.valid){
       return false;
     }
