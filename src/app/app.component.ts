@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { Platform, Nav } from 'ionic-angular';
+import { Platform, Nav, NavController, App } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 
@@ -12,6 +12,11 @@ import { AngularFireAuth } from 'angularfire2/auth';
 import { AuthProvider } from '../providers/auth/auth';
 import { AdminCreateJobsPage } from '../pages/admin-create-jobs/admin-create-jobs';
 import { AdminListJobsPage } from '../pages/admin-list-jobs/admin-list-jobs';
+import { CustomerLoginPage } from '../pages/customer-login/customer-login';
+import { CustomerSingleJobViewPage } from '../pages/customer-single-job-view/customer-single-job-view';
+import { CustomerAuthProvider } from '../providers/customer-auth/customer-auth';
+import { CustomerJobListingPage } from '../pages/customer-job-listing/customer-job-listing';
+import { CustomerJobListingPage } from '../pages/customer-job-listing/customer-job-listing';
 
 @Component({
   templateUrl: 'app.html'
@@ -20,33 +25,67 @@ export class MyApp {
   @ViewChild(Nav) nav: Nav;
   rootPage:any;
   pages: Array<{title:string,component:any}>;
-
-  constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen, afAuth: AngularFireAuth,public authData:AuthProvider) {
+  public is_admin:boolean=false
+  constructor(public app:App,platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen, afAuth: AngularFireAuth,public authData:AuthProvider,public customerAuthData:CustomerAuthProvider) {
     this.pages=[
       {title:'Dashboard',component:AdminDashboardPage},
       {title:'Add Job',component:AdminCreateJobsPage},
       {title:'View Jobs',component:TabsPage},
       {title:'List Jobs',component:AdminListJobsPage}
     ];
+    console.log("loc="+window.location.href)
+    if(window.location.href.indexOf('#/admin') != -1){
+      this.is_admin=true
+    }
+      
+    
+    if(this.is_admin == true){
+      this.rootPage=AdminLoginPage;
+    }
+    else{
+      this.rootPage=CustomerLoginPage;
+    }
+    
+    this.authData.getUserEmail().then(userename=>{
+      if(this.is_admin ==true && userename!=null)
+      {
+        this.rootPage=AdminDashboardPage;
+       
+      }
+      else
+      {
+        if(this.is_admin ==true){
+          this.rootPage=AdminLoginPage;
+        }
+          
+       
+      }
+    });
 
     const authObserver=afAuth.authState.subscribe(user=>{
       if(user){
-        this.authData.getUserEmail().then(userename=>{
-          if(userename!=null)
+        this.customerAuthData.getUserPhone().then(userphone=>{
+          if(this.is_admin ==false && userphone!=null)
           {
-            this.rootPage=AdminDashboardPage;
+            this.rootPage=CustomerLoginPage;
             authObserver.unsubscribe();
           }
           else
           {
-            this.rootPage=AdminLoginPage;
-            authObserver.unsubscribe();
+            if(this.is_admin ==false){
+              this.rootPage=CustomerJobListingPage;
+              authObserver.unsubscribe();
+            }
+            
           }
         });
       }
       else{
-        this.rootPage=AdminLoginPage;
-        authObserver.unsubscribe();
+        if(this.is_admin ==false){
+          this.rootPage=CustomerLoginPage;
+          authObserver.unsubscribe();
+        }
+        
       }
     });
 

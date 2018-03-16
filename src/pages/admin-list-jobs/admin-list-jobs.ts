@@ -105,7 +105,7 @@ export class AdminListJobsPage {
     this.jobRef.on('value', function (snapshot) {
 
       snapshot.forEach( itemSnap => {
-        // console.log(itemSnap.val())
+        console.log(itemSnap.key)
         let job_details_id=itemSnap.val().job_details_id
         let designation='';
         // var userId = snapshot.val().userId; // line 1 (results like 1,2,3,4,5,6)
