@@ -144,7 +144,7 @@
                   <!-- <input type="checkbox" formControlName="isChosen" /> {{hobby.controls.name.value}} -->
                     <ion-item  >
                       <label class = "checkbox">
-                          <input #contact_via formControlName="contact_via" type="checkbox" value="{{contactVia.key}}" [checked]="ind === 0"  (change)="updateContactViaList(contactVia.key, $event.target.checked, ind)"/>
+                          <input #contact_via formControlName="contact_via" type="checkbox" value="{{contactVia.key}}" [checked]="contactVia.checked"  (change)="updateContactViaList(contactVia.key, $event.target.checked, ind)"/>
                       </label>
                         {{contactVia.value}}
 
