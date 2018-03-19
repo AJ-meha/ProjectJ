@@ -1,6 +1,6 @@
 .list > .item-block:first-child{
 	border-color: $lining;
-	border-top-width: 1px;
+	border-top-width: 0;
 }
 
 .list > .item-block:last-child,
@@ -12,26 +12,26 @@
 .list{
 	margin-bottom: 13px;
 	.item{
-		font-size: 1.4rem;
-		font-weight: 500;
+		font-size: 1.5rem;
+		// font-weight: 500;
 		color: $dark-text;
 		padding-left: 12px;
-		&:after{
-			content: '';
-			width: 100%;
-			height: 1px;
-			background-color: $lining;
-			position: absolute;
-			bottom: 0;
-			left: 12px;
-		}
+		// &:after{
+		// 	content: '';
+		// 	width: 100%;
+		// 	height: 1px;
+		// 	background-color: $lining;
+		// 	position: absolute;
+		// 	bottom: 0;
+		// 	left: 12px;
+		// }
 		&> ion-icon{
 			font-size: 2rem;
 			line-height: 1.3;
 		}
 
 		.label{
-			margin: 18px 8px 18px 0;
+			margin: 12px 8px 12px 8px;
 		}
 		[item-start]{
 			margin-right: 12px;
@@ -44,6 +44,19 @@
 			&:after{
 				height: 0;
 			}
+		}
+
+		&.list-header{
+			// margin-left: 20px;
+			// margin-right: 20px;
+			// padding-left: 0;
+			font-weight: 700;
+			font-size: 1.3rem;
+			.label{
+				margin: 12px 8px 8px 8px;
+			}
+			border-bottom: 0;
+
 		}
 	}
 }

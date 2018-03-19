@@ -3,7 +3,9 @@ import { IonicPage, NavController, NavParams, ModalController } from 'ionic-angu
 import { CustomerAuthProvider } from '../../providers/customer-auth/customer-auth';
 import { CustomerLoginPage } from '../customer-login/customer-login';
 import { CustomerSingleJobViewPage } from '../customer-single-job-view/customer-single-job-view';
+import { SingleJob_2Page } from '../single-job-2/single-job-2';
 import firebase  from 'firebase';
+
 /**
  * Generated class for the CustomerJobListingPage page.
  *
@@ -58,13 +60,17 @@ export class CustomerJobListingPage {
             // console.log(mediaSnap.val());
             designation=mediaSnap.val().designation
             self.jobs.push({'key':itemSnap.key,'value':itemSnap.val(),'designation':designation})
-            
+
         });
         // self.jobs.push({'key':itemSnap.key,'value':itemSnap.val()})
         return false;
       });
-      
+
     });
+  }
+
+  openJob2() {
+      this.navCtrl.push(SingleJob_2Page);
   }
 
 }
