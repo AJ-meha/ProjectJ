@@ -524,13 +524,13 @@
                 </ion-row>
                 <ion-row>
                   <ion-col col-12>
-                    <button ion-button outline (click)="addQuestion();">
+                    <button ion-button outline type="button" (click)="addQuestion();">
                       Add Question
                     </button>
                   </ion-col>
                 </ion-row>
 
-                <ion-item class="error-message" *ngIf="(checkQuestions()==false)  && (formsubmitted==true || formsaved==true)">
+                <ion-item class="error-message" *ngIf="(checkQuestions()==false)  && (formsubmitted || formsaved)">
                   <p>Please enter questions and options.</p>
                 </ion-item>
               </div>
