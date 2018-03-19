@@ -28,6 +28,7 @@ import { AdminCreateJobsPage } from '../pages/admin-create-jobs/admin-create-job
 import { SingleJobPage } from '../pages/single-job/single-job';
 import { JobBenefitsPage } from '../pages/job-benefits/job-benefits';
 import { JobDetailsPage } from '../pages/job-details/job-details';
+import { OnboardingPage } from '../pages/onboarding/onboarding';
 
 
 // AF2 Settings
@@ -54,7 +55,8 @@ const firebaseConfig = {
     AdminCreateJobsPage,
     SingleJobPage,
     JobBenefitsPage,
-    JobDetailsPage
+    JobDetailsPage,
+    OnboardingPage
   ],
   imports: [
     BrowserModule,
@@ -79,7 +81,8 @@ const firebaseConfig = {
     AdminCreateJobsPage,
     SingleJobPage,
     JobBenefitsPage,
-    JobDetailsPage
+    JobDetailsPage,
+    OnboardingPage
   ],
   providers: [
     StatusBar,

@@ -4,6 +4,7 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 
 import { TabsPage } from '../pages/tabs/tabs';
+import { OnboardingPage } from '../pages/onboarding/onboarding';
 import { AdminLoginPage } from '../pages/admin-login/admin-login';
 import { AdminDashboardPage } from '../pages/admin-dashboard/admin-dashboard';
 
@@ -24,7 +25,8 @@ export class MyApp {
     this.pages=[
       {title:'Dashboard',component:AdminDashboardPage},
       {title:'Add Job',component:AdminCreateJobsPage},
-      {title:'View Jobs',component:TabsPage}
+      {title:'View Jobs',component:TabsPage},
+      {title:'Welcome',component:OnboardingPage}
     ];
 
     const authObserver=afAuth.authState.subscribe(user=>{
