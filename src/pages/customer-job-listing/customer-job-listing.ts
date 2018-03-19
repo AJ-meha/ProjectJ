@@ -3,6 +3,7 @@ import { IonicPage, NavController, NavParams, ModalController } from 'ionic-angu
 import { CustomerAuthProvider } from '../../providers/customer-auth/customer-auth';
 import { CustomerLoginPage } from '../customer-login/customer-login';
 import { CustomerSingleJobViewPage } from '../customer-single-job-view/customer-single-job-view';
+import { SingleJob_2Page } from '../single-job-2/single-job-2';
 
 /**
  * Generated class for the CustomerJobListingPage page.
@@ -40,6 +41,10 @@ export class CustomerJobListingPage {
 
   openJob() {
     this.navCtrl.push(CustomerSingleJobViewPage);
+  }
+
+  openJob2() {
+      this.navCtrl.push(SingleJob_2Page);
   }
 
 }

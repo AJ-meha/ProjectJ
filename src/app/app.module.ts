@@ -29,6 +29,7 @@ import { AdminListJobsPage } from '../pages/admin-list-jobs/admin-list-jobs';
 import { SingleJobPage } from '../pages/single-job/single-job';
 import { JobBenefitsPage } from '../pages/job-benefits/job-benefits';
 import { JobDetailsPage } from '../pages/job-details/job-details';
+import { SingleJob_2Page } from '../pages/single-job-2/single-job-2';
 import { JobsProvider } from '../providers/jobs/jobs';
 import { CustomerAuthProvider } from '../providers/customer-auth/customer-auth';
 import { CustomerLoginPage } from '../pages/customer-login/customer-login';
@@ -71,6 +72,7 @@ export const deepLinkConfig: DeepLinkConfig = {
     SingleJobPage,
     JobBenefitsPage,
     JobDetailsPage,
+    SingleJob_2Page,
     CustomerLoginPage,
     CustomerSingleJobViewPage,
     CustomerJobListingPage,
@@ -101,6 +103,7 @@ export const deepLinkConfig: DeepLinkConfig = {
     SingleJobPage,
     JobBenefitsPage,
     JobDetailsPage,
+    SingleJob_2Page,
     CustomerLoginPage,
     CustomerSingleJobViewPage,
     CustomerJobListingPage,
