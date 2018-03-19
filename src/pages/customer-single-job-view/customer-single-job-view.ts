@@ -9,14 +9,22 @@ import { JobBenefitsPage } from '../job-benefits/job-benefits';
  * Ionic pages and navigation.
  */
 
-@IonicPage()
+@IonicPage(
+  {
+    name: "job",
+    segment: "job/:id"
+  }
+)
 @Component({
   selector: 'page-customer-single-job-view',
   templateUrl: 'customer-single-job-view.html',
 })
 export class CustomerSingleJobViewPage {
+  public id:string;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public viewCtrl: ViewController) {
+    console.log("id="+ this.navParams.get('id'))
+    this.id=this.navParams.get('id')
   }
 
   ionViewDidLoad() {
