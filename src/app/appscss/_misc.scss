@@ -23,3 +23,9 @@
 .dark-text{
 	color: $dark-text;
 }
+
+@media(max-width: 767px){
+	.mobile-hidden{
+		display: none;
+	}
+}

@@ -21,6 +21,8 @@ export class AuthProvider {
 
   constructor(public afAuth: AngularFireAuth, public storage: Storage) {
     console.log('Hello AuthProvider Provider');
+    this.passwordcheck.on('value', itemSnapshot => { 
+    });
   }
 
   loginUser(newEmail: string, newPassword: string): Promise<any> {

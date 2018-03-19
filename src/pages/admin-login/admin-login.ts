@@ -14,7 +14,7 @@ import { AdminDashboardPage } from '../admin-dashboard/admin-dashboard';
 
 @IonicPage({
   name: 'login',
-  segment:'admin/login'
+  segment:'admin'
 })
 @Component({
   selector: 'page-admin-login',
@@ -26,7 +26,7 @@ export class AdminLoginPage {
   email:string;
   constructor(public navCtrl: NavController, public navParams: NavParams,public authData:AuthProvider,public formBuilder:FormBuilder,public alertCtrl:AlertController,public loadingCtrl:LoadingController) {
 
-    this.connectfirebase();
+    // this.connectfirebase();
 
     this.loginForm=formBuilder.group({
       email:['',Validators.compose([Validators.required,EmailValidator.isValid])],
