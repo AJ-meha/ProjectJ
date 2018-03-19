@@ -33,7 +33,7 @@
 	    <ion-avatar item-start>
 	      <img src="assets/imgs/pacific-coffee_logo.jpg">
 	    </ion-avatar>
-	    <h3 class="font-weight-medium">Pacific Coffee</h3>
+	    <h3 class="font-weight-medium">{{job["workplace_name"]}}</h3>
 	  </ion-item>
 	</ion-list>
 
@@ -51,19 +51,19 @@
 	<ion-list >
 	  <ion-item>
 	    <ion-icon name="ios-calendar-outline" showWhen="android, windows, ios, core" color="primary" item-start></ion-icon>
-	    Barista
+	    {{job["designation"]}}
 	  </ion-item>
 	  <ion-item>
 	    <ion-icon name="ios-calendar-outline" showWhen="android, windows, ios, core" color="primary" item-start></ion-icon>
-	    Full - time
+	    {{empTypes[job["employment_type"]]}}
 	  </ion-item>
 	  <ion-item>
 	    <ion-icon name="ios-calendar-outline" showWhen="android, windows, ios, core" color="primary" item-start></ion-icon>
-	    Sheugn Wan
+	    {{job["workplace_address"]}}
 	  </ion-item>
 	  <ion-item>
 	    <ion-icon name="ios-calendar-outline" showWhen="android, windows, ios, core" color="primary" item-start></ion-icon>
-	    HK$ 7800 / mo
+			{{job["salary_amount"]}}
 	  </ion-item>
 	</ion-list>
 

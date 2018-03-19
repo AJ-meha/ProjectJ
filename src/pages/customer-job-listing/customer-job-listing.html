@@ -27,9 +27,9 @@
       View Modal
   </button> -->
 
-  <ion-card padding>
-    <h5>Pacific Coffee</h5>
-    <button ion-button small (click)="openJob()">
+  <ion-card padding *ngFor="let job of jobs">
+    <h5>{{job.designation}}</h5>
+    <button ion-button small (click)="openJob(job.key)">
         View Job
     </button>
   </ion-card>
