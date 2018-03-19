@@ -3,6 +3,8 @@ import { IonicPage, NavController, NavParams, ModalController } from 'ionic-angu
 import { CustomerAuthProvider } from '../../providers/customer-auth/customer-auth';
 import { CustomerLoginPage } from '../customer-login/customer-login';
 import { CustomerSingleJobViewPage } from '../customer-single-job-view/customer-single-job-view';
+import { SingleJob_2Page } from '../single-job-2/single-job-2';
+import firebase  from 'firebase';
 
 /**
  * Generated class for the CustomerJobListingPage page.
@@ -17,7 +19,9 @@ import { CustomerSingleJobViewPage } from '../customer-single-job-view/customer-
   templateUrl: 'customer-job-listing.html',
 })
 export class CustomerJobListingPage {
-
+  public jobRef: firebase.database.Reference = firebase.database().ref('jobs');
+  public jobs: Array<any> = [];
+  public dbRef: firebase.database.Reference = firebase.database().ref();
   constructor(public navCtrl: NavController, public navParams: NavParams,public authData:CustomerAuthProvider,public modalCtrl:ModalController) {
   }
 
@@ -38,8 +42,35 @@ export class CustomerJobListingPage {
     modal.present();
   }
 
-  openJob() {
-    this.navCtrl.push(CustomerSingleJobViewPage);
+  openJob(idval) {
+    this.navCtrl.push(CustomerSingleJobViewPage,{
+      id: idval
+    });
+  }
+
+  ngOnInit(){
+    let self=this
+    this.jobRef.on('value', function (snapshot) {
+
+      snapshot.forEach( itemSnap => {
+        console.log(itemSnap.key)
+        let job_details_id=itemSnap.val().job_details_id
+        let designation='';
+        self.dbRef.child('job_details/').child(job_details_id).once('value').then( function(mediaSnap) {
+            // console.log(mediaSnap.val());
+            designation=mediaSnap.val().designation
+            self.jobs.push({'key':itemSnap.key,'value':itemSnap.val(),'designation':designation})
+
+        });
+        // self.jobs.push({'key':itemSnap.key,'value':itemSnap.val()})
+        return false;
+      });
+
+    });
+  }
+
+  openJob2() {
+      this.navCtrl.push(SingleJob_2Page);
   }
 
 }
