@@ -529,6 +529,10 @@
                     </button>
                   </ion-col>
                 </ion-row>
+
+                <ion-item class="error-message" *ngIf="(checkQuestions()==false)  && (formsubmitted==true || formsaved==true)">
+                  <p>Please enter questions and options.</p>
+                </ion-item>
               </div>
 
               <!--ion-row>
