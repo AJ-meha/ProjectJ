@@ -53,6 +53,9 @@ export const deepLinkConfig: DeepLinkConfig = {
     { component: AdminCreateJobsPage, name: "create-jobs", segment: "admin/jobs/add" },
     { component: AdminCreateJobsPage, name: "create-jobs", segment: "admin/jobs/edit/:id" },
     { component: AdminListJobsPage, name: "list-jobs", segment: "admin/jobs" },
+    { component: CustomerSingleJobViewPage, name: "job", segment: "job/:id" },
+    { component: CustomerLoginPage, name: "customer-login", segment: "" },
+    { component: CustomerDashboardPage, name: "dashboard", segment: "dashboard" },
   ]
 };
 
