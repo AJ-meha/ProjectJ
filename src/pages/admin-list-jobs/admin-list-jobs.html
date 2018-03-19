@@ -33,7 +33,7 @@
 
 			<ion-row>
 				<ion-col>
-					<h6 no-margin>Filters</h6>
+					<h6 no-margin class="mobile-hidden">Filters</h6>
 				</ion-col>
 				<ion-col>
 					<ion-buttons end>
@@ -44,8 +44,10 @@
 				</ion-col>
 			</ion-row>
 
-			<div class="filters flex bottom">
-				<ion-searchbar [(ngModel)]="autocomplete.input" (ionInput)="updateSearchResults()" placeholder="Search for a Job Role"></ion-searchbar>
+			<div class="filters filters__wrap flex bottom">
+				<div class="filters__search">
+					<ion-searchbar [(ngModel)]="autocomplete.input" (ionInput)="updateSearchResults()" placeholder="Search for a Job Role"></ion-searchbar>
+				</div>
 				<div class="bt-dropdown" [class.open]="filterOptions.role.open" >
 					<!-- .... On click of this button, add class "open" to the parent div "bt-dropdown" .... -->
 					<!-- .... just adding the class will show the dropdown .... -->
@@ -80,28 +82,31 @@
 
 
 				<button ion-button small class="btn-apply" clear no-margin (click)="applyFilter()">Apply</button>
-				<button ion-button small color="secondary" no-margin class="btn-reset" clear (click)="resetFilter()"><ion-icon name="md-refresh" class="hidden-xs"></ion-icon><span class="visible-xs">Reset</span></button>
+				<button ion-button small color="secondary" no-margin class="btn-reset" clear (click)="resetFilter()"><span class="visible-xs">Reset</span> <ion-icon name="md-refresh" class="hidden-xs icon-small"></ion-icon></button>
 			</div>
 
-			<div class="tabular" margin-top>
-				<div class="tabular__header flex hidden-xs">
-					<div class="tabular__cell cell-half">
-						Job Role
+			<ion-card padding>
+				<div class="tabular" margin-top>
+					<div class="tabular__header flex hidden-xs">
+						<div class="tabular__cell cell-half">
+							Job Role
+						</div>
+						<div class="tabular__cell cell-one-fourth">Sub-industry
+								<!-- <ion-icon name="funnel" class="bt-dropdown__btn button-drop" (click)="toggleDrop('status')"></ion-icon> -->
+						</div>
+						<div class="tabular__cell cell-one-fourth">Status
+
+						</div>
 					</div>
-					<div class="tabular__cell cell-one-fourth">Sub-industry
-							<!-- <ion-icon name="funnel" class="bt-dropdown__btn button-drop" (click)="toggleDrop('status')"></ion-icon> -->
-					</div>
-					<div class="tabular__cell cell-one-fourth">Status
-							
-					</div>
-				</div>
-				{{jobs}}
+					{{jobs}}
 				<div class="tabular__row flex" *ngFor="let job of jobs">
 					<div class="tabular__cell cell-half"><a href="#/admin/jobs/edit/{{job.key}}">{{job.designation}}</a></div>
 					<div class="tabular__cell cell-one-fourth">{{job.sub_industry}}</div>
 					<div class="tabular__cell cell-one-fourth">{{jobStatuses[job.value['job_status']]}}</div>
 				</div>
-			</div>
+				</div>
+			</ion-card>
+
 
 
 		</ion-content>
