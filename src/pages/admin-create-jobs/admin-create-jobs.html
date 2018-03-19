@@ -468,45 +468,87 @@
         <ion-card margin-top>
           <ion-card-header padding-left class="card-wp-admin">Questions</ion-card-header>
           <ion-grid>
-            <ion-row radio-group>
+            <ion-row radio-group [(ngModel)]="inputsArray['question']" [ngModelOptions]="{standalone: true}">
               <ion-col col-12 col-md-4>
                 <ion-label padding-left>
                   Ask a question?
                 </ion-label>
               </ion-col>
-                <ion-col col-12 col-md-4>
+              <ion-col col-12 col-md-4>
                     <ion-item>
-                      <ion-radio mode="md" item-left checked="true" value="yes"></ion-radio>
+                      <ion-radio mode="md" item-left value="yes"></ion-radio>
                       <ion-label>Yes</ion-label>
                     </ion-item>
               </ion-col>
 
               <ion-col col-12 col-md-4>
                   <ion-item>
-                    <ion-radio mode="md" item-left value="no"></ion-radio>
+                    <ion-radio mode="md" item-left value="no" (ionSelect)="questionToggle()"></ion-radio>
                     <ion-label>No</ion-label>
                   </ion-item>
                 </ion-col>
               </ion-row>
 
-              <ion-row>
+              <div *ngIf="(inputsArray['question']=='yes')">
+                <ion-row *ngFor="let questions of questionsArray;let indq=index">
+                  <ion-col col-12>
+                    <ion-item>
+                      <ion-label padding-left>Question {{indq+1}} : </ion-label>
+                      <ion-input [(ngModel)]="questions.question_name" [ngModelOptions]="{standalone: true}" type="text" placeholder="Add a Question"></ion-input>
+                      <ion-icon *ngIf="(indq!=questionsArray.length-1 || questionsArray.length>1)" item-end name='remove-circle' (click)="removeQuestion(indq);"></ion-icon>
+                    </ion-item>
+                  </ion-col>
+                  <ion-col col-12 *ngFor="let options of questions.options;let inda=index">
+                    <ion-row>
+                      <ion-col col-5 offset-1>
+                        <ion-item>
+                          <ion-icon *ngIf="(questions.option_type=='radio')" item-start name='radio-button-off'></ion-icon>
+                          <ion-icon *ngIf="(questions.option_type=='checkbox')" item-start name='square-outline'></ion-icon>
+                          <ion-input [(ngModel)]="options.val" [ngModelOptions]="{standalone: true}" type="text" placeholder="Add an Answer"></ion-input>
+                          <ion-icon *ngIf="(inda!=questions.options.length-1 || questions.options.length>1)" item-end name='remove-circle' (click)="removeOption(indq,inda);"></ion-icon>
+                        </ion-item>
+                      </ion-col>
+                      <ion-col col-4 *ngIf="(inda==0)">
+                        <ion-select [(ngModel)]="questions.option_type" [ngModelOptions]="{standalone: true}" interface="popover">
+                          <ion-option value="radio">Multiple Choice</ion-option>
+                          <ion-option value="checkbox">Checkboxes</ion-option>
+                        </ion-select>
+                      </ion-col>
+                    </ion-row>
+                  </ion-col>
+                  <ion-col col-11 offset-1>
+                    <button ion-button outline small type="button" [disabled]="questions.options.length>=max_option" (click)="addOption(indq);">
+                      + Add Option
+                    </button>
+                  </ion-col>
+                </ion-row>
+                <ion-row>
+                  <ion-col col-12>
+                    <button ion-button outline (click)="addQuestion();">
+                      Add Question
+                    </button>
+                  </ion-col>
+                </ion-row>
+              </div>
+
+              <!--ion-row>
                 <ion-col col-12 col-md-6>
-                  <!-- <ion-select [(ngModel)]="question" name="question" interface="popover" placeholder="Select a Question">
+                  <ion-select [(ngModel)]="question" name="question" interface="popover" placeholder="Select a Question">
                         <ion-option value="1">Question 1</ion-option>
                         <ion-option value="2">Question 2</ion-option>
-                  </ion-select> -->
+                  </ion-select>
                 </ion-col>
                 <ion-col col-12 col-md-6>
                   <ion-item>
-                    <!-- <ion-select [(ngModel)]="question_type" name="question_type" interface="popover" placeholder="--">
+                    <ion-select [(ngModel)]="question_type" name="question_type" interface="popover" placeholder="--">
                           <ion-option value="1" selected>Multiple Choice</ion-option>
                           <ion-option value="2">Radio Buttons</ion-option>
-                    </ion-select> -->
+                    </ion-select>
                   </ion-item>
                 </ion-col>
-              </ion-row>
+              </ion-row-->
 
-              <ion-row>
+              <!--ion-row>
                 <ion-col col-2 col-md-1>
                   <ion-item>
                     <ion-radio mode="md" item-left value="value"></ion-radio>
@@ -540,7 +582,7 @@
                 <button ion-button outline>
                   Add a Question
                 </button>
-              </ion-buttons>
+              </ion-buttons-->
           </ion-grid>
         </ion-card>
 
