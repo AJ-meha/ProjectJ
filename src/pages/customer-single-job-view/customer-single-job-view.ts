@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
-
+import { IonicPage, NavController, NavParams, ViewController } from 'ionic-angular';
+import { JobDetailsPage } from '../job-details/job-details';
+import { JobBenefitsPage } from '../job-benefits/job-benefits';
 /**
  * Generated class for the CustomerSingleJobViewPage page.
  *
