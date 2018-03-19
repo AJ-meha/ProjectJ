@@ -144,16 +144,21 @@ export class AdminCreateJobsPage {
       });
     });
     let stepCounter=0;
+    let isChecked=false;
     this.jobContactViaRef.on('value', itemSnapshot => {
       itemSnapshot.forEach( itemSnap => {
 
         console.log(itemSnap.key+"=="+itemSnap.val())
         let ikey=itemSnap.key
         let ival=itemSnap.val()
-        this.contactVias.push({"key":ikey,"value":ival})
         if(stepCounter == 0){
-          this.selectedContactViaArray.push(ikey)
+          this.selectedContactViaArray.push(ikey);
+          isChecked=true;
         }
+        else{
+          isChecked=false;
+        }
+        this.contactVias.push({"key":ikey,"value":ival,"checked":isChecked})
         
         stepCounter +=1;
         let cform=this.formBuilder.group({
@@ -202,97 +207,116 @@ export class AdminCreateJobsPage {
 
   getData(){
     console.log("===getData===")
+    console.log(this.navParams.get('id'))
     firebase.database().ref('jobs/'+this.navParams.get('id')).on('value', itemSnapshot => {
-      itemSnapshot.forEach( itemSnap => {
-        let ival=itemSnap.val();
-
-        firebase.database().ref('job_details/'+ival.job_details_id).on('value', itemSnapshot1 => {
-          itemSnapshot1.forEach( itemSnap1 => {
-            console.log(itemSnap1.key);
-            console.log(itemSnap1.val());
-            if(itemSnap1.key!='industry')
-            {
-              this.inputsArray[itemSnap1.key]=itemSnap1.val();
-            }
-            if(itemSnap1.key=='industry')
-            {
-              this.inputsArray[itemSnap1.key]=itemSnap1.val();
-              this.populateSubIndustry(itemSnap1.val());
-            }
-            return false;
-          });
+      let ival=itemSnapshot.val();
+      firebase.database().ref('job_details/'+ival.job_details_id).on('value', itemSnapshot1 => {
+        itemSnapshot1.forEach( itemSnap1 => {
+          console.log(itemSnap1.key);
+          console.log(itemSnap1.val());
+          if(itemSnap1.key!='industry')
+          {
+            this.inputsArray[itemSnap1.key]=itemSnap1.val();
+          }
+          if(itemSnap1.key=='industry')
+          {
+            this.inputsArray[itemSnap1.key]=itemSnap1.val();
+            this.populateSubIndustry(itemSnap1.val());
+          }
+          return false;
         });
-        firebase.database().ref('job_employee_benefits/'+ival.job_emp_benefits_id).on('value', itemSnapshot2 => {
-          itemSnapshot2.forEach( itemSnap2 => {
-            if(itemSnap2.key!='employee_benefits')
-            {
-              this.inputsArray[itemSnap2.key]=itemSnap2.val();
+      });
+      firebase.database().ref('job_employee_benefits/'+ival.job_emp_benefits_id).on('value', itemSnapshot2 => {
+        itemSnapshot2.forEach( itemSnap2 => {
+          if(itemSnap2.key!='employee_benefits')
+          {
+            this.inputsArray[itemSnap2.key]=itemSnap2.val();
+          }
+          if(itemSnap2.key=='employee_benefits')
+          {
+            let emp_beneArr=itemSnap2.val();
+            for (let emp_bene in emp_beneArr) {
+              this.employeeBenefitsArray[emp_bene].checkbox=true;
+              this.employeeBenefitsArray[emp_bene].details=emp_beneArr[emp_bene];
             }
-            if(itemSnap2.key=='employee_benefits')
-            {
-              let emp_beneArr=itemSnap2.val();
-              for (let emp_bene in emp_beneArr) {
-                this.employeeBenefitsArray[emp_bene].checkbox=true;
-                this.employeeBenefitsArray[emp_bene].details=emp_beneArr[emp_bene];
+          }
+          return false;
+        });
+      });
+      firebase.database().ref('jobs_contact_workplace/'+ival.jobs_contact_workplace_id).on('value', itemSnapshot3 => {
+        itemSnapshot3.forEach( itemSnap3 => {
+          let i3val=itemSnap3.val();
+          console.log("===zzz===");
+          console.log(itemSnap3.key);
+          if(itemSnap3.key!='contact_via')
+          {
+            this.inputsArray[itemSnap3.key]=i3val;
+          }
+          if(itemSnap3.key=='contact_via')
+          {
+            this.selectedContactViaArray=[];
+            for (let contact in this.contactVias) {
+              console.log("===z1z===");
+              this.contactVias[contact].checked=false;
+            }
+            for (let val in i3val) {
+              console.log("===z2z===");
+              this.selectedContactViaArray.push(i3val[val]);
+              for (let contact in this.contactVias) {
+                console.log("===z3z===");
+                if(this.contactVias[contact].key==i3val[val])
+                {
+                  console.log("===z4z===");
+                  this.contactVias[contact].checked=true;
+                }
               }
             }
-            return false;
-          });
+          }
+          return false;
         });
-        firebase.database().ref('jobs_contact_workplace/'+ival.jobs_contact_workplace_id).on('value', itemSnapshot3 => {
-          itemSnapshot3.forEach( itemSnap3 => {
-            if(itemSnap3.key!='contact_via')
+      });
+      firebase.database().ref('job_work_schedule/'+ival.job_work_schedule_id).on('value', itemSnapshot4 => {
+        itemSnapshot4.forEach( itemSnap4 => {
+          let timeArrayFetch=itemSnap4.val();
+          for (let tkey in timeArrayFetch) {
+            if(tkey!='shift_end')
             {
-              this.inputsArray[itemSnap3.key]=itemSnap3.val();
+              this.timeArray[itemSnap4.key][tkey]=timeArrayFetch[tkey];
             }
-            return false;
-          });
-        });
-        firebase.database().ref('job_work_schedule/'+ival.job_work_schedule_id).on('value', itemSnapshot4 => {
-          itemSnapshot4.forEach( itemSnap4 => {
-            let timeArrayFetch=itemSnap4.val();
-            for (let tkey in timeArrayFetch) {
-              if(tkey!='shift_end')
+            else
+            {
+              if(timeArrayFetch[tkey]=='')
               {
-                this.timeArray[itemSnap4.key][tkey]=timeArrayFetch[tkey];
+                this.timeArray[itemSnap4.key][tkey]=itemSnap4.key;
+                this.inputsArray['night_shift']=false;
               }
               else
               {
-                if(timeArrayFetch[tkey]=='')
-                {
-                  this.timeArray[itemSnap4.key][tkey]=itemSnap4.key;
-                  this.inputsArray['night_shift']=false;
-                }
-                else
-                {
-                  this.timeArray[itemSnap4.key][tkey]=timeArrayFetch[tkey];
-                  this.inputsArray['night_shift']=true;
-                }
+                this.timeArray[itemSnap4.key][tkey]=timeArrayFetch[tkey];
+                this.inputsArray['night_shift']=true;
               }
             }
-            return false;
-          });
+          }
+          return false;
         });
-        firebase.database().ref('job_questions/'+ival.job_questions_id).on('value', itemSnapshot5 => {
-          itemSnapshot5.forEach( itemSnap5 => {
-            let quesArr=itemSnap5.val();
-            if(quesArr!='NA')
+      });
+      firebase.database().ref('job_questions/'+ival.job_questions_id).on('value', itemSnapshot5 => {
+        itemSnapshot5.forEach( itemSnap5 => {
+          let quesArr=itemSnap5.val();
+          if(quesArr!='NA')
+          {
+            if(itemSnap5.key=='0')
             {
-              if(itemSnap5.key=='0')
-              {
-                this.questionsArray=[];
-              }
-              this.inputsArray.question="yes";
-              this.questionsArray.push({question_name:quesArr.question_name,option_type:quesArr.option_type,options:[]});
-              for (let options in quesArr.options) {
-                this.questionsArray[this.questionsArray.length-1].options.push({val:quesArr.options[options]});
-              }
+              this.questionsArray=[];
             }
-            return false;
-          });
+            this.inputsArray.question="yes";
+            this.questionsArray.push({question_name:quesArr.question_name,option_type:quesArr.option_type,options:[]});
+            for (let options in quesArr.options) {
+              this.questionsArray[this.questionsArray.length-1].options.push({val:quesArr.options[options]});
+            }
+          }
+          return false;
         });
-
-        return false;
       });
     });
   }
@@ -450,7 +474,7 @@ export class AdminCreateJobsPage {
           if(itemSnap=='jobs_contact_workplace_id')
           {
             firebase.database().ref('jobs_contact_workplace/'+idArr[itemSnap]+'/application_sent_mail').set(application_sent_mail);
-            //firebase.database().ref('jobs_contact_workplace/'+idArr[itemSnap]+'/contact_via').set(contact_via);
+            firebase.database().ref('jobs_contact_workplace/'+idArr[itemSnap]+'/contact_via').set(contact_via);
             firebase.database().ref('jobs_contact_workplace/'+idArr[itemSnap]+'/mobile').set(mobile);
             firebase.database().ref('jobs_contact_workplace/'+idArr[itemSnap]+'/workplace').set(workplace);
             firebase.database().ref('jobs_contact_workplace/'+idArr[itemSnap]+'/workplace_address').set(workplace_address);
