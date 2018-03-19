@@ -10,7 +10,27 @@ page-onboarding {
 
 	.slide-image {
 	  // max-height: 50%;
-	  // max-width: 60%;
+	  max-width: 86%;
 	  // margin: 18px 0;
+	}
+
+	p{
+		font-size: 15px;
+		color: $light-text;
+		font-weight: 500;
+		max-width: 65%;
+		margin: auto;
+	}
+
+	.swiper-container-horizontal > .swiper-pagination-bullets{
+		bottom: 48px;
+	}
+	.swiper-pagination-bullet{
+		width: 6px;
+		height: 6px;
+		background-color: $dark-text;
+		&-active{
+			background-color: $light-text;
+		}
 	}
 }
