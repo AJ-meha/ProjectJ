@@ -340,7 +340,7 @@ export class AdminCreateJobsPage {
         return false;
       }
       for (let options in this.questionsArray[question].options){
-        if(this.questionsArray[question].options[options]==""){
+        if(this.questionsArray[question].options[options].val==""){
           return false;
         }
       }
