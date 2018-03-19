@@ -28,10 +28,12 @@ import { AdminListJobsPage } from '../admin-list-jobs/admin-list-jobs'
   templateUrl: 'admin-create-jobs.html',
 })
 export class AdminCreateJobsPage {
-  inputsArray = {application_sent_mail:'',mobile:'',workplace:'',workplace_address:'',workplace_name:'',designation:'',industry:'',salary_amount:'',salary_unit:'',sub_industry:'',type:'',employment_type:'',additional_info:'',night_shift:false};
+  inputsArray = {application_sent_mail:'',mobile:'',workplace:'',workplace_address:'',workplace_name:'',designation:'',industry:'',salary_amount:'',salary_unit:'',sub_industry:'',type:'',employment_type:'',additional_info:'',night_shift:false,question:"no"};
   timeArray = {mon:{start_time:"",end_time:"",holiday:false,shift_end:"mon"},tue:{start_time:"",end_time:"",holiday:false,shift_end:"tue"},wed:{start_time:"",end_time:"",holiday:false,shift_end:"wed"},thu:{start_time:"",end_time:"",holiday:false,shift_end:"thu"},fri:{start_time:"",end_time:"",holiday:false,shift_end:"fri"},sat:{start_time:"",end_time:"",holiday:false,shift_end:"sat"},sun:{start_time:"",end_time:"",holiday:false,shift_end:"sun"}};
   daysArray = GlobalVarsProvider.daysArray;
   employeeBenefitsArray: Array<any> = [];
+  questionsArray: Array<any> = [{question_name:"",option_type:"radio",options:[{val:""}]}];
+  max_option = GlobalVarsProvider.max_option;
   jobsForm:FormGroup;
   contactVias: Array<any> = [];
   workplaceTypes: Array<any> = [];
@@ -58,7 +60,7 @@ export class AdminCreateJobsPage {
   constructor(public navCtrl: NavController, public navParams: NavParams,private af: AngularFireDatabase,public formBuilder:FormBuilder,public commonfunc:CommonFunctionsProvider) {
 
     // console.log("jobss---")
-    console.log("id="+ this.navParams.get('id'))
+    console.log("id=")
     this.jobsForm=this.formBuilder.group({
       application_sent_mail:['',Validators.compose([Validators.required,EmailValidator.isValid])],
       workplace:['',Validators.compose([Validators.required])],
@@ -66,7 +68,7 @@ export class AdminCreateJobsPage {
       workplace_address:['',Validators.compose([Validators.required])],
       workplace_latitude:['',Validators.compose([Validators.required])],
       workplace_longitude:['',Validators.compose([Validators.required])],
-      mobile:['',Validators.compose([Validators.required,Validators.pattern('(\\+852[- ]?)?\\d{10}$')])],
+      mobile:['',Validators.compose([Validators.required,Validators.pattern('(\\+852[- ]?)\\d{10}$')])],
       designation:['',Validators.compose([Validators.required])],
       type:['',Validators.compose([Validators.required])],
       salary_amount:['',Validators.compose([Validators.required,Validators.pattern('[1-9]+[0-9]*')])],
@@ -313,6 +315,26 @@ export class AdminCreateJobsPage {
     return true;
   }
 
+  questionToggle(){
+    this.questionsArray=[{question_name:"",option_type:"radio",options:[{val:""}]}];
+  }
+
+  addOption(indq){
+    this.questionsArray[indq].options.push({val:""});
+  }
+
+  addQuestion(){
+    this.questionsArray.push({question_name:"",option_type:"radio",options:[{val:""}]});
+  }
+
+  removeOption(indq,inda){
+    this.questionsArray[indq].options.splice(inda, 1);
+  }
+
+  removeQuestion(indq){
+    this.questionsArray.splice(indq, 1);
+  }
+
   submitJob(form){
     if(!form.valid || this.checkDates()==false){
       this.validateAllFormFields(form);
@@ -363,22 +385,19 @@ export class AdminCreateJobsPage {
         employee_benefits[emp_bene]=this.employeeBenefitsArray[emp_bene].details;
       }
     }
-    let mon = this.timeArray['mon'];
-    let tue = this.timeArray['tue'];
-    let wed = this.timeArray['wed'];
-    let thu = this.timeArray['thu'];
-    let fri = this.timeArray['fri'];
-    let sat = this.timeArray['sat'];
-    let sun = this.timeArray['sun'];
+    let weekArr:Array<any>=this.timeArray;
     if(this.inputsArray.night_shift==false)
     {
-      mon.shift_end='';
-      tue.shift_end='';
-      wed.shift_end='';
-      thu.shift_end='';
-      fri.shift_end='';
-      sat.shift_end='';
-      sun.shift_end='';
+      for (let day in weekArr) {
+        weekArr[day].shift_end='';
+      }
+    }
+    let job_questions: Array<any> = [];
+    for (let question in this.questionsArray) {
+      job_questions.push({question_name:this.questionsArray[question].question_name,option_type:this.questionsArray[question].option_type,options:[]});
+      for (let options in this.questionsArray[question].options) {
+        job_questions[job_questions.length-1].options.push(this.questionsArray[question].options[options].val);
+      }
     }
 
         
@@ -413,13 +432,7 @@ export class AdminCreateJobsPage {
           }
           if(itemSnap=='job_work_schedule_id')
           {
-            firebase.database().ref('job_work_schedule/'+idArr[itemSnap]+'/mon').set(mon);
-            firebase.database().ref('job_work_schedule/'+idArr[itemSnap]+'/tue').set(tue);
-            firebase.database().ref('job_work_schedule/'+idArr[itemSnap]+'/wed').set(wed);
-            firebase.database().ref('job_work_schedule/'+idArr[itemSnap]+'/thu').set(thu);
-            firebase.database().ref('job_work_schedule/'+idArr[itemSnap]+'/fri').set(fri);
-            firebase.database().ref('job_work_schedule/'+idArr[itemSnap]+'/sat').set(sat);
-            firebase.database().ref('job_work_schedule/'+idArr[itemSnap]+'/sun').set(sun);
+            firebase.database().ref('job_work_schedule/'+idArr[itemSnap]).set(weekArr);
           }
         }
         this.commonfunc.presentToast("Job Updated Successfully!!!");
@@ -431,14 +444,21 @@ export class AdminCreateJobsPage {
       let jobs_contact_workplace_ref=this.af.list('jobs_contact_workplace').push({ application_sent_mail,workplace,workplace_name,workplace_address,mobile,contact_via})
       let job_details_ref=this.af.list('job_details').push({ designation,type,employment_type,salary_amount,salary_unit,industry,sub_industry})
       let job_emp_benefits_ref=this.af.list('job_employee_benefits').push({employee_benefits,additional_info})
-      let job_work_schedule_ref=this.af.list('job_work_schedule').push({mon,tue,wed,thu,fri,sat,sun})
+      let job_work_schedule_ref=this.af.list('job_work_schedule').push(weekArr)
+      if(this.inputsArray.question=='no'){
+        let job_questions_ref=this.af.list('job_questions').push({0:"NA"})
+      }
+      else{
+        let job_questions_ref=this.af.list('job_questions').push(job_questions)
+      }
 
       let jobs_contact_workplace_id=jobs_contact_workplace_ref.key
       let job_details_id=job_details_ref.key
       let job_emp_benefits_id=job_emp_benefits_ref.key
       let job_work_schedule_id=job_work_schedule_ref.key
+      let job_questions_id=job_questions_ref.key
       let job_status='draft'
-      this.af.list('jobs').push({jobs_contact_workplace_id,job_details_id,job_emp_benefits_id,job_work_schedule_id,job_status})
+      this.af.list('jobs').push({jobs_contact_workplace_id,job_details_id,job_emp_benefits_id,job_work_schedule_id,job_questions_id,job_status})
       this.commonfunc.presentToast("Job added Successfully!!!");
       form.reset();
     }
