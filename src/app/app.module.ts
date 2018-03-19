@@ -30,6 +30,12 @@ import { SingleJobPage } from '../pages/single-job/single-job';
 import { JobBenefitsPage } from '../pages/job-benefits/job-benefits';
 import { JobDetailsPage } from '../pages/job-details/job-details';
 import { SingleJob_2Page } from '../pages/single-job-2/single-job-2';
+import { JobsProvider } from '../providers/jobs/jobs';
+import { CustomerAuthProvider } from '../providers/customer-auth/customer-auth';
+import { CustomerLoginPage } from '../pages/customer-login/customer-login';
+import { CustomerSingleJobViewPage } from '../pages/customer-single-job-view/customer-single-job-view';
+import { CustomerJobListingPage } from '../pages/customer-job-listing/customer-job-listing';
+import { CustomerDashboardPage } from '../pages/customer-dashboard/customer-dashboard';
 
 
 // AF2 Settings
@@ -66,7 +72,11 @@ export const deepLinkConfig: DeepLinkConfig = {
     SingleJobPage,
     JobBenefitsPage,
     JobDetailsPage,
-    SingleJob_2Page
+    SingleJob_2Page,
+    CustomerLoginPage,
+    CustomerSingleJobViewPage,
+    CustomerJobListingPage,
+    CustomerDashboardPage
   ],
   imports: [
     BrowserModule,
@@ -93,7 +103,11 @@ export const deepLinkConfig: DeepLinkConfig = {
     SingleJobPage,
     JobBenefitsPage,
     JobDetailsPage,
-    SingleJob_2Page
+    SingleJob_2Page,
+    CustomerLoginPage,
+    CustomerSingleJobViewPage,
+    CustomerJobListingPage,
+    CustomerDashboardPage
   ],
   providers: [
     StatusBar,
@@ -101,7 +115,9 @@ export const deepLinkConfig: DeepLinkConfig = {
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     CommonFunctionsProvider,
     GlobalVarsProvider,
-    AuthProvider
+    AuthProvider,
+    JobsProvider,
+    CustomerAuthProvider
   ]
 })
 export class AppModule {}

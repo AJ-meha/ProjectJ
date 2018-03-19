@@ -32,7 +32,7 @@
       <form [formGroup]="jobsForm" (submit)="formsubmitted=true;formsaved=false;submitJob(this.jobsForm)" novalidate>
         <div>
         <ion-card>
-          <ion-card-header padding-left class="card-wp-primary">Contact &amp; Workplace Info</ion-card-header>
+          <ion-card-header padding-left class="card-wp-admin">Contact &amp; Workplace Info</ion-card-header>
             <ion-grid>
               <ion-row>
                 <ion-col col-12 col-md-6>
@@ -89,26 +89,47 @@
                   <ion-item class="error-message" *ngIf="!jobsForm.controls.workplace_address.valid  && formsubmitted">
                     <p>Please enter a valid address.</p>
                   </ion-item>
-                </ion-col>
-                <ion-col col-12 col-md-3>
-                  <ion-item>
-                    <ion-label stacked>Latitude</ion-label>
-                    <ion-input  #workplace_latitude formControlName="workplace_latitude" type="text" placeholder="Enter Latitude" [class.invalid]="!jobsForm.controls.workplace_latitude.valid && formsubmitted"></ion-input>
-                  </ion-item>
-                  <ion-item class="error-message" *ngIf="!jobsForm.controls.workplace_latitude.valid  && formsubmitted">
-                    <p>Please enter a valid latitude.</p>
-                  </ion-item>
-                </ion-col>
-                <ion-col col-12 col-md-3>
-                  <ion-item>
-                    <ion-label stacked>Longitude</ion-label>
-                    <ion-input  #workplace_longitude formControlName="workplace_longitude" type="text" placeholder="Enter Longitude" [class.invalid]="!jobsForm.controls.workplace_longitude.valid && formsubmitted"></ion-input>
-                  </ion-item>
-                  <ion-item class="error-message" *ngIf="!jobsForm.controls.workplace_longitude.valid  && formsubmitted">
-                    <p>Please enter a valid longitude.</p>
-                  </ion-item>
-                </ion-col>
 
+                  <ion-row>
+                    <ion-col col-12 col-md-6>
+                      <ion-item>
+                        <ion-label stacked>Latitude</ion-label>
+                        <ion-input  #workplace_latitude formControlName="workplace_latitude" type="text" placeholder="Enter Latitude" [class.invalid]="!jobsForm.controls.workplace_latitude.valid && formsubmitted"></ion-input>
+                      </ion-item>
+                      <ion-item class="error-message" *ngIf="!jobsForm.controls.workplace_latitude.valid  && formsubmitted">
+                        <p>Please enter a valid latitude.</p>
+                      </ion-item>
+                    </ion-col>
+                    <ion-col col-12 col-md-6>
+                      <ion-item>
+                        <ion-label stacked>Longitude</ion-label>
+                        <ion-input  #workplace_longitude formControlName="workplace_longitude" type="text" placeholder="Enter Longitude" [class.invalid]="!jobsForm.controls.workplace_longitude.valid && formsubmitted"></ion-input>
+                      </ion-item>
+                      <ion-item class="error-message" *ngIf="!jobsForm.controls.workplace_longitude.valid  && formsubmitted">
+                        <p>Please enter a valid longitude.</p>
+                      </ion-item>
+                    </ion-col>
+                  </ion-row>
+                </ion-col>
+                <ion-col col-12 col-md-6>
+                  <ion-item>
+                    <img src="assets/imgs/map-img.png">
+                  </ion-item>
+                </ion-col>
+              </ion-row>
+
+              <ion-row>
+                <ion-col col-8 col-md-3>
+                  <ion-item>
+                    <ion-label stacked>Upload Logo</ion-label>
+                    <ion-input  value="" type="file" placeholder="Select a file to upload" ></ion-input>
+                  </ion-item>
+                </ion-col>
+                <ion-col col-4 col-md-3 margin-top padding-top>
+                    <button margin-top ion-button small>
+                      Upload
+                    </button>
+                </ion-col>
               </ion-row>
 
 
@@ -122,10 +143,10 @@
                   <!-- <ion-item-group  > -->
                   <!-- <input type="checkbox" formControlName="isChosen" /> {{hobby.controls.name.value}} -->
                     <ion-item  >
-                        {{contactVia.value}}
                       <label class = "checkbox">
                           <input #contact_via formControlName="contact_via" type="checkbox" value="{{contactVia.key}}" [checked]="ind === 0"  (change)="updateContactViaList(contactVia.key, $event.target.checked, ind)"/>
                       </label>
+                        {{contactVia.value}}
 
                       <!-- <ion-checkbox value="{{contactVia.key}}"></ion-checkbox> -->
                     </ion-item>
@@ -182,7 +203,7 @@
         </ion-card>
 
         <ion-card margin-top>
-          <ion-card-header padding-left class="card-wp-primary">Job Details</ion-card-header>
+          <ion-card-header padding-left class="card-wp-admin">Job Details</ion-card-header>
           <ion-grid>
             <ion-row>
                 <ion-col col-12 col-md-6>
@@ -305,169 +326,53 @@
               <ion-row>
                   <ion-col col-12 >
                     <ion-label padding-left no-margin>Work Schedule</ion-label>
+                    <ion-item>
+                      <ion-label>Night-Shift</ion-label>
+                      <ion-checkbox [(ngModel)]="inputsArray['night_shift']" [ngModelOptions]="{standalone: true}" (click)="resetField();"></ion-checkbox>
+                    </ion-item>
                   </ion-col>
-                  <ion-col col-12 col-md-3>
-                <ion-card>
-                    <ion-list>
-                      <ion-list-header no-margin>
-                        Mon
-                      </ion-list-header>
-                      <ion-item>
-                        <ion-label>Start Time</ion-label>
-                        <ion-datetime [disabled]="checkboxMon" displayFormat="h:mm A" pickerFormat="h mm A" placeholder="--"></ion-datetime>
-                      </ion-item>
-                      <ion-item>
-                        <ion-label>End Time</ion-label>
-                        <ion-datetime [disabled]="checkboxMon" displayFormat="h:mm A" pickerFormat="h mm A" placeholder="--"></ion-datetime>
-                      </ion-item>
-                      <ion-item>
-                        <ion-label>Holiday</ion-label>
-                        <ion-checkbox [(ngModel)]="checkboxMon" [ngModelOptions]="{standalone: true}"></ion-checkbox>
-                      </ion-item>
-                    </ion-list>
-                </ion-card>
-              </ion-col>
 
-              <ion-col col-12 col-md-3>
-                <ion-card>
-                    <ion-list>
-                      <ion-list-header no-margin>
-                        Tue
-                      </ion-list-header>
-                      <ion-item>
-                        <ion-label>Start Time</ion-label>
-                        <ion-datetime [disabled]="checkboxTue" displayFormat="h:mm A" pickerFormat="h mm A" placeholder="--" ></ion-datetime>
-                      </ion-item>
-                      <ion-item>
-                        <ion-label>End Time</ion-label>
-                        <ion-datetime [disabled]="checkboxTue" displayFormat="h:mm A" pickerFormat="h mm A" placeholder="--" ></ion-datetime>
-                      </ion-item>
-                      <ion-item>
-                        <ion-label>Holiday</ion-label>
-                        <ion-checkbox [(ngModel)]="checkboxTue" [ngModelOptions]="{standalone: true}"></ion-checkbox>
-                      </ion-item>
-                    </ion-list>
-                  </ion-card>
-              </ion-col>
-
-              <ion-col col-12 col-md-3>
-                  <ion-card>
-                    <ion-list>
-                      <ion-list-header no-margin>
-                        Wed
-                      </ion-list-header>
-                      <ion-item>
-                        <ion-label>Start Time</ion-label>
-                        <ion-datetime [disabled]="checkboxWed" displayFormat="h:mm A" pickerFormat="h mm A" placeholder="--" ></ion-datetime>
-                      </ion-item>
-                      <ion-item>
-                        <ion-label>End Time</ion-label>
-                        <ion-datetime [disabled]="checkboxWed" displayFormat="h:mm A" pickerFormat="h mm A" placeholder="--" ></ion-datetime>
-                      </ion-item>
-                      <ion-item>
-                        <ion-label>Holiday</ion-label>
-                        <ion-checkbox [(ngModel)]="checkboxWed" [ngModelOptions]="{standalone: true}"></ion-checkbox>
-                      </ion-item>
-                    </ion-list>
-                  </ion-card>
-              </ion-col>
-
-              <ion-col col-12 col-md-3>
-                  <ion-card>
-                    <ion-list>
-                      <ion-list-header no-margin>
-                        Thu
-                      </ion-list-header>
-                      <ion-item>
-                        <ion-label>Start Time</ion-label>
-                        <ion-datetime [disabled]="checkboxThu" displayFormat="h:mm A" pickerFormat="h mm A" placeholder="--" ></ion-datetime>
-                      </ion-item>
-                      <ion-item>
-                        <ion-label>End Time</ion-label>
-                        <ion-datetime [disabled]="checkboxThu" displayFormat="h:mm A" pickerFormat="h mm A" placeholder="--" ></ion-datetime>
-                      </ion-item>
-                      <ion-item>
-                        <ion-label>Holiday</ion-label>
-                        <ion-checkbox [(ngModel)]="checkboxThu" [ngModelOptions]="{standalone: true}"></ion-checkbox>
-                      </ion-item>
-                    </ion-list>
-                  </ion-card>
-              </ion-col>
-
-              <ion-col col-12 col-md-3>
-                  <ion-card>
-                    <ion-list>
-                      <ion-list-header no-margin>
-                        Fri
-                      </ion-list-header>
-                      <ion-item>
-                        <ion-label>Start Time</ion-label>
-                        <ion-datetime [disabled]="checkboxFri" displayFormat="h:mm A" pickerFormat="h mm A" placeholder="--" ></ion-datetime>
-                      </ion-item>
-                      <ion-item>
-                        <ion-label>End Time</ion-label>
-                        <ion-datetime [disabled]="checkboxFri" displayFormat="h:mm A" pickerFormat="h mm A" placeholder="--" ></ion-datetime>
-                      </ion-item>
-                      <ion-item>
-                        <ion-label>Holiday</ion-label>
-                        <ion-checkbox [(ngModel)]="checkboxFri" [ngModelOptions]="{standalone: true}"></ion-checkbox>
-                      </ion-item>
-                    </ion-list>
-                  </ion-card>
-              </ion-col>
-
-              <ion-col col-12 col-md-3>
-                  <ion-card>
-                    <ion-list>
-                      <ion-list-header no-margin>
-                        Sat
-                      </ion-list-header>
-                      <ion-item>
-                        <ion-label>Start Time</ion-label>
-                        <ion-datetime [disabled]="checkboxSat" displayFormat="h:mm A" pickerFormat="h mm A" placeholder="--" ></ion-datetime>
-                      </ion-item>
-                      <ion-item>
-                        <ion-label>End Time</ion-label>
-                        <ion-datetime [disabled]="checkboxSat" displayFormat="h:mm A" pickerFormat="h mm A" placeholder="--" ></ion-datetime>
-                      </ion-item>
-                      <ion-item>
-                        <ion-label>Holiday</ion-label>
-                        <ion-checkbox [(ngModel)]="checkboxSat" [ngModelOptions]="{standalone: true}"></ion-checkbox>
-                      </ion-item>
-                    </ion-list>
-                  </ion-card>
-              </ion-col>
-
-              <ion-col col-12 col-md-3>
-                  <ion-card>
-                    <ion-list>
-                      <ion-list-header no-margin>
-                        Sun
-                      </ion-list-header>
-                      <ion-item>
-                        <ion-label>Start Time</ion-label>
-                        <ion-datetime [disabled]="checkboxSun" displayFormat="h:mm A" pickerFormat="h mm A" placeholder="--" ></ion-datetime>
-                      </ion-item>
-                      <ion-item>
-                        <ion-label>End Time</ion-label>
-                        <ion-datetime [disabled]="checkboxSun" displayFormat="h:mm A" pickerFormat="h mm A" placeholder="--" ></ion-datetime>
-                      </ion-item>
-                      <ion-item>
-                        <ion-label>Holiday</ion-label>
-                        <ion-checkbox [(ngModel)]="checkboxSun" [ngModelOptions]="{standalone: true}"></ion-checkbox>
-                      </ion-item>
-                    </ion-list>
-                  </ion-card>
-              </ion-col>
+                  <ion-col *ngFor="let day of daysArray;let indx=index" col-12>
+                    <ion-card margin-horizontal no-margin>
+                      <ion-row>
+                        <ion-col col-6 col-md>
+                          <ion-label padding-left>{{day.value}}</ion-label>
+                        </ion-col>
+                        <ion-col col-6 col-md>
+                          <ion-datetime [(ngModel)]="timeArray[day.key]['start_time']" [ngModelOptions]="{standalone: true}" [disabled]="timeArray[day.key]['holiday']==true" displayFormat="H:mm" pickerFormat="H mm" minuteValues="0,30" placeholder="Start Time"></ion-datetime>
+                        </ion-col>
+                        <ion-col col-12 col-md text-center text-md-left>
+                          <ion-label >to</ion-label>
+                        </ion-col>
+                        <ion-col col-6 col-md>
+                          <!-- <ion-label padding-left >Tue</ion-label> -->
+                          <ion-select [(ngModel)]="timeArray[day.key]['shift_end']" [ngModelOptions]="{standalone: true}" [disabled]="inputsArray['night_shift']!=true || timeArray[day.key]['holiday']==true" col-12  interface="popover">
+                              <ion-option value="{{day.key}}">{{day.value}}</ion-option>
+                              <ion-option *ngIf="(indx!=6)" value="{{daysArray[indx+1].key}}">{{daysArray[indx+1].value}}</ion-option>
+                              <ion-option *ngIf="(indx==6)" value="{{daysArray[0].key}}">{{daysArray[0].value}}</ion-option>
+                          </ion-select>
+                        </ion-col>
+                        <ion-col col-6 col-md>
+                          <ion-datetime [(ngModel)]="timeArray[day.key]['end_time']" [ngModelOptions]="{standalone: true}" [disabled]="timeArray[day.key]['holiday']==true" displayFormat="H:mm" pickerFormat="H mm" minuteValues="0,30" placeholder="End Time"></ion-datetime>
+                        </ion-col>
+                        <ion-col col-12 col-md>
+                          <ion-item>
+                            <ion-label>Holiday</ion-label>
+                            <ion-checkbox [(ngModel)]="timeArray[day.key]['holiday']" [ngModelOptions]="{standalone: true}" (click)="clearTime(day.key);"></ion-checkbox>
+                          </ion-item>
+                        </ion-col>
+                      </ion-row>
+                    </ion-card>
+                  </ion-col>
             </ion-row>
           </ion-grid>
         </ion-card>
 
         <ion-card margin-top>
-          <ion-card-header padding-left class="card-wp-primary">Employee Benefits</ion-card-header>
+          <ion-card-header padding-left class="card-wp-admin">Employee Benefits</ion-card-header>
           <ion-grid>
             <ion-row>
-                <ion-col *ngFor="let employeeBenefit of employeeBenefits;let i=index"  col-12 col-md-4>
+                <ion-col *ngFor="let employeeBenefit of employeeBenefits;"  col-12 col-md-4>
                   <ion-item>
                     <ion-label>{{employeeBenefit.value.text}}</ion-label>
                     <ion-checkbox [(ngModel)]="employeeBenefitsArray[employeeBenefit.key].checkbox" [ngModelOptions]="{standalone: true}" (click)="clearField(employeeBenefit.key);"></ion-checkbox>
@@ -561,7 +466,7 @@
         </ion-card>
 
         <ion-card margin-top>
-          <ion-card-header padding-left class="card-wp-primary">Questions</ion-card-header>
+          <ion-card-header padding-left class="card-wp-admin">Questions</ion-card-header>
           <ion-grid>
             <ion-row radio-group>
               <ion-col col-12 col-md-4>

@@ -31,3 +31,9 @@
 .swiper-wrapper{
 	align-items: center;
 }
+
+@media(max-width: 767px){
+	.mobile-hidden{
+		display: none;
+	}
+}

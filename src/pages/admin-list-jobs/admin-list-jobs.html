@@ -30,64 +30,10 @@
 
 		<ion-content padding>
 
-			<!-- <ion-list>
-				<ion-card padding>
-					<ion-row>
-						<ion-col col-4>
-							Job Role
-						</ion-col>
-						<ion-col col-4>
-							Sub-industry
-						</ion-col>
-						<ion-col col-4>
-							Status
-						</ion-col>
-					</ion-row>
-				</ion-card>
-				<ion-item padding-left padding-right>
-					<ion-row>
-						<ion-col col-4>
-							Vegetarian Cook
-						</ion-col>
-						<ion-col col-4>
-							Cook
-						</ion-col>
-						<ion-col col-4>
-							Draft
-						</ion-col>
-					</ion-row>
-				</ion-item>
-				<ion-item padding-left padding-right>
-					<ion-row>
-						<ion-col col-4>
-							Security guard for XYZ High School
-						</ion-col>
-						<ion-col col-4>
-							Security
-						</ion-col>
-						<ion-col col-4>
-							Published
-						</ion-col>
-					</ion-row>
-				</ion-item>
-				<ion-item padding-left padding-right>
-					<ion-row>
-						<ion-col col-4>
-							Nanny for a new born
-						</ion-col>
-						<ion-col col-4>
-							Maid
-						</ion-col>
-						<ion-col col-4 class="small">
-							Archived
-						</ion-col>
-					</ion-row>
-				</ion-item>
-			</ion-list> -->
 
 			<ion-row>
 				<ion-col>
-					<h6 no-margin>Filters</h6>
+					<h6 no-margin class="mobile-hidden">Filters</h6>
 				</ion-col>
 				<ion-col>
 					<ion-buttons end>
@@ -98,23 +44,21 @@
 				</ion-col>
 			</ion-row>
 
-			<div class="filters flex bottom">
-
+			<div class="filters filters__wrap flex bottom">
+				<div class="filters__search">
+					<ion-searchbar [(ngModel)]="autocomplete.input" (ionInput)="updateSearchResults()" placeholder="Search for a Job Role"></ion-searchbar>
+				</div>
 				<div class="bt-dropdown" [class.open]="filterOptions.role.open" >
 					<!-- .... On click of this button, add class "open" to the parent div "bt-dropdown" .... -->
 					<!-- .... just adding the class will show the dropdown .... -->
 					<button ion-button small color="dark" outline no-margin class="bt-dropdown__btn button-drop" (click)="toggleDrop('role')">
-						Job Role <ion-icon name="ios-arrow-down" class="hidden-xs icon-small"></ion-icon>
+						Sub Industry <ion-icon name="ios-arrow-down" class="hidden-xs icon-small"></ion-icon>
 					</button>
 					<div class="bt-dropdown__dd">
 						<ion-list >
-							<ion-item>
-							  <ion-label no-padding>Role 1</ion-label>
-							  <ion-checkbox ></ion-checkbox>
-							</ion-item>
-							<ion-item>
-							  <ion-label no-padding>Role 2</ion-label>
-							  <ion-checkbox ></ion-checkbox>
+							<ion-item *ngFor="let subind of indSubInd;let ind=index;">
+							  <ion-label no-padding>{{subind.value}}</ion-label>
+							  <ion-checkbox (ionChange)="updateSubIndFilter(subind.key, $event.checked, ind)"></ion-checkbox>
 							</ion-item>
 						</ion-list>
 					</div>
@@ -128,59 +72,41 @@
 					</button>
 					<div class="bt-dropdown__dd">
 						<ion-list >
-							<ion-item>
-							  <ion-label no-padding>Published</ion-label>
-							  <ion-checkbox ></ion-checkbox>
-							</ion-item>
-							<ion-item>
-							  <ion-label no-padding>Draft</ion-label>
-							  <ion-checkbox ></ion-checkbox>
-							</ion-item>
-							<ion-item>
-							  <ion-label no-padding>Archived</ion-label>
-							  <ion-checkbox ></ion-checkbox>
-							</ion-item>
-							<ion-item>
-							  <ion-label no-padding>Pending Review</ion-label>
-							  <ion-checkbox ></ion-checkbox>
+							<ion-item *ngFor="let jobStatus of allJobStatus;let ind=index;">
+							  <ion-label no-padding>{{jobStatus.value}}</ion-label>
+							  <ion-checkbox (ionChange)="updateStatusFilter(jobStatus.key, $event.checked, ind)"></ion-checkbox>
 							</ion-item>
 						</ion-list>
 					</div>
 				</div>
 
 
-				<button ion-button small class="btn-apply" clear no-margin>Apply</button>
-				<button ion-button small color="secondary" no-margin class="btn-reset" clear><ion-icon name="md-refresh" class="hidden-xs"></ion-icon><span class="visible-xs">Reset</span></button>
+				<button ion-button small class="btn-apply" clear no-margin (click)="applyFilter()">Apply</button>
+				<button ion-button small color="secondary" no-margin class="btn-reset" clear (click)="resetFilter()"><span class="visible-xs">Reset</span> <ion-icon name="md-refresh" class="hidden-xs icon-small"></ion-icon></button>
 			</div>
 
-			<div class="tabular" margin-top>
-				<div class="tabular__header flex hidden-xs">
-					<div class="tabular__cell cell-half">Job Role</div>
-					<div class="tabular__cell cell-one-fourth">Sub-industry</div>
-					<div class="tabular__cell cell-one-fourth">Status</div>
-				</div>
+			<ion-card padding>
+				<div class="tabular" margin-top>
+					<div class="tabular__header flex hidden-xs">
+						<div class="tabular__cell cell-half">
+							Job Role
+						</div>
+						<div class="tabular__cell cell-one-fourth">Sub-industry
+								<!-- <ion-icon name="funnel" class="bt-dropdown__btn button-drop" (click)="toggleDrop('status')"></ion-icon> -->
+						</div>
+						<div class="tabular__cell cell-one-fourth">Status
 
-				<div class="tabular__row flex">
-					<div class="tabular__cell cell-half">Vegetarian Cook</div>
-					<div class="tabular__cell cell-one-fourth">Cook</div>
-					<div class="tabular__cell cell-one-fourth">Draft</div>
+						</div>
+					</div>
+					{{jobs}}
+				<div class="tabular__row flex" *ngFor="let job of jobs">
+					<div class="tabular__cell cell-half"><a href="#/admin/jobs/edit/{{job.key}}">{{job.designation}}</a></div>
+					<div class="tabular__cell cell-one-fourth">{{job.sub_industry}}</div>
+					<div class="tabular__cell cell-one-fourth">{{jobStatuses[job.value['job_status']]}}</div>
 				</div>
-				<div class="tabular__row flex">
-					<div class="tabular__cell cell-half">Security guard for XYZ High School</div>
-					<div class="tabular__cell cell-one-fourth">Security</div>
-					<div class="tabular__cell cell-one-fourth">Published</div>
 				</div>
-				<div class="tabular__row flex">
-					<div class="tabular__cell cell-half">Nanny for a new born</div>
-					<div class="tabular__cell cell-one-fourth">Maid</div>
-					<div class="tabular__cell cell-one-fourth">Archived</div>
-				</div>
-				<div class="tabular__row flex">
-					<div class="tabular__cell cell-half">House Maid</div>
-					<div class="tabular__cell cell-one-fourth">Maid</div>
-					<div class="tabular__cell cell-one-fourth">Pending Review</div>
-				</div>
-			</div>
+			</ion-card>
+
 
 
 		</ion-content>
