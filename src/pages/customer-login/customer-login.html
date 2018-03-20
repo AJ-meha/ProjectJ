@@ -14,15 +14,24 @@
 
 
 <ion-content padding>
-  <div id="recaptcha-container"></div>
+  <form [formGroup]="loginForm">
+    <div id="recaptcha-container"></div>
 
-  <ion-item>
-    <ion-label stacked>Phone Number</ion-label>
-    <ion-input type="number" [(ngModel)]="phoneNumber"></ion-input>
-  </ion-item>
+    <ion-item>
+      <ion-label stacked>Phone Number</ion-label>
+    </ion-item>
+    <ion-item>
+      <ion-label item-start>{{mobile_code}}</ion-label>
+      <ion-input #mobile formControlName="mobile" type="number" [(ngModel)]="phoneNumber"></ion-input>
+    </ion-item>
+    <ion-item class="error-message" *ngIf="!loginForm.controls.mobile.valid  &&
+      loginForm.controls.mobile.dirty">
+      <p>Please enter a valid number.</p>
+    </ion-item>
 
-  <button ion-button id="sign-in-button" (click)="signIn(phoneNumber)">
-    Sign In
-  </button>
-
+    <button ion-button id="sign-in-button" (click)="signIn(phoneNumber)">
+      Sign In
+    </button>
+  
+  </form>
 </ion-content>

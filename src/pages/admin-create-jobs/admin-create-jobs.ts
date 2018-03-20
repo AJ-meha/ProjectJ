@@ -28,12 +28,13 @@ import { AdminListJobsPage } from '../admin-list-jobs/admin-list-jobs'
   templateUrl: 'admin-create-jobs.html',
 })
 export class AdminCreateJobsPage {
-  inputsArray = {application_sent_mail:'',mobile:'',workplace:'',workplace_address:'',workplace_name:'',designation:'',industry:'',salary_amount:'',salary_unit:'',sub_industry:'',type:'',employment_type:'',additional_info:'',night_shift:false,question:"no"};
+  inputsArray = {application_sent_mail:'',mobile:'',workplace:'',workplace_address:'',workplace_name:'',workplace_latitude:'',workplace_longitude:'',designation:'',industry:'',salary_amount:'',salary_unit:'',sub_industry:'',type:'',employment_type:'',additional_info:'',night_shift:false,question:"no"};
   timeArray = {mon:{start_time:"",end_time:"",holiday:false,shift_end:"mon"},tue:{start_time:"",end_time:"",holiday:false,shift_end:"tue"},wed:{start_time:"",end_time:"",holiday:false,shift_end:"wed"},thu:{start_time:"",end_time:"",holiday:false,shift_end:"thu"},fri:{start_time:"",end_time:"",holiday:false,shift_end:"fri"},sat:{start_time:"",end_time:"",holiday:false,shift_end:"sat"},sun:{start_time:"",end_time:"",holiday:false,shift_end:"sun"}};
   daysArray = GlobalVarsProvider.daysArray;
   employeeBenefitsArray: Array<any> = [];
   questionsArray: Array<any> = [{question_name:"",option_type:"radio",options:[{val:""}]}];
   max_option = GlobalVarsProvider.max_option;
+  mobile_code = GlobalVarsProvider.mobile_code;
   jobsForm:FormGroup;
   contactVias: Array<any> = [];
   workplaceTypes: Array<any> = [];
@@ -66,7 +67,7 @@ export class AdminCreateJobsPage {
       workplace_address:['',Validators.compose([Validators.required])],
       workplace_latitude:['',Validators.compose([Validators.required])],
       workplace_longitude:['',Validators.compose([Validators.required])],
-      mobile:['',Validators.compose([Validators.required,Validators.pattern('(\\+852[- ]?)\\d{10}$')])],
+      mobile:['',Validators.compose([Validators.required,Validators.pattern('\\d{10}$')])],
       designation:['',Validators.compose([Validators.required])],
       type:['',Validators.compose([Validators.required])],
       salary_amount:['',Validators.compose([Validators.required,Validators.pattern('[1-9]+[0-9]*')])],
@@ -246,8 +247,6 @@ export class AdminCreateJobsPage {
       firebase.database().ref('jobs_contact_workplace/'+ival.jobs_contact_workplace_id).on('value', itemSnapshot3 => {
         itemSnapshot3.forEach( itemSnap3 => {
           let i3val=itemSnap3.val();
-          console.log("===zzz===");
-          console.log(itemSnap3.key);
           if(itemSnap3.key!='contact_via')
           {
             this.inputsArray[itemSnap3.key]=i3val;
@@ -256,17 +255,13 @@ export class AdminCreateJobsPage {
           {
             this.selectedContactViaArray=[];
             for (let contact in this.contactVias) {
-              console.log("===z1z===");
               this.contactVias[contact].checked=false;
             }
             for (let val in i3val) {
-              console.log("===z2z===");
               this.selectedContactViaArray.push(i3val[val]);
               for (let contact in this.contactVias) {
-                console.log("===z3z===");
                 if(this.contactVias[contact].key==i3val[val])
                 {
-                  console.log("===z4z===");
                   this.contactVias[contact].checked=true;
                 }
               }
@@ -397,7 +392,11 @@ export class AdminCreateJobsPage {
       return false;
     }
 
-    if(form.value.application_sent_mail!='' && !form.controls.application_sent_mail.valid){
+    if(!form.controls.application_sent_mail.valid){
+      return false;
+    }
+
+    if(!form.controls.designation.valid){
       return false;
     }
 
@@ -418,6 +417,8 @@ export class AdminCreateJobsPage {
     let workplace=form.value.workplace
     let workplace_name=form.value.workplace_name
     let workplace_address=form.value.workplace_address
+    let workplace_latitude=form.value.workplace_latitude
+    let workplace_longitude=form.value.workplace_longitude
     let mobile=form.value.mobile
     let designation=form.value.designation
     let type=form.value.type
@@ -479,6 +480,8 @@ export class AdminCreateJobsPage {
             firebase.database().ref('jobs_contact_workplace/'+idArr[itemSnap]+'/workplace').set(workplace);
             firebase.database().ref('jobs_contact_workplace/'+idArr[itemSnap]+'/workplace_address').set(workplace_address);
             firebase.database().ref('jobs_contact_workplace/'+idArr[itemSnap]+'/workplace_name').set(workplace_name);
+            firebase.database().ref('jobs_contact_workplace/'+idArr[itemSnap]+'/workplace_latitude').set(workplace_latitude);
+            firebase.database().ref('jobs_contact_workplace/'+idArr[itemSnap]+'/workplace_longitude').set(workplace_longitude);
           }
           if(itemSnap=='job_work_schedule_id')
           {
@@ -495,12 +498,12 @@ export class AdminCreateJobsPage {
           }
         }
         this.commonfunc.presentToast("Job Updated Successfully!!!");
-        form.reset();
+        //form.reset();
       });
     }
     else
     {
-      let jobs_contact_workplace_ref=this.af.list('jobs_contact_workplace').push({ application_sent_mail,workplace,workplace_name,workplace_address,mobile,contact_via})
+      let jobs_contact_workplace_ref=this.af.list('jobs_contact_workplace').push({ application_sent_mail,workplace,workplace_name,workplace_address,workplace_latitude,workplace_longitude,mobile,contact_via})
       let job_details_ref=this.af.list('job_details').push({ designation,type,employment_type,salary_amount,salary_unit,industry,sub_industry})
       let job_emp_benefits_ref=this.af.list('job_employee_benefits').push({employee_benefits,additional_info})
       let job_work_schedule_ref=this.af.list('job_work_schedule').push(weekArr)
@@ -520,7 +523,7 @@ export class AdminCreateJobsPage {
       let job_status='draft'
       this.af.list('jobs').push({jobs_contact_workplace_id,job_details_id,job_emp_benefits_id,job_work_schedule_id,job_questions_id,job_status})
       this.commonfunc.presentToast("Job added Successfully!!!");
-      form.reset();
+      //form.reset();
     }
 
   }
