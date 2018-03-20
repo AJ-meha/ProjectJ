@@ -1,4 +1,11 @@
 page-onboarding {
+	@media(min-width: 768px){
+		max-width: 550px;
+		.scroll-content{
+			overflow-y: auto;
+		}
+	}
+
 	.slide-zoom {
 	  height: 100%;
 	  background-color: #fff;
