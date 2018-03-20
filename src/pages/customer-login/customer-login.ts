@@ -5,6 +5,8 @@ import { CustomerAuthProvider } from '../../providers/customer-auth/customer-aut
 import { CustomerSingleJobViewPage } from '../customer-single-job-view/customer-single-job-view';
 import { CustomerJobListingPage } from '../customer-job-listing/customer-job-listing';
 import { CustomerDashboardPage } from '../customer-dashboard/customer-dashboard';
+import { GlobalVarsProvider } from '../../providers/global-vars/global-vars';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 /**
  * Generated class for the CustomerLoginPage page.
  *
@@ -18,9 +20,15 @@ import { CustomerDashboardPage } from '../customer-dashboard/customer-dashboard'
   templateUrl: 'customer-login.html',
 })
 export class CustomerLoginPage {
+  loginForm:FormGroup;
+  mobile_code = GlobalVarsProvider.mobile_code;
 
   public recaptchaVerifier:firebase.auth.RecaptchaVerifier;
-  constructor(public navCtrl: NavController, public navParams: NavParams,public alertCtrl:AlertController,public appCtrl: App,public authData:CustomerAuthProvider) {
+  constructor(public navCtrl: NavController, public navParams: NavParams,public alertCtrl:AlertController,public appCtrl: App,public authData:CustomerAuthProvider,public formBuilder:FormBuilder) {
+
+    this.loginForm=formBuilder.group({
+      mobile:['',Validators.compose([Validators.required,Validators.pattern('\\d{10}$')])]
+    });
   }
 
   ionViewDidLoad() {
@@ -37,8 +45,11 @@ export class CustomerLoginPage {
   }
 
   signIn(phoneNumber: number){
+    if(!this.loginForm.valid){
+      return false;
+    }
     const appVerifier = this.recaptchaVerifier;
-    const phoneNumberString = "+" + phoneNumber;
+    const phoneNumberString = GlobalVarsProvider.mobile_code + phoneNumber;
     let self=this;
     firebase.auth().signInWithPhoneNumber(phoneNumberString, appVerifier)
       .then( confirmationResult => {
