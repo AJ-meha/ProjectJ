@@ -117,10 +117,15 @@ export class AdminListJobsPage {
             designation=mediaSnap.val().designation
             let sub_industry=mediaSnap.val().sub_industry
             let industry=mediaSnap.val().industry
-            self.jobDetailsRef.child('industry_subindustry').child(industry).child(sub_industry).once('value').then( function(subindSnap) {
-              // console.log(subindSnap.val())
-              self.jobs.push({'key':itemSnap.key,'value':itemSnap.val(),'designation':designation,'industry':industry,'sub_industry':subindSnap.val()})
-            });
+            if(sub_industry==""){
+              self.jobs.push({'key':itemSnap.key,'value':itemSnap.val(),'designation':designation,'industry':industry,'sub_industry':"---"})
+            }
+            else{
+              self.jobDetailsRef.child('industry_subindustry').child(industry).child(sub_industry).once('value').then( function(subindSnap) {
+                // console.log(subindSnap.val())
+                self.jobs.push({'key':itemSnap.key,'value':itemSnap.val(),'designation':designation,'industry':industry,'sub_industry':subindSnap.val()})
+              });
+            }
             
         });
         // self.jobs.push({'key':itemSnap.key,'value':itemSnap.val()})
@@ -183,13 +188,11 @@ export class AdminListJobsPage {
           designation=mediaSnap.val().designation
           let sub_industry=mediaSnap.val().sub_industry
           let industry=mediaSnap.val().industry
-          self.jobDetailsRef.child('industry_subindustry').child(industry).child(sub_industry).once('value').then( function(subindSnap) {
-            // console.log(designation.indexOf(self.searchstring))
-            
+          if(sub_industry==""){
             if(self.searchstring!=""){
               
               if(designation.toLowerCase().indexOf(self.searchstring.toLowerCase()) != -1){
-                self.jobs.push({'key':itemSnap.key,'value':itemSnap.val(),'designation':designation,'industry':industry,'sub_industry':subindSnap.val()})
+                self.jobs.push({'key':itemSnap.key,'value':itemSnap.val(),'designation':designation,'industry':industry,'sub_industry':"---"})
               }
               
             }
@@ -197,23 +200,47 @@ export class AdminListJobsPage {
              
               if(self.selectedStatusArray.length>0 || self.selectedSubIndArray.length>0){
                 if((self.selectedStatusArray.length>0 && self.selectedSubIndArray.length<=0) && (self.selectedStatusArray.indexOf(itemSnap.val().job_status) > -1)){
-                  self.jobs.push({'key':itemSnap.key,'value':itemSnap.val(),'designation':designation,'industry':industry,'sub_industry':subindSnap.val()})
-                }
-                else if((self.selectedStatusArray.length<=0 && self.selectedSubIndArray.length>0) && (self.selectedSubIndArray.indexOf(sub_industry) > -1)){
-                  self.jobs.push({'key':itemSnap.key,'value':itemSnap.val(),'designation':designation,'industry':industry,'sub_industry':subindSnap.val()})
-                }
-                else if((self.selectedStatusArray.length>0 && self.selectedSubIndArray.length>0) && (self.selectedSubIndArray.indexOf(sub_industry) > -1) && (self.selectedStatusArray.indexOf(itemSnap.val().job_status) > -1)){
-                  self.jobs.push({'key':itemSnap.key,'value':itemSnap.val(),'designation':designation,'industry':industry,'sub_industry':subindSnap.val()})
+                  self.jobs.push({'key':itemSnap.key,'value':itemSnap.val(),'designation':designation,'industry':industry,'sub_industry':"---"})
                 }
               }
               else{
-                self.jobs.push({'key':itemSnap.key,'value':itemSnap.val(),'designation':designation,'industry':industry,'sub_industry':subindSnap.val()})
+                self.jobs.push({'key':itemSnap.key,'value':itemSnap.val(),'designation':designation,'industry':industry,'sub_industry':"---"})
               }
             }
-            
-            //
-            
-          });
+          }
+          else{
+            self.jobDetailsRef.child('industry_subindustry').child(industry).child(sub_industry).once('value').then( function(subindSnap) {
+              // console.log(designation.indexOf(self.searchstring))
+              
+              if(self.searchstring!=""){
+                
+                if(designation.toLowerCase().indexOf(self.searchstring.toLowerCase()) != -1){
+                  self.jobs.push({'key':itemSnap.key,'value':itemSnap.val(),'designation':designation,'industry':industry,'sub_industry':subindSnap.val()})
+                }
+                
+              }
+              else{
+               
+                if(self.selectedStatusArray.length>0 || self.selectedSubIndArray.length>0){
+                  if((self.selectedStatusArray.length>0 && self.selectedSubIndArray.length<=0) && (self.selectedStatusArray.indexOf(itemSnap.val().job_status) > -1)){
+                    self.jobs.push({'key':itemSnap.key,'value':itemSnap.val(),'designation':designation,'industry':industry,'sub_industry':subindSnap.val()})
+                  }
+                  else if((self.selectedStatusArray.length<=0 && self.selectedSubIndArray.length>0) && (self.selectedSubIndArray.indexOf(sub_industry) > -1)){
+                    self.jobs.push({'key':itemSnap.key,'value':itemSnap.val(),'designation':designation,'industry':industry,'sub_industry':subindSnap.val()})
+                  }
+                  else if((self.selectedStatusArray.length>0 && self.selectedSubIndArray.length>0) && (self.selectedSubIndArray.indexOf(sub_industry) > -1) && (self.selectedStatusArray.indexOf(itemSnap.val().job_status) > -1)){
+                    self.jobs.push({'key':itemSnap.key,'value':itemSnap.val(),'designation':designation,'industry':industry,'sub_industry':subindSnap.val()})
+                  }
+                }
+                else{
+                  self.jobs.push({'key':itemSnap.key,'value':itemSnap.val(),'designation':designation,'industry':industry,'sub_industry':subindSnap.val()})
+                }
+              }
+              
+              //
+              
+            });
+          }
           
       });
       // self.jobs.push({'key':itemSnap.key,'value':itemSnap.val()})

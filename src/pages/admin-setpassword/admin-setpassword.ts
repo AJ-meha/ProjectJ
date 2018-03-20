@@ -30,7 +30,7 @@ export class AdminSetpasswordPage {
 
   resetForm:FormGroup;
 
-  public usercheck: firebase.database.Reference = firebase.database().ref('users');
+  public usercheck: firebase.database.Reference = firebase.database().ref('admin_user');
 
   emailid:any;
   uid:any;
@@ -134,7 +134,7 @@ export class AdminSetpasswordPage {
     }
     else{
       let passwordhash = Md5.hashStr(this.resetForm.value.password)
-      firebase.database().ref('users/'+this.key+'/password').set(passwordhash);
+      firebase.database().ref('admin_user/'+this.key+'/password').set(passwordhash);
       this.commonfunc.presentToast("Password Set Successfully!!!");
       this.resetForm.reset();
     }
