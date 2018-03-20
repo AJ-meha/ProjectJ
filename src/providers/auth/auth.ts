@@ -15,7 +15,7 @@ import {Md5} from 'ts-md5/dist/md5';
 @Injectable()
 export class AuthProvider {
 
-  public passwordcheck: firebase.database.Reference = firebase.database().ref('users');
+  public passwordcheck: firebase.database.Reference = firebase.database().ref('admin_user');
 
   HAS_LOGGED_IN = 'hasLoggedIn';
 
