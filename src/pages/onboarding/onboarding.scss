@@ -12,18 +12,28 @@ page-onboarding {
 	}
 
 	.slide-title {
-	  margin-top: 2.8rem;
+	  margin-top: 3.0rem;
+	  margin-bottom: 0.8rem;
 	  color: $dark-text;
+	  font-size: 17.2px;
 	}
 
 	.slide-image {
 	  // max-height: 50%;
-	  max-width: 86%;
+	  	max-width: 232px;
+	    max-width: 61.6%;
+	    margin-bottom: 1rem;
 	  // margin: 18px 0;
+	  &.top-space{
+	  	max-width: 306px;
+	  	max-width: 81.6%;
+	  	margin-top: 55px;
+	  	margin-bottom: 0;
+	  }
 	}
 
 	p{
-		font-size: 15px;
+		font-size: 15.1px;
 		color: $light-text;
 		font-weight: 500;
 		max-width: 65%;
@@ -36,7 +46,8 @@ page-onboarding {
 	.swiper-pagination-bullet{
 		width: 6px;
 		height: 6px;
-		background-color: $dark-text;
+		background-color: $dark-gray-icons;
+		opacity: 1;
 		&-active{
 			background-color: $light-text;
 		}
