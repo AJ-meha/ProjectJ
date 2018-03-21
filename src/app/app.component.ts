@@ -31,8 +31,8 @@ export class MyApp {
     this.pages=[
       {title:'Dashboard',component:AdminDashboardPage},
       {title:'Add Job',component:AdminCreateJobsPage},
-      {title:'View Jobs',component:TabsPage},
       {title:'List Jobs',component:AdminListJobsPage},
+      {title:'View Jobs',component:CustomerDashboardPage},
       {title:'Onboarding (WIP)',component:OnboardingPage}
     ];
     console.log("loc="+window.location.href)
