@@ -98,7 +98,7 @@ export class ImageProvider {
           // upload success
           upload.url = uploadTask.snapshot.downloadURL
           upload.name = upload.file.name
-          this.saveFileData(upload)
+          upload.fileId=this.saveFileData(upload)
           resolve(uploadTask.snapshot);
         }
       );
@@ -109,7 +109,7 @@ export class ImageProvider {
 
   // Writes the file details to the realtime db
   private saveFileData(upload: Upload) {
-    this.db.list(`${this.basePath}/`).push(upload);
+    return this.db.list(`${this.basePath}/`).push(upload).key;
   }
 
 }

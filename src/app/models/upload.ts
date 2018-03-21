@@ -7,6 +7,7 @@ export class Upload {
     progress:number;
     createdAt: Date = new Date();
     thumb:string;
+    fileId:string;
   
     constructor(file:File) {
       this.file = file;

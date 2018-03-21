@@ -22,8 +22,8 @@ const sharp = require('sharp')
 const _ = require('lodash');
 const path = require('path');
 const os = require('os');
-// const admin=require('firebase-admin')
-// admin.initializeApp(functions.config().firebase)
+const admin=require('firebase-admin')
+admin.initializeApp(functions.config().firebase)
 // [END import]
 
 // [START generateThumbnail]
@@ -36,7 +36,7 @@ exports.generateThumbnail = functions.storage.object().onChange((event) => {
     const object = event.data; // The Storage object.
 
     console.log(object)
-    // const ref=admin.database().ref()
+    const ref=admin.database().ref()
     const fileBucket = object.bucket; // The Storage bucket that contains the file.
     const filePath = object.name; // File path in the bucket.
     const contentType = object.contentType; // File content type.
@@ -69,7 +69,7 @@ exports.generateThumbnail = functions.storage.object().onChange((event) => {
     }).then(() => {
   
       _.each(SIZES, (size) => {
-  
+        console.log("sizes=="+size)
         let newFileName = `${fileName}_thumb.png`
         let newFileTemp = path.join(os.tmpdir(), newFileName);
         let newFilePath = `thumbs/${size}/${newFileName}`
@@ -82,28 +82,47 @@ exports.generateThumbnail = functions.storage.object().onChange((event) => {
             }
             bucket.upload(newFileTemp, {
               destination: newFilePath
-            })
+            }).then(()=>{
+              const thumbFile=bucket.file(newFilePath);
+              const config={
+                  action:'read',
+                  expires:'03-09-2491'
+              };
+              return ref.child('uploadThumbs').push({path:fileName,thumburl:newFilePath})
+              // return Promise.all([
+              //     thumbFile.getSignedUrl(config),
+              //     file.getSignedUrl(config)
+              // ])
+              // .then(results=>{
+              //   const thumbResult=results[0]
+              //   const originalResult=results[1]
+              //   const thumbFileUrl=thumbResult[0]
+              //   const fileUrl=originalResult[0]
+              //   console.log(fileUrl+"=="+thumbFileUrl)
+              //   return ref.child('uploadThumbs').push({path:fileName,thumburl:thumbFileUrl})
+            // }).catch(err => console.error(err));
+          }).catch(err => console.error(err));
                  
                 
   
           })
-        //   .then(()=>{
-        //     const thumbFile=bucket.file(newFilePath);
-        //     const config={
-        //         action:'read',
-        //         expires:'03-09-2491'
-        //     };
-        //     return Promise.all([
-        //         thumbFile.getSignedUrl(config),
-        //         file.getSignedUrl(config)
-        //     ])
-        // }).then(results=>{
-        //         const thumbResult=results[0]
-        //         const originalResult=results[1]
-        //         const thumbFileUrl=thumbResult[0]
-        //         const fileUrl=originalResult[0]
-        //         return ref.child('uploadThumbs').push({path:fileUrl,thumburl:thumbFileUrl})
-        //     }).catch(err => console.error(err));
+          // .then(()=>{
+          //       const thumbFile=bucket.file(newFilePath);
+          //       const config={
+          //           action:'read',
+          //           expires:'03-09-2491'
+          //       };
+          //       return thumbFile.then(signedUrls => {
+          //         // signedUrls[0] contains the file's public URL
+          //         file.getSignedUrl(config).then(filesignedUrls => {
+          //           // signedUrls[0] contains the file's public URL
+          //           const thumbFileUrl=signedUrls[0]
+          //           const fileUrl=filesignedUrls[0]
+          //           return ref.child('uploadThumbs').push({path:fileUrl,thumburl:thumbFileUrl})
+          //         });
+          //       });
+          //   }).catch(err => console.error(err));
+
   
       })
       return true;

@@ -115,14 +115,13 @@ export class AdminListJobsPage {
         self.jobDetailsRef.child('job_details/').child(job_details_id).once('value').then( function(mediaSnap) {
             // console.log(mediaSnap.val());
             designation=mediaSnap.val().designation
-            // let sub_industry=mediaSnap.val().sub_industry
-            // let industry=mediaSnap.val().industry
-            // self.jobDetailsRef.child('industry_subindustry').child(industry).child(sub_industry).once('value').then( function(subindSnap) {
-            //   // console.log(subindSnap.val())
-            //   self.jobs.push({'key':itemSnap.key,'value':itemSnap.val(),'designation':designation,'industry':industry,'sub_industry':subindSnap.val()})
-            // });
-            self.jobs.push({'key':itemSnap.key,'value':itemSnap.val(),'designation':designation,'industry':'','sub_industry':''})
-            
+            let sub_industry=mediaSnap.val().sub_industry
+            let industry=mediaSnap.val().industry
+            self.jobDetailsRef.child('industry_subindustry').child(industry).child(sub_industry).once('value').then( function(subindSnap) {
+              // console.log(subindSnap.val())
+              self.jobs.push({'key':itemSnap.key,'value':itemSnap.val(),'designation':designation,'industry':industry,'sub_industry':subindSnap.val()})
+            });
+           
         });
         // self.jobs.push({'key':itemSnap.key,'value':itemSnap.val()})
         return false;

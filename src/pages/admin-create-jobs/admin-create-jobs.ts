@@ -54,7 +54,7 @@ export class AdminCreateJobsPage {
   public salaryUnitRef: firebase.database.Reference = firebase.database().ref('salary_unit');
   public industryRef: firebase.database.Reference = firebase.database().ref('industry');
   public employeeBenefitsRef: firebase.database.Reference = firebase.database().ref('employee_benefits');
-
+  public dbRef: firebase.database.Reference = firebase.database().ref();
   public savedJobsRef: firebase.database.Reference = firebase.database().ref('jobs');
   public jobImage  	   : any;
   
@@ -205,6 +205,23 @@ export class AdminCreateJobsPage {
     // for (let contactVia of this.contactViaList.controls) {
     //   console.log(contactVia)
     // }
+
+    let self=this
+    this.dbRef.child('uploadThumbs/').on("child_added", function(snapshot, prevChildKey) {
+      var newchildthumb = snapshot.val();
+      console.log("-----CHILD ADDED----")
+      console.log(newchildthumb);
+      // console.log(self.currentUpload.name);
+      if(typeof self.currentUpload !== 'undefined'){
+        firebase.storage().ref().child('/thumbs/64/'+self.currentUpload.name+'_thumb.png').getDownloadURL().then(function(url) {
+          console.log("URL==="+url);
+          self.currentUpload.thumb=url;
+        }).catch(function(error) {
+          // Handle any errors here
+        });
+      }
+      
+    });
 
   }
 
@@ -396,6 +413,11 @@ export class AdminCreateJobsPage {
         let idArr=itemSnapshot.val();
         console.log("id==")
         console.log(idArr)
+
+        if(typeof this.currentUpload !== 'undefined'){
+          firebase.database().ref('jobs/'+this.navParams.get('id')+'/image').set(this.currentUpload.fileId);
+        }
+
         this._IMG.uploadImage(this.jobImage)
          .then((snapshot : any) =>
          {
