@@ -60,6 +60,7 @@ export class AdminCreateJobsPage {
   
   selectedFiles: FileList;
   currentUpload: Upload;
+  existingUpload:string;
   
   constructor(public navCtrl: NavController, public navParams: NavParams,private af: AngularFireDatabase,public formBuilder:FormBuilder,public commonfunc:CommonFunctionsProvider,private _IMG: ImageProvider) {
 
@@ -216,6 +217,7 @@ export class AdminCreateJobsPage {
         firebase.storage().ref().child('/thumbs/64/'+self.currentUpload.name+'_thumb.png').getDownloadURL().then(function(url) {
           console.log("URL==="+url);
           self.currentUpload.thumb=url;
+          self.existingUpload='';
         }).catch(function(error) {
           // Handle any errors here
         });
@@ -228,13 +230,22 @@ export class AdminCreateJobsPage {
   getData(){
     console.log("===getData===")
     let redirect=0;
+    let self=this
     this.savedJobsRef.on('value', itemSnapshot => {
       itemSnapshot.forEach( itemSnap => {
         let ival=itemSnap.val()
-        
+        // console.log("ival=====")
+        // console.log(ival)
         if(itemSnap.key==this.navParams.get('id'))
         {
           redirect=1;
+
+          if(typeof ival.image !== 'undefined'){
+            firebase.database().ref('uploads/'+ival.image).once('value').then( function(mediaSnap) {
+              self.existingUpload=mediaSnap.val().url
+              console.log("image==="+self.existingUpload)
+            });
+          }
           firebase.database().ref('job_details/'+ival.job_details_id).on('value', itemSnapshot1 => {
             itemSnapshot1.forEach( itemSnap1 => {
               console.log(itemSnap1.key);
@@ -417,14 +428,6 @@ export class AdminCreateJobsPage {
         if(typeof this.currentUpload !== 'undefined'){
           firebase.database().ref('jobs/'+this.navParams.get('id')+'/image').set(this.currentUpload.fileId);
         }
-
-        this._IMG.uploadImage(this.jobImage)
-         .then((snapshot : any) =>
-         {
-            let uploadedImage : any = snapshot.downloadURL;
-
-            
-         });
         for (let itemSnap in idArr) {
           if(itemSnap=='job_details_id')
           {
@@ -548,12 +551,13 @@ export class AdminCreateJobsPage {
     let self=this;
     this._IMG.pushUpload(this.currentUpload).then((snapshot : any) =>
     {
-       firebase.storage().ref().child('/thumbs/64/'+self.currentUpload.name+'_thumb.png').getDownloadURL().then(function(url) {
-        console.log("URL==="+url);
-        self.currentUpload.thumb=url;
-      }).catch(function(error) {
-        // Handle any errors here
-      });
+      //  firebase.storage().ref().child('/thumbs/64/'+self.currentUpload.name+'_thumb.png').getDownloadURL().then(function(url) {
+      //   console.log("URL==="+url);
+      //   self.currentUpload.thumb=url;
+      //   self.existingUpload='';
+      // }).catch(function(error) {
+      //   // Handle any errors here
+      // });
        
     });
     

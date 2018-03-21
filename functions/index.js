@@ -64,16 +64,19 @@ exports.generateThumbnail = functions.storage.object().onChange((event) => {
     const bucket = gcs.bucket(fileBucket);
     const tempFilePath = path.join(os.tmpdir(), fileName);
     const file=bucket.file(filePath);
+    let thumbsArr=[];
+    let counter=0;
     return bucket.file(filePath).download({
       destination: tempFilePath
     }).then(() => {
   
       _.each(SIZES, (size) => {
-        console.log("sizes=="+size)
+        console.log("sizes=="+size);
+        counter +=1;
         let newFileName = `${fileName}_thumb.png`
         let newFileTemp = path.join(os.tmpdir(), newFileName);
         let newFilePath = `thumbs/${size}/${newFileName}`
-  
+        thumbsArr.push(newFilePath)
         sharp(tempFilePath)
           .resize(size, null)
           .toFile(newFileTemp, (err, info) => {
@@ -88,7 +91,10 @@ exports.generateThumbnail = functions.storage.object().onChange((event) => {
                   action:'read',
                   expires:'03-09-2491'
               };
-              return ref.child('uploadThumbs').push({path:fileName,thumburl:newFilePath})
+              if(SIZES.length === counter)
+                return ref.child('uploadThumbs').push({path:fileName,thumburl:thumbsArr})
+              else
+                return true;
               // return Promise.all([
               //     thumbFile.getSignedUrl(config),
               //     file.getSignedUrl(config)

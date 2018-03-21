@@ -156,8 +156,9 @@
                     [(ngModel)]="jobImage">
                 <img [src]="jobImage"> -->
                 <div *ngIf="currentUpload"> <img [src]="currentUpload?.thumb"></div>
+                <div *ngIf="existingUpload"> <img [src]="existingUpload"></div>
                 <label>
-                  <input type="file" (change)="detectFiles($event)">
+                  <input accept="image/*" type="file" (change)="detectFiles($event)">
                </label>
                     <button margin-top ion-button small [disabled]="!selectedFiles"
                     (click)="uploadSingle()">
