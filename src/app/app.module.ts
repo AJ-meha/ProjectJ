@@ -36,7 +36,9 @@ import { CustomerLoginPage } from '../pages/customer-login/customer-login';
 import { CustomerSingleJobViewPage } from '../pages/customer-single-job-view/customer-single-job-view';
 import { CustomerJobListingPage } from '../pages/customer-job-listing/customer-job-listing';
 import { CustomerDashboardPage } from '../pages/customer-dashboard/customer-dashboard';
-
+import { ImageProvider } from '../providers/image/image';
+import { Camera } from '@ionic-native/camera';
+import { PreloaderProvider } from '../providers/preloader/preloader';
 
 // AF2 Settings
 const firebaseConfig = {
@@ -115,12 +117,15 @@ export const deepLinkConfig: DeepLinkConfig = {
   providers: [
     StatusBar,
     SplashScreen,
+    Camera,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     CommonFunctionsProvider,
     GlobalVarsProvider,
     AuthProvider,
     JobsProvider,
-    CustomerAuthProvider
+    CustomerAuthProvider,
+    ImageProvider,
+    PreloaderProvider
   ]
 })
 export class AppModule {}

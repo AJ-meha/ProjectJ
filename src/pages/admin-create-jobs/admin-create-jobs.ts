@@ -9,6 +9,8 @@ import { TabsPage } from '../tabs/tabs';
 
 import { EmailValidator } from '../../validators/email';
 import { AdminListJobsPage } from '../admin-list-jobs/admin-list-jobs'
+import { ImageProvider } from '../../providers/image/image';
+import { Upload } from '../../app/models/upload';
 
 /**
  * Generated class for the AdminCreateJobsPage page.
@@ -54,8 +56,12 @@ export class AdminCreateJobsPage {
   public employeeBenefitsRef: firebase.database.Reference = firebase.database().ref('employee_benefits');
 
   public savedJobsRef: firebase.database.Reference = firebase.database().ref('jobs');
+  public jobImage  	   : any;
   
-  constructor(public navCtrl: NavController, public navParams: NavParams,private af: AngularFireDatabase,public formBuilder:FormBuilder,public commonfunc:CommonFunctionsProvider) {
+  selectedFiles: FileList;
+  currentUpload: Upload;
+  
+  constructor(public navCtrl: NavController, public navParams: NavParams,private af: AngularFireDatabase,public formBuilder:FormBuilder,public commonfunc:CommonFunctionsProvider,private _IMG: ImageProvider) {
 
     // console.log("jobss---")
     console.log("id="+ this.navParams.get('id'))
@@ -75,7 +81,8 @@ export class AdminCreateJobsPage {
       sub_industry:['',Validators.compose([Validators.required])],
       employment_type:['',Validators.compose([Validators.required])],
       contact_via:['',Validators.compose([Validators.required])],
-      additional_info:''
+      additional_info:'',
+      image:''
       // contactViaList:this.formBuilder.array([])
       // contactViaList:this.formBuilder.array([])
 
@@ -85,6 +92,7 @@ export class AdminCreateJobsPage {
       { title: 'Home', component: TabsPage },
       { title: 'Add Job', component: AdminCreateJobsPage }
     ];
+
 
   }
 
@@ -386,6 +394,15 @@ export class AdminCreateJobsPage {
     {
       firebase.database().ref('jobs/'+this.navParams.get('id')).on('value', itemSnapshot => {
         let idArr=itemSnapshot.val();
+        console.log("id==")
+        console.log(idArr)
+        this._IMG.uploadImage(this.jobImage)
+         .then((snapshot : any) =>
+         {
+            let uploadedImage : any = snapshot.downloadURL;
+
+            
+         });
         for (let itemSnap in idArr) {
           if(itemSnap=='job_details_id')
           {
@@ -488,5 +505,36 @@ export class AdminCreateJobsPage {
    }
    console.log(this.selectedContactViaArray)
  }
+
+ selectImage()
+ {
+    this._IMG.selectImage()
+    .then((data) =>
+    {
+       this.jobImage = data;
+       console.log( this.jobImage)
+    });
+ }
+
+ detectFiles(event) {
+    this.selectedFiles = event.target.files;
+  }
+
+  uploadSingle() {
+    let file = this.selectedFiles.item(0)
+    this.currentUpload = new Upload(file);
+    let self=this;
+    this._IMG.pushUpload(this.currentUpload).then((snapshot : any) =>
+    {
+       firebase.storage().ref().child('/thumbs/64/'+self.currentUpload.name+'_thumb.png').getDownloadURL().then(function(url) {
+        console.log("URL==="+url);
+        self.currentUpload.thumb=url;
+      }).catch(function(error) {
+        // Handle any errors here
+      });
+       
+    });
+    
+  }
 
 }
