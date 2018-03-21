@@ -1,3 +1,33 @@
 page-search {
+	.searchbar{
+		padding: 12px 9px;
+		border: 0;
+		background: rgba(0, 0, 0, 0.1);
+		.searchbar-input{
+			height: 4.8rem;
+			border-radius: 2px;
+			border: 1px solid $lining;
+			padding-left: 20px !important;
+		}
+		.searchbar-search-icon{
+			left: initial;
+			right: 17px;
+			top: 16px;
+			width: 16px;
+			height: 17px;
+			background-size: contain;
+		}
+	}
 
+	.scroll-content{
+		padding-top: 0 !important;
+	}
+
+	.map-wrapper{
+		background-color: $lining;
+		// height: 49.25vh;
+		height: calc(100vh - 300px);
+		overflow: hidden;
+		border-bottom: 1px solid $lining;
+	}
 }
