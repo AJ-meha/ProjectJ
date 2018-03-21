@@ -26,7 +26,7 @@ export class MyApp {
       {title:'Dashboard',component:AdminDashboardPage},
       {title:'Add Job',component:AdminCreateJobsPage},
       {title:'View Jobs',component:TabsPage},
-      {title:'Welcome',component:OnboardingPage}
+      {title:'Onboarding (WIP)',component:OnboardingPage}
     ];
 
     const authObserver=afAuth.authState.subscribe(user=>{
