@@ -545,7 +545,7 @@
                   <ion-col col-12 col-md-10>
                     <ion-item>
                       <ion-input [(ngModel)]="questions.question_name" [ngModelOptions]="{standalone: true}" type="text" placeholder="Enter a Question"></ion-input>
-                      <button ion-fab mini item-end color="danger" *ngIf="(indq!=questionsArray.length-1 || questionsArray.length>1)" item-end (click)="removeQuestion(indq);"><ion-icon name="trash"></ion-icon></button>
+                      <button ion-fab mini item-end color="danger" *ngIf="(questionsArray.length>1)" item-end (click)="removeQuestion(indq);"><ion-icon name="trash"></ion-icon></button>
                     </ion-item>
                   </ion-col>
 
@@ -562,7 +562,7 @@
                           <ion-icon *ngIf="(questions.option_type=='radio')" item-start name='radio-button-off'></ion-icon>
                           <ion-icon *ngIf="(questions.option_type=='checkbox')" item-start name='square-outline'></ion-icon>
                           <ion-input [(ngModel)]="options.val" [ngModelOptions]="{standalone: true}" type="text" placeholder="Enter an Answer"></ion-input>
-                          <button ion-fab mini item-end color="danger" *ngIf="(inda!=questions.options.length-1 || questions.options.length>1)" (click)="removeOption(indq,inda);"><ion-icon name="trash"></ion-icon></button>
+                          <button ion-fab mini item-end color="danger" *ngIf="(questions.options.length>2)" (click)="removeOption(indq,inda);"><ion-icon name="trash"></ion-icon></button>
                         </ion-item>
                       </ion-col>
                     </ion-row>
