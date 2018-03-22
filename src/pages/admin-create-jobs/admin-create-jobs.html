@@ -117,19 +117,55 @@
                 </ion-col>
               </ion-row>
 
-              <ion-row>
+              <ion-row *ngIf="navParams.get('id')">
                 <ion-col col-8 col-md-3>
                   <ion-item>
                     <ion-label stacked>Upload Logo</ion-label>
-                    <ion-input  value="" type="file" placeholder="Select a file to upload" ></ion-input>
+                    
+               
+                   
+                    <!-- <span
+                    ion-text
+                    color="danger"
+                    block
+                    text-center
+                    padding-top
+                    padding-bottom
+                    (click)="selectImage()">Select an image</span> -->
+                    
+                    
+                   
+                        <!-- <span
+                    ion-text
+                    color="danger"
+                    block
+                    text-center
+                    padding-top
+                    padding-bottom
+                    (click)="selectImage()">Select an image</span> -->
                   </ion-item>
                 </ion-col>
-                <ion-col col-4 col-md-3 margin-top padding-top>
-                    <button margin-top ion-button small>
+                <ion-col col-4 col-md-3 margin-top padding-top >
+                    <!-- <ion-input class="cordova-camera-select"  value="" type="file" name="files[]" placeholder="Select a file to upload" (click)="selectImage()"></ion-input> -->
+                    <!-- <button ion-button (click)="selectImage()">Lets take a picture!</button> -->
+                    <!-- <input
+                    type="hidden"
+                    name="image"
+                    formControlName="image"
+                    [(ngModel)]="jobImage">
+                <img [src]="jobImage"> -->
+                <div *ngIf="currentUpload" > <img class="image_logo" [src]="currentUpload?.thumb" ></div>
+                <div *ngIf="existingUpload"> <img class="image_logo" [src]="existingUpload"></div>
+                <label>
+                  <input accept="image/*" type="file" (change)="detectFiles($event)">
+               </label>
+                    <button margin-top ion-button small [disabled]="!selectedFiles"
+                    (click)="uploadSingle()">
                       Upload
                     </button>
                 </ion-col>
               </ion-row>
+
 
 
               <ion-row >
@@ -469,6 +505,7 @@
 
                   </ion-item>
               </ion-col>
+              
             </ion-row>
           </ion-grid>
         </ion-card>

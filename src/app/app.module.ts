@@ -23,7 +23,11 @@ import { FavouritePage } from '../pages/favourite/favourite';
 import { MessagePage } from '../pages/message/message';
 import { SearchPage } from '../pages/search/search';
 import { ProfilePage } from '../pages/profile/profile';
-
+import { CustomerDashboardPage } from '../pages/customer-dashboard/customer-dashboard';
+import { OnboardingPage } from '../pages/onboarding/onboarding';
+import { ImageProvider } from '../providers/image/image';
+import { Camera } from '@ionic-native/camera';
+import { PreloaderProvider } from '../providers/preloader/preloader';
 
 // AF2 Settings
 const firebaseConfig = {
@@ -78,12 +82,15 @@ const firebaseConfig = {
   providers: [
     StatusBar,
     SplashScreen,
+    Camera,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     CommonFunctionsProvider,
     GlobalVarsProvider,
     AuthProvider,
     JobsProvider,
-    CustomerAuthProvider
+    CustomerAuthProvider,
+    ImageProvider,
+    PreloaderProvider
   ]
 })
 export class AppModule {}

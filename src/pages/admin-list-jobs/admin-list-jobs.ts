@@ -123,6 +123,7 @@ export class AdminListJobsPage {
               });
             }
             
+
         });
         // self.jobs.push({'key':itemSnap.key,'value':itemSnap.val()})
         return false;
