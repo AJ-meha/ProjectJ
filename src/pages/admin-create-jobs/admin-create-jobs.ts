@@ -7,9 +7,7 @@ import firebase  from 'firebase';
 import { CommonFunctionsProvider } from '../../providers/common-functions/common-functions';
 import { GlobalVarsProvider } from '../../providers/global-vars/global-vars';
 import { AuthProvider } from '../../providers/auth/auth';
-
 import { EmailValidator } from '../../validators/email';
-import { AdminListJobsPage } from '../admin-list-jobs/admin-list-jobs'
 import { ImageProvider } from '../../providers/image/image';
 import { Upload } from '../../app/models/upload';
 
