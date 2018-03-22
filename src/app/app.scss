@@ -16,4 +16,16 @@
 // automatically applied to the <body> element in the app.
 
 
-@import 'appscss/all'
+@import 'appscss/all';
+
+@media(min-width: 768px){
+	.app-root{
+		.ion-page.show-page{
+			& ~ .nav-decor{
+				background-image: url(/assets/imgs/dummy-bg.jpg);
+				background-position: center;
+				background-size: cover;
+			}
+		}
+	}
+}

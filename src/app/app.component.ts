@@ -4,6 +4,7 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 
 import { TabsPage } from '../pages/tabs/tabs';
+import { OnboardingPage } from '../pages/onboarding/onboarding';
 import { AdminLoginPage } from '../pages/admin-login/admin-login';
 import { AdminDashboardPage } from '../pages/admin-dashboard/admin-dashboard';
 
@@ -30,35 +31,36 @@ export class MyApp {
     this.pages=[
       {title:'Dashboard',component:AdminDashboardPage},
       {title:'Add Job',component:AdminCreateJobsPage},
-      {title:'View Jobs',component:TabsPage},
-      {title:'List Jobs',component:AdminListJobsPage}
+      {title:'List Jobs',component:AdminListJobsPage},
+      {title:'View Jobs',component:CustomerDashboardPage},
+      {title:'Onboarding (WIP)',component:OnboardingPage}
     ];
     console.log("loc="+window.location.href)
     if(window.location.href.indexOf('#/admin') != -1){
       this.is_admin=true
     }
-      
-    
+
+
     if(this.is_admin == true){
       this.rootPage=AdminLoginPage;
     }
     else{
       this.rootPage=CustomerLoginPage;
     }
-    
+
     this.authData.getUserEmail().then(userename=>{
       if(this.is_admin ==true && userename!=null)
       {
         this.rootPage=AdminDashboardPage;
-       
+
       }
       else
       {
         if(this.is_admin ==true){
           this.rootPage=AdminLoginPage;
         }
-          
-       
+
+
       }
     });
 
@@ -76,7 +78,7 @@ export class MyApp {
               this.rootPage=CustomerDashboardPage;
               authObserver.unsubscribe();
             }
-            
+
           }
         });
       }
@@ -85,7 +87,7 @@ export class MyApp {
           this.rootPage=CustomerLoginPage;
           authObserver.unsubscribe();
         }
-        
+
       }
     });
 

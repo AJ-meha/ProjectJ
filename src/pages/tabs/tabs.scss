@@ -4,6 +4,12 @@
 }
 
 .tabs{
+  @media(min-width: 768px){
+    max-width: 550px;
+    .scroll-content{
+      overflow-y: auto;
+    }
+  }
   .tab-button{
     min-height: 4rem;
   }

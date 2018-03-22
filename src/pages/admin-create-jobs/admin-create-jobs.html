@@ -38,9 +38,9 @@
                 <ion-col col-12 col-md-6>
                   <ion-item>
                     <ion-label stacked>Applications to be sent to</ion-label>
-                    <ion-input autofocus [(ngModel)]="inputsArray['application_sent_mail']" #application_sent_mail formControlName="application_sent_mail" type="email" placeholder="Enter Email Address" [class.invalid]="!jobsForm.controls.application_sent_mail.valid && (formsubmitted || (this.jobsForm.value.application_sent_mail!='' && formsaved))"></ion-input>
+                    <ion-input autofocus [(ngModel)]="inputsArray['application_sent_mail']" #application_sent_mail formControlName="application_sent_mail" type="email" placeholder="Enter Email Address" [class.invalid]="!jobsForm.controls.application_sent_mail.valid && (formsubmitted || formsaved)"></ion-input>
                   </ion-item>
-                  <ion-item class="error-message" *ngIf="!jobsForm.controls.application_sent_mail.valid  && (formsubmitted || (this.jobsForm.value.application_sent_mail!='' && formsaved))">
+                  <ion-item class="error-message" *ngIf="!jobsForm.controls.application_sent_mail.valid  && (formsubmitted || formsaved)">
                     <p>Please enter a valid email address.</p>
                   </ion-item>
 
@@ -63,6 +63,8 @@
                 <ion-col col-12 col-md-6>
                   <ion-item>
                     <ion-label stacked>Workplace Name</ion-label>
+                  </ion-item>
+                  <ion-item>
                     <ion-input [(ngModel)]="inputsArray['workplace_name']" #workplace_name formControlName="workplace_name" type="text" placeholder="Enter Workplace name" [class.invalid]="!jobsForm.controls.workplace_name.valid && formsubmitted"></ion-input>
                   </ion-item>
                   <ion-item class="error-message" *ngIf="!jobsForm.controls.workplace_name.valid  && formsubmitted">
@@ -73,7 +75,10 @@
                 <ion-col col-12 col-md-6>
                   <ion-item>
                     <ion-label stacked>Mobile</ion-label>
-                    <ion-input [(ngModel)]="inputsArray['mobile']" #mobile formControlName="mobile" type="tel" placeholder="Enter Mobile number" [class.invalid]="!jobsForm.controls.mobile.valid && (formsubmitted || (this.jobsForm.value.mobile!='' && formsaved))"></ion-input>
+                  </ion-item>
+                  <ion-item>
+                    <ion-label item-start>{{mobile_code}}</ion-label>
+                    <ion-input item-end [(ngModel)]="inputsArray['mobile']" #mobile formControlName="mobile" type="tel" placeholder="Enter Mobile number" [class.invalid]="!jobsForm.controls.mobile.valid && (formsubmitted || (this.jobsForm.value.mobile!='' && formsaved))"></ion-input>
                   </ion-item>
                   <ion-item class="error-message" *ngIf="!jobsForm.controls.mobile.valid  && (formsubmitted || (this.jobsForm.value.mobile!='' && formsaved))">
                     <p>Please enter a valid mobile number.</p>
@@ -94,7 +99,7 @@
                     <ion-col col-12 col-md-6>
                       <ion-item>
                         <ion-label stacked>Latitude</ion-label>
-                        <ion-input  #workplace_latitude formControlName="workplace_latitude" type="text" placeholder="Enter Latitude" [class.invalid]="!jobsForm.controls.workplace_latitude.valid && formsubmitted"></ion-input>
+                        <ion-input [(ngModel)]="inputsArray['workplace_latitude']"  #workplace_latitude formControlName="workplace_latitude" type="text" placeholder="Enter Latitude" [class.invalid]="!jobsForm.controls.workplace_latitude.valid && formsubmitted"></ion-input>
                       </ion-item>
                       <ion-item class="error-message" *ngIf="!jobsForm.controls.workplace_latitude.valid  && formsubmitted">
                         <p>Please enter a valid latitude.</p>
@@ -103,7 +108,7 @@
                     <ion-col col-12 col-md-6>
                       <ion-item>
                         <ion-label stacked>Longitude</ion-label>
-                        <ion-input  #workplace_longitude formControlName="workplace_longitude" type="text" placeholder="Enter Longitude" [class.invalid]="!jobsForm.controls.workplace_longitude.valid && formsubmitted"></ion-input>
+                        <ion-input [(ngModel)]="inputsArray['workplace_longitude']"  #workplace_longitude formControlName="workplace_longitude" type="text" placeholder="Enter Longitude" [class.invalid]="!jobsForm.controls.workplace_longitude.valid && formsubmitted"></ion-input>
                       </ion-item>
                       <ion-item class="error-message" *ngIf="!jobsForm.controls.workplace_longitude.valid  && formsubmitted">
                         <p>Please enter a valid longitude.</p>
@@ -180,7 +185,7 @@
                   <!-- <input type="checkbox" formControlName="isChosen" /> {{hobby.controls.name.value}} -->
                     <ion-item  >
                       <label class = "checkbox">
-                          <input #contact_via formControlName="contact_via" type="checkbox" value="{{contactVia.key}}" [checked]="ind === 0"  (change)="updateContactViaList(contactVia.key, $event.target.checked, ind)"/>
+                          <input #contact_via formControlName="contact_via" type="checkbox" value="{{contactVia.key}}" [checked]="contactVia.checked"  (change)="updateContactViaList(contactVia.key, $event.target.checked, ind)"/>
                       </label>
                         {{contactVia.value}}
 
@@ -245,9 +250,9 @@
                 <ion-col col-12 col-md-6>
                   <ion-item>
                     <ion-label stacked>Designation</ion-label>
-                    <ion-input [(ngModel)]="inputsArray['designation']" [class.invalid]="!jobsForm.controls.designation.valid && formsubmitted" #designation formControlName="designation" type="text" placeholder="Enter Designation"></ion-input>
+                    <ion-input [(ngModel)]="inputsArray['designation']" [class.invalid]="!jobsForm.controls.designation.valid && (formsubmitted || formsaved)" #designation formControlName="designation" type="text" placeholder="Enter Designation"></ion-input>
                   </ion-item>
-                  <ion-item class="error-message" *ngIf="!jobsForm.controls.designation.valid  && formsubmitted">
+                  <ion-item class="error-message" *ngIf="!jobsForm.controls.designation.valid  && (formsubmitted || formsaved)">
                     <p>Please enter a valid designation.</p>
                   </ion-item>
                 </ion-col>
@@ -335,6 +340,9 @@
                     <ion-col col-12 col-sm-6>
                       <ion-item>
                         <ion-label stacked>Salary</ion-label>
+                      </ion-item>
+                      <ion-item>
+                        <ion-label item-start>HK$</ion-label>
                         <ion-input [(ngModel)]="inputsArray['salary_amount']" [class.invalid]="!jobsForm.controls.salary_amount.valid && (formsubmitted || (this.jobsForm.value.salary_amount!='' && formsaved))" #salary_amount formControlName="salary_amount" type="number" placeholder="Enter Salary"></ion-input>
                       </ion-item>
                       <ion-item class="error-message" *ngIf="!jobsForm.controls.salary_amount.valid  && (formsubmitted || (this.jobsForm.value.salary_amount!='' && formsaved))">
@@ -344,6 +352,8 @@
                     <ion-col col-12 col-sm-6>
                       <ion-item>
                         <ion-label stacked>per</ion-label>
+                      </ion-item>
+                      <ion-item>
                         <ion-select [(ngModel)]="inputsArray['salary_unit']" [class.invalid]="!jobsForm.controls.salary_unit.valid && formsubmitted" #salary_unit formControlName="salary_unit" name="salary" interface="popover" placeholder="--">
 
                              <ion-option *ngFor="let salaryUnit of salaryUnits" value="{{salaryUnit.key}}">{{salaryUnit.value}}</ion-option>
@@ -400,6 +410,10 @@
                       </ion-row>
                     </ion-card>
                   </ion-col>
+
+                  <ion-item class="error-message" *ngIf="(checkDates()==false)  && formsubmitted">
+                    <p>Please enter work schedule.</p>
+                  </ion-item>
             </ion-row>
           </ion-grid>
         </ion-card>
@@ -505,45 +519,100 @@
         <ion-card margin-top>
           <ion-card-header padding-left class="card-wp-admin">Questions</ion-card-header>
           <ion-grid>
-            <ion-row radio-group>
-              <ion-col col-12 col-md-4>
+            <ion-row radio-group [(ngModel)]="inputsArray['question']" [ngModelOptions]="{standalone: true}">
+              <ion-col col-12 col-md-2>
                 <ion-label padding-left>
                   Ask a question?
                 </ion-label>
               </ion-col>
-                <ion-col col-12 col-md-4>
+              <ion-col col-6 col-md-2>
                     <ion-item>
-                      <ion-radio mode="md" item-left checked="true" value="yes"></ion-radio>
+                      <ion-radio mode="md" item-left value="yes"></ion-radio>
                       <ion-label>Yes</ion-label>
                     </ion-item>
               </ion-col>
 
-              <ion-col col-12 col-md-4>
+              <ion-col col-6 col-md-2>
                   <ion-item>
-                    <ion-radio mode="md" item-left value="no"></ion-radio>
+                    <ion-radio mode="md" item-left value="no" (ionSelect)="questionToggle()"></ion-radio>
                     <ion-label>No</ion-label>
                   </ion-item>
                 </ion-col>
               </ion-row>
 
-              <ion-row>
+              <div *ngIf="(inputsArray['question']=='yes')">
+                <ion-row *ngFor="let questions of questionsArray;let indq=index">
+
+                  <ion-col col-12 col-md-2>
+                    <ion-item no-padding>
+                      <ion-label padding-left>Question {{indq+1}} : </ion-label>
+                    </ion-item>
+                  </ion-col>
+                  <ion-col col-12 col-md-10>
+                    <ion-item>
+                      <ion-input [(ngModel)]="questions.question_name" [ngModelOptions]="{standalone: true}" type="text" placeholder="Enter a Question"></ion-input>
+                      <button ion-fab mini item-end color="danger" *ngIf="(indq!=questionsArray.length-1 || questionsArray.length>1)" item-end (click)="removeQuestion(indq);"><ion-icon name="trash"></ion-icon></button>
+                    </ion-item>
+                  </ion-col>
+
+                  <ion-col col-12 *ngFor="let options of questions.options;let inda=index">
+                    <ion-row>
+                      <ion-col col-12 push-md-7 col-md-2>
+                        <ion-select [(ngModel)]="questions.option_type" [ngModelOptions]="{standalone: true}" interface="popover" *ngIf="(inda==0)" col-12>
+                          <ion-option value="radio">Multiple Choice</ion-option>
+                          <ion-option value="checkbox">Checkboxes</ion-option>
+                        </ion-select>
+                      </ion-col>
+                      <ion-col col-12 pull-md-4 col-md-5 offset-md-4>
+                        <ion-item>
+                          <ion-icon *ngIf="(questions.option_type=='radio')" item-start name='radio-button-off'></ion-icon>
+                          <ion-icon *ngIf="(questions.option_type=='checkbox')" item-start name='square-outline'></ion-icon>
+                          <ion-input [(ngModel)]="options.val" [ngModelOptions]="{standalone: true}" type="text" placeholder="Enter an Answer"></ion-input>
+                          <button ion-fab mini item-end color="danger" *ngIf="(inda!=questions.options.length-1 || questions.options.length>1)" (click)="removeOption(indq,inda);"><ion-icon name="trash"></ion-icon></button>
+                        </ion-item>
+                      </ion-col>
+                    </ion-row>
+                  </ion-col>
+
+                  <ion-col col-12 col-md-5 offset-md-2>
+                    <ion-item>
+                      <button ion-button item-end outline small type="button" [disabled]="questions.options.length>=max_option" (click)="addOption(indq);">
+                        + Add Option
+                      </button>
+                  </ion-item>
+                  </ion-col>
+                </ion-row>
+                <ion-row>
+                  <ion-col col-12>
+                    <button ion-button small type="button" (click)="addQuestion();">
+                      + Add Question
+                    </button>
+                  </ion-col>
+                </ion-row>
+
+                <ion-item class="error-message" *ngIf="(checkQuestions()==false)  && (formsubmitted || formsaved)">
+                  <p>Please enter questions and options.</p>
+                </ion-item>
+              </div>
+
+              <!--ion-row>
                 <ion-col col-12 col-md-6>
-                  <!-- <ion-select [(ngModel)]="question" name="question" interface="popover" placeholder="Select a Question">
+                  <ion-select [(ngModel)]="question" name="question" interface="popover" placeholder="Select a Question">
                         <ion-option value="1">Question 1</ion-option>
                         <ion-option value="2">Question 2</ion-option>
-                  </ion-select> -->
+                  </ion-select>
                 </ion-col>
                 <ion-col col-12 col-md-6>
                   <ion-item>
-                    <!-- <ion-select [(ngModel)]="question_type" name="question_type" interface="popover" placeholder="--">
+                    <ion-select [(ngModel)]="question_type" name="question_type" interface="popover" placeholder="--">
                           <ion-option value="1" selected>Multiple Choice</ion-option>
                           <ion-option value="2">Radio Buttons</ion-option>
-                    </ion-select> -->
+                    </ion-select>
                   </ion-item>
                 </ion-col>
-              </ion-row>
+              </ion-row-->
 
-              <ion-row>
+              <!--ion-row>
                 <ion-col col-2 col-md-1>
                   <ion-item>
                     <ion-radio mode="md" item-left value="value"></ion-radio>
@@ -577,7 +646,7 @@
                 <button ion-button outline>
                   Add a Question
                 </button>
-              </ion-buttons>
+              </ion-buttons-->
           </ion-grid>
         </ion-card>
 

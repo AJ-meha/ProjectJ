@@ -30,10 +30,13 @@ import { Upload } from '../../app/models/upload';
   templateUrl: 'admin-create-jobs.html',
 })
 export class AdminCreateJobsPage {
-  inputsArray = {application_sent_mail:'',mobile:'',workplace:'',workplace_address:'',workplace_name:'',designation:'',industry:'',salary_amount:'',salary_unit:'',sub_industry:'',type:'',employment_type:'',additional_info:'',night_shift:false};
+  inputsArray = {application_sent_mail:'',mobile:'',workplace:'',workplace_address:'',workplace_name:'',workplace_latitude:'',workplace_longitude:'',designation:'',industry:'',salary_amount:'',salary_unit:'',sub_industry:'',type:'',employment_type:'',additional_info:'',night_shift:false,question:"no"};
   timeArray = {mon:{start_time:"",end_time:"",holiday:false,shift_end:"mon"},tue:{start_time:"",end_time:"",holiday:false,shift_end:"tue"},wed:{start_time:"",end_time:"",holiday:false,shift_end:"wed"},thu:{start_time:"",end_time:"",holiday:false,shift_end:"thu"},fri:{start_time:"",end_time:"",holiday:false,shift_end:"fri"},sat:{start_time:"",end_time:"",holiday:false,shift_end:"sat"},sun:{start_time:"",end_time:"",holiday:false,shift_end:"sun"}};
   daysArray = GlobalVarsProvider.daysArray;
   employeeBenefitsArray: Array<any> = [];
+  questionsArray: Array<any> = [{question_name:"",option_type:"radio",options:[{val:""}]}];
+  max_option = GlobalVarsProvider.max_option;
+  mobile_code = GlobalVarsProvider.mobile_code;
   jobsForm:FormGroup;
   contactVias: Array<any> = [];
   workplaceTypes: Array<any> = [];
@@ -54,6 +57,7 @@ export class AdminCreateJobsPage {
   public salaryUnitRef: firebase.database.Reference = firebase.database().ref('salary_unit');
   public industryRef: firebase.database.Reference = firebase.database().ref('industry');
   public employeeBenefitsRef: firebase.database.Reference = firebase.database().ref('employee_benefits');
+
   public dbRef: firebase.database.Reference = firebase.database().ref();
   public savedJobsRef: firebase.database.Reference = firebase.database().ref('jobs');
   public jobImage  	   : any;
@@ -65,7 +69,7 @@ export class AdminCreateJobsPage {
   constructor(public navCtrl: NavController, public navParams: NavParams,private af: AngularFireDatabase,public formBuilder:FormBuilder,public commonfunc:CommonFunctionsProvider,private _IMG: ImageProvider) {
 
     // console.log("jobss---")
-    console.log("id="+ this.navParams.get('id'))
+    console.log("id=")
     this.jobsForm=this.formBuilder.group({
       application_sent_mail:['',Validators.compose([Validators.required,EmailValidator.isValid])],
       workplace:['',Validators.compose([Validators.required])],
@@ -73,7 +77,7 @@ export class AdminCreateJobsPage {
       workplace_address:['',Validators.compose([Validators.required])],
       workplace_latitude:['',Validators.compose([Validators.required])],
       workplace_longitude:['',Validators.compose([Validators.required])],
-      mobile:['',Validators.compose([Validators.required,Validators.pattern('(\\+852[- ]?)?\\d{10}$')])],
+      mobile:['',Validators.compose([Validators.required,Validators.pattern('\\d{10}$')])],
       designation:['',Validators.compose([Validators.required])],
       type:['',Validators.compose([Validators.required])],
       salary_amount:['',Validators.compose([Validators.required,Validators.pattern('[1-9]+[0-9]*')])],
@@ -153,16 +157,21 @@ export class AdminCreateJobsPage {
       });
     });
     let stepCounter=0;
+    let isChecked=false;
     this.jobContactViaRef.on('value', itemSnapshot => {
       itemSnapshot.forEach( itemSnap => {
 
         console.log(itemSnap.key+"=="+itemSnap.val())
         let ikey=itemSnap.key
         let ival=itemSnap.val()
-        this.contactVias.push({"key":ikey,"value":ival})
         if(stepCounter == 0){
-          this.selectedContactViaArray.push(ikey)
+          this.selectedContactViaArray.push(ikey);
+          isChecked=true;
         }
+        else{
+          isChecked=false;
+        }
+        this.contactVias.push({"key":ikey,"value":ival,"checked":isChecked})
         
         stepCounter +=1;
         let cform=this.formBuilder.group({
@@ -229,98 +238,119 @@ export class AdminCreateJobsPage {
 
   getData(){
     console.log("===getData===")
-    let redirect=0;
-    let self=this
-    this.savedJobsRef.on('value', itemSnapshot => {
-      itemSnapshot.forEach( itemSnap => {
-        let ival=itemSnap.val()
-        // console.log("ival=====")
-        // console.log(ival)
-        if(itemSnap.key==this.navParams.get('id'))
-        {
-          redirect=1;
-
-          if(typeof ival.image !== 'undefined'){
-            firebase.database().ref('uploads/'+ival.image).once('value').then( function(mediaSnap) {
-              self.existingUpload=mediaSnap.val().url
-              console.log("image==="+self.existingUpload)
-            });
-          }
-          firebase.database().ref('job_details/'+ival.job_details_id).on('value', itemSnapshot1 => {
-            itemSnapshot1.forEach( itemSnap1 => {
-              console.log(itemSnap1.key);
-              console.log(itemSnap1.val());
-              if(itemSnap1.key!='industry')
-              {
-                this.inputsArray[itemSnap1.key]=itemSnap1.val();
-              }
-              if(itemSnap1.key=='industry')
-              {
-                this.inputsArray[itemSnap1.key]=itemSnap1.val();
-                this.populateSubIndustry(itemSnap1.val());
-              }
-              return false;
-            });
-          });
-          firebase.database().ref('job_employee_benefits/'+ival.job_emp_benefits_id).on('value', itemSnapshot2 => {
-            itemSnapshot2.forEach( itemSnap2 => {
-              if(itemSnap2.key!='employee_benefits')
-              {
-                this.inputsArray[itemSnap2.key]=itemSnap2.val();
-              }
-              if(itemSnap2.key=='employee_benefits')
-              {
-                let emp_beneArr=itemSnap2.val();
-                for (let emp_bene in emp_beneArr) {
-                  this.employeeBenefitsArray[emp_bene].checkbox=true;
-                  this.employeeBenefitsArray[emp_bene].details=emp_beneArr[emp_bene];
-                }
-              }
-              return false;
-            });
-          });
-          firebase.database().ref('jobs_contact_workplace/'+ival.jobs_contact_workplace_id).on('value', itemSnapshot3 => {
-            itemSnapshot3.forEach( itemSnap3 => {
-              if(itemSnap3.key!='contact_via')
-              {
-                this.inputsArray[itemSnap3.key]=itemSnap3.val();
-              }
-              return false;
-            });
-          });
-          firebase.database().ref('job_work_schedule/'+ival.job_work_schedule_id).on('value', itemSnapshot4 => {
-            itemSnapshot4.forEach( itemSnap4 => {
-              let timeArrayFetch=itemSnap4.val();
-              for (let tkey in timeArrayFetch) {
-                if(tkey!='shift_end')
-                {
-                  this.timeArray[itemSnap4.key][tkey]=timeArrayFetch[tkey];
-                }
-                else
-                {
-                  if(timeArrayFetch[tkey]=='')
-                  {
-                    this.timeArray[itemSnap4.key][tkey]=itemSnap4.key;
-                    this.inputsArray['night_shift']=false;
-                  }
-                  else
-                  {
-                    this.timeArray[itemSnap4.key][tkey]=timeArrayFetch[tkey];
-                    this.inputsArray['night_shift']=true;
-                  }
-                }
-              }
-              return false;
-            });
-          });
-        }
-        return false;
-      });
-
-      if(redirect==0)
-      {
-        this.navCtrl.setRoot(AdminListJobsPage);
+    let self=this;
+    console.log(this.navParams.get('id'))
+    firebase.database().ref('jobs/'+this.navParams.get('id')).on('value', itemSnapshot => {
+      let ival=itemSnapshot.val();
+      if(typeof ival.image !== 'undefined'){
+        firebase.database().ref('uploads/'+ival.image).once('value').then( function(mediaSnap) {
+          self.existingUpload=mediaSnap.val().url
+          console.log("image==="+self.existingUpload)
+        });
       }
+      firebase.database().ref('job_details/'+ival.job_details_id).on('value', itemSnapshot1 => {
+        itemSnapshot1.forEach( itemSnap1 => {
+          console.log(itemSnap1.key);
+          console.log(itemSnap1.val());
+          if(itemSnap1.key!='industry')
+          {
+            this.inputsArray[itemSnap1.key]=itemSnap1.val();
+          }
+          if(itemSnap1.key=='industry')
+          {
+            this.inputsArray[itemSnap1.key]=itemSnap1.val();
+            this.populateSubIndustry(itemSnap1.val());
+          }
+          return false;
+        });
+      });
+      firebase.database().ref('job_employee_benefits/'+ival.job_emp_benefits_id).on('value', itemSnapshot2 => {
+        itemSnapshot2.forEach( itemSnap2 => {
+          if(itemSnap2.key!='employee_benefits')
+          {
+            this.inputsArray[itemSnap2.key]=itemSnap2.val();
+          }
+          if(itemSnap2.key=='employee_benefits')
+          {
+            let emp_beneArr=itemSnap2.val();
+            for (let emp_bene in emp_beneArr) {
+              this.employeeBenefitsArray[emp_bene].checkbox=true;
+              this.employeeBenefitsArray[emp_bene].details=emp_beneArr[emp_bene];
+            }
+          }
+          return false;
+        });
+      });
+      firebase.database().ref('jobs_contact_workplace/'+ival.jobs_contact_workplace_id).on('value', itemSnapshot3 => {
+        itemSnapshot3.forEach( itemSnap3 => {
+          let i3val=itemSnap3.val();
+          if(itemSnap3.key!='contact_via')
+          {
+            this.inputsArray[itemSnap3.key]=i3val;
+          }
+          if(itemSnap3.key=='contact_via')
+          {
+            this.selectedContactViaArray=[];
+            for (let contact in this.contactVias) {
+              this.contactVias[contact].checked=false;
+            }
+            for (let val in i3val) {
+              this.selectedContactViaArray.push(i3val[val]);
+              for (let contact in this.contactVias) {
+                if(this.contactVias[contact].key==i3val[val])
+                {
+                  this.contactVias[contact].checked=true;
+
+                }
+              }
+            }
+          }
+          return false;
+        });
+      });
+      firebase.database().ref('job_work_schedule/'+ival.job_work_schedule_id).on('value', itemSnapshot4 => {
+        itemSnapshot4.forEach( itemSnap4 => {
+          let timeArrayFetch=itemSnap4.val();
+          for (let tkey in timeArrayFetch) {
+            if(tkey!='shift_end')
+            {
+              this.timeArray[itemSnap4.key][tkey]=timeArrayFetch[tkey];
+            }
+            else
+            {
+              if(timeArrayFetch[tkey]=='')
+              {
+                this.timeArray[itemSnap4.key][tkey]=itemSnap4.key;
+                this.inputsArray['night_shift']=false;
+              }
+              else
+              {
+                this.timeArray[itemSnap4.key][tkey]=timeArrayFetch[tkey];
+                this.inputsArray['night_shift']=true;
+              }
+            }
+          }
+          return false;
+        });
+      });
+      firebase.database().ref('job_questions/'+ival.job_questions_id).on('value', itemSnapshot5 => {
+        itemSnapshot5.forEach( itemSnap5 => {
+          let quesArr=itemSnap5.val();
+          if(quesArr!='NA')
+          {
+            if(itemSnap5.key=='0')
+            {
+              this.questionsArray=[];
+            }
+            this.inputsArray.question="yes";
+            this.questionsArray.push({question_name:quesArr.question_name,option_type:quesArr.option_type,options:[]});
+            for (let options in quesArr.options) {
+              this.questionsArray[this.questionsArray.length-1].options.push({val:quesArr.options[options]});
+            }
+          }
+          return false;
+        });
+      });
     });
   }
 
@@ -349,8 +379,43 @@ export class AdminCreateJobsPage {
     return true;
   }
 
+  checkQuestions(){
+    if(this.inputsArray.question=='yes')
+    for (let question in this.questionsArray){
+      if(this.questionsArray[question].question_name==""){
+        return false;
+      }
+      for (let options in this.questionsArray[question].options){
+        if(this.questionsArray[question].options[options].val==""){
+          return false;
+        }
+      }
+    }
+    return true;
+  }
+
+  questionToggle(){
+    this.questionsArray=[{question_name:"",option_type:"radio",options:[{val:""}]}];
+  }
+
+  addOption(indq){
+    this.questionsArray[indq].options.push({val:""});
+  }
+
+  addQuestion(){
+    this.questionsArray.push({question_name:"",option_type:"radio",options:[{val:""}]});
+  }
+
+  removeOption(indq,inda){
+    this.questionsArray[indq].options.splice(inda, 1);
+  }
+
+  removeQuestion(indq){
+    this.questionsArray.splice(indq, 1);
+  }
+
   submitJob(form){
-    if(!form.valid || this.checkDates()==false){
+    if(!form.valid || this.checkDates()==false || this.checkQuestions()==false){
       this.validateAllFormFields(form);
       console.log(form.value);
     }
@@ -361,7 +426,15 @@ export class AdminCreateJobsPage {
   }
 
   saveJob(form){
-    if(form.value.application_sent_mail!='' && !form.controls.application_sent_mail.valid){
+    if(this.checkQuestions()==false){
+      return false;
+    }
+
+    if(!form.controls.application_sent_mail.valid){
+      return false;
+    }
+
+    if(!form.controls.designation.valid){
       return false;
     }
 
@@ -382,6 +455,8 @@ export class AdminCreateJobsPage {
     let workplace=form.value.workplace
     let workplace_name=form.value.workplace_name
     let workplace_address=form.value.workplace_address
+    let workplace_latitude=form.value.workplace_latitude
+    let workplace_longitude=form.value.workplace_longitude
     let mobile=form.value.mobile
     let designation=form.value.designation
     let type=form.value.type
@@ -399,22 +474,19 @@ export class AdminCreateJobsPage {
         employee_benefits[emp_bene]=this.employeeBenefitsArray[emp_bene].details;
       }
     }
-    let mon = this.timeArray['mon'];
-    let tue = this.timeArray['tue'];
-    let wed = this.timeArray['wed'];
-    let thu = this.timeArray['thu'];
-    let fri = this.timeArray['fri'];
-    let sat = this.timeArray['sat'];
-    let sun = this.timeArray['sun'];
+    let weekArr=this.timeArray;
     if(this.inputsArray.night_shift==false)
     {
-      mon.shift_end='';
-      tue.shift_end='';
-      wed.shift_end='';
-      thu.shift_end='';
-      fri.shift_end='';
-      sat.shift_end='';
-      sun.shift_end='';
+      for (let day in weekArr) {
+        weekArr[day].shift_end='';
+      }
+    }
+    let job_questions: Array<any> = [];
+    for (let question in this.questionsArray) {
+      job_questions.push({question_name:this.questionsArray[question].question_name,option_type:this.questionsArray[question].option_type,options:[]});
+      for (let options in this.questionsArray[question].options) {
+        job_questions[job_questions.length-1].options.push(this.questionsArray[question].options[options].val);
+      }
     }
 
         
@@ -447,42 +519,55 @@ export class AdminCreateJobsPage {
           if(itemSnap=='jobs_contact_workplace_id')
           {
             firebase.database().ref('jobs_contact_workplace/'+idArr[itemSnap]+'/application_sent_mail').set(application_sent_mail);
-            //firebase.database().ref('jobs_contact_workplace/'+idArr[itemSnap]+'/contact_via').set(contact_via);
+            firebase.database().ref('jobs_contact_workplace/'+idArr[itemSnap]+'/contact_via').set(contact_via);
             firebase.database().ref('jobs_contact_workplace/'+idArr[itemSnap]+'/mobile').set(mobile);
             firebase.database().ref('jobs_contact_workplace/'+idArr[itemSnap]+'/workplace').set(workplace);
             firebase.database().ref('jobs_contact_workplace/'+idArr[itemSnap]+'/workplace_address').set(workplace_address);
             firebase.database().ref('jobs_contact_workplace/'+idArr[itemSnap]+'/workplace_name').set(workplace_name);
+            firebase.database().ref('jobs_contact_workplace/'+idArr[itemSnap]+'/workplace_latitude').set(workplace_latitude);
+            firebase.database().ref('jobs_contact_workplace/'+idArr[itemSnap]+'/workplace_longitude').set(workplace_longitude);
           }
           if(itemSnap=='job_work_schedule_id')
           {
-            firebase.database().ref('job_work_schedule/'+idArr[itemSnap]+'/mon').set(mon);
-            firebase.database().ref('job_work_schedule/'+idArr[itemSnap]+'/tue').set(tue);
-            firebase.database().ref('job_work_schedule/'+idArr[itemSnap]+'/wed').set(wed);
-            firebase.database().ref('job_work_schedule/'+idArr[itemSnap]+'/thu').set(thu);
-            firebase.database().ref('job_work_schedule/'+idArr[itemSnap]+'/fri').set(fri);
-            firebase.database().ref('job_work_schedule/'+idArr[itemSnap]+'/sat').set(sat);
-            firebase.database().ref('job_work_schedule/'+idArr[itemSnap]+'/sun').set(sun);
+            firebase.database().ref('job_work_schedule/'+idArr[itemSnap]).set(weekArr);
+          }
+          if(itemSnap=='job_questions_id')
+          {
+            if(this.inputsArray.question=='no'){
+              firebase.database().ref('job_questions/'+idArr[itemSnap]).set({0:"NA"});
+            }
+            else{
+              firebase.database().ref('job_questions/'+idArr[itemSnap]).set(job_questions);
+            }
           }
         }
         this.commonfunc.presentToast("Job Updated Successfully!!!");
-        form.reset();
+        //form.reset();
       });
     }
     else
     {
-      let jobs_contact_workplace_ref=this.af.list('jobs_contact_workplace').push({ application_sent_mail,workplace,workplace_name,workplace_address,mobile,contact_via})
+      let jobs_contact_workplace_ref=this.af.list('jobs_contact_workplace').push({ application_sent_mail,workplace,workplace_name,workplace_address,workplace_latitude,workplace_longitude,mobile,contact_via})
       let job_details_ref=this.af.list('job_details').push({ designation,type,employment_type,salary_amount,salary_unit,industry,sub_industry})
       let job_emp_benefits_ref=this.af.list('job_employee_benefits').push({employee_benefits,additional_info})
-      let job_work_schedule_ref=this.af.list('job_work_schedule').push({mon,tue,wed,thu,fri,sat,sun})
+      let job_work_schedule_ref=this.af.list('job_work_schedule').push(weekArr)
+      let job_questions_ref:any;
+      if(this.inputsArray.question=='no'){
+        job_questions_ref=this.af.list('job_questions').push({0:"NA"})
+      }
+      else{
+        job_questions_ref=this.af.list('job_questions').push(job_questions)
+      }
 
       let jobs_contact_workplace_id=jobs_contact_workplace_ref.key
       let job_details_id=job_details_ref.key
       let job_emp_benefits_id=job_emp_benefits_ref.key
       let job_work_schedule_id=job_work_schedule_ref.key
+      let job_questions_id=job_questions_ref.key
       let job_status='draft'
-      this.af.list('jobs').push({jobs_contact_workplace_id,job_details_id,job_emp_benefits_id,job_work_schedule_id,job_status})
+      this.af.list('jobs').push({jobs_contact_workplace_id,job_details_id,job_emp_benefits_id,job_work_schedule_id,job_questions_id,job_status})
       this.commonfunc.presentToast("Job added Successfully!!!");
-      form.reset();
+      //form.reset();
     }
 
   }
