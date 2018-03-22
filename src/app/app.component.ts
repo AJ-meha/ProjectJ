@@ -34,8 +34,12 @@ export class MyApp {
       this.authData.getUserEmail().then(useremail=>{
         if(useremail!=null)
         {
-          if(loc.indexOf('#/admin/') == -1){
+          if((loc.indexOf('#/admin/') == -1) || (loc[loc.indexOf('#/admin/')+8]==undefined)){
             self.nav.setRoot("admin-list-jobs");
+          }
+          else{
+            console.log(loc.indexOf('#/admin/'));
+            console.log(loc[loc.indexOf('#/admin/')+8]);
           }
         }
         else
