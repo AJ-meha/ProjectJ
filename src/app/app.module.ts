@@ -11,23 +11,21 @@ import { AngularFireAuthModule } from 'angularfire2/auth';
 
 import { AngularFireDatabaseModule } from 'angularfire2/database';
 import { IonicStorageModule } from '@ionic/storage';
+import { Camera } from '@ionic-native/camera';
 
 import { CommonFunctionsProvider } from '../providers/common-functions/common-functions';
 import { GlobalVarsProvider } from '../providers/global-vars/global-vars';
 import { AuthProvider } from '../providers/auth/auth';
 import { CustomerAuthProvider } from '../providers/customer-auth/customer-auth';
 import { JobsProvider } from '../providers/jobs/jobs';
+import { ImageProvider } from '../providers/image/image';
+import { PreloaderProvider } from '../providers/preloader/preloader';
 
 import { CustomerJobListingPage } from '../pages/customer-job-listing/customer-job-listing';
 import { FavouritePage } from '../pages/favourite/favourite';
 import { MessagePage } from '../pages/message/message';
 import { SearchPage } from '../pages/search/search';
 import { ProfilePage } from '../pages/profile/profile';
-import { CustomerDashboardPage } from '../pages/customer-dashboard/customer-dashboard';
-import { OnboardingPage } from '../pages/onboarding/onboarding';
-import { ImageProvider } from '../providers/image/image';
-import { Camera } from '@ionic-native/camera';
-import { PreloaderProvider } from '../providers/preloader/preloader';
 
 // AF2 Settings
 const firebaseConfig = {
