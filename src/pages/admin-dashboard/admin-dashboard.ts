@@ -2,8 +2,6 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { AuthProvider } from '../../providers/auth/auth';
 
-import { AdminLoginPage } from '../admin-login/admin-login';
-
 /**
  * Generated class for the AdminDashboardPage page.
  *
@@ -11,10 +9,12 @@ import { AdminLoginPage } from '../admin-login/admin-login';
  * Ionic pages and navigation.
  */
 
-@IonicPage({
-  name: 'dashboard',
-  segment:'admin/dashboard'
-})
+@IonicPage(
+  {
+    name: 'admin-dashboard',
+    segment:'admin/dashboard'
+  }
+)
 @Component({
   selector: 'page-admin-dashboard',
   templateUrl: 'admin-dashboard.html',
@@ -24,6 +24,16 @@ export class AdminDashboardPage {
   userename:string;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public authData: AuthProvider) {
+
+    let self=this;
+    this.authData.getUserEmail().then(useremail=>{
+      if(useremail==null)
+      {
+        self.authData.setAdminInit(window.location.href);
+        self.navCtrl.setRoot("admin-login");
+      }
+    });
+    
     this.getUserName();
   }
 
@@ -35,9 +45,9 @@ export class AdminDashboardPage {
 
   logOut(){
     this.authData.logoutUser().then(authData=>{
-      this.navCtrl.setRoot(AdminLoginPage);
+      this.navCtrl.setRoot("admin-login");
       //this.navCtrl.popAll();
-      //this.navCtrl.push("AdminLoginPage");
+      //this.navCtrl.push(""admin-login"");
     });
   }
 
