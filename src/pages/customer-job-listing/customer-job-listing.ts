@@ -1,9 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, ModalController } from 'ionic-angular';
 import { CustomerAuthProvider } from '../../providers/customer-auth/customer-auth';
-import { CustomerLoginPage } from '../customer-login/customer-login';
-import { CustomerSingleJobViewPage } from '../customer-single-job-view/customer-single-job-view';
-import { SingleJob_2Page } from '../single-job-2/single-job-2';
 import firebase  from 'firebase';
 
 /**
@@ -13,7 +10,6 @@ import firebase  from 'firebase';
  * Ionic pages and navigation.
  */
 
-@IonicPage()
 @Component({
   selector: 'page-customer-job-listing',
   templateUrl: 'customer-job-listing.html',
@@ -31,9 +27,9 @@ export class CustomerJobListingPage {
 
   logOut(){
     this.authData.logoutUser().then(authData=>{
-      this.navCtrl.setRoot(CustomerLoginPage);
+      this.navCtrl.setRoot("login");
       //this.navCtrl.popAll();
-      //this.navCtrl.push("LoginPage");
+      //this.navCtrl.push("login");
     });
   }
 
@@ -43,7 +39,7 @@ export class CustomerJobListingPage {
   }
 
   openJob(idval) {
-    this.navCtrl.push(CustomerSingleJobViewPage,{
+    this.navCtrl.push("job",{
       id: idval
     });
   }
@@ -70,7 +66,7 @@ export class CustomerJobListingPage {
   }
 
   openJob2() {
-      this.navCtrl.push(SingleJob_2Page);
+      this.navCtrl.push("single-job-details");
   }
 
 }

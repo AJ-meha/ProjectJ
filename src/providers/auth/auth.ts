@@ -97,4 +97,18 @@ export class AuthProvider {
     });
   }
 
+  setAdminInit(init) {
+    this.storage.set('admin_init', init);
+  }
+
+  getAdminInit(){
+    return this.storage.get('admin_init').then((value)=>{
+      return value;
+    });
+  }
+
+  unsetAdminInit() {
+    this.storage.remove('admin_init');
+  }
+
 }

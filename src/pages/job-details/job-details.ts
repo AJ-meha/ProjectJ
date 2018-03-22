@@ -9,7 +9,7 @@ import { IonicPage, NavController, NavParams, ViewController } from 'ionic-angul
  */
 
 @IonicPage({
-	name: 'jobDetails',
+	name: 'job-details',
 	segment:'job-details'
 })
 @Component({
