@@ -9,6 +9,15 @@
     font-weight: 400;
    	font-style: regular;
 }
+@media screen and (-webkit-min-device-pixel-ratio:0) {
+    @font-face {
+        font-family: 'AvenirNext';
+        src: url('../assets/fonts/Avenir_Next_Regular/Avenir_Next_Regular.svg#Avenir_Next_Regular') format('svg');
+        font-weight: 400;
+        font-style: regular;
+    }
+}
+
 @font-face {
     font-family: 'AvenirNext';
     src: url('../assets/fonts/Avenir_Next_Medium/Avenir_Next_Medium.otf') format('otf');
@@ -20,6 +29,15 @@
     font-weight: 500;
    	font-style: regular;
 }
+@media screen and (-webkit-min-device-pixel-ratio:0) {
+    @font-face {
+        font-family: 'AvenirNext';
+        src: url('../assets/fonts/Avenir_Next_Medium/Avenir_Next_Medium.svg#Avenir_Next_Medium') format('svg');
+        font-weight: 500;
+        font-style: regular;
+    }
+}
+
 @font-face {
     font-family: 'AvenirNext';
     src: url('../assets/fonts/Avenir_Next_Bold/Avenir_Next_Bold.otf') format('otf');
@@ -30,6 +48,14 @@
              url('../assets/fonts/Avenir_Next_Bold/Avenir_Next_Bold.svg#Avenir_Next_Bold') format('svg');
     font-weight: 600;
    	font-style: regular;
+}
+@media screen and (-webkit-min-device-pixel-ratio:0) {
+    @font-face {
+        font-family: 'AvenirNext';
+        src: url('../assets/fonts/Avenir_Next_Bold/Avenir_Next_Bold.svg#Avenir_Next_Bold') format('svg');
+        font-weight: 600;
+        font-style: regular;
+    }
 }
 
 .item p{
