@@ -123,7 +123,7 @@
                 </ion-col>
               </ion-row>
 
-              <ion-row>
+              <ion-row *ngIf="navParams.get('id')">
                 <ion-col col-8 col-md-3>
                   <ion-item>
                     <ion-label stacked>Upload Logo</ion-label>
@@ -151,7 +151,7 @@
                     (click)="selectImage()">Select an image</span> -->
                   </ion-item>
                 </ion-col>
-                <ion-col col-4 col-md-3 margin-top padding-top>
+                <ion-col col-4 col-md-3 margin-top padding-top >
                     <!-- <ion-input class="cordova-camera-select"  value="" type="file" name="files[]" placeholder="Select a file to upload" (click)="selectImage()"></ion-input> -->
                     <!-- <button ion-button (click)="selectImage()">Lets take a picture!</button> -->
                     <!-- <input
@@ -160,8 +160,8 @@
                     formControlName="image"
                     [(ngModel)]="jobImage">
                 <img [src]="jobImage"> -->
-                <div *ngIf="currentUpload"> <img [src]="currentUpload?.thumb"></div>
-                <div *ngIf="existingUpload"> <img [src]="existingUpload"></div>
+                <div *ngIf="currentUpload" > <img class="image_logo" [src]="currentUpload?.thumb" ></div>
+                <div *ngIf="existingUpload"> <img class="image_logo" [src]="existingUpload"></div>
                 <label>
                   <input accept="image/*" type="file" (change)="detectFiles($event)">
                </label>
