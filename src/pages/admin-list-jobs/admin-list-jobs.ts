@@ -1,8 +1,8 @@
 import { Component, ViewChild } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
-import { AdminCreateJobsPage } from '../admin-create-jobs/admin-create-jobs'
-import { TabsPage } from '../tabs/tabs';
 import firebase  from 'firebase';
+
+import { AuthProvider } from '../../providers/auth/auth';
 /**
  * Generated class for the AdminListJobsPage page.
  *
@@ -11,7 +11,7 @@ import firebase  from 'firebase';
  */
 
 @IonicPage({
-  name: "list-jobs",
+  name: "admin-list-jobs",
   segment: "admin/jobs"
 })
 @Component({
@@ -23,7 +23,6 @@ export class AdminListJobsPage {
   public selectedStatusArray: Array<any> = [];
   public selectedSubIndArray: Array<any> = [];
   @ViewChild(NavController) nav: NavController;
-  pages: Array<{title: string, component: any}>;
   public jobRef: firebase.database.Reference = firebase.database().ref('jobs');
   public jobStatusRef: firebase.database.Reference = firebase.database().ref('jobs_status');
   public indSubIndRef: firebase.database.Reference = firebase.database().ref('industry_subindustry');
@@ -33,13 +32,16 @@ export class AdminListJobsPage {
   public indSubInd: Array<any> = [];
   autocomplete:any
   searchstring:string=""
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public authData:AuthProvider) {
+    let self=this;
+    this.authData.getUserEmail().then(useremail=>{
+      if(useremail==null)
+      {
+        self.authData.setAdminInit(window.location.href);
+        self.navCtrl.setRoot("admin-login");
+      }
+    });
     this.autocomplete = { input: '' };
-  	this.pages = [
-  	  { title: 'Dashboard', component: TabsPage },
-      { title: 'List Jobs', component: AdminListJobsPage },
-  	  { title: 'Add Job', component: AdminCreateJobsPage }
-  	];
   }
 
   private filterOptions: any = {
@@ -53,18 +55,12 @@ export class AdminListJobsPage {
     this.filterOptions[filtertype].open = !this.filterOptions[filtertype].open;
   }
 
-  openPage(page) {
-    // Reset the content nav to have just this page
-    // we wouldn't want the back button to show in this scenario
-    this.navCtrl.setRoot(page.component);
-  }
-
   ionViewDidLoad() {
     console.log('ionViewDidLoad AdminListJobsPage');
   }
 
   goToAddJob(){
-    this.navCtrl.setRoot(AdminCreateJobsPage)
+    this.navCtrl.setRoot("admin-create-jobs")
   }
 
 
@@ -127,6 +123,7 @@ export class AdminListJobsPage {
               });
             }
             
+
         });
         // self.jobs.push({'key':itemSnap.key,'value':itemSnap.val()})
         return false;

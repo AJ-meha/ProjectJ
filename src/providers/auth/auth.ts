@@ -20,8 +20,9 @@ export class AuthProvider {
   HAS_LOGGED_IN = 'hasLoggedIn';
 
   constructor(public afAuth: AngularFireAuth, public storage: Storage) {
-    console.log('Hello AuthProvider Provider');
+    // console.log('Hello AuthProvider Provider');
     this.passwordcheck.on('value', itemSnapshot => { 
+      // console.log("construxct===")
     });
   }
 
@@ -44,6 +45,7 @@ export class AuthProvider {
   let z = 0;
   let passwordhash = Md5.hashStr(newPassword)
     this.passwordcheck.on('value', itemSnapshot => { 
+      // console.log("in===")
       try {
         itemSnapshot.forEach( itemSnap => {
           let ival=itemSnap.val()
@@ -67,7 +69,7 @@ export class AuthProvider {
       }
      
     });
-
+    // console.log("exit===")
     if(z==0) return {"code":0,msg:"Incorrect Email"};
     if(z==1) return {"code":1,msg:pass};
     if(z==2) return {"code":2,msg:"Incorrect Password"};
@@ -93,6 +95,20 @@ export class AuthProvider {
     return this.storage.get('username').then((value)=>{
       return value;
     });
+  }
+
+  setAdminInit(init) {
+    this.storage.set('admin_init', init);
+  }
+
+  getAdminInit(){
+    return this.storage.get('admin_init').then((value)=>{
+      return value;
+    });
+  }
+
+  unsetAdminInit() {
+    this.storage.remove('admin_init');
   }
 
 }

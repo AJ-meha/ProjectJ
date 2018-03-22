@@ -11,6 +11,9 @@ import firebase from 'firebase/app';
 @Injectable()
 export class CustomerAuthProvider {
   CUSTOMER_HAS_LOGGED_IN = 'customerHasLoggedIn';
+
+  public usersRef: firebase.database.Reference = firebase.database().ref();
+  
   constructor(public afAuth: AngularFireAuth, public storage: Storage) {
   }
 
@@ -56,20 +59,48 @@ export class CustomerAuthProvider {
     });
   }
 
+  setUserRole(role) {
+    this.storage.set('customer_userrole', role);
+  }
+
+  getUserRole(){
+    return this.storage.get('customer_userrole').then((value)=>{
+      return value;
+    });
+  }
+
   loginWithEmail(email) {
     this.storage.set(this.CUSTOMER_HAS_LOGGED_IN, true);
     this.setUserEmail(email);
   }
 
-  loginWithPhone(email) {
+  loginWithPhone(phone) {
     this.storage.set(this.CUSTOMER_HAS_LOGGED_IN, true);
-    this.setUserEmail(email);
+    this.setUserPhone(phone);
+
+    let self=this;
+    let role: string;
+    this.usersRef.child("users").child(phone).once('value', function(snapshot) {
+      let val=snapshot.val();
+      if(val == null)
+      {
+        let userArr={role:"employee"};
+        role = "employee";
+        self.usersRef.child("users").child(phone).set(userArr);
+      }
+      else
+      {
+        role = val.role;
+      }
+      self.setUserRole(role);
+    });
   }
 
   logoutUpdateStorage() {
     this.storage.remove(this.CUSTOMER_HAS_LOGGED_IN);
     this.storage.remove('customer_useremail');
     this.storage.remove('customer_userphone');
+    this.storage.remove('customer_userrole');
   }
 
 }

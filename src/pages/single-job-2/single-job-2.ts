@@ -8,7 +8,12 @@ import { IonicPage, NavController, NavParams, ViewController } from 'ionic-angul
  * Ionic pages and navigation.
  */
 
-@IonicPage()
+@IonicPage(
+  {
+    name: 'single-job-details',
+    segment:'jobview-details'
+  }
+)
 @Component({
   selector: 'page-single-job-2',
   templateUrl: 'single-job-2.html',
