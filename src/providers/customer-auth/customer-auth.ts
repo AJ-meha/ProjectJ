@@ -92,7 +92,7 @@ export class CustomerAuthProvider {
       {
         role = val.role;
       }
-      this.setUserRole(role);
+      self.setUserRole(role);
     });
   }
 

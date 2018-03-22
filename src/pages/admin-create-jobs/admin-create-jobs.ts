@@ -2,13 +2,13 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { FormGroup, FormBuilder, Validators, FormControl, FormArray } from '@angular/forms';
 import { AngularFireDatabase } from 'angularfire2/database';
-import { CommonFunctionsProvider } from '../../providers/common-functions/common-functions';
 import firebase  from 'firebase';
+
+import { CommonFunctionsProvider } from '../../providers/common-functions/common-functions';
 import { GlobalVarsProvider } from '../../providers/global-vars/global-vars';
-import { TabsPage } from '../tabs/tabs';
+import { AuthProvider } from '../../providers/auth/auth';
 
 import { EmailValidator } from '../../validators/email';
-import { AdminListJobsPage } from '../admin-list-jobs/admin-list-jobs'
 
 /**
  * Generated class for the AdminCreateJobsPage page.
@@ -19,8 +19,8 @@ import { AdminListJobsPage } from '../admin-list-jobs/admin-list-jobs'
 
 @IonicPage(
   {
-    name: "create-jobs",
-    segment: "admin/jobs/add"
+    name: "admin-create-jobs",
+    segment: "admin/jobs/:action/:id"
   }
 )
 @Component({
@@ -47,7 +47,6 @@ export class AdminCreateJobsPage {
   contactViaList:FormArray;
   contactViaArray = [];
   selectedContactViaArray = [];
-  pages: Array<{title: string, component: any}>;
   public jobContactViaRef: firebase.database.Reference = firebase.database().ref('job_contact_via');
   public workplacetypeViaRef: firebase.database.Reference = firebase.database().ref('workplace_type');
   public emptypeViaRef: firebase.database.Reference = firebase.database().ref('employment_type');
@@ -56,7 +55,16 @@ export class AdminCreateJobsPage {
   public industryRef: firebase.database.Reference = firebase.database().ref('industry');
   public employeeBenefitsRef: firebase.database.Reference = firebase.database().ref('employee_benefits');
   
-  constructor(public navCtrl: NavController, public navParams: NavParams,private af: AngularFireDatabase,public formBuilder:FormBuilder,public commonfunc:CommonFunctionsProvider) {
+  constructor(public navCtrl: NavController, public navParams: NavParams,private af: AngularFireDatabase,public formBuilder:FormBuilder,public commonfunc:CommonFunctionsProvider, public authData:AuthProvider) {
+
+    let self=this;
+    this.authData.getUserEmail().then(useremail=>{
+      if(useremail==null)
+      {
+        self.authData.setAdminInit(window.location.href);
+        self.navCtrl.setRoot("admin-login");
+      }
+    });
 
     // console.log("jobss---")
     console.log("id=")
@@ -81,11 +89,6 @@ export class AdminCreateJobsPage {
       // contactViaList:this.formBuilder.array([])
 
     });
-
-    this.pages = [
-      { title: 'Home', component: TabsPage },
-      { title: 'Add Job', component: AdminCreateJobsPage }
-    ];
 
   }
 
@@ -187,7 +190,7 @@ export class AdminCreateJobsPage {
       console.log("employeeBenefits===");
 
       //VIRAJ - Put inside to get saved data after everything loads
-      if(this.navParams.get('id')!=undefined)
+      if(this.navParams.get('action')=="edit")
       {
         this.getData();
       }
@@ -211,6 +214,10 @@ export class AdminCreateJobsPage {
     console.log(this.navParams.get('id'))
     firebase.database().ref('jobs/'+this.navParams.get('id')).on('value', itemSnapshot => {
       let ival=itemSnapshot.val();
+      if(ival==null)
+      {
+        return false;
+      }
       firebase.database().ref('job_details/'+ival.job_details_id).on('value', itemSnapshot1 => {
         itemSnapshot1.forEach( itemSnap1 => {
           console.log(itemSnap1.key);
@@ -452,7 +459,7 @@ export class AdminCreateJobsPage {
     }
 
         
-    if(this.navParams.get('id')!=undefined)
+    if(this.navParams.get('action')=="edit")
     {
       firebase.database().ref('jobs/'+this.navParams.get('id')).on('value', itemSnapshot => {
         let idArr=itemSnapshot.val();

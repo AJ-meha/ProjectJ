@@ -2,9 +2,6 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, AlertController, App } from 'ionic-angular';
 import firebase from 'firebase';
 import { CustomerAuthProvider } from '../../providers/customer-auth/customer-auth';
-import { CustomerSingleJobViewPage } from '../customer-single-job-view/customer-single-job-view';
-import { CustomerJobListingPage } from '../customer-job-listing/customer-job-listing';
-import { CustomerDashboardPage } from '../customer-dashboard/customer-dashboard';
 import { GlobalVarsProvider } from '../../providers/global-vars/global-vars';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 /**
@@ -14,7 +11,12 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
  * Ionic pages and navigation.
  */
 
-@IonicPage()
+@IonicPage(
+  {
+    name: "login",
+    segment: "login"
+  }
+)
 @Component({
   selector: 'page-customer-login',
   templateUrl: 'customer-login.html',
@@ -70,7 +72,7 @@ export class CustomerLoginPage {
                   // console.log(result.user);
                   self.authData.loginWithPhone(firebase.auth().currentUser.phoneNumber);
                   prompt.dismiss().then(() => {
-                   self.navCtrl.setRoot(CustomerDashboardPage);
+                   self.navCtrl.setRoot("dashboard");
                   });
                   // ...
                 }).catch(function (error) {
