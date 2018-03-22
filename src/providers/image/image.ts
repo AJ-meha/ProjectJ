@@ -80,7 +80,7 @@ export class ImageProvider {
   pushUpload(upload: Upload) : Promise<any>{
     let storageRef = firebase.storage().ref();
     let filenameArr=upload.file.name.split('.')
-    let filename=filenameArr[0]+''+new Date().getTime()+filenameArr[1]
+    let filename=filenameArr[0]+''+new Date().getTime()+'.'+filenameArr[1]
     let uploadTask = storageRef.child(`${this.basePath}/${filename}`).put(upload.file);
     
     return new Promise((resolve, reject) =>
