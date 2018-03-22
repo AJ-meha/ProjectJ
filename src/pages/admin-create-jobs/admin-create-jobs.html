@@ -118,12 +118,12 @@
               </ion-row>
 
               <ion-row *ngIf="navParams.get('id')">
-                <ion-col col-8 col-md-3>
+                <ion-col col-12 col-md-3>
                   <ion-item>
                     <ion-label stacked>Upload Logo</ion-label>
-                    
-               
-                   
+
+
+
                     <!-- <span
                     ion-text
                     color="danger"
@@ -132,9 +132,9 @@
                     padding-top
                     padding-bottom
                     (click)="selectImage()">Select an image</span> -->
-                    
-                    
-                   
+
+
+
                         <!-- <span
                     ion-text
                     color="danger"
@@ -144,25 +144,25 @@
                     padding-bottom
                     (click)="selectImage()">Select an image</span> -->
                   </ion-item>
-                </ion-col>
-                <ion-col col-4 col-md-3 margin-top padding-top >
-                    <!-- <ion-input class="cordova-camera-select"  value="" type="file" name="files[]" placeholder="Select a file to upload" (click)="selectImage()"></ion-input> -->
-                    <!-- <button ion-button (click)="selectImage()">Lets take a picture!</button> -->
-                    <!-- <input
-                    type="hidden"
-                    name="image"
-                    formControlName="image"
-                    [(ngModel)]="jobImage">
-                <img [src]="jobImage"> -->
-                <div *ngIf="currentUpload" > <img class="image_logo" [src]="currentUpload?.thumb" ></div>
-                <div *ngIf="existingUpload"> <img class="image_logo" [src]="existingUpload"></div>
-                <label>
-                  <input accept="image/*" type="file" (change)="detectFiles($event)">
-               </label>
-                    <button margin-top ion-button small [disabled]="!selectedFiles"
-                    (click)="uploadSingle()">
-                      Upload
-                    </button>
+                  <div padding-left >
+                      <!-- <ion-input class="cordova-camera-select"  value="" type="file" name="files[]" placeholder="Select a file to upload" (click)="selectImage()"></ion-input> -->
+                      <!-- <button ion-button (click)="selectImage()">Lets take a picture!</button> -->
+                      <!-- <input
+                      type="hidden"
+                      name="image"
+                      formControlName="image"
+                      [(ngModel)]="jobImage">
+                      <img [src]="jobImage"> -->
+                      <div *ngIf="currentUpload" > <img class="image_logo" [src]="currentUpload?.thumb" ></div>
+                      <div *ngIf="existingUpload"> <img class="image_logo" [src]="existingUpload"></div>
+                      <label>
+                        <input accept="image/*" type="file" (change)="detectFiles($event)">
+                      </label>
+                      <button margin-top ion-button small [disabled]="!selectedFiles"
+                      (click)="uploadSingle()">
+                        Upload
+                      </button>
+                  </div>
                 </ion-col>
               </ion-row>
 
@@ -331,7 +331,7 @@
 
                 <ion-col col-12>
                   <ion-row>
-                    <ion-col col-12 col-sm-6>
+                    <ion-col col-12 col-sm-3>
                       <ion-item>
                         <ion-label stacked>Salary</ion-label>
                       </ion-item>
@@ -343,11 +343,9 @@
                         <p>Please enter valid salary amount.</p>
                       </ion-item>
                     </ion-col>
-                    <ion-col col-12 col-sm-6>
-                      <ion-item>
-                        <ion-label stacked>per</ion-label>
-                      </ion-item>
-                      <ion-item>
+                    <ion-col col-12 col-sm-3>
+                      <ion-item class="per-salary">
+                        <ion-label >per</ion-label>
                         <ion-select [(ngModel)]="inputsArray['salary_unit']" [class.invalid]="!jobsForm.controls.salary_unit.valid && formsubmitted" #salary_unit formControlName="salary_unit" name="salary" interface="popover" placeholder="--">
 
                              <ion-option *ngFor="let salaryUnit of salaryUnits" value="{{salaryUnit.key}}">{{salaryUnit.value}}</ion-option>
@@ -505,7 +503,7 @@
 
                   </ion-item>
               </ion-col>
-              
+
             </ion-row>
           </ion-grid>
         </ion-card>

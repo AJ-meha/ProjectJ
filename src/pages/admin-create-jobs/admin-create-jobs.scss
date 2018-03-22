@@ -41,4 +41,10 @@ page-admin-create-jobs {
 	.image_logo{
 		width:auto!important
 	}
+
+	@media(min-width: 768px){
+		.per-salary{
+			margin-top: 50px;
+		}
+	}
 }
