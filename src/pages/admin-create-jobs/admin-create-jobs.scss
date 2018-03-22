@@ -1,5 +1,7 @@
 page-admin-create-jobs {
 
+	font-family: "roboto";
+
 	&.show-page{
 		.content{
 			background-color: #fcfcfc;
@@ -23,11 +25,17 @@ page-admin-create-jobs {
 	}
 	.text-input{
 		font-size: 1.6rem;
+		border-bottom: 1px solid $lining;
+		padding-bottom: 8px;
 	}
 
 	.item-md .radio-md[item-left],
 	.item-md .radio-md[item-start],
 	.item.item-md .checkbox-md{
 		margin-right: 10px
+	}
+
+	.image_logo{
+		width:auto!important
 	}
 }

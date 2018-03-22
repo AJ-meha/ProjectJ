@@ -1,17 +1,12 @@
 import { Component, ViewChild } from '@angular/core';
-import { Platform, Nav } from 'ionic-angular';
+import { Platform, Nav, NavController, App } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
-
-import { TabsPage } from '../pages/tabs/tabs';
-import { OnboardingPage } from '../pages/onboarding/onboarding';
-import { AdminLoginPage } from '../pages/admin-login/admin-login';
-import { AdminDashboardPage } from '../pages/admin-dashboard/admin-dashboard';
 
 import { AngularFireAuth } from 'angularfire2/auth';
 
 import { AuthProvider } from '../providers/auth/auth';
-import { AdminCreateJobsPage } from '../pages/admin-create-jobs/admin-create-jobs';
+import { CustomerAuthProvider } from '../providers/customer-auth/customer-auth';
 
 @Component({
   templateUrl: 'app.html'
@@ -19,36 +14,63 @@ import { AdminCreateJobsPage } from '../pages/admin-create-jobs/admin-create-job
 export class MyApp {
   @ViewChild(Nav) nav: Nav;
   rootPage:any;
-  pages: Array<{title:string,component:any}>;
-
-  constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen, afAuth: AngularFireAuth,public authData:AuthProvider) {
+  pages: Array<{title:string,name:any}>;
+  public is_admin:boolean=false
+  constructor(public app:App,platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen, afAuth: AngularFireAuth,public authData:AuthProvider,public customerAuthData:CustomerAuthProvider) {
     this.pages=[
-      {title:'Dashboard',component:AdminDashboardPage},
-      {title:'Add Job',component:AdminCreateJobsPage},
-      {title:'View Jobs',component:TabsPage},
-      {title:'Onboarding (WIP)',component:OnboardingPage}
+      {title:'Dashboard',name:"admin-dashboard"},
+      {title:'Add Job',name:"admin-create-jobs"},
+      {title:'List Jobs',name:"admin-list-jobs"},
+      {title:'Onboarding (WIP)',name:"onboarding"}
     ];
+    console.log("loc="+window.location.href)
+    let loc=window.location.href;
+    if(loc.indexOf('#/admin') != -1){
+      this.is_admin=true
+    }
 
-    const authObserver=afAuth.authState.subscribe(user=>{
-      if(user){
-        this.authData.getUserEmail().then(userename=>{
-          if(userename!=null)
-          {
-            this.rootPage=AdminDashboardPage;
-            authObserver.unsubscribe();
+    let self=this;
+    if(this.is_admin == true){
+      this.authData.getUserEmail().then(useremail=>{
+        if(useremail!=null)
+        {
+          if((loc.indexOf('#/admin/') == -1) || (loc[loc.indexOf('#/admin/')+8]==undefined)){
+            self.nav.setRoot("admin-list-jobs");
           }
-          else
-          {
-            this.rootPage=AdminLoginPage;
-            authObserver.unsubscribe();
+          else{
+            console.log(loc.indexOf('#/admin/'));
+            console.log(loc[loc.indexOf('#/admin/')+8]);
           }
-        });
-      }
-      else{
-        this.rootPage=AdminLoginPage;
-        authObserver.unsubscribe();
-      }
-    });
+        }
+        else
+        {
+          self.authData.setAdminInit("init");
+          self.nav.setRoot("admin-login");
+        }
+      });
+    }
+    else{
+      const authObserver=afAuth.authState.subscribe(user=>{
+        if(user){
+          this.customerAuthData.getUserPhone().then(userphone=>{
+            if(userphone==null)
+            {
+              self.nav.setRoot("login");
+              authObserver.unsubscribe();
+            }
+            else
+            {
+              self.nav.setRoot("dashboard");
+              authObserver.unsubscribe();
+            }
+          });
+        }
+        else{
+          this.nav.setRoot("login");
+          authObserver.unsubscribe();
+        }
+      });
+    }
 
     platform.ready().then(() => {
       // Okay, so the platform is ready and our plugins are available.
@@ -61,6 +83,6 @@ export class MyApp {
   openPage(page) {
     // Reset the content nav to have just this page
     // we wouldn't want the back button to show in this scenario
-    this.nav.setRoot(page.component);
+    this.nav.setRoot(page.name);
   }
 }
