@@ -9,6 +9,8 @@ import { TabsPage } from '../tabs/tabs';
 
 import { EmailValidator } from '../../validators/email';
 import { AdminListJobsPage } from '../admin-list-jobs/admin-list-jobs'
+import { ImageProvider } from '../../providers/image/image';
+import { Upload } from '../../app/models/upload';
 
 /**
  * Generated class for the AdminCreateJobsPage page.
@@ -55,8 +57,16 @@ export class AdminCreateJobsPage {
   public salaryUnitRef: firebase.database.Reference = firebase.database().ref('salary_unit');
   public industryRef: firebase.database.Reference = firebase.database().ref('industry');
   public employeeBenefitsRef: firebase.database.Reference = firebase.database().ref('employee_benefits');
+
+  public dbRef: firebase.database.Reference = firebase.database().ref();
+  public savedJobsRef: firebase.database.Reference = firebase.database().ref('jobs');
+  public jobImage  	   : any;
   
-  constructor(public navCtrl: NavController, public navParams: NavParams,private af: AngularFireDatabase,public formBuilder:FormBuilder,public commonfunc:CommonFunctionsProvider) {
+  selectedFiles: FileList;
+  currentUpload: Upload;
+  existingUpload:string;
+  
+  constructor(public navCtrl: NavController, public navParams: NavParams,private af: AngularFireDatabase,public formBuilder:FormBuilder,public commonfunc:CommonFunctionsProvider,private _IMG: ImageProvider) {
 
     // console.log("jobss---")
     console.log("id=")
@@ -76,7 +86,8 @@ export class AdminCreateJobsPage {
       sub_industry:['',Validators.compose([Validators.required])],
       employment_type:['',Validators.compose([Validators.required])],
       contact_via:['',Validators.compose([Validators.required])],
-      additional_info:''
+      additional_info:'',
+      image:''
       // contactViaList:this.formBuilder.array([])
       // contactViaList:this.formBuilder.array([])
 
@@ -86,6 +97,7 @@ export class AdminCreateJobsPage {
       { title: 'Home', component: TabsPage },
       { title: 'Add Job', component: AdminCreateJobsPage }
     ];
+
 
   }
 
@@ -204,13 +216,38 @@ export class AdminCreateJobsPage {
     //   console.log(contactVia)
     // }
 
+    let self=this
+    this.dbRef.child('uploadThumbs/').on("child_added", function(snapshot, prevChildKey) {
+      var newchildthumb = snapshot.val();
+      console.log("-----CHILD ADDED----")
+      console.log(newchildthumb);
+      // console.log(self.currentUpload.name);
+      if(typeof self.currentUpload !== 'undefined'){
+        firebase.storage().ref().child('/thumbs/64/'+self.currentUpload.name+'_thumb.png').getDownloadURL().then(function(url) {
+          console.log("URL==="+url);
+          self.currentUpload.thumb=url;
+          self.existingUpload='';
+        }).catch(function(error) {
+          // Handle any errors here
+        });
+      }
+      
+    });
+
   }
 
   getData(){
     console.log("===getData===")
+    let self=this;
     console.log(this.navParams.get('id'))
     firebase.database().ref('jobs/'+this.navParams.get('id')).on('value', itemSnapshot => {
       let ival=itemSnapshot.val();
+      if(typeof ival.image !== 'undefined'){
+        firebase.database().ref('uploads/'+ival.image).once('value').then( function(mediaSnap) {
+          self.existingUpload=mediaSnap.val().url
+          console.log("image==="+self.existingUpload)
+        });
+      }
       firebase.database().ref('job_details/'+ival.job_details_id).on('value', itemSnapshot1 => {
         itemSnapshot1.forEach( itemSnap1 => {
           console.log(itemSnap1.key);
@@ -263,6 +300,7 @@ export class AdminCreateJobsPage {
                 if(this.contactVias[contact].key==i3val[val])
                 {
                   this.contactVias[contact].checked=true;
+
                 }
               }
             }
@@ -456,6 +494,12 @@ export class AdminCreateJobsPage {
     {
       firebase.database().ref('jobs/'+this.navParams.get('id')).on('value', itemSnapshot => {
         let idArr=itemSnapshot.val();
+        console.log("id==")
+        console.log(idArr)
+
+        if(typeof this.currentUpload !== 'undefined'){
+          firebase.database().ref('jobs/'+this.navParams.get('id')+'/image').set(this.currentUpload.fileId);
+        }
         for (let itemSnap in idArr) {
           if(itemSnap=='job_details_id')
           {
@@ -571,5 +615,37 @@ export class AdminCreateJobsPage {
    }
    console.log(this.selectedContactViaArray)
  }
+
+ selectImage()
+ {
+    this._IMG.selectImage()
+    .then((data) =>
+    {
+       this.jobImage = data;
+       console.log( this.jobImage)
+    });
+ }
+
+ detectFiles(event) {
+    this.selectedFiles = event.target.files;
+  }
+
+  uploadSingle() {
+    let file = this.selectedFiles.item(0)
+    this.currentUpload = new Upload(file);
+    let self=this;
+    this._IMG.pushUpload(this.currentUpload).then((snapshot : any) =>
+    {
+      //  firebase.storage().ref().child('/thumbs/64/'+self.currentUpload.name+'_thumb.png').getDownloadURL().then(function(url) {
+      //   console.log("URL==="+url);
+      //   self.currentUpload.thumb=url;
+      //   self.existingUpload='';
+      // }).catch(function(error) {
+      //   // Handle any errors here
+      // });
+       
+    });
+    
+  }
 
 }
