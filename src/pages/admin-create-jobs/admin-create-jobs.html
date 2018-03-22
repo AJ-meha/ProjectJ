@@ -35,7 +35,7 @@
                     <ion-input autofocus [(ngModel)]="inputsArray['application_sent_mail']" #application_sent_mail formControlName="application_sent_mail" type="email" placeholder="Enter Email Address" [class.invalid]="!jobsForm.controls.application_sent_mail.valid && (formsubmitted || formsaved)"></ion-input>
                   </ion-item>
                   <ion-item class="error-message" *ngIf="!jobsForm.controls.application_sent_mail.valid  && (formsubmitted || formsaved)">
-                    <p>Please enter a valid email address.</p>
+                    <p>Please enter a valid email address</p>
                   </ion-item>
 
                 </ion-col>
@@ -50,7 +50,7 @@
                     </ion-select>
                   </ion-item>
                   <ion-item class="error-message" *ngIf="!jobsForm.controls.workplace.valid  && formsubmitted">
-                    <p>Please enter a valid workplace.</p>
+                    <p>Please enter a valid workplace</p>
                   </ion-item>
                 </ion-col>
 
@@ -62,7 +62,7 @@
                     <ion-input [(ngModel)]="inputsArray['workplace_name']" #workplace_name formControlName="workplace_name" type="text" placeholder="Enter Workplace name" [class.invalid]="!jobsForm.controls.workplace_name.valid && formsubmitted"></ion-input>
                   </ion-item>
                   <ion-item class="error-message" *ngIf="!jobsForm.controls.workplace_name.valid  && formsubmitted">
-                    <p>Please enter a valid workplace name.</p>
+                    <p>Please enter a valid workplace name</p>
                   </ion-item>
                 </ion-col>
 
@@ -75,7 +75,7 @@
                     <ion-input item-end [(ngModel)]="inputsArray['mobile']" #mobile formControlName="mobile" type="tel" placeholder="Enter Mobile number" [class.invalid]="!jobsForm.controls.mobile.valid && (formsubmitted || (this.jobsForm.value.mobile!='' && formsaved))"></ion-input>
                   </ion-item>
                   <ion-item class="error-message" *ngIf="!jobsForm.controls.mobile.valid  && (formsubmitted || (this.jobsForm.value.mobile!='' && formsaved))">
-                    <p>Please enter a valid mobile number.</p>
+                    <p>Please enter a valid mobile number</p>
                   </ion-item>
                 </ion-col>
 
@@ -86,7 +86,7 @@
                     <ion-input [(ngModel)]="inputsArray['workplace_address']" #workplace_address formControlName="workplace_address" type="text" placeholder="Enter Address" [class.invalid]="!jobsForm.controls.workplace_address.valid && formsubmitted"></ion-input>
                   </ion-item>
                   <ion-item class="error-message" *ngIf="!jobsForm.controls.workplace_address.valid  && formsubmitted">
-                    <p>Please enter a valid address.</p>
+                    <p>Please enter a valid address</p>
                   </ion-item>
 
                   <ion-row>
@@ -96,7 +96,7 @@
                         <ion-input [(ngModel)]="inputsArray['workplace_latitude']"  #workplace_latitude formControlName="workplace_latitude" type="text" placeholder="Enter Latitude" [class.invalid]="!jobsForm.controls.workplace_latitude.valid && formsubmitted"></ion-input>
                       </ion-item>
                       <ion-item class="error-message" *ngIf="!jobsForm.controls.workplace_latitude.valid  && formsubmitted">
-                        <p>Please enter a valid latitude.</p>
+                        <p>Please enter a valid latitude</p>
                       </ion-item>
                     </ion-col>
                     <ion-col col-12 col-md-6>
@@ -105,7 +105,7 @@
                         <ion-input [(ngModel)]="inputsArray['workplace_longitude']"  #workplace_longitude formControlName="workplace_longitude" type="text" placeholder="Enter Longitude" [class.invalid]="!jobsForm.controls.workplace_longitude.valid && formsubmitted"></ion-input>
                       </ion-item>
                       <ion-item class="error-message" *ngIf="!jobsForm.controls.workplace_longitude.valid  && formsubmitted">
-                        <p>Please enter a valid longitude.</p>
+                        <p>Please enter a valid longitude</p>
                       </ion-item>
                     </ion-col>
                   </ion-row>
@@ -188,7 +188,7 @@
                   <!-- </ion-item-group> -->
               </ion-col>
               <ion-item class="error-message" *ngIf="!jobsForm.controls.contact_via.valid  && formsubmitted">
-                  <p>Please enter a valid contact means.</p>
+                  <p>Please enter a valid contact means</p>
                 </ion-item>
             </ion-row>
               <!-- <ion-row formArrayName="contactViaList">
@@ -247,7 +247,7 @@
                     <ion-input [(ngModel)]="inputsArray['designation']" [class.invalid]="!jobsForm.controls.designation.valid && (formsubmitted || formsaved)" #designation formControlName="designation" type="text" placeholder="Enter Designation"></ion-input>
                   </ion-item>
                   <ion-item class="error-message" *ngIf="!jobsForm.controls.designation.valid  && (formsubmitted || formsaved)">
-                    <p>Please enter a valid designation.</p>
+                    <p>Please enter a valid designation</p>
                   </ion-item>
                 </ion-col>
                 <ion-col col-12 col-md-6>
@@ -263,7 +263,7 @@
                     </ion-select>
                   </ion-item>
                   <ion-item class="error-message" *ngIf="!jobsForm.controls.industry.valid  && formsubmitted">
-                    <p>Please enter a valid industry.</p>
+                    <p>Please enter a valid industry</p>
                   </ion-item>
                 </ion-col>
                 <ion-col col-12 col-md-6>
@@ -279,7 +279,7 @@
                     </ion-select>
                   </ion-item>
                   <ion-item class="error-message" *ngIf="!jobsForm.controls.sub_industry.valid  && formsubmitted">
-                    <p>Please enter a valid sub industry.</p>
+                    <p>Please enter a valid sub industry</p>
                   </ion-item>
                 </ion-col>
                 <ion-col col-12 col-md-6>
@@ -292,7 +292,7 @@
                     </ion-select>
                   </ion-item>
                   <ion-item class="error-message" *ngIf="!jobsForm.controls.type.valid  && formsubmitted">
-                    <p>Please enter a valid type.</p>
+                    <p>Please enter a valid type</p>
                   </ion-item>
                 </ion-col>
             </ion-row>
@@ -309,7 +309,7 @@
 
                     </ion-col>
                     <ion-item class="error-message" *ngIf="!jobsForm.controls.employment_type.valid  && formsubmitted">
-                      <p>Please enter a valid employment type.</p>
+                      <p>Please enter a valid employment type</p>
                     </ion-item>
 
                     <!-- <ion-item>
@@ -340,7 +340,7 @@
                         <ion-input [(ngModel)]="inputsArray['salary_amount']" [class.invalid]="!jobsForm.controls.salary_amount.valid && (formsubmitted || (this.jobsForm.value.salary_amount!='' && formsaved))" #salary_amount formControlName="salary_amount" type="number" placeholder="Enter Salary"></ion-input>
                       </ion-item>
                       <ion-item class="error-message" *ngIf="!jobsForm.controls.salary_amount.valid  && (formsubmitted || (this.jobsForm.value.salary_amount!='' && formsaved))">
-                        <p>Please enter valid salary amount.</p>
+                        <p>Please enter valid salary amount</p>
                       </ion-item>
                     </ion-col>
                     <ion-col col-12 col-sm-6>
@@ -356,7 +356,7 @@
                         </ion-select>
                       </ion-item>
                       <ion-item class="error-message" *ngIf="!jobsForm.controls.salary_unit.valid  && formsubmitted">
-                        <p>Please enter a valid salary unit.</p>
+                        <p>Please enter a valid salary unit</p>
                       </ion-item>
                     </ion-col>
                   </ion-row>
@@ -406,7 +406,7 @@
                   </ion-col>
 
                   <ion-item class="error-message" *ngIf="(checkDates()==false)  && formsubmitted">
-                    <p>Please enter work schedule.</p>
+                    <p>Please enter work schedule</p>
                   </ion-item>
             </ion-row>
           </ion-grid>
@@ -561,7 +561,7 @@
                         <ion-item>
                           <ion-icon *ngIf="(questions.option_type=='radio')" item-start name='radio-button-off'></ion-icon>
                           <ion-icon *ngIf="(questions.option_type=='checkbox')" item-start name='square-outline'></ion-icon>
-                          <ion-input [(ngModel)]="options.val" [ngModelOptions]="{standalone: true}" type="text" placeholder="Enter an Answer"></ion-input>
+                          <ion-input [(ngModel)]="options.val" [ngModelOptions]="{standalone: true}" [disabled]="questions.question_name==''" type="text" placeholder="Enter an Answer"></ion-input>
                           <button ion-fab mini item-end color="danger" *ngIf="(questions.options.length>2)" (click)="removeOption(indq,inda);"><ion-icon name="trash"></ion-icon></button>
                         </ion-item>
                       </ion-col>
@@ -584,8 +584,11 @@
                   </ion-col>
                 </ion-row>
 
-                <ion-item class="error-message" *ngIf="(checkQuestions()==false)  && (formsubmitted || formsaved)">
-                  <p>Please enter questions and options.</p>
+                <ion-item class="error-message" *ngIf="(checkQuestionsSubmit()==false)  && formsubmitted">
+                  <p>Please enter all questions and options</p>
+                </ion-item>
+                <ion-item class="error-message" *ngIf="(checkQuestionsSave()==false)  && formsaved">
+                  <p>Please enter atleast 1 question and options for it</p>
                 </ion-item>
               </div>
 
