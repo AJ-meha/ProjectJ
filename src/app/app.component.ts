@@ -24,7 +24,8 @@ export class MyApp {
       {title:'Onboarding (WIP)',name:"onboarding"}
     ];
     console.log("loc="+window.location.href)
-    if(window.location.href.indexOf('#/admin') != -1){
+    let loc=window.location.href;
+    if(loc.indexOf('#/admin') != -1){
       this.is_admin=true
     }
 
@@ -33,8 +34,9 @@ export class MyApp {
       this.authData.getUserEmail().then(useremail=>{
         if(useremail!=null)
         {
-          self.nav.setRoot("admin-list-jobs");
-
+          if(loc.indexOf('#/admin/') == -1){
+            self.nav.setRoot("admin-list-jobs");
+          }
         }
         else
         {
