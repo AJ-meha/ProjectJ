@@ -21,7 +21,6 @@ import { JobsProvider } from '../providers/jobs/jobs';
 import { CustomerJobListingPage } from '../pages/customer-job-listing/customer-job-listing';
 import { FavouritePage } from '../pages/favourite/favourite';
 import { MessagePage } from '../pages/message/message';
-import { SearchPage } from '../pages/search/search';
 import { ProfilePage } from '../pages/profile/profile';
 import { CustomerDashboardPage } from '../pages/customer-dashboard/customer-dashboard';
 import { OnboardingPage } from '../pages/onboarding/onboarding';
@@ -57,7 +56,6 @@ const firebaseConfig = {
     CustomerJobListingPage,
     FavouritePage,
     MessagePage,
-    SearchPage,
     ProfilePage
   ],
   imports: [
@@ -76,7 +74,6 @@ const firebaseConfig = {
     CustomerJobListingPage,
     FavouritePage,
     MessagePage,
-    SearchPage,
     ProfilePage
   ],
   providers: [

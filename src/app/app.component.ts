@@ -21,6 +21,7 @@ export class MyApp {
       {title:'Dashboard',name:"admin-dashboard"},
       {title:'Add Job',name:"admin-create-jobs"},
       {title:'List Jobs',name:"admin-list-jobs"},
+      {title:'Home (WIP)',name:"home"},
       {title:'Onboarding (WIP)',name:"onboarding"}
     ];
     console.log("loc="+window.location.href)

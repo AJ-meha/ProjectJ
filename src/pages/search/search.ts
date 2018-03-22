@@ -1,7 +1,12 @@
 import { Component } from '@angular/core';
-import { NavController, ModalController } from 'ionic-angular';
-import { SingleJobPage } from '../single-job/single-job';
-import { SingleJob_2Page } from '../single-job-2/single-job-2';
+import { IonicPage, NavController, ModalController } from 'ionic-angular';
+
+@IonicPage(
+  {
+    name: 'page-search',
+  	segment: 'page-search'
+  }
+)
 
 @Component({
   selector: 'page-search',
@@ -19,11 +24,11 @@ export class SearchPage {
 	}
 
 	openJob() {
-	    this.navCtrl.push(SingleJobPage);
+	    this.navCtrl.push('single-job');
 	}
 
 	openJob2() {
-	    this.navCtrl.push(SingleJob_2Page);
+	    this.navCtrl.push('single-job-details');
 	}
 
 }
