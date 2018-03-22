@@ -84,6 +84,13 @@ export class MyApp {
   openPage(page) {
     // Reset the content nav to have just this page
     // we wouldn't want the back button to show in this scenario
-    this.nav.setRoot(page.name);
+    if(page.name=="admin-create-jobs")
+    {
+      window.location.href="/#/admin/jobs/add/new"
+    }
+    else
+    {
+      this.nav.setRoot(page.name);
+    }
   }
 }
