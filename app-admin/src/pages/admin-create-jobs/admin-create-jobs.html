@@ -1,0 +1,673 @@
+<ion-split-pane>
+<ion-menu [content]="content">
+    <ion-card-header padding-left padding-top padding-bottom text-uppercase class="card-wp-primary">
+      <div padding-top padding-bottom margin-top margin-bottom text-center style="font-weight: bold">
+        Project J
+      </div>
+    </ion-card-header>
+
+  </ion-menu>
+
+  <ion-content main #content swipeBackEnabled="false">
+
+    <ion-header>
+
+      <ion-navbar>
+        <button ion-button menuToggle>
+          <ion-icon name="menu"></ion-icon>
+        </button>
+        <ion-title>Add a Job</ion-title>
+      </ion-navbar>
+
+    </ion-header>
+
+
+    <ion-content padding>
+      <form [formGroup]="jobsForm" (submit)="formsubmitted=true;formsaved=false;submitJob(this.jobsForm)" novalidate>
+        <div>
+        <ion-card>
+          <ion-card-header padding-left class="card-wp-admin">Contact &amp; Workplace Info</ion-card-header>
+            <ion-grid>
+              <ion-row>
+                <ion-col col-12 col-md-6>
+                  <ion-item>
+                    <ion-label stacked>Applications to be sent to</ion-label>
+                    <ion-input autofocus [(ngModel)]="inputsArray['application_sent_mail']" #application_sent_mail formControlName="application_sent_mail" type="email" placeholder="Enter Email Address" [class.invalid]="!jobsForm.controls.application_sent_mail.valid && (formsubmitted || formsaved)"></ion-input>
+                  </ion-item>
+                  <ion-item class="error-message" *ngIf="!jobsForm.controls.application_sent_mail.valid  && (formsubmitted || formsaved)">
+                    <p>Please enter a valid email address</p>
+                  </ion-item>
+
+                </ion-col>
+
+                <ion-col col-12 col-md-6>
+                  <ion-item>
+                    <ion-label stacked>Workplace</ion-label>
+                    <ion-select [(ngModel)]="inputsArray['workplace']" #workplace formControlName="workplace" [class.invalid]="!jobsForm.controls.workplace.valid && formsubmitted" placeholder="--">
+                        <ion-option *ngFor="let workplaceType of workplaceTypes" value="{{workplaceType.key}}" [selected]="workplaceType.key == company">{{workplaceType.value}}</ion-option>
+                        <!-- <ion-option value="domestic">Domestic</ion-option>
+                        <ion-option value="company">Company</ion-option> -->
+                    </ion-select>
+                  </ion-item>
+                  <ion-item class="error-message" *ngIf="!jobsForm.controls.workplace.valid  && formsubmitted">
+                    <p>Please enter a valid workplace</p>
+                  </ion-item>
+                </ion-col>
+
+                <ion-col col-12 col-md-6>
+                  <ion-item>
+                    <ion-label stacked>Workplace Name</ion-label>
+                  </ion-item>
+                  <ion-item>
+                    <ion-input [(ngModel)]="inputsArray['workplace_name']" #workplace_name formControlName="workplace_name" type="text" placeholder="Enter Workplace name" [class.invalid]="!jobsForm.controls.workplace_name.valid && formsubmitted"></ion-input>
+                  </ion-item>
+                  <ion-item class="error-message" *ngIf="!jobsForm.controls.workplace_name.valid  && formsubmitted">
+                    <p>Please enter a valid workplace name</p>
+                  </ion-item>
+                </ion-col>
+
+                <ion-col col-12 col-md-6>
+                  <ion-item>
+                    <ion-label stacked>Mobile</ion-label>
+                  </ion-item>
+                  <ion-item>
+                    <ion-label item-start>{{mobile_code}}</ion-label>
+                    <ion-input item-end [(ngModel)]="inputsArray['mobile']" #mobile formControlName="mobile" type="tel" placeholder="Enter Mobile number" [class.invalid]="!jobsForm.controls.mobile.valid && (formsubmitted || (this.jobsForm.value.mobile!='' && formsaved))"></ion-input>
+                  </ion-item>
+                  <ion-item class="error-message" *ngIf="!jobsForm.controls.mobile.valid  && (formsubmitted || (this.jobsForm.value.mobile!='' && formsaved))">
+                    <p>Please enter a valid mobile number</p>
+                  </ion-item>
+                </ion-col>
+
+
+                <ion-col col-12 col-md-6>
+                  <ion-item>
+                    <ion-label stacked>Address</ion-label>
+                    <ion-input [(ngModel)]="inputsArray['workplace_address']" #workplace_address formControlName="workplace_address" type="text" placeholder="Enter Address" [class.invalid]="!jobsForm.controls.workplace_address.valid && formsubmitted"></ion-input>
+                  </ion-item>
+                  <ion-item class="error-message" *ngIf="!jobsForm.controls.workplace_address.valid  && formsubmitted">
+                    <p>Please enter a valid address</p>
+                  </ion-item>
+
+                  <ion-row>
+                    <ion-col col-12 col-md-6>
+                      <ion-item>
+                        <ion-label stacked>Latitude</ion-label>
+                        <ion-input [(ngModel)]="inputsArray['workplace_latitude']"  #workplace_latitude formControlName="workplace_latitude" type="text" placeholder="Enter Latitude" [class.invalid]="!jobsForm.controls.workplace_latitude.valid && formsubmitted"></ion-input>
+                      </ion-item>
+                      <ion-item class="error-message" *ngIf="!jobsForm.controls.workplace_latitude.valid  && formsubmitted">
+                        <p>Please enter a valid latitude</p>
+                      </ion-item>
+                    </ion-col>
+                    <ion-col col-12 col-md-6>
+                      <ion-item>
+                        <ion-label stacked>Longitude</ion-label>
+                        <ion-input [(ngModel)]="inputsArray['workplace_longitude']"  #workplace_longitude formControlName="workplace_longitude" type="text" placeholder="Enter Longitude" [class.invalid]="!jobsForm.controls.workplace_longitude.valid && formsubmitted"></ion-input>
+                      </ion-item>
+                      <ion-item class="error-message" *ngIf="!jobsForm.controls.workplace_longitude.valid  && formsubmitted">
+                        <p>Please enter a valid longitude</p>
+                      </ion-item>
+                    </ion-col>
+                  </ion-row>
+                </ion-col>
+                <ion-col col-12 col-md-6>
+                  <ion-item>
+                    <img src="assets/imgs/map-img.png">
+                  </ion-item>
+                </ion-col>
+              </ion-row>
+
+              <ion-row *ngIf="edit_id">
+                <ion-col col-12 col-md-3>
+                  <ion-item>
+                    <ion-label stacked>Upload Logo</ion-label>
+
+
+
+                    <!-- <span
+                    ion-text
+                    color="danger"
+                    block
+                    text-center
+                    padding-top
+                    padding-bottom
+                    (click)="selectImage()">Select an image</span> -->
+
+
+
+                        <!-- <span
+                    ion-text
+                    color="danger"
+                    block
+                    text-center
+                    padding-top
+                    padding-bottom
+                    (click)="selectImage()">Select an image</span> -->
+                  </ion-item>
+                  <div padding-left >
+                      <!-- <ion-input class="cordova-camera-select"  value="" type="file" name="files[]" placeholder="Select a file to upload" (click)="selectImage()"></ion-input> -->
+                      <!-- <button ion-button (click)="selectImage()">Lets take a picture!</button> -->
+                      <!-- <input
+                      type="hidden"
+                      name="image"
+                      formControlName="image"
+                      [(ngModel)]="jobImage">
+                      <img [src]="jobImage"> -->
+                      <div *ngIf="currentUpload" > <img class="image_logo" [src]="currentUpload?.thumb" ></div>
+                      <div *ngIf="existingUpload"> <img class="image_logo" [src]="existingUpload"></div>
+                      <label>
+                        <input accept="image/*" type="file" (change)="detectFiles($event)">
+                      </label>
+                      <button margin-top ion-button small [disabled]="!selectedFiles"
+                      (click)="uploadSingle()">
+                        Upload
+                      </button>
+                  </div>
+                </ion-col>
+              </ion-row>
+
+
+
+              <ion-row >
+                <ion-col col-12>
+                  <ion-label padding-left>
+                    Contact via
+                  </ion-label>
+                </ion-col>
+                <ion-col class="item item-checkbox" *ngFor="let contactVia of contactVias;let ind=index"  col-12 col-sm>
+                  <!-- <ion-item-group  > -->
+                  <!-- <input type="checkbox" formControlName="isChosen" /> {{hobby.controls.name.value}} -->
+                    <ion-item  >
+                      <label class = "checkbox">
+                          <input #contact_via formControlName="contact_via" type="checkbox" value="{{contactVia.key}}" [checked]="contactVia.checked"  (change)="updateContactViaList(contactVia.key, $event.target.checked, ind)"/>
+                      </label>
+                        {{contactVia.value}}
+
+                      <!-- <ion-checkbox value="{{contactVia.key}}"></ion-checkbox> -->
+                    </ion-item>
+                  <!-- </ion-item-group> -->
+              </ion-col>
+              <ion-item class="error-message" *ngIf="!jobsForm.controls.contact_via.valid  && formsubmitted">
+                  <p>Please enter a valid contact means</p>
+                </ion-item>
+            </ion-row>
+              <!-- <ion-row formArrayName="contactViaList">
+                      <ion-col *ngFor="let contactVia of contactViaList.controls"  col-12 col-sm>
+                        <!-- <input type="checkbox" formControlName="isChosen" /> {{hobby.controls.name.value}} -->
+                        <!-- <ion-item>
+                          <ion-label>{{contactVia.controls.name.value}}</ion-label> -->
+                            <!-- <ion-checkbox #contact_via formControlName="contact_via"  checked="true" ></ion-checkbox> -->
+                          <!-- </ion-item>
+
+                    </ion-col>
+              </ion-row>  -->
+
+              <!-- <ion-row>
+                  <ion-col col-12 col-sm>
+                  <ion-item>
+                  <ion-label>Email</ion-label>
+                    <ion-checkbox #contact_via formControlName="contact_via"  checked="true" value="email"></ion-checkbox>
+                  </ion-item>
+              </ion-col>
+              <ion-col col-12 col-sm>
+                  <ion-item>
+                  <ion-label>Whatsapp</ion-label>
+                    <ion-checkbox   #contact_via formControlName="contact_via" value="whatsapp"></ion-checkbox>
+                  </ion-item>
+              </ion-col>
+              <ion-col col-12 col-sm>
+                    <ion-item>
+                    <ion-label>WeChat</ion-label>
+                      <ion-checkbox   #contact_via formControlName="contact_via" value="wechat"></ion-checkbox>
+                    </ion-item>
+              </ion-col>
+              <ion-col col-12 col-sm>
+                    <ion-item>
+                    <ion-label>Line</ion-label>
+                      <ion-checkbox  #contact_via formControlName="contact_via" value="line"></ion-checkbox>
+                    </ion-item>
+              </ion-col>
+              <ion-col col-12 col-sm>
+                    <ion-item>
+                    <ion-label>Phone</ion-label>
+                      <ion-checkbox  #contact_via formControlName="contact_via" value="phone"></ion-checkbox>
+                    </ion-item>
+              </ion-col>
+            </ion-row> -->
+            </ion-grid>
+        </ion-card>
+
+        <ion-card margin-top>
+          <ion-card-header padding-left class="card-wp-admin">Job Details</ion-card-header>
+          <ion-grid>
+            <ion-row>
+                <ion-col col-12 col-md-6>
+                  <ion-item>
+                    <ion-label stacked>Designation</ion-label>
+                    <ion-input [(ngModel)]="inputsArray['designation']" [class.invalid]="!jobsForm.controls.designation.valid && (formsubmitted || formsaved)" #designation formControlName="designation" type="text" placeholder="Enter Designation"></ion-input>
+                  </ion-item>
+                  <ion-item class="error-message" *ngIf="!jobsForm.controls.designation.valid  && (formsubmitted || formsaved)">
+                    <p>Please enter a valid designation</p>
+                  </ion-item>
+                </ion-col>
+                <ion-col col-12 col-md-6>
+                  <ion-item>
+                    <ion-label stacked>Industry</ion-label>
+                    <ion-select [(ngModel)]="inputsArray['industry']" [class.invalid]="!jobsForm.controls.industry.valid && formsubmitted" #industry formControlName="industry" interface="popover" placeholder="--" (ionChange)="populateSubIndustry(industry.value)">
+                        <!-- <ion-select [(ngModel)]="industry" name="industry" interface="popover" placeholder="--"> -->
+
+                          <ion-option *ngFor="let industry of industries" value="{{industry.key}}">{{industry.value}}</ion-option>
+
+                          <!-- <ion-option value="1">Industry 1</ion-option>
+                          <ion-option value="2">Industry 2</ion-option> -->
+                    </ion-select>
+                  </ion-item>
+                  <ion-item class="error-message" *ngIf="!jobsForm.controls.industry.valid  && formsubmitted">
+                    <p>Please enter a valid industry</p>
+                  </ion-item>
+                </ion-col>
+                <ion-col col-12 col-md-6>
+                  <ion-item>
+                    <ion-label stacked>Sub-Industry</ion-label>
+                    <ion-select [(ngModel)]="inputsArray['sub_industry']" [class.invalid]="!jobsForm.controls.sub_industry.valid && formsubmitted" #sub_industry formControlName="sub_industry" name="subindustry" interface="popover" placeholder="--">
+                        <!-- <ng-container *ngIf="subindustry?.length > 0"> -->
+                          <ion-option *ngFor="let subindustry of subindustries" value="{{subindustry.key}}">{{subindustry.value}}</ion-option>
+                        <!-- </ng-container>   -->
+
+                          <!-- <ion-option value="1">Sub-Industry 1</ion-option>
+                          <ion-option value="2">Sub-Industry 2</ion-option> -->
+                    </ion-select>
+                  </ion-item>
+                  <ion-item class="error-message" *ngIf="!jobsForm.controls.sub_industry.valid  && formsubmitted">
+                    <p>Please enter a valid sub industry</p>
+                  </ion-item>
+                </ion-col>
+                <ion-col col-12 col-md-6>
+                  <ion-item>
+                    <ion-label stacked>Type</ion-label>
+                    <ion-select [(ngModel)]="inputsArray['type']" [class.invalid]="!jobsForm.controls.type.valid && formsubmitted" #type formControlName="type" name="type" interface="popover" placeholder="--">
+                        <ion-option *ngFor="let type of types" value="{{type.key}}">{{type.value['text']}}</ion-option>
+                          <!-- <ion-option value="1">Type 1</ion-option>
+                          <ion-option value="2">Type 2</ion-option> -->
+                    </ion-select>
+                  </ion-item>
+                  <ion-item class="error-message" *ngIf="!jobsForm.controls.type.valid  && formsubmitted">
+                    <p>Please enter a valid type</p>
+                  </ion-item>
+                </ion-col>
+            </ion-row>
+
+            <ion-row>
+                <ion-col col-12 >
+                  <ion-label padding-left >Employment Type</ion-label>
+                  <ion-row [(ngModel)]="inputsArray['employment_type']" radio-group #employment_type formControlName="employment_type">
+                    <ion-col  col-12 col-md-4 *ngFor="let empType of empTypes;let idx = index">
+                      <ion-item>
+                        <ion-radio mode="md" item-left value="{{empType.key}}" [checked]="idx === 0"></ion-radio>
+                        <ion-label>{{empType.value}}</ion-label>
+                      </ion-item>
+
+                    </ion-col>
+                    <ion-item class="error-message" *ngIf="!jobsForm.controls.employment_type.valid  && formsubmitted">
+                      <p>Please enter a valid employment type</p>
+                    </ion-item>
+
+                    <!-- <ion-item>
+                      <ion-label>Permanent</ion-label>
+                      <ion-radio checked="true" value="permanent"></ion-radio>
+                    </ion-item>
+
+                    <ion-item>
+                      <ion-label>Part-time</ion-label>
+                      <ion-radio value="parttime"></ion-radio>
+                    </ion-item>
+
+                    <ion-item>
+                      <ion-label>Contract Based</ion-label>
+                      <ion-radio value="contract"></ion-radio>
+                    </ion-item> -->
+                  </ion-row>
+                </ion-col>
+
+                <ion-col col-12>
+                  <ion-row>
+                    <ion-col col-12 col-sm-3>
+                      <ion-item>
+                        <ion-label stacked>Salary</ion-label>
+                      </ion-item>
+                      <ion-item>
+                        <ion-label item-start>HK$</ion-label>
+                        <ion-input [(ngModel)]="inputsArray['salary_amount']" [class.invalid]="!jobsForm.controls.salary_amount.valid && (formsubmitted || (this.jobsForm.value.salary_amount!='' && formsaved))" #salary_amount formControlName="salary_amount" type="number" placeholder="Enter Salary"></ion-input>
+                      </ion-item>
+                      <ion-item class="error-message" *ngIf="!jobsForm.controls.salary_amount.valid  && (formsubmitted || (this.jobsForm.value.salary_amount!='' && formsaved))">
+                        <p>Please enter valid salary amount</p>
+                      </ion-item>
+                    </ion-col>
+                    <ion-col col-12 col-sm-3>
+                      <ion-item class="per-salary">
+                        <ion-label >per</ion-label>
+                        <ion-select [(ngModel)]="inputsArray['salary_unit']" [class.invalid]="!jobsForm.controls.salary_unit.valid && formsubmitted" #salary_unit formControlName="salary_unit" name="salary" interface="popover" placeholder="--">
+
+                             <ion-option *ngFor="let salaryUnit of salaryUnits" value="{{salaryUnit.key}}">{{salaryUnit.value}}</ion-option>
+                             <!-- <ion-option value="1">10k</ion-option>
+                              <ion-option value="2">20k</ion-option> -->
+                        </ion-select>
+                      </ion-item>
+                      <ion-item class="error-message" *ngIf="!jobsForm.controls.salary_unit.valid  && formsubmitted">
+                        <p>Please enter a valid salary unit</p>
+                      </ion-item>
+                    </ion-col>
+                  </ion-row>
+                </ion-col>
+            </ion-row>
+
+              <ion-row>
+                  <ion-col col-12 >
+                    <ion-label padding-left no-margin>Work Schedule</ion-label>
+                    <ion-item>
+                      <ion-label>Night-Shift</ion-label>
+                      <ion-checkbox [(ngModel)]="inputsArray['night_shift']" [ngModelOptions]="{standalone: true}" (click)="resetField();"></ion-checkbox>
+                    </ion-item>
+                  </ion-col>
+
+                  <ion-col *ngFor="let day of daysArray;let indx=index" col-12>
+                    <ion-card margin-horizontal no-margin>
+                      <ion-row>
+                        <ion-col col-6 col-md>
+                          <ion-label padding-left>{{day.value}}</ion-label>
+                        </ion-col>
+                        <ion-col col-6 col-md>
+                          <ion-datetime [(ngModel)]="timeArray[day.key]['start_time']" [ngModelOptions]="{standalone: true}" [disabled]="timeArray[day.key]['holiday']==true" displayFormat="H:mm" pickerFormat="H mm" minuteValues="0,30" placeholder="Start Time"></ion-datetime>
+                        </ion-col>
+                        <ion-col col-12 col-md text-center text-md-left>
+                          <ion-label >to</ion-label>
+                        </ion-col>
+                        <ion-col col-6 col-md>
+                          <!-- <ion-label padding-left >Tue</ion-label> -->
+                          <ion-select [(ngModel)]="timeArray[day.key]['shift_end']" [ngModelOptions]="{standalone: true}" [disabled]="inputsArray['night_shift']!=true || timeArray[day.key]['holiday']==true" col-12  interface="popover">
+                              <ion-option value="{{day.key}}">{{day.value}}</ion-option>
+                              <ion-option *ngIf="(indx!=6)" value="{{daysArray[indx+1].key}}">{{daysArray[indx+1].value}}</ion-option>
+                              <ion-option *ngIf="(indx==6)" value="{{daysArray[0].key}}">{{daysArray[0].value}}</ion-option>
+                          </ion-select>
+                        </ion-col>
+                        <ion-col col-6 col-md>
+                          <ion-datetime [(ngModel)]="timeArray[day.key]['end_time']" [ngModelOptions]="{standalone: true}" [disabled]="timeArray[day.key]['holiday']==true" displayFormat="H:mm" pickerFormat="H mm" minuteValues="0,30" placeholder="End Time"></ion-datetime>
+                        </ion-col>
+                        <ion-col col-12 col-md>
+                          <ion-item>
+                            <ion-label>Holiday</ion-label>
+                            <ion-checkbox [(ngModel)]="timeArray[day.key]['holiday']" [ngModelOptions]="{standalone: true}" (click)="clearTime(day.key);"></ion-checkbox>
+                          </ion-item>
+                        </ion-col>
+                      </ion-row>
+                    </ion-card>
+                  </ion-col>
+
+                  <ion-item class="error-message" *ngIf="(checkDates()==false)  && formsubmitted">
+                    <p>Please enter work schedule</p>
+                  </ion-item>
+            </ion-row>
+          </ion-grid>
+        </ion-card>
+
+        <ion-card margin-top>
+          <ion-card-header padding-left class="card-wp-admin">Employee Benefits</ion-card-header>
+          <ion-grid>
+            <ion-row>
+                <ion-col *ngFor="let employeeBenefit of employeeBenefits;"  col-12 col-md-4>
+                  <ion-item>
+                    <ion-label>{{employeeBenefit.value.text}}</ion-label>
+                    <ion-checkbox [(ngModel)]="employeeBenefitsArray[employeeBenefit.key].checkbox" [ngModelOptions]="{standalone: true}" (click)="clearField(employeeBenefit.key);"></ion-checkbox>
+                  </ion-item>
+                  <ion-item>
+                    <ion-input [(ngModel)]="employeeBenefitsArray[employeeBenefit.key].details" [ngModelOptions]="{standalone: true}" [disabled]="employeeBenefitsArray[employeeBenefit.key].checkbox!=true" type="text" placeholder="Say something about this"></ion-input>
+                  </ion-item>
+                </ion-col>
+                <!--ion-col col-12 col-md-4>
+                  <ion-item>
+                    <ion-label>Meal at work</ion-label>
+                    <ion-checkbox [(ngModel)]="mealAtWork" [ngModelOptions]="{standalone: true}"></ion-checkbox>
+                  </ion-item>
+                  <ion-item>
+                    <ion-input [disabled]="!mealAtWork" type="text" placeholder="Say something about this"></ion-input>
+                  </ion-item>
+              </ion-col>
+                <ion-col col-12 col-md-4>
+                  <ion-item>
+                    <ion-label>Perks &amp; Bonus</ion-label>
+                    <ion-checkbox [(ngModel)]="perks" [ngModelOptions]="{standalone: true}"></ion-checkbox>
+                  </ion-item>
+                  <ion-item>
+                    <ion-input [disabled]="!perks" type="text" placeholder="Say something about this"></ion-input>
+                  </ion-item>
+              </ion-col>
+                <ion-col col-12 col-md-4>
+                  <ion-item>
+                    <ion-label>Food Coupon</ion-label>
+                    <ion-checkbox [(ngModel)]="foodCoupon" [ngModelOptions]="{standalone: true}"></ion-checkbox>
+                  </ion-item>
+                  <ion-item>
+                    <ion-input [disabled]="!foodCoupon" type="text" placeholder="Say something about this"></ion-input>
+                  </ion-item>
+              </ion-col>
+                <ion-col col-12 col-md-4>
+                  <ion-item>
+                    <ion-label>Increment</ion-label>
+                    <ion-checkbox [(ngModel)]="increment" [ngModelOptions]="{standalone: true}"></ion-checkbox>
+                  </ion-item>
+                  <ion-item>
+                    <ion-input [disabled]="!increment" type="text" placeholder="Say something about this"></ion-input>
+                  </ion-item>
+              </ion-col>
+                <ion-col col-12 col-md-4>
+                  <ion-item>
+                    <ion-label>Health Insurance</ion-label>
+                    <ion-checkbox [(ngModel)]="healthInsurance" [ngModelOptions]="{standalone: true}"></ion-checkbox>
+                  </ion-item>
+                  <ion-item>
+                    <ion-input [disabled]="!healthInsurance" type="text" placeholder="Say something about this"></ion-input>
+                  </ion-item>
+              </ion-col>
+                <ion-col col-12 col-md-4>
+                  <ion-item>
+                    <ion-label>Social Security</ion-label>
+                    <ion-checkbox [(ngModel)]="socialSecurity" [ngModelOptions]="{standalone: true}"></ion-checkbox>
+                  </ion-item>
+                  <ion-item>
+                    <ion-input [disabled]="!socialSecurity" type="text" placeholder="Say something about this"></ion-input>
+                  </ion-item>
+              </ion-col>
+                <ion-col col-12 col-md-4>
+                  <ion-item>
+                    <ion-label>Travel Allowance</ion-label>
+                    <ion-checkbox [(ngModel)]="travelAllowance" [ngModelOptions]="{standalone: true}"></ion-checkbox>
+                  </ion-item>
+                  <ion-item>
+                    <ion-input [disabled]="!travelAllowance" type="text" placeholder="Say something about this"></ion-input>
+                  </ion-item>
+              </ion-col>
+                <ion-col col-12 col-md-4>
+                  <ion-item>
+                    <ion-label>Performance Benefits</ion-label>
+                    <ion-checkbox [(ngModel)]="performanceBenefits" [ngModelOptions]="{standalone: true}"></ion-checkbox>
+                  </ion-item>
+                  <ion-item>
+                    <ion-input [disabled]="!performanceBenefits" type="text" placeholder="Say something about this"></ion-input>
+                  </ion-item>
+              </ion-col-->
+                <ion-col col-12>
+                  <ion-label padding-left>More about this role</ion-label>
+                  <ion-item>
+
+                    <ion-textarea [(ngModel)]="inputsArray['additional_info']" #additional_info formControlName="additional_info" placeholder="Additional Information"></ion-textarea>
+
+                  </ion-item>
+              </ion-col>
+
+            </ion-row>
+          </ion-grid>
+        </ion-card>
+
+        <ion-card margin-top>
+          <ion-card-header padding-left class="card-wp-admin">Questions</ion-card-header>
+          <ion-grid>
+            <ion-row radio-group [(ngModel)]="inputsArray['question']" [ngModelOptions]="{standalone: true}">
+              <ion-col col-12 col-md-2>
+                <ion-label padding-left>
+                  Ask a question?
+                </ion-label>
+              </ion-col>
+              <ion-col col-6 col-md-2>
+                    <ion-item>
+                      <ion-radio mode="md" item-left value="yes"></ion-radio>
+                      <ion-label>Yes</ion-label>
+                    </ion-item>
+              </ion-col>
+
+              <ion-col col-6 col-md-2>
+                  <ion-item>
+                    <ion-radio mode="md" item-left value="no" (ionSelect)="questionToggle()"></ion-radio>
+                    <ion-label>No</ion-label>
+                  </ion-item>
+                </ion-col>
+              </ion-row>
+
+              <div *ngIf="(inputsArray['question']=='yes')">
+                <ion-row *ngFor="let questions of questionsArray;let indq=index">
+
+                  <ion-col col-12 col-md-2>
+                    <ion-item no-padding>
+                      <ion-label padding-left>Question {{indq+1}} : </ion-label>
+                    </ion-item>
+                  </ion-col>
+                  <ion-col col-12 col-md-10>
+                    <ion-item>
+                      <ion-input [(ngModel)]="questions.question_name" [ngModelOptions]="{standalone: true}" type="text" placeholder="Enter a Question"></ion-input>
+                      <button ion-fab mini item-end color="danger" *ngIf="(questionsArray.length>1)" item-end (click)="removeQuestion(indq);"><ion-icon name="trash"></ion-icon></button>
+                    </ion-item>
+                  </ion-col>
+
+                  <ion-col col-12 *ngFor="let options of questions.options;let inda=index">
+                    <ion-row>
+                      <ion-col col-12 push-md-7 col-md-2>
+                        <ion-select [(ngModel)]="questions.option_type" [ngModelOptions]="{standalone: true}" interface="popover" *ngIf="(inda==0)" col-12>
+                          <ion-option value="radio">Multiple Choice</ion-option>
+                          <ion-option value="checkbox">Checkboxes</ion-option>
+                        </ion-select>
+                      </ion-col>
+                      <ion-col col-12 pull-md-4 col-md-5 offset-md-4>
+                        <ion-item>
+                          <ion-icon *ngIf="(questions.option_type=='radio')" item-start name='radio-button-off'></ion-icon>
+                          <ion-icon *ngIf="(questions.option_type=='checkbox')" item-start name='square-outline'></ion-icon>
+                          <ion-input [(ngModel)]="options.val" [ngModelOptions]="{standalone: true}" [disabled]="questions.question_name==''" type="text" placeholder="Enter an Answer"></ion-input>
+                          <button ion-fab mini item-end color="danger" *ngIf="(questions.options.length>2)" (click)="removeOption(indq,inda);"><ion-icon name="trash"></ion-icon></button>
+                        </ion-item>
+                      </ion-col>
+                    </ion-row>
+                  </ion-col>
+
+                  <ion-col col-12 col-md-5 offset-md-2>
+                    <ion-item>
+                      <button ion-button item-end outline small type="button" [disabled]="questions.options.length>=max_option" (click)="addOption(indq);">
+                        + Add Option
+                      </button>
+                  </ion-item>
+                  </ion-col>
+                </ion-row>
+                <ion-row>
+                  <ion-col col-12>
+                    <button ion-button small type="button" (click)="addQuestion();">
+                      + Add Question
+                    </button>
+                  </ion-col>
+                </ion-row>
+
+                <ion-item class="error-message" *ngIf="(checkQuestionsSubmit()==false)  && formsubmitted">
+                  <p>Please enter all questions and options</p>
+                </ion-item>
+                <ion-item class="error-message" *ngIf="(checkQuestionsSave()==false)  && formsaved">
+                  <p>Please enter atleast 1 question and options for it</p>
+                </ion-item>
+              </div>
+
+              <!--ion-row>
+                <ion-col col-12 col-md-6>
+                  <ion-select [(ngModel)]="question" name="question" interface="popover" placeholder="Select a Question">
+                        <ion-option value="1">Question 1</ion-option>
+                        <ion-option value="2">Question 2</ion-option>
+                  </ion-select>
+                </ion-col>
+                <ion-col col-12 col-md-6>
+                  <ion-item>
+                    <ion-select [(ngModel)]="question_type" name="question_type" interface="popover" placeholder="--">
+                          <ion-option value="1" selected>Multiple Choice</ion-option>
+                          <ion-option value="2">Radio Buttons</ion-option>
+                    </ion-select>
+                  </ion-item>
+                </ion-col>
+              </ion-row-->
+
+              <!--ion-row>
+                <ion-col col-2 col-md-1>
+                  <ion-item>
+                    <ion-radio mode="md" item-left value="value"></ion-radio>
+                  </ion-item>
+                </ion-col>
+                <ion-col col-10 col-md-8>
+                  <ion-item>
+                    <ion-input type="text" placeholder="Add an answer"></ion-input>
+                  </ion-item>
+                </ion-col>
+              </ion-row>
+              <ion-row>
+                <ion-col col-2 col-md-1>
+                  <ion-item>
+                    <ion-radio mode="md" item-left value="value"></ion-radio>
+                  </ion-item>
+                </ion-col>
+                <ion-col col-10 col-md-8>
+                  <ion-item>
+                    <ion-input type="text" placeholder="Add an answer"></ion-input>
+                  </ion-item>
+                </ion-col>
+                <ion-col col-12 col-md-3 text-right>
+                  <button ion-button outline small type="button">
+                    + Add Option
+                  </button>
+                </ion-col>
+              </ion-row>
+
+              <ion-buttons end>
+                <button ion-button outline>
+                  Add a Question
+                </button>
+              </ion-buttons-->
+          </ion-grid>
+        </ion-card>
+
+        <ion-grid>
+          <ion-row>
+            <ion-col col-12 col-md-6>
+              <button ion-button outline type="submit">
+                Send for Approval
+              </button>
+            </ion-col>
+            <ion-col col-12 col-md-6>
+
+              <ion-buttons end>
+                <button ion-button type="button" (click)="formsaved=true;formsubmitted=false;saveJob(this.jobsForm)">
+                  Save
+                </button>
+
+                <button ion-button type="button">
+                  Save &amp; Exit
+                </button>
+              </ion-buttons>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+        </div>
+      </form>
+    </ion-content>
+  </ion-content>
+</ion-split-pane>

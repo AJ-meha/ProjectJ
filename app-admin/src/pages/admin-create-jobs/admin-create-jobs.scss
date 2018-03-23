@@ -1,0 +1,50 @@
+page-admin-create-jobs {
+
+	font-family: "roboto";
+
+	&.show-page{
+		.content{
+			background-color: #fcfcfc;
+		}
+	}
+
+	.invalid {
+		border-bottom: 1px solid $notifications;
+		input{
+			margin-bottom: 0 !important;
+		}
+	}
+
+	.error-message .label p{
+		color: $notifications;
+	}
+	.error-message .item-inner {
+		border-bottom: 0 !important;
+	}
+
+	.label-md[stacked], .label-ios[stacked]{
+		font-size: 1.4rem;
+		color: #000;
+	}
+	.text-input{
+		font-size: 1.6rem;
+		border-bottom: 1px solid $lining;
+		padding-bottom: 8px;
+	}
+
+	.item-md .radio-md[item-left],
+	.item-md .radio-md[item-start],
+	.item.item-md .checkbox-md{
+		margin-right: 10px
+	}
+
+	.image_logo{
+		width:auto!important
+	}
+
+	@media(min-width: 768px){
+		.per-salary{
+			margin-top: 50px;
+		}
+	}
+}
