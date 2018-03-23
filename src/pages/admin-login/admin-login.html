@@ -20,10 +20,10 @@
         <ion-label stacked>Email</ion-label>
         <ion-input #email formControlName="email" type="email" placeholder="Your email address"
           [class.invalid]="!loginForm.controls.email.valid &&
-            loginForm.controls.email.dirty"></ion-input>
+            (loginForm.controls.email.dirty || loginForm.controls.email.touched)"></ion-input>
       </ion-item>
       <ion-item class="error-message" *ngIf="!loginForm.controls.email.valid  &&
-        loginForm.controls.email.dirty">
+        (loginForm.controls.email.dirty || loginForm.controls.email.touched)">
         <p>Please enter a valid email.</p>
       </ion-item>
   
@@ -31,10 +31,10 @@
         <ion-label stacked>Password</ion-label>
         <ion-input #password formControlName="password" type="password" placeholder="Your password"
           [class.invalid]="!loginForm.controls.password.valid &&
-            loginForm.controls.password.dirty"></ion-input>
+            (loginForm.controls.password.dirty || loginForm.controls.password.touched)"></ion-input>
       </ion-item>
       <ion-item class="error-message" *ngIf="!loginForm.controls.password.valid  &&
-        loginForm.controls.password.dirty">
+        (loginForm.controls.password.dirty || loginForm.controls.password.touched)">
         <p>Your password needs more than 6 characters.</p>
       </ion-item>
   
