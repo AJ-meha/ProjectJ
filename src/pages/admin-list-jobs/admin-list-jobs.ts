@@ -60,7 +60,7 @@ export class AdminListJobsPage {
   }
 
   goToAddJob(){
-    this.navCtrl.setRoot("admin-create-jobs")
+    window.location.href="/#/admin/jobs/add/new"
   }
 
 
