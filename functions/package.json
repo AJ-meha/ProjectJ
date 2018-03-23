@@ -12,6 +12,8 @@
   "dependencies": {
     "@google-cloud/storage": "^1.6.0",
     "child-process-promise": "^2.2.1",
+    "cors": "^2.8.4",
+    "express": "^4.16.3",
     "firebase-admin": "^5.8.2",
     "firebase-functions": "^0.8.1",
     "libvips": "0.0.2",
