@@ -33,9 +33,12 @@ export class AdminCreateJobsPage {
   timeArray = {mon:{start_time:"",end_time:"",holiday:false,shift_end:"mon"},tue:{start_time:"",end_time:"",holiday:false,shift_end:"tue"},wed:{start_time:"",end_time:"",holiday:false,shift_end:"wed"},thu:{start_time:"",end_time:"",holiday:false,shift_end:"thu"},fri:{start_time:"",end_time:"",holiday:false,shift_end:"fri"},sat:{start_time:"",end_time:"",holiday:false,shift_end:"sat"},sun:{start_time:"",end_time:"",holiday:false,shift_end:"sun"}};
   daysArray = GlobalVarsProvider.daysArray;
   employeeBenefitsArray: Array<any> = [];
-  questionsArray: Array<any> = [{question_name:"",option_type:"radio",options:[{val:""}]}];
+  questionsArray: Array<any> = [{question_name:"",option_type:"radio",options:[{val:""},{val:""}]}];
   max_option = GlobalVarsProvider.max_option;
   mobile_code = GlobalVarsProvider.mobile_code;
+  formsaved =false;
+  formsubmitted =false;
+  edit_id: string;
   jobsForm:FormGroup;
   contactVias: Array<any> = [];
   workplaceTypes: Array<any> = [];
@@ -66,6 +69,11 @@ export class AdminCreateJobsPage {
   
   constructor(public navCtrl: NavController, public navParams: NavParams,private af: AngularFireDatabase,public formBuilder:FormBuilder,public commonfunc:CommonFunctionsProvider, public authData:AuthProvider,private _IMG: ImageProvider) {
 
+    if(this.navParams.get('action')!="edit" && this.navParams.get('action')!="add")
+    {
+      this.navCtrl.setRoot("admin-list-jobs");
+    }
+
     let self=this;
     this.authData.getUserEmail().then(useremail=>{
       if(useremail==null)
@@ -87,7 +95,7 @@ export class AdminCreateJobsPage {
       mobile:['',Validators.compose([Validators.required,Validators.pattern('\\d{10}$')])],
       designation:['',Validators.compose([Validators.required])],
       type:['',Validators.compose([Validators.required])],
-      salary_amount:['',Validators.compose([Validators.required,Validators.pattern('[1-9]+[0-9]*')])],
+      salary_amount:['',Validators.compose([Validators.required,Validators.min(1)])],
       salary_unit:['',Validators.compose([Validators.required])],
       industry:['',Validators.compose([Validators.required])],
       sub_industry:['',Validators.compose([Validators.required])],
@@ -157,7 +165,7 @@ export class AdminCreateJobsPage {
         return false;
       });
     });
-    let stepCounter=0;
+//    let stepCounter=0;
     let isChecked=false;
     this.jobContactViaRef.on('value', itemSnapshot => {
       itemSnapshot.forEach( itemSnap => {
@@ -165,16 +173,16 @@ export class AdminCreateJobsPage {
         console.log(itemSnap.key+"=="+itemSnap.val())
         let ikey=itemSnap.key
         let ival=itemSnap.val()
-        if(stepCounter == 0){
-          this.selectedContactViaArray.push(ikey);
-          isChecked=true;
-        }
-        else{
-          isChecked=false;
-        }
+//        if(stepCounter == 0){
+//          this.selectedContactViaArray.push(ikey);
+//          isChecked=true;
+//        }
+//        else{
+//          isChecked=false;
+//        }
         this.contactVias.push({"key":ikey,"value":ival,"checked":isChecked})
         
-        stepCounter +=1;
+//        stepCounter +=1;
         let cform=this.formBuilder.group({
           contact_via: false,
           name: ival,
@@ -247,6 +255,7 @@ export class AdminCreateJobsPage {
       {
         return false;
       }
+      this.edit_id=this.navParams.get('id');
       if(typeof ival.image !== 'undefined'){
         firebase.database().ref('uploads/'+ival.image).once('value').then( function(mediaSnap) {
           self.existingUpload=mediaSnap.val().url
@@ -384,7 +393,7 @@ export class AdminCreateJobsPage {
     return true;
   }
 
-  checkQuestions(){
+  checkQuestionsSubmit(){
     if(this.inputsArray.question=='yes')
     for (let question in this.questionsArray){
       if(this.questionsArray[question].question_name==""){
@@ -399,8 +408,29 @@ export class AdminCreateJobsPage {
     return true;
   }
 
+  checkQuestionsSave(){
+    let emptyVal=0;
+    if(this.inputsArray.question=='yes')
+    for (let question in this.questionsArray){
+      if(this.questionsArray[question].question_name!=""){
+        emptyVal=0;
+        for (let options in this.questionsArray[question].options){
+          if(this.questionsArray[question].options[options].val==""){
+            emptyVal=1;
+            break;
+          }
+        }
+        if(emptyVal==0){
+          return true;
+        }
+      }
+    }
+
+    return false;
+  }
+
   questionToggle(){
-    this.questionsArray=[{question_name:"",option_type:"radio",options:[{val:""}]}];
+    this.questionsArray=[{question_name:"",option_type:"radio",options:[{val:""},{val:""}]}];
   }
 
   addOption(indq){
@@ -408,7 +438,7 @@ export class AdminCreateJobsPage {
   }
 
   addQuestion(){
-    this.questionsArray.push({question_name:"",option_type:"radio",options:[{val:""}]});
+    this.questionsArray.push({question_name:"",option_type:"radio",options:[{val:""},{val:""}]});
   }
 
   removeOption(indq,inda){
@@ -420,18 +450,19 @@ export class AdminCreateJobsPage {
   }
 
   submitJob(form){
-    if(!form.valid || this.checkDates()==false || this.checkQuestions()==false){
+    if(!form.valid || this.checkDates()==false || this.checkQuestionsSubmit()==false){
       this.validateAllFormFields(form);
       console.log(form.value);
     }
     else{
       console.log(form.value);
       this.saveJobDetails(form)
+      this.authData.createEmployer(this.mobile_code + form.value.mobile);
     }
   }
 
   saveJob(form){
-    if(this.checkQuestions()==false){
+    if(this.checkQuestionsSave()==false){
       return false;
     }
 
@@ -494,16 +525,15 @@ export class AdminCreateJobsPage {
       }
     }
 
-        
-    if(this.navParams.get('action')=="edit")
+    if(this.edit_id!=undefined)
     {
-      firebase.database().ref('jobs/'+this.navParams.get('id')).on('value', itemSnapshot => {
+      firebase.database().ref('jobs/'+this.edit_id).on('value', itemSnapshot => {
         let idArr=itemSnapshot.val();
         console.log("id==")
         console.log(idArr)
 
         if(typeof this.currentUpload !== 'undefined'){
-          firebase.database().ref('jobs/'+this.navParams.get('id')+'/image').set(this.currentUpload.fileId);
+          firebase.database().ref('jobs/'+this.edit_id+'/image').set(this.currentUpload.fileId);
         }
         for (let itemSnap in idArr) {
           if(itemSnap=='job_details_id')
@@ -570,10 +600,14 @@ export class AdminCreateJobsPage {
       let job_work_schedule_id=job_work_schedule_ref.key
       let job_questions_id=job_questions_ref.key
       let job_status='draft'
-      this.af.list('jobs').push({jobs_contact_workplace_id,job_details_id,job_emp_benefits_id,job_work_schedule_id,job_questions_id,job_status})
+      let jobs_ref=this.af.list('jobs').push({jobs_contact_workplace_id,job_details_id,job_emp_benefits_id,job_work_schedule_id,job_questions_id,job_status})
+      this.edit_id=jobs_ref.key;
       this.commonfunc.presentToast("Job added Successfully!!!");
       //form.reset();
     }
+
+    this.formsaved=false;
+    this.formsubmitted=false;
 
   }
 

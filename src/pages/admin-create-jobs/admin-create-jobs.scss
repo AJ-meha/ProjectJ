@@ -9,11 +9,14 @@ page-admin-create-jobs {
 	}
 
 	.invalid {
-		border-bottom: 1px solid #FF6153;
+		border-bottom: 1px solid $notifications;
+		input{
+			margin-bottom: 0 !important;
+		}
 	}
 
 	.error-message .label p{
-		color:#FF6153;
+		color: $notifications;
 	}
 	.error-message .item-inner {
 		border-bottom: 0 !important;
@@ -37,5 +40,11 @@ page-admin-create-jobs {
 
 	.image_logo{
 		width:auto!important
+	}
+
+	@media(min-width: 768px){
+		.per-salary{
+			margin-top: 50px;
+		}
 	}
 }

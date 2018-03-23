@@ -21,6 +21,7 @@ export class MyApp {
       {title:'Dashboard',name:"admin-dashboard"},
       {title:'Add Job',name:"admin-create-jobs"},
       {title:'List Jobs',name:"admin-list-jobs"},
+      {title:'Home (WIP)',name:"home"},
       {title:'Onboarding (WIP)',name:"onboarding"}
     ];
     console.log("loc="+window.location.href)
@@ -83,6 +84,13 @@ export class MyApp {
   openPage(page) {
     // Reset the content nav to have just this page
     // we wouldn't want the back button to show in this scenario
-    this.nav.setRoot(page.name);
+    if(page.name=="admin-create-jobs")
+    {
+      window.location.href="/#/admin/jobs/add/new"
+    }
+    else
+    {
+      this.nav.setRoot(page.name);
+    }
   }
 }

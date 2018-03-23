@@ -16,6 +16,7 @@ import {Md5} from 'ts-md5/dist/md5';
 export class AuthProvider {
 
   public passwordcheck: firebase.database.Reference = firebase.database().ref('admin_user');
+  public usersRef: firebase.database.Reference = firebase.database().ref();
 
   HAS_LOGGED_IN = 'hasLoggedIn';
 
@@ -109,6 +110,11 @@ export class AuthProvider {
 
   unsetAdminInit() {
     this.storage.remove('admin_init');
+  }
+
+  createEmployer(phone) {
+    let userArr={role:"employer"};
+    this.usersRef.child("users").child(phone).set(userArr);
   }
 
 }

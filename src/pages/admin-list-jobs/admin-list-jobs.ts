@@ -189,14 +189,42 @@ export class AdminListJobsPage {
             if(self.searchstring!=""){
               
               if(designation.toLowerCase().indexOf(self.searchstring.toLowerCase()) != -1){
-                self.jobs.push({'key':itemSnap.key,'value':itemSnap.val(),'designation':designation,'industry':industry,'sub_industry':"---"})
+                if(self.selectedStatusArray.length>0 || self.selectedSubIndArray.length>0){
+                  // if((self.selectedStatusArray.length>0 && self.selectedSubIndArray.length<=0) && (self.selectedStatusArray.indexOf(itemSnap.val().job_status) > -1)){
+                  //   self.jobs.push({'key':itemSnap.key,'value':itemSnap.val(),'designation':designation,'industry':industry,'sub_industry':"---"})
+                  // }
+  
+                  if((self.selectedStatusArray.length>0 && self.selectedSubIndArray.length<=0) && (self.selectedStatusArray.indexOf(itemSnap.val().job_status) > -1)){
+                    self.jobs.push({'key':itemSnap.key,'value':itemSnap.val(),'designation':designation,'industry':industry,'sub_industry':"---"})
+                  }
+                  else if((self.selectedStatusArray.length<=0 && self.selectedSubIndArray.length>0) && (self.selectedSubIndArray.indexOf(sub_industry) > -1)){
+                    self.jobs.push({'key':itemSnap.key,'value':itemSnap.val(),'designation':designation,'industry':industry,'sub_industry':"---"})
+                  }
+                  else if((self.selectedStatusArray.length>0 && self.selectedSubIndArray.length>0) && (self.selectedSubIndArray.indexOf(sub_industry) > -1) && (self.selectedStatusArray.indexOf(itemSnap.val().job_status) > -1)){
+                    self.jobs.push({'key':itemSnap.key,'value':itemSnap.val(),'designation':designation,'industry':industry,'sub_industry':"---"})
+                  }
+                }
+                else{
+                  self.jobs.push({'key':itemSnap.key,'value':itemSnap.val(),'designation':designation,'industry':industry,'sub_industry':"---"})
+                }
+                
               }
               
             }
             else{
              
               if(self.selectedStatusArray.length>0 || self.selectedSubIndArray.length>0){
+                // if((self.selectedStatusArray.length>0 && self.selectedSubIndArray.length<=0) && (self.selectedStatusArray.indexOf(itemSnap.val().job_status) > -1)){
+                //   self.jobs.push({'key':itemSnap.key,'value':itemSnap.val(),'designation':designation,'industry':industry,'sub_industry':"---"})
+                // }
+
                 if((self.selectedStatusArray.length>0 && self.selectedSubIndArray.length<=0) && (self.selectedStatusArray.indexOf(itemSnap.val().job_status) > -1)){
+                  self.jobs.push({'key':itemSnap.key,'value':itemSnap.val(),'designation':designation,'industry':industry,'sub_industry':"---"})
+                }
+                else if((self.selectedStatusArray.length<=0 && self.selectedSubIndArray.length>0) && (self.selectedSubIndArray.indexOf(sub_industry) > -1)){
+                  self.jobs.push({'key':itemSnap.key,'value':itemSnap.val(),'designation':designation,'industry':industry,'sub_industry':"---"})
+                }
+                else if((self.selectedStatusArray.length>0 && self.selectedSubIndArray.length>0) && (self.selectedSubIndArray.indexOf(sub_industry) > -1) && (self.selectedStatusArray.indexOf(itemSnap.val().job_status) > -1)){
                   self.jobs.push({'key':itemSnap.key,'value':itemSnap.val(),'designation':designation,'industry':industry,'sub_industry':"---"})
                 }
               }
@@ -212,7 +240,21 @@ export class AdminListJobsPage {
               if(self.searchstring!=""){
                 
                 if(designation.toLowerCase().indexOf(self.searchstring.toLowerCase()) != -1){
-                  self.jobs.push({'key':itemSnap.key,'value':itemSnap.val(),'designation':designation,'industry':industry,'sub_industry':subindSnap.val()})
+                  if(self.selectedStatusArray.length>0 || self.selectedSubIndArray.length>0){
+                    if((self.selectedStatusArray.length>0 && self.selectedSubIndArray.length<=0) && (self.selectedStatusArray.indexOf(itemSnap.val().job_status) > -1)){
+                      self.jobs.push({'key':itemSnap.key,'value':itemSnap.val(),'designation':designation,'industry':industry,'sub_industry':subindSnap.val()})
+                    }
+                    else if((self.selectedStatusArray.length<=0 && self.selectedSubIndArray.length>0) && (self.selectedSubIndArray.indexOf(sub_industry) > -1)){
+                      self.jobs.push({'key':itemSnap.key,'value':itemSnap.val(),'designation':designation,'industry':industry,'sub_industry':subindSnap.val()})
+                    }
+                    else if((self.selectedStatusArray.length>0 && self.selectedSubIndArray.length>0) && (self.selectedSubIndArray.indexOf(sub_industry) > -1) && (self.selectedStatusArray.indexOf(itemSnap.val().job_status) > -1)){
+                      self.jobs.push({'key':itemSnap.key,'value':itemSnap.val(),'designation':designation,'industry':industry,'sub_industry':subindSnap.val()})
+                    }
+                  }
+                  else{
+                    self.jobs.push({'key':itemSnap.key,'value':itemSnap.val(),'designation':designation,'industry':industry,'sub_industry':subindSnap.val()})
+                  }
+                  
                 }
                 
               }

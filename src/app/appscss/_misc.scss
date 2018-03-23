@@ -27,6 +27,9 @@
 .dark-text{
 	color: $dark-text !important;
 }
+.light-text{
+	color: $light-text;
+}
 
 .swiper-wrapper{
 	align-items: center;
@@ -40,4 +43,8 @@
 
 .alert-message{
 	overflow-y: auto;
+}
+
+.error-message{
+	color: $notifications;
 }

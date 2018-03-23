@@ -32,6 +32,15 @@ page-onboarding {
 	  }
 	}
 
+	@media(max-width: 320px){
+		.slide-image{
+			max-width: 56.6%;
+			&.top-space{
+				max-width: 71.6%
+			}
+		}
+	}
+
 	p{
 		font-size: 15.1px;
 		color: $light-text;
