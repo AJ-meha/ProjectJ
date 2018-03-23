@@ -21,9 +21,15 @@ page-admin-login {
     }
 
     .invalid {
-      border-bottom: 1px solid #FF6153;
+      border-bottom: 1px solid $notifications;
+      input{
+        margin-bottom: 0 !important;
+      }
     }
 
+    .error-message .label p{
+      color: $notifications;
+    }
     .error-message .item-inner {
       border-bottom: 0 !important;
     }

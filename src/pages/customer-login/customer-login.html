@@ -22,10 +22,11 @@
     </ion-item>
     <ion-item>
       <ion-label item-start>{{mobile_code}}</ion-label>
-      <ion-input #mobile formControlName="mobile" type="number" [(ngModel)]="phoneNumber"></ion-input>
+      <ion-input #mobile formControlName="mobile" type="number" [(ngModel)]="phoneNumber" [class.invalid]="!loginForm.controls.mobile.valid &&
+            (loginForm.controls.mobile.dirty || loginForm.controls.mobile.touched)"></ion-input>
     </ion-item>
     <ion-item class="error-message" *ngIf="!loginForm.controls.mobile.valid  &&
-      loginForm.controls.mobile.dirty">
+      (loginForm.controls.mobile.dirty || loginForm.controls.mobile.touched)">
       <p>Please enter a valid number.</p>
     </ion-item>
 
