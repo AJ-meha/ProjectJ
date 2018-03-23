@@ -36,6 +36,8 @@ export class AdminCreateJobsPage {
   questionsArray: Array<any> = [{question_name:"",option_type:"radio",options:[{val:""},{val:""}]}];
   max_option = GlobalVarsProvider.max_option;
   mobile_code = GlobalVarsProvider.mobile_code;
+  formsaved =false;
+  formsubmitted =false;
   edit_id: string;
   jobsForm:FormGroup;
   contactVias: Array<any> = [];
@@ -391,7 +393,7 @@ export class AdminCreateJobsPage {
     return true;
   }
 
-  checkQuestions(){
+  checkQuestionsSubmit(){
     if(this.inputsArray.question=='yes')
     for (let question in this.questionsArray){
       if(this.questionsArray[question].question_name==""){
@@ -404,6 +406,27 @@ export class AdminCreateJobsPage {
       }
     }
     return true;
+  }
+
+  checkQuestionsSave(){
+    let emptyVal=0;
+    if(this.inputsArray.question=='yes')
+    for (let question in this.questionsArray){
+      if(this.questionsArray[question].question_name!=""){
+        emptyVal=0;
+        for (let options in this.questionsArray[question].options){
+          if(this.questionsArray[question].options[options].val==""){
+            emptyVal=1;
+            break;
+          }
+        }
+        if(emptyVal==0){
+          return true;
+        }
+      }
+    }
+
+    return false;
   }
 
   questionToggle(){
@@ -427,7 +450,7 @@ export class AdminCreateJobsPage {
   }
 
   submitJob(form){
-    if(!form.valid || this.checkDates()==false || this.checkQuestions()==false){
+    if(!form.valid || this.checkDates()==false || this.checkQuestionsSubmit()==false){
       this.validateAllFormFields(form);
       console.log(form.value);
     }
@@ -439,7 +462,7 @@ export class AdminCreateJobsPage {
   }
 
   saveJob(form){
-    if(this.checkQuestions()==false){
+    if(this.checkQuestionsSave()==false){
       return false;
     }
 
@@ -582,6 +605,9 @@ export class AdminCreateJobsPage {
       this.commonfunc.presentToast("Job added Successfully!!!");
       //form.reset();
     }
+
+    this.formsaved=false;
+    this.formsubmitted=false;
 
   }
 
