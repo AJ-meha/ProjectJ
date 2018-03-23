@@ -395,38 +395,41 @@ export class AdminCreateJobsPage {
 
   checkQuestionsSubmit(){
     if(this.inputsArray.question=='yes')
-    for (let question in this.questionsArray){
-      if(this.questionsArray[question].question_name==""){
-        return false;
-      }
-      for (let options in this.questionsArray[question].options){
-        if(this.questionsArray[question].options[options].val==""){
+    {
+      for (let question in this.questionsArray){
+        if(this.questionsArray[question].question_name==""){
           return false;
         }
+        for (let options in this.questionsArray[question].options){
+          if(this.questionsArray[question].options[options].val==""){
+            return false;
+          }
+        }
       }
+      return true;
     }
-    return true;
   }
 
   checkQuestionsSave(){
     let emptyVal=0;
     if(this.inputsArray.question=='yes')
-    for (let question in this.questionsArray){
-      if(this.questionsArray[question].question_name!=""){
-        emptyVal=0;
-        for (let options in this.questionsArray[question].options){
-          if(this.questionsArray[question].options[options].val==""){
-            emptyVal=1;
-            break;
+    {
+      for (let question in this.questionsArray){
+        if(this.questionsArray[question].question_name!=""){
+          emptyVal=0;
+          for (let options in this.questionsArray[question].options){
+            if(this.questionsArray[question].options[options].val==""){
+              emptyVal=1;
+              break;
+            }
+          }
+          if(emptyVal==0){
+            return true;
           }
         }
-        if(emptyVal==0){
-          return true;
-        }
       }
+      return false;
     }
-
-    return false;
   }
 
   questionToggle(){
