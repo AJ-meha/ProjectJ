@@ -21,7 +21,7 @@
 	.app-root{
 		.ion-page.show-page{
 			& ~ .nav-decor{
-				background-image: url(/assets/imgs/dummy-bg.jpg);
+				background-image: url(../assets/imgs/dummy-bg.jpg);
 				background-position: center;
 				background-size: cover;
 			}
