@@ -10,7 +10,7 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 
 @IonicPage({
   name: 'register',
-  segment:'admin/register'
+  segment:'register'
 })
 @Component({
   selector: 'page-admin-register',
