@@ -24,6 +24,7 @@ import { GlobalVarsProvider } from '../../providers/global-vars/global-vars';
 export class CustomerLoginPage {
   loginForm:FormGroup;
   mobile_code = GlobalVarsProvider.mobile_code;
+  mobile_arr:any;
 
   public recaptchaVerifier:firebase.auth.RecaptchaVerifier;
   constructor(public navCtrl: NavController, public navParams: NavParams,public alertCtrl:AlertController,public appCtrl: App,public authData:CustomerAuthProvider,public formBuilder:FormBuilder) {
@@ -31,6 +32,8 @@ export class CustomerLoginPage {
     this.loginForm=formBuilder.group({
       mobile:['',Validators.compose([Validators.required,Validators.pattern('\\d{10}$')])]
     });
+
+    console.log(this.mobile_arr)
   }
 
   ionViewDidLoad() {
@@ -109,6 +112,10 @@ export class CustomerLoginPage {
         this.validateAllFormFields(control);            //{6}
       }
     });
+  }
+
+  ngOnInit(){
+    this.mobile_arr=GlobalVarsProvider.mobile_code_arr
   }
 
 }

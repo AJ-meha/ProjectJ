@@ -22,6 +22,9 @@
     </ion-item>
     <ion-item>
       <ion-label item-start>{{mobile_code}}</ion-label>
+      <!-- <ion-select>
+        <ion-option *ngFor="let mobileno of mobile_arr;let indx=index" value="{{$mobile_arr[indx]['value']}}">{{$mobile_arr[indx]['key']}}</ion-option>
+      </ion-select> -->
       <ion-input #mobile formControlName="mobile" type="number" [(ngModel)]="phoneNumber" [class.invalid]="!loginForm.controls.mobile.valid &&
             (loginForm.controls.mobile.dirty || loginForm.controls.mobile.touched)"></ion-input>
     </ion-item>
