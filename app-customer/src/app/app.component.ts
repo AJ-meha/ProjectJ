@@ -10,10 +10,18 @@ import { CustomerAuthProvider } from '../providers/customer-auth/customer-auth';
   templateUrl: 'app.html'
 })
 export class MyApp {
-  rootPage:any = HomePage;
+  rootPage:any;
   @ViewChild(Nav) nav: Nav;
   public is_admin:boolean=false
+  pages: Array<{title:string,name:any}>;
   constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen, afAuth: AngularFireAuth,public customerAuthData:CustomerAuthProvider) {
+    this.pages=[
+      {title:'Dashboard',name:"admin-dashboard"},
+      {title:'Add Job',name:"admin-create-jobs"},
+      {title:'List Jobs',name:"admin-list-jobs"},
+      {title:'Home (WIP)',name:"home"},
+      {title:'Onboarding (WIP)',name:"onboarding"}
+    ];
     let loc=window.location.href;
     if(loc.indexOf('#/admin') != -1){
       this.is_admin=true
@@ -25,7 +33,7 @@ export class MyApp {
           this.customerAuthData.getUserPhone().then(userphone=>{
             if(userphone==null)
             {
-              self.nav.setRoot("login");
+              self.nav.setRoot("home");
               authObserver.unsubscribe();
             }
             else
@@ -36,7 +44,7 @@ export class MyApp {
           });
         }
         else{
-          this.nav.setRoot("login");
+          this.nav.setRoot("home");
           authObserver.unsubscribe();
         }
       });
@@ -46,6 +54,19 @@ export class MyApp {
       // Here you can do any higher level native things you might need.
 
     });
+  }
+
+  openPage(page) {
+    // Reset the content nav to have just this page
+    // we wouldn't want the back button to show in this scenario
+    if(page.name=="admin-create-jobs")
+    {
+      window.location.href="/#/admin/jobs/add/new"
+    }
+    else
+    {
+      this.nav.setRoot(page.name);
+    }
   }
 }
 

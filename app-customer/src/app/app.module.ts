@@ -33,8 +33,7 @@ const firebaseConfig = {
 
 @NgModule({
   declarations: [
-    MyApp,
-    HomePage,
+    MyApp, 
     CustomerJobListingPage,
     FavouritePage,
     MessagePage,
@@ -42,7 +41,9 @@ const firebaseConfig = {
   ],
   imports: [
     BrowserModule,
-    IonicModule.forRoot(MyApp),
+    IonicModule.forRoot(MyApp, {
+      mode: 'ios'
+    }),
     AngularFireModule.initializeApp(firebaseConfig),
     AngularFireAuthModule,
     AngularFireDatabaseModule,
@@ -50,8 +51,7 @@ const firebaseConfig = {
   ],
   bootstrap: [IonicApp],
   entryComponents: [
-    MyApp,
-    HomePage,
+    MyApp,  
     CustomerJobListingPage,
     FavouritePage,
     MessagePage,
