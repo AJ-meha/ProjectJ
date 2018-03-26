@@ -1,0 +1,61 @@
+.card-slides{
+	padding: 19px 0 0 13px;
+}
+
+.single-card{
+	&.card{
+		border: 1px solid $lining;
+		// border: 1px solid #c6c5c5;
+		box-shadow: none;
+		height: 214px;
+		padding: 15px 15px 10px;
+		text-align: left;
+		display: flex;
+		flex-direction: column;
+		justify-content: space-between;
+		width: calc(100% - 24px);
+	}
+
+	.card-header{
+		display: flex;
+		align-items: center;
+		justify-content: flex-start;
+		position: relative;
+		.job-logo{
+			width: 46px;
+			margin-right: 8px;
+		}
+		h5{
+			font-weight: 500;
+			color: $dark-text;
+		}
+		h6{
+			font-weight: 500;
+			font-size: 13px;
+			color: $light-text;
+		}
+
+		.new{
+			color: $cta;
+			font-weight: 500;
+			font-size: 13px;
+			position: absolute;
+			right: 0;
+			top: 0;
+		}
+	}
+
+	.card-footer{
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		font-size: 13px;
+		font-weight: 500;
+	}
+
+	.card-action{
+		font-size: 18px;
+		line-height: 1;
+		color: $dark-text;
+	}
+}

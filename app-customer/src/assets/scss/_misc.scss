@@ -1,0 +1,50 @@
+
+.show-page{
+	.content{
+		// background-color: $background;
+		color: $dark-text;
+	}
+}
+
+.flex {
+	display: flex;
+}
+.space-between{
+	justify-content: space-between;
+}
+
+.vertical-align-center{
+	align-items: center;
+}
+
+.font-weight-medium{
+	font-weight: 500 !important;
+}
+.font-weight-heavy{
+	font-weight: 700 !important;
+}
+
+.dark-text{
+	color: $dark-text !important;
+}
+.light-text{
+	color: $light-text;
+}
+
+.swiper-wrapper{
+	align-items: center;
+}
+
+@media(max-width: 767px){
+	.mobile-hidden{
+		display: none;
+	}
+}
+
+.alert-message{
+	overflow-y: auto;
+}
+
+.error-message{
+	color: $notifications;
+}

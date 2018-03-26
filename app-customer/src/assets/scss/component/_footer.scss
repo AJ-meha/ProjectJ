@@ -1,0 +1,21 @@
+.footer{
+	.toolbar{
+		&:first-child{
+			.toolbar-background{
+				background-color: #fff;
+				border-top-width: 1px;
+				border-top-color: $lining;
+			}
+		}
+	}
+
+	.toolbar-content{
+		padding: 0 5px;
+		.button-block{
+			font-weight: 500;
+			font-size: 15px;
+			padding: 22px 1em;
+			margin: 5px 0;
+		}
+	}
+}
