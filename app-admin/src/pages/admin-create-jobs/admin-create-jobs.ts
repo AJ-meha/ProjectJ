@@ -528,16 +528,21 @@ export class AdminCreateJobsPage {
       }
     }
 
+    let d = new Date();
+    let date = d.getFullYear()+"-"+(("0" + (d.getMonth() + 1)).slice(-2))+"-"+(("0" + d.getDate()).slice(-2))+" "+(("0" + d.getHours()).slice(-2))+":"+(("0" + d.getMinutes()).slice(-2))+":"+(("0" + d.getSeconds()).slice(-2));
+
     if(this.edit_id!=undefined)
     {
-      firebase.database().ref('jobs/'+this.edit_id).on('value', itemSnapshot => {
+      firebase.database().ref('jobs/'+this.edit_id).once('value', itemSnapshot => {
         let idArr=itemSnapshot.val();
-        console.log("id==")
         console.log(idArr)
 
         if(typeof this.currentUpload !== 'undefined'){
           firebase.database().ref('jobs/'+this.edit_id+'/image').set(this.currentUpload.fileId);
         }
+        
+        firebase.database().ref('jobs/'+this.edit_id+'/date').set(date);
+
         for (let itemSnap in idArr) {
           if(itemSnap=='job_details_id')
           {
@@ -603,7 +608,7 @@ export class AdminCreateJobsPage {
       let job_work_schedule_id=job_work_schedule_ref.key
       let job_questions_id=job_questions_ref.key
       let job_status='draft'
-      let jobs_ref=this.af.list('jobs').push({jobs_contact_workplace_id,job_details_id,job_emp_benefits_id,job_work_schedule_id,job_questions_id,job_status})
+      let jobs_ref=this.af.list('jobs').push({jobs_contact_workplace_id,job_details_id,job_emp_benefits_id,job_work_schedule_id,job_questions_id,job_status,date})
       this.edit_id=jobs_ref.key;
       this.commonfunc.presentToast("Job added Successfully!!!");
       //form.reset();

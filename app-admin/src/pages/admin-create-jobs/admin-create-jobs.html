@@ -158,7 +158,7 @@
                       <label>
                         <input accept="image/*" type="file" (change)="detectFiles($event)">
                       </label>
-                      <button margin-top ion-button small [disabled]="!selectedFiles"
+                      <button margin-top ion-button small type="button" [disabled]="!selectedFiles"
                       (click)="uploadSingle()">
                         Upload
                       </button>
