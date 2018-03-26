@@ -21,7 +21,7 @@ import { Upload } from '../../app/models/upload';
 @IonicPage(
   {
     name: "admin-create-jobs",
-    segment: "admin/jobs/:action/:id"
+    segment: "jobs/:action/:id"
   }
 )
 @Component({

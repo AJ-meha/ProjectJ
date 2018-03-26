@@ -13,7 +13,7 @@ import { EmailValidator } from '../../validators/email';
 
 @IonicPage({
   name: 'admin-login',
-  segment:'admin/login'
+  segment:'login'
 })
 @Component({
   selector: 'page-admin-login',

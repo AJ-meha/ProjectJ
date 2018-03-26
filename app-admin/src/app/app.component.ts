@@ -22,14 +22,26 @@ export class MyApp {
     ];
 
     let self=this;
+    let loc=window.location.href;
     this.authData.getUserEmail().then(useremail=>{
       if(useremail!=null)
       {
-        self.nav.setRoot("admin-dashboard");
+        if((loc.indexOf('#/') == -1) || (loc[loc.indexOf('#/')+8]==undefined)){
+          self.nav.setRoot("admin-dashboard");
+        }
+        else{
+          console.log(loc.indexOf('#/admin/'));
+          console.log(loc[loc.indexOf('#/admin/')+8]);
+        }
       }
       else
       {
-        self.authData.setAdminInit("init");
+        if((loc.indexOf('#/') == -1) || (loc[loc.indexOf('#/')+8]==undefined)){
+          self.authData.setAdminInit("init");
+        }
+        else{
+          self.authData.setAdminInit(window.location.href);
+        }
         self.nav.setRoot("admin-login");
       }
     });
@@ -47,7 +59,7 @@ export class MyApp {
     // we wouldn't want the back button to show in this scenario
     if(page.name=="admin-create-jobs")
     {
-      window.location.href="/#/admin/jobs/add/new"
+      window.location.href="/#/jobs/add/new"
     }
     else
     {
