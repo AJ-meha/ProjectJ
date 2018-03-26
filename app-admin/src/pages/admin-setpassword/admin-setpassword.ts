@@ -20,7 +20,7 @@ import { CommonFunctionsProvider } from '../../providers/common-functions/common
 
 @IonicPage({
   name: 'setpassword',
-  segment:'admin/setpassword/:email/:uid'
+  segment:'setpassword/:email/:uid'
 })
 @Component({
   selector: 'page-admin-setpassword',
