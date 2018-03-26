@@ -61,3 +61,8 @@
 ion-app{
     font-size: 1.5rem;
 }
+
+* {
+    -webkit-font-smoothing: antialiased;
+    // -moz-osx-font-smoothing: grayscale;
+}
