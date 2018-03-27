@@ -122,4 +122,9 @@ export class CustomerLoginPage {
     this.navCtrl.pop();
   }
 
+  // Temporary click action. TO BE REMOVED
+  tempOTP(){
+    this.navCtrl.push('CustomerVerificationPage');
+  }
+
 }
