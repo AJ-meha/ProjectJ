@@ -30,6 +30,7 @@ plugins/ios.json
 www/
 bower_components/
 $RECYCLE.BIN/
+release/
 
 .DS_Store
 Thumbs.db
