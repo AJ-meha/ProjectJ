@@ -27,6 +27,10 @@ function hashFile(file) {
     console.log("cache-busting.js:hashFile:Renaming " + filePath + " to " + fileNewPath);
     fs.renameSync(filePath, fileNewPath);
 
+    var serviceWorkerData = fs.readFileSync(serviceWorkerPath, 'utf8');    
+    var serviceWorkerModifiedData = serviceWorkerData.replace(file, fileNewName);
+    fs.writeFileSync(serviceWorkerPath, serviceWorkerModifiedData, 'utf8');
+
     return fileNewRelativePath;
 }
 
@@ -39,6 +43,7 @@ var destination = path.resolve(rootDir, 'release');
 
 var buildDir = path.join(source, 'build');
 var indexPath = path.join(source, 'index.html');
+var serviceWorkerPath = path.join(source, 'service-worker.js');
 $ = cheerio.load(fs.readFileSync(indexPath, 'utf-8'));
 
 
