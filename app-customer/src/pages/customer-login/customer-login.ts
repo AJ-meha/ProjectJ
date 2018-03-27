@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, AlertController, App } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, AlertController, App, ViewController } from 'ionic-angular';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import firebase from 'firebase';
 import { CustomerAuthProvider } from '../../providers/customer-auth/customer-auth';
@@ -27,7 +27,7 @@ export class CustomerLoginPage {
   mobile_arr:any;
 
   public recaptchaVerifier:firebase.auth.RecaptchaVerifier;
-  constructor(public navCtrl: NavController, public navParams: NavParams,public alertCtrl:AlertController,public appCtrl: App,public authData:CustomerAuthProvider,public formBuilder:FormBuilder) {
+  constructor(public navCtrl: NavController, public navParams: NavParams,public alertCtrl:AlertController,public appCtrl: App,public authData:CustomerAuthProvider,public formBuilder:FormBuilder, public viewCtrl: ViewController) {
 
     this.loginForm=formBuilder.group({
       mobile:['',Validators.compose([Validators.required,Validators.pattern('\\d{10}$')])]
@@ -45,8 +45,8 @@ export class CustomerLoginPage {
       });
     // this.recaptchaVerifier = new firebase.auth.RecaptchaVerifier('recaptcha-container');
     console.log('ionViewDidLoad PhoneLoginPage');
-    
-   
+    this.viewCtrl.showBackButton(false);
+
   }
 
   signIn(phoneNumber: number){
@@ -95,7 +95,7 @@ export class CustomerLoginPage {
           ]
         });
         prompt.present();
-        
+
       })
       .catch(function (error) {
         console.error("SMS not sent", error);
@@ -116,6 +116,10 @@ export class CustomerLoginPage {
 
   ngOnInit(){
     this.mobile_arr=GlobalVarsProvider.mobile_code_arr
+  }
+
+  goBack() {
+    this.navCtrl.pop();
   }
 
 }

@@ -19,6 +19,6 @@ export class HomePage {
 
 
   openPage(){
-    this.navCtrl.setRoot('login');
+    this.navCtrl.push('login');
   }
 }
