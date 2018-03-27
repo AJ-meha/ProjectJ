@@ -30,12 +30,12 @@
       <!-- <ion-select>
         <ion-option *ngFor="let mobileno of mobile_arr;let indx=index" value="{{$mobile_arr[indx]['value']}}">{{$mobile_arr[indx]['key']}}</ion-option>
       </ion-select> -->
-      <ion-input #mobile formControlName="mobile" type="tel" [(ngModel)]="phoneNumber" [class.invalid]="!loginForm.controls.mobile.valid &&
+      <ion-input #mobile formControlName="mobile" type="tel" clearInput="true" [(ngModel)]="phoneNumber" [class.invalid]="!loginForm.controls.mobile.valid &&
             (loginForm.controls.mobile.dirty || loginForm.controls.mobile.touched)"></ion-input>
     </ion-item>
     <div class="error-message" *ngIf="!loginForm.controls.mobile.valid  &&
       (loginForm.controls.mobile.dirty || loginForm.controls.mobile.touched)">
-      <p>Please enter a valid number.</p>
+      <div>This phone number is invalid</div>
     </div>
 
     <!-- <button ion-button id="sign-in-button" (click)="signIn(phoneNumber)">
