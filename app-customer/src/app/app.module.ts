@@ -17,6 +17,8 @@ import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 
+import { HttpModule } from '@angular/http';
+
 import { CommonFunctionsProvider } from '../providers/common-functions/common-functions';
 import { GlobalVarsProvider } from '../providers/global-vars/global-vars';
 import { CustomerAuthProvider } from '../providers/customer-auth/customer-auth';
@@ -57,6 +59,7 @@ const firebaseConfig = {
     AngularFireAuthModule,
     AngularFireDatabaseModule,
     IonicStorageModule.forRoot(),
+    HttpModule,
     HttpClientModule,
     TranslateModule.forRoot({
         loader: {

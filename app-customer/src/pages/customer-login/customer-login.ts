@@ -5,8 +5,9 @@ import firebase from 'firebase';
 import { CustomerAuthProvider } from '../../providers/customer-auth/customer-auth';
 import { GlobalVarsProvider } from '../../providers/global-vars/global-vars';
 
-import * as json_en from '../../assets/i18n/en.json';
-import * as json_zh from '../../assets/i18n/zh.json';
+import { Http } from '@angular/http';
+import {Observable} from 'rxjs/Rx';
+import 'rxjs/add/operator/map';
 
 import { TranslateService } from '@ngx-translate/core';
 
@@ -31,10 +32,10 @@ export class CustomerLoginPage {
   loginForm:FormGroup;
   mobile_code = GlobalVarsProvider.mobile_code;
   mobile_arr:any;
-  langArr: JSON;
+  langArr ={ENTER_CONFIRM_CODE:"",CONFIRM_CODE:"",CANCEL:"",SEND:"",ERROR:"",INVALID_OTP:""};
 
   public recaptchaVerifier:firebase.auth.RecaptchaVerifier;
-  constructor(public navCtrl: NavController, public navParams: NavParams,public alertCtrl:AlertController,public appCtrl: App,public authData:CustomerAuthProvider,public formBuilder:FormBuilder, private translateService: TranslateService) {
+  constructor(public navCtrl: NavController, public navParams: NavParams,public alertCtrl:AlertController,public appCtrl: App,public authData:CustomerAuthProvider,public formBuilder:FormBuilder, private http: Http, private translateService: TranslateService) {
 
     this.loginForm=formBuilder.group({
       mobile:['',Validators.compose([Validators.required,Validators.pattern('\\d{10}$')])]
@@ -42,22 +43,41 @@ export class CustomerLoginPage {
 
     console.log(this.mobile_arr)
 
+    //import * as json_en from '../../assets/i18n/en.json';
+    //import * as json_zh from '../../assets/i18n/zh.json';
+
     switch(translateService.currentLang) { 
        case 'en': { 
-          this.langArr = json_en;
+          this.getJsonEN().subscribe((data) =>{this.langArr = data;});
           break; 
        } 
        case 'zh': { 
-          this.langArr = json_zh; 
+          this.getJsonZH().subscribe((data) =>{this.langArr = data;}); 
           break; 
        } 
        default: { 
-          this.langArr = json_en;
+          this.getJsonEN().subscribe((data) =>{this.langArr = data;});
           break; 
        } 
     }
 
   }
+
+  getJsonEN(): Observable<any>{
+     return this.http.get('../../assets/i18n/en.json')
+         .map((response) => {
+             return response.json();
+         }
+     );
+   }
+
+  getJsonZH(): Observable<any>{
+     return this.http.get('../../assets/i18n/zh.json')
+         .map((response) => {
+             return response.json();
+         }
+     );
+   }
 
   ionViewDidLoad() {
     this.recaptchaVerifier= new firebase.auth.RecaptchaVerifier('recaptcha-container', {
