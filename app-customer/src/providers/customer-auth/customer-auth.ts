@@ -103,4 +103,14 @@ export class CustomerAuthProvider {
     this.storage.remove('customer_userrole');
   }
 
+  setLanguage(lang) {
+    this.storage.set('customer_lang', lang);
+  }
+
+  getLanguage(){
+    return this.storage.get('customer_lang').then((value)=>{
+      return value;
+    });
+  }
+
 }

@@ -3,6 +3,8 @@ import { Platform, Nav } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 
+import { TranslateService } from '@ngx-translate/core';
+
 import { HomePage } from '../pages/home/home';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { CustomerAuthProvider } from '../providers/customer-auth/customer-auth';
@@ -14,7 +16,7 @@ export class MyApp {
   @ViewChild(Nav) nav: Nav;
   public is_admin:boolean=false
   pages: Array<{title:string,name:any}>;
-  constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen, afAuth: AngularFireAuth,public customerAuthData:CustomerAuthProvider) {
+  constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen, afAuth: AngularFireAuth,public customerAuthData:CustomerAuthProvider, private translateService: TranslateService) {
     this.pages=[
       {title:'Dashboard',name:"admin-dashboard"},
       {title:'Add Job',name:"admin-create-jobs"},
@@ -52,7 +54,17 @@ export class MyApp {
     platform.ready().then(() => {
       // Okay, so the platform is ready and our plugins are available.
       // Here you can do any higher level native things you might need.
-
+      translateService.setDefaultLang('en');
+      this.customerAuthData.getLanguage().then(customer_lang=>{
+        if(customer_lang==null)
+        {
+          translateService.use('en');
+        }
+        else
+        {
+          translateService.use(customer_lang);
+        }
+      });
     });
   }
 

@@ -7,10 +7,10 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>Search</ion-title>
+    <ion-title>{{ 'SEARCH' | translate }}</ion-title>
     <ion-buttons right>
       <button ion-button  type="button" (click)="logOut()" title="Logout">
-        Logout
+        {{ 'LOGOUT' | translate }}
       </button>
     </ion-buttons>
   </ion-navbar>
@@ -20,7 +20,7 @@
 
 <ion-content >
   <p padding>
-    List of jobs
+    {{ 'LIST_OF_JOBS' | translate }}
   </p>
   <!-- <button ion-button small (click)="openModal()">
       View Modal
@@ -29,14 +29,14 @@
   <ion-card padding *ngFor="let job of jobs">
     <h5>{{job.designation}}</h5>
     <button ion-button small (click)="openJob(job.key)">
-        View Job
+        {{ 'VIEW_JOB' | translate }}
     </button>
   </ion-card>
 
   <ion-card padding>
     <h5>Dummy Job UI-2</h5>
     <button ion-button small (click)="openJob2()">
-        View Job
+        {{ 'VIEW_JOB' | translate }}
     </button>
   </ion-card>
 </ion-content>
