@@ -46,8 +46,13 @@
 
 <ion-footer>
   <ion-toolbar>
-    <button ion-button block color="primary" id="sign-in-button" (click)="signIn(phoneNumber)">
+    <!-- <button ion-button block color="primary" id="sign-in-button" (click)="signIn(phoneNumber)">
       {{ 'SIGN_IN' | translate }}
+    </button> -->
+
+    <!-- Temporary click action. TO BE REMOVED -->
+    <button ion-button block color="primary" (click)="tempOTP();">
+      Continue
     </button>
   </ion-toolbar>
 </ion-footer>
