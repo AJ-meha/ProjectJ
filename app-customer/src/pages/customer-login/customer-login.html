@@ -26,10 +26,9 @@
     <div id="recaptcha-container"></div>
 
     <ion-item class="mob-input" no-padding>
-      <ion-label item-start>{{mobile_code}}</ion-label>
-      <!-- <ion-select>
-        <ion-option *ngFor="let mobileno of mobile_arr;let indx=index" value="{{$mobile_arr[indx]['value']}}">{{$mobile_arr[indx]['key']}}</ion-option>
-      </ion-select> -->
+      <ion-select [(ngModel)]="mobile_code" [ngModelOptions]="{standalone: true}" item-start interface="popover" placeholder="--">
+        <ion-option *ngFor="let code of mobile_codeArr" value="{{code.key}}">{{code.value}}</ion-option>
+      </ion-select>
       <ion-input #mobile formControlName="mobile" type="tel" clearInput="true" [(ngModel)]="phoneNumber" [class.invalid]="!loginForm.controls.mobile.valid &&
             (loginForm.controls.mobile.dirty || loginForm.controls.mobile.touched)"></ion-input>
     </ion-item>
