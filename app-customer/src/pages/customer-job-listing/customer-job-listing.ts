@@ -3,6 +3,8 @@ import { IonicPage, NavController, NavParams, ModalController } from 'ionic-angu
 import { CustomerAuthProvider } from '../../providers/customer-auth/customer-auth';
 import firebase  from 'firebase';
 
+import { TranslateService } from '@ngx-translate/core';
+
 /**
  * Generated class for the CustomerJobListingPage page.
  *

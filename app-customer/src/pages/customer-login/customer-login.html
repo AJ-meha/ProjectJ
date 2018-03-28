@@ -7,7 +7,7 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>customer-login</ion-title>
+    <ion-title>{{ 'LOGIN' | translate }}</ion-title>
   </ion-navbar>
 
 </ion-header>
@@ -18,7 +18,7 @@
     <div id="recaptcha-container"></div>
 
     <ion-item>
-      <ion-label stacked>Phone Number</ion-label>
+      <ion-label stacked>{{ 'PHONE_NUMBER' | translate }}</ion-label>
     </ion-item>
     <ion-item>
       <ion-label item-start>{{mobile_code}}</ion-label>
@@ -30,11 +30,11 @@
     </ion-item>
     <ion-item class="error-message" *ngIf="!loginForm.controls.mobile.valid  &&
       (loginForm.controls.mobile.dirty || loginForm.controls.mobile.touched)">
-      <p>Please enter a valid number.</p>
+      <p>{{ 'ENTER_VALID_NUMBER' | translate }}</p>
     </ion-item>
 
     <button ion-button id="sign-in-button" (click)="signIn(phoneNumber)">
-      Sign In
+      {{ 'SIGN_IN' | translate }}
     </button>
   
   </form>
