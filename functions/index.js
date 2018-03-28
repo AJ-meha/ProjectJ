@@ -178,11 +178,8 @@ exports.jobs = functions.https.onRequest((req, res) => {
   let total_count=0;
   jobRef.on('value', function (snapshot) {
     let jobs=[];
-    total_count=snapshot.numChildren();
-    
+    total_count=snapshot.numChildren();  
     snapshot.forEach( itemSnap => {
-      
-      // console.log(itemSnap.key)
       let job_details_id=itemSnap.val().job_details_id
       let job_contact_workplace_id=itemSnap.val().jobs_contact_workplace_id
       let designation='';
@@ -203,32 +200,88 @@ exports.jobs = functions.https.onRequest((req, res) => {
             }
             else{
               return 0;
-            }
-            
+            }        
           }).catch(err => console.error(err));
           return false;
-
       }).catch(err => console.error(err));   
-      
-      
         return false;
-     
-        
-      
     })
   })
 });
-  // .then(()=>{
-  //   // return console.log(total_count)
-  //   response["success"]=true;
-  //   response["message"]="Job listing fetched successfully";
-  //   response["data"]=jobs;
-  //   return res.status(200).json(response);
-  // }).catch(err => console.error(err));
+});
+
+exports.jobdetails = functions.https.onRequest((req, res) => {
+  cors(req, res, () => {
+  let job_id=req.query.job_id
+  res.setHeader("Access-Control-Allow-Origin", "*");
+  let data=[];
+  let response={};
   
-  // });
-  // }
-  // else{
-  //   res.status(500).send({ error: 'Method not supported!!!' });
-  // }
+  
+  var jobRef=admin.database().ref('jobs');
+  var dbRef=admin.database().ref();
+  var count=0;
+  let total_count=0;
+  dbRef.child('jobs/').child(job_id).once('value').then( function(itemSnap) {
+    console.log(itemSnap.val())
+    
+    // total_count=itemSnap.numChildren();
+    let job_details_id=itemSnap.val().job_details_id
+    let job_contact_workplace_id=itemSnap.val().jobs_contact_workplace_id
+    let job_emp_benefits_id=itemSnap.val().job_emp_benefits_id
+    let designation='';
+    let employment_type='';
+    let salary_amount='';
+    let salary_unit='';
+    let industry='';
+    let type='';
+    let sub_industry='';
+    let employee_benefits='';
+    dbRef.child('job_details/').child(job_details_id).once('value').then( function(mediaSnap) {
+        designation=mediaSnap.val().designation
+        employment_type=mediaSnap.val().employment_type
+        type=mediaSnap.val().type
+        salary_unit=mediaSnap.val().salary_unit
+        salary_amount=mediaSnap.val().salary_amount
+        industry=mediaSnap.val().industry
+        sub_industry=mediaSnap.val().sub_industry
+        dbRef.child('jobs_contact_workplace/').child(job_contact_workplace_id).once('value').then( function(jobContactSnap) {
+          // count +=1;
+          if(job_emp_benefits_id ===""){
+            response["success"]=true;
+            response["message"]="Job Details fetched successfully";
+            response["data"]={"key":itemSnap.key,"designation":designation,"employment_type":employment_type,"type":type,"workplace_name":jobContactSnap.val().workplace_name,
+            "workplace_address":jobContactSnap.val().workplace_address,"salary_amount":salary_amount,"salary_unit":salary_unit,"industry":industry,"sub_industry":sub_industry,"employee_benefits":employee_benefits};
+            // response["total_count"]=total_count;
+            // response["count"]=count;
+            // if(count === total_count){
+            return res.status(200).json(response);
+          }
+          else{
+            dbRef.child('job_employee_benefits/').child(job_emp_benefits_id).once('value').then( function(jobEmpBenSnap) {
+              employee_benefits=jobEmpBenSnap.val().employee_benefits
+              console.log(employee_benefits)
+              response["success"]=true;
+              response["message"]="Job Details fetched successfully";
+              response["data"]={"key":itemSnap.key,"designation":designation,"employment_type":employment_type,"type":type,"workplace_name":jobContactSnap.val().workplace_name,
+              "workplace_address":jobContactSnap.val().workplace_address,"salary_amount":salary_amount,"salary_unit":salary_unit,"industry":industry,"sub_industry":sub_industry,"employee_benefits":employee_benefits};
+              // response["total_count"]=total_count;
+              // response["count"]=count;
+              // if(count === total_count){
+              return res.status(200).json(response);
+            }).catch(err => console.error(err));
+            return false;
+          }
+          
+          // }
+          // else{
+          //   return 0;
+          // }  
+        }).catch(err => console.error(err));
+      return false;
+        
+    }).catch(err => console.error(err));
+    return false;
+  }).catch(err => console.error(err));
+});
 });
