@@ -1,0 +1,84 @@
+<ion-header>
+
+  <ion-navbar>
+  	<ion-buttons left>
+  	  <button ion-button color="dark" (click)="goBack()">
+  	    <ion-icon name="ios-arrow-round-back" svgversion></ion-icon>
+  	  </button>
+  	</ion-buttons>
+    <ion-title>Verification Code</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+	<p class="light-text font-weight-medium login-help" text-center>
+    Please type the verification code sent to
+    +852 7733 8839
+  </p>
+
+  <!--
+    /////////////////////////////////////////
+      On entering invalid OTP, add an attribute ''invalid'' to the form tag
+    /////////////////////////////////////////
+  -->
+  <form>
+    <div class="otp-wrapper">
+      <ion-input type="tel" #otp1 class="otp" pattern="[0-9]{6}" maxlength="1" size="1" (keyup)="next(otp2)">
+      </ion-input>
+      <ion-input type="tel" #otp2 class="otp" pattern="[0-9]{6}" maxlength="1" size="1" (keyup)="next(otp3)">
+      </ion-input>
+      <ion-input type="tel" #otp3 class="otp" pattern="[0-9]{6}" maxlength="1" size="1" (keyup)="next(otp4)">
+      </ion-input>
+      <ion-input type="tel" #otp4 class="otp" pattern="[0-9]{6}" maxlength="1" size="1" (keyup)="next(otp5)">
+      </ion-input>
+      <ion-input type="tel" #otp5 class="otp" pattern="[0-9]{6}" maxlength="1" size="1" (keyup)="next(otp6)">
+      </ion-input>
+      <ion-input type="tel" #otp6 class="otp" pattern="[0-9]{6}" maxlength="1" size="1">
+      </ion-input>
+    </div>
+
+    <!--
+      /////////////////////////////////////////
+        The below commented line to be displayed when the OTP is invalid
+      /////////////////////////////////////////
+    -->
+    <!-- <div class="error-message otp-error" text-center>Incorrect verification code.</div> -->
+
+  </form>
+
+  <div class="timer-resend-wrapper">
+    <div class="light-text font-weight-medium" text-center>Didn't receive a code?</div>
+
+    <!--
+      /////////////////////////////////////////
+        The below line to be hidden when the timer expires
+      /////////////////////////////////////////
+    -->
+    <div class="light-text font-weight-medium" text-center>Please wait <span class="text-ios-primary">0:29</span></div>
+
+
+    <!--
+      /////////////////////////////////////////
+        The below line to be uncommented and displayed when the timer expires.
+        Just add a click action to the div. No need for a button.
+      /////////////////////////////////////////
+    -->
+    <!-- <div class="text-ios-primary font-weight-medium resend-action" text-center>RESEND SMS</div> -->
+
+  </div>
+</ion-content>
+
+<ion-footer>
+  <ion-toolbar>
+    <!--
+      /////////////////////////////////////////
+        Button should have attribute ''disabled'' by default. Attribute to be removed when OTP is entered.
+      /////////////////////////////////////////
+    -->
+    <button ion-button block color="primary" (click)="tempListing();">
+      Continue
+    </button>
+  </ion-toolbar>
+</ion-footer>
