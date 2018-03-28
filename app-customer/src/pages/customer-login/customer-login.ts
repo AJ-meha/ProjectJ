@@ -30,8 +30,8 @@ import { TranslateService } from '@ngx-translate/core';
 })
 export class CustomerLoginPage {
   loginForm:FormGroup;
-  mobile_code = GlobalVarsProvider.mobile_code;
-  mobile_arr:any;
+  mobile_codeArr = GlobalVarsProvider.mobile_code;
+  mobile_code = "+852";
   langArr ={ENTER_CONFIRM_CODE:"",CONFIRM_CODE:"",CANCEL:"",SEND:"",ERROR:"",INVALID_OTP:""};
 
   public recaptchaVerifier:firebase.auth.RecaptchaVerifier;
@@ -40,8 +40,6 @@ export class CustomerLoginPage {
     this.loginForm=formBuilder.group({
       mobile:['',Validators.compose([Validators.required,Validators.pattern('\\d{10}$')])]
     });
-
-    console.log(this.mobile_arr)
 
     //import * as json_en from '../../assets/i18n/en.json';
     //import * as json_zh from '../../assets/i18n/zh.json';
@@ -99,7 +97,7 @@ export class CustomerLoginPage {
     }
     else{
       const appVerifier = this.recaptchaVerifier;
-      const phoneNumberString = GlobalVarsProvider.mobile_code + phoneNumber;
+      const phoneNumberString = this.mobile_code + phoneNumber;
       let self=this;
       firebase.auth().signInWithPhoneNumber(phoneNumberString, appVerifier)
         .then( confirmationResult => {
@@ -158,7 +156,6 @@ export class CustomerLoginPage {
   }
 
   ngOnInit(){
-    this.mobile_arr=GlobalVarsProvider.mobile_code_arr
   }
 
   goBack() {
