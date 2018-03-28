@@ -1,26 +1,71 @@
 page-customer-login {
-    form {
-      margin-bottom: 32px;
-      button {
-        margin-top: 20px;
+  .login-help{
+    margin-top: 22px;
+    margin-top: 3.75vh;
+    font-size: 16px;
+    max-width: 190px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  form{
+    margin: 0 24px;
+  }
+
+  .mob-input{
+    border-bottom: 2px solid $lining;
+    margin-top: 40px;
+    .label, .text-input, .select{
+      font-size: 28px;
+      color: $dark-text;
+      font-weight: 500;
+      margin-bottom: 4px;
+    }
+    .label{
+      margin-top: 11px;
+    }
+    .select{
+      padding: 0;
+      // margin-right: 0;
+      margin-right: 8px;
+      margin-top: 11px;
+      .select-icon{
+        display: none;
       }
     }
 
-    p {
-      font-size: 0.8em;
-      color: #d2d2d2;
+    &.item-block{
+      .item-inner{
+        border-bottom: 0;
+      }
     }
+  }
 
-    ion-label {
-      margin-left: 5px;
-    }
+    // form {
+    //   margin-bottom: 32px;
+    //   button {
+    //     margin-top: 20px;
+    //   }
+    // }
 
-    ion-input {
-      padding: 5px;
-    }
 
-    .error-message .item-inner {
-      border-bottom: 0 !important;
-    }
+    // ion-label {
+    //   margin-left: 5px;
+    // }
 
+    // ion-input {
+    //   padding: 5px;
+    // }
+
+    // .error-message .item-inner {
+    //   border-bottom: 0 !important;
+    // }
+
+}
+
+.popover-ios .popover-content{
+  width: 150px;
+  .item-block{
+    font-weight: 500;
+  }
 }

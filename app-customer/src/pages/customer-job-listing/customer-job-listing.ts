@@ -4,6 +4,8 @@ import { CustomerAuthProvider } from '../../providers/customer-auth/customer-aut
 import firebase  from 'firebase';
 import { Http,Headers } from '@angular/http';
 
+import { TranslateService } from '@ngx-translate/core';
+
 /**
  * Generated class for the CustomerJobListingPage page.
  *
