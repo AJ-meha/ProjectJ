@@ -15,7 +15,7 @@ page-customer-login {
   .mob-input{
     border-bottom: 2px solid $lining;
     margin-top: 40px;
-    .label, .text-input{
+    .label, .text-input, .select{
       font-size: 28px;
       color: $dark-text;
       font-weight: 500;
@@ -23,6 +23,15 @@ page-customer-login {
     }
     .label{
       margin-top: 11px;
+    }
+    .select{
+      padding: 0;
+      // margin-right: 0;
+      margin-right: 8px;
+      margin-top: 11px;
+      .select-icon{
+        display: none;
+      }
     }
 
     &.item-block{
@@ -60,4 +69,11 @@ page-customer-login {
     //   border-bottom: 0 !important;
     // }
 
+}
+
+.popover-ios .popover-content{
+  width: 150px;
+  .item-block{
+    font-weight: 500;
+  }
 }
