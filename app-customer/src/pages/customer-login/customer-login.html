@@ -12,7 +12,7 @@
         <ion-icon name="ios-arrow-round-back" svgversion></ion-icon>
       </button>
     </ion-buttons>
-    <ion-title>Enter Mobile Number</ion-title>
+    <ion-title>{{ 'LOGIN' | translate }}</ion-title>
   </ion-navbar>
 
 </ion-header>
@@ -20,7 +20,7 @@
 
 <ion-content padding>
 
-  <p class="light-text font-weight-medium login-help" text-center>A 6-digit verification code<br> will be sent on SMS</p>
+  <p class="light-text font-weight-medium login-help" text-center>{{ 'PHONE_NUMBER' | translate }}</p>
 
   <form [formGroup]="loginForm">
     <div id="recaptcha-container"></div>
@@ -35,7 +35,7 @@
     </ion-item>
     <div class="error-message" *ngIf="!loginForm.controls.mobile.valid  &&
       (loginForm.controls.mobile.dirty || loginForm.controls.mobile.touched)">
-      <div>This phone number is invalid</div>
+      <div>{{ 'ENTER_VALID_NUMBER' | translate }}</div>
     </div>
 
     <!-- <button ion-button id="sign-in-button" (click)="signIn(phoneNumber)">
@@ -48,7 +48,7 @@
 <ion-footer>
   <ion-toolbar>
     <button ion-button block color="primary" id="sign-in-button" (click)="signIn(phoneNumber)">
-      Continue
+      {{ 'SIGN_IN' | translate }}
     </button>
   </ion-toolbar>
 </ion-footer>

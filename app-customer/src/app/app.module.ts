@@ -13,6 +13,12 @@ import { AngularFireAuthModule } from 'angularfire2/auth';
 import { AngularFireDatabaseModule } from 'angularfire2/database';
 import { IonicStorageModule } from '@ionic/storage';
 
+import { HttpClientModule, HttpClient } from '@angular/common/http';
+import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+
+import { HttpModule } from '@angular/http';
+
 import { CommonFunctionsProvider } from '../providers/common-functions/common-functions';
 import { GlobalVarsProvider } from '../providers/global-vars/global-vars';
 import { CustomerAuthProvider } from '../providers/customer-auth/customer-auth';
@@ -20,6 +26,11 @@ import { FavouritePage } from '../pages/favourite/favourite';
 import { MessagePage } from '../pages/message/message';
 import { ProfilePage } from '../pages/profile/profile';
 import { CustomerJobListingPage } from '../pages/customer-job-listing/customer-job-listing';
+
+export function HttpLoaderFactory(http: HttpClient) {
+    return new TranslateHttpLoader(http);
+}
+
 // AF2 Settings
 const firebaseConfig = {
   apiKey: "AIzaSyDMk-KBiuYXavz6yvoUk85oZ32JhN1IVVM",
@@ -48,6 +59,15 @@ const firebaseConfig = {
     AngularFireAuthModule,
     AngularFireDatabaseModule,
     IonicStorageModule.forRoot(),
+    HttpModule,
+    HttpClientModule,
+    TranslateModule.forRoot({
+        loader: {
+            provide: TranslateLoader,
+            useFactory: HttpLoaderFactory,
+            deps: [HttpClient]
+        }
+    })
   ],
   bootstrap: [IonicApp],
   entryComponents: [
