@@ -18,4 +18,11 @@
 			margin: 5px 0;
 		}
 	}
+
+	button{
+	  &[disabled], &[ion-button][disabled]{
+	    background-color: $light-text;
+	    opacity: 1;
+	  }
+	}
 }

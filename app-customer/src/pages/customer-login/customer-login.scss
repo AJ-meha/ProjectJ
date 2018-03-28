@@ -32,14 +32,6 @@ page-customer-login {
     }
   }
 
-  ion-footer{
-    button{
-      &[disabled], &[ion-button][disabled]{
-        background-color: $light-text;
-        opacity: 1;
-      }
-    }
-  }
     // form {
     //   margin-bottom: 32px;
     //   button {

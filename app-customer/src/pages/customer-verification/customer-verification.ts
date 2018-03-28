@@ -27,4 +27,14 @@ export class CustomerVerificationPage {
     this.navCtrl.pop();
   }
 
+  // Focus on next input field for OTP
+  next(el) {
+    el.setFocus();
+  }
+
+  // Temporary click action. TO BE REMOVED
+  tempListing(){
+    this.navCtrl.setRoot('page-search');
+  }
+
 }
