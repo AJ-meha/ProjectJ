@@ -23,6 +23,11 @@ const _ = require('lodash');
 const path = require('path');
 const os = require('os');
 const admin=require('firebase-admin')
+var express = require('express');
+var cors = require('cors');
+const app = express();
+app.use(cors({ origin: true }));
+
 admin.initializeApp(functions.config().firebase)
 // [END import]
 
@@ -135,3 +140,22 @@ exports.generateThumbnail = functions.storage.object().onChange((event) => {
     }).then(() => fs.unlinkSync(tempFilePath));
 });
 // [END generateThumbnail]
+
+/* RESTFUL APIS */
+
+// build multiple CRUD interfaces:
+app.get('/jobs', (req, res) => {
+  if(req.method === 'GET'){
+    res.status(200).json({success: true});
+  }
+  else{
+    res.status(500).send({ error: 'Method not supported!!!' });
+  }
+  // let key = req.query.key;
+  // var postRef = firebase.database().ref('designs').child(key);
+  // postRef.once('value').then(function(snap) {
+  
+  // });
+});
+
+exports.main = functions.https.onRequest(app);

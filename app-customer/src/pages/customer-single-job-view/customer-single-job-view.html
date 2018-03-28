@@ -1,0 +1,79 @@
+<!--
+  Generated template for the SingleJobPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar>
+  	<ion-buttons left>
+  	  <button ion-button color="dark" (click)="goBack()">
+  	    <ion-icon name="ios-arrow-round-back" svgversion showWhen="android, windows, ios, core"></ion-icon>
+  	  </button>
+  	</ion-buttons>
+    <ion-title>Summary</ion-title>
+    <ion-buttons right>
+      <button ion-button color="dark">
+        <ion-icon name="ios-cloud-upload-outline" svgversion showWhen="android, windows, ios, core"></ion-icon>
+      </button>
+      <button ion-button color="primary">
+        <ion-icon name="md-heart" svgversion showWhen="android, windows, ios, core"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content>
+
+	<ion-list class="page-banner-section">
+	  <ion-item>
+	    <ion-avatar item-start>
+	      <img src="assets/imgs/pacific-coffee_logo.jpg">
+	    </ion-avatar>
+	    <h3 class="font-weight-medium">{{job["workplace_name"]}}</h3>
+	  </ion-item>
+	</ion-list>
+
+	<ion-list >
+	  <button ion-item (click)="openDetails()">
+	    <ion-icon name="ios-calendar-outline" showWhen="android, windows, ios, core" color="primary" item-start></ion-icon>
+	    Job details
+	  </button>
+	  <button ion-item (click)="openBenefits()">
+	    <ion-icon name="ios-calendar-outline" showWhen="android, windows, ios, core" color="primary" item-start></ion-icon>
+	    Benefits
+	  </button>
+	</ion-list>
+
+	<ion-list >
+	  <ion-item>
+	    <ion-icon name="ios-calendar-outline" showWhen="android, windows, ios, core" color="primary" item-start></ion-icon>
+	    {{job["designation"]}}
+	  </ion-item>
+	  <ion-item>
+	    <ion-icon name="ios-calendar-outline" showWhen="android, windows, ios, core" color="primary" item-start></ion-icon>
+	    {{empTypes[job["employment_type"]]}}
+	  </ion-item>
+	  <ion-item>
+	    <ion-icon name="ios-calendar-outline" showWhen="android, windows, ios, core" color="primary" item-start></ion-icon>
+	    {{job["workplace_address"]}}
+	  </ion-item>
+	  <ion-item>
+	    <ion-icon name="ios-calendar-outline" showWhen="android, windows, ios, core" color="primary" item-start></ion-icon>
+			{{job["salary_amount"]}}
+	  </ion-item>
+	</ion-list>
+
+</ion-content>
+
+
+<ion-footer>
+  <ion-toolbar>
+    <button ion-button block color="primary">
+    	Apply now
+    </button>
+  </ion-toolbar>
+</ion-footer>
