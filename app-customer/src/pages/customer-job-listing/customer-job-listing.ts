@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, ModalController } from 'ionic-angular';
 import { CustomerAuthProvider } from '../../providers/customer-auth/customer-auth';
 import firebase  from 'firebase';
+import { Http,Headers } from '@angular/http';
 
 /**
  * Generated class for the CustomerJobListingPage page.
@@ -18,7 +19,7 @@ export class CustomerJobListingPage {
   public jobRef: firebase.database.Reference = firebase.database().ref('jobs');
   public jobs: Array<any> = [];
   public dbRef: firebase.database.Reference = firebase.database().ref();
-  constructor(public navCtrl: NavController, public navParams: NavParams,public authData:CustomerAuthProvider,public modalCtrl:ModalController) {
+  constructor(public navCtrl: NavController, public navParams: NavParams,public authData:CustomerAuthProvider,public modalCtrl:ModalController,private http:Http) {
   }
 
   ionViewDidLoad() {
@@ -39,6 +40,16 @@ export class CustomerJobListingPage {
   }
 
   openJob(idval) {
+    firebase.auth().currentUser.getIdToken()
+    .then(authToken => {
+      const headers = new Headers({'Authorization': 'Bearer ' + authToken });
+      console.log("authToken==="+authToken)
+
+      const myUID    = { uid: 'current-user-uid' };    // success 200 response
+      const notMyUID = { uid: 'some-other-user-uid' }; // error 403 response
+      
+      // return this.http.get(url, { headers: headers }).toPromise()
+    })
     this.navCtrl.push("job",{
       id: idval
     });
@@ -46,6 +57,17 @@ export class CustomerJobListingPage {
 
   ngOnInit(){
     let self=this
+    var headers = new Headers();
+    headers.append('Access-Control-Allow-Origin' , '*');
+    headers.append('Accept' , 'application/json');
+    headers.append('Content-Type' , 'application/json');
+    // headers.append('Access-Control-Allow-Methods','GET, POST, PATCH, PUT, DELETE, OPTIONS');
+    // headers.append("Access-Control-Allow-Headers", "Access-Control-Allow-Headers, Origin,Accept, X-Auth-Token, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers");
+    this.http.get(' https://us-central1-project-j-main.cloudfunctions.net/jobs',{ headers: headers })
+    .subscribe((data) => {
+      console.log('data=='+data.json().data);
+      this.jobs = data.json().data;
+    })
     this.jobRef.on('value', function (snapshot) {
 
       snapshot.forEach( itemSnap => {
@@ -68,5 +90,7 @@ export class CustomerJobListingPage {
   openJob2() {
       this.navCtrl.push("single-job-details");
   }
+
+            
 
 }

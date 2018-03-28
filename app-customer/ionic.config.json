@@ -2,5 +2,11 @@
   "name": "app-customer",
   "app_id": "",
   "type": "ionic-angular",
-  "integrations": {}
+  "integrations": {},
+  "proxies": [
+    {
+      "path": "/jobs",
+      "proxyUrl": "https://us-central1-project-j-main.cloudfunctions.net/jobs"
+    }
+  ]
 }

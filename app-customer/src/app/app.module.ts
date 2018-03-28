@@ -12,7 +12,7 @@ import { AngularFireAuthModule } from 'angularfire2/auth';
 
 import { AngularFireDatabaseModule } from 'angularfire2/database';
 import { IonicStorageModule } from '@ionic/storage';
-
+import { HttpModule } from '@angular/http';
 import { CommonFunctionsProvider } from '../providers/common-functions/common-functions';
 import { GlobalVarsProvider } from '../providers/global-vars/global-vars';
 import { CustomerAuthProvider } from '../providers/customer-auth/customer-auth';
@@ -41,6 +41,7 @@ const firebaseConfig = {
   ],
   imports: [
     BrowserModule,
+    HttpModule,
     IonicModule.forRoot(MyApp, {
       mode: 'ios'
     }),

@@ -24,10 +24,11 @@ const path = require('path');
 const os = require('os');
 const admin=require('firebase-admin')
 var express = require('express');
-var cors = require('cors');
+var cors = require('cors')({origin: true});
 const app = express();
-app.use(cors({ origin: true }));
-
+var router = express.Router();
+// app.use(cors({ origin: true }));
+// var firebase = admin.initializeApp(functions.config().firebase);
 admin.initializeApp(functions.config().firebase)
 // [END import]
 
@@ -145,17 +146,89 @@ exports.generateThumbnail = functions.storage.object().onChange((event) => {
 
 // build multiple CRUD interfaces:
 app.get('/jobs', (req, res) => {
-  if(req.method === 'GET'){
-    res.status(200).json({success: true});
-  }
-  else{
-    res.status(500).send({ error: 'Method not supported!!!' });
-  }
+  // if(req.method === 'GET'){
+  res.status(200).json({success: true});
+  // }
+  // else{
+  //   res.status(500).send({ error: 'Method not supported!!!' });
+  // }
   // let key = req.query.key;
   // var postRef = firebase.database().ref('designs').child(key);
   // postRef.once('value').then(function(snap) {
   
   // });
 });
-
+app.use('/api', router);
 exports.main = functions.https.onRequest(app);
+exports.jobs = functions.https.onRequest((req, res) => {
+  // if(req.method === 'GET'){
+  cors(req, res, () => {
+  // res.header("Access-Control-Allow-Origin", "*");
+  // res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept")
+  res.setHeader("Access-Control-Allow-Origin", "*");
+  // res.setHeader('Access-Control-Allow-Methods','GET, POST, PATCH, PUT, DELETE, OPTIONS');
+  // res.setHeader('Access-Control-Allow-Headers','Origin, Content-Type, X-Auth-Token');
+  // res.setHeader("Access-Control-Allow-Headers", "Access-Control-Allow-Headers, Origin,Accept, X-Auth-Token, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers");
+  let data=[];
+  let response={};
+  
+  var jobRef=admin.database().ref('jobs');
+  var dbRef=admin.database().ref();
+  var count=0;
+  let total_count=0;
+  jobRef.on('value', function (snapshot) {
+    let jobs=[];
+    total_count=snapshot.numChildren();
+    
+    snapshot.forEach( itemSnap => {
+      
+      // console.log(itemSnap.key)
+      let job_details_id=itemSnap.val().job_details_id
+      let job_contact_workplace_id=itemSnap.val().jobs_contact_workplace_id
+      let designation='';
+      dbRef.child('job_details/').child(job_details_id).once('value').then( function(mediaSnap) {
+          // console.log(mediaSnap.val());         
+          designation=mediaSnap.val().designation
+          dbRef.child('jobs_contact_workplace/').child(job_contact_workplace_id).once('value').then( function(jobContactSnap) {
+            count +=1;
+            // console.log("count=="+count)
+            jobs.push({'job_id':itemSnap.key,'workplace_name':jobContactSnap.val().workplace_name,'designation':designation})
+            response["success"]=true;
+            response["message"]="Job listing fetched successfully";
+            response["data"]=jobs;
+            // response["total_count"]=total_count;
+            // response["count"]=count;
+            if(count === total_count){
+              return res.status(200).json(response);
+            }
+            else{
+              return 0;
+            }
+            
+          }).catch(err => console.error(err));
+          return false;
+
+      }).catch(err => console.error(err));   
+      
+      
+        return false;
+     
+        
+      
+    })
+  })
+});
+  // .then(()=>{
+  //   // return console.log(total_count)
+  //   response["success"]=true;
+  //   response["message"]="Job listing fetched successfully";
+  //   response["data"]=jobs;
+  //   return res.status(200).json(response);
+  // }).catch(err => console.error(err));
+  
+  // });
+  // }
+  // else{
+  //   res.status(500).send({ error: 'Method not supported!!!' });
+  // }
+});
