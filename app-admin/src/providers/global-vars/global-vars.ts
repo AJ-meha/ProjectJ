@@ -13,7 +13,8 @@ export class GlobalVarsProvider {
   static from_email: string= "jobsproject2018@gmail.com";
   static daysArray = [{key:"mon",value:"MON"},{key:"tue",value:"TUE"},{key:"wed",value:"WED"},{key:"thu",value:"THU"},{key:"fri",value:"FRI"},{key:"sat",value:"SAT"},{key:"sun",value:"SUN"}];
   static max_option = 4;
-  static mobile_code: string= "+91";
+  //static mobile_code: string= "+91";
+  static mobile_code = [{key:"+91",value:"+91"},{key:"+852",value:"+852"}];
 
   constructor() {
   }
