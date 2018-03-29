@@ -1,0 +1,26 @@
+{
+    "PROFILE" : "Profile",
+    "MY_PROFILE" : "My Profile",
+    "SELECT_LANG" : "Select Language",
+    "BUTTONS" : {
+        "btn_eng" : "English",
+        "btn_can" : "Cantonese"
+    },
+    "FAVOURITES" : "Favourites",
+    "MESSAGES" : "Messages",
+    "SAVED_JOBS" : "Saved jobs",
+    "SEARCH" : "Search",
+    "LOGOUT" : "Logout",
+    "LIST_OF_JOBS" : "List of jobs",
+    "VIEW_JOB" : "View Job",
+    "LOGIN" : "Enter Mobile Number",
+    "PHONE_NUMBER" : "A 6-digit verification code will be sent on SMS",
+    "ENTER_VALID_NUMBER" : "The phone number is invalid",
+    "SIGN_IN" : "Continue",
+    "ENTER_CONFIRM_CODE" : "Enter the Confirmation code",
+    "CONFIRM_CODE" : "Confirmation Code",
+    "CANCEL" : "Cancel",
+    "SEND" : "Send",
+    "ERROR" : "Error",
+    "INVALID_OTP" : "Invalid OTP. User authentication failed!"
+}

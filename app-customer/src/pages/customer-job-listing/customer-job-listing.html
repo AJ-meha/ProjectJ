@@ -1,0 +1,42 @@
+<!--
+  Generated template for the CustomerJobListingPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>{{ 'SEARCH' | translate }}</ion-title>
+    <ion-buttons right>
+      <button ion-button  type="button" (click)="logOut()" title="Logout">
+        {{ 'LOGOUT' | translate }}
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content >
+  <p padding>
+    {{ 'LIST_OF_JOBS' | translate }}
+  </p>
+  <!-- <button ion-button small (click)="openModal()">
+      View Modal
+  </button> -->
+
+  <ion-card padding *ngFor="let job of jobs">
+    <h5>{{job.designation}}</h5>
+    <button ion-button small (click)="openJob(job.key)">
+        {{ 'VIEW_JOB' | translate }}
+    </button>
+  </ion-card>
+
+  <ion-card padding>
+    <h5>Dummy Job UI-2</h5>
+    <button ion-button small (click)="openJob2()">
+        {{ 'VIEW_JOB' | translate }}
+    </button>
+  </ion-card>
+</ion-content>

@@ -63,7 +63,7 @@ module.exports = {
    */
   excludeFiles: [
       /\.(wp|md).(scss)$/i,
-      /(action-sheet|alert|backdrop|badge|card|checkbox|chip|datetime|fab|grid|icon|img|infinite-scroll|input|item|label|list|loading|menu|modal|note|picker|popover|radio|range|refresher|searchbar|segment|select|show-hide-when|split-pane|spinner|tabs|toast|toggle|virtual-scroll|cordova)/i,
+      /(action-sheet|checkbox|chip|datetime|fab|grid|icon|img|infinite-scroll|list|loading|menu|modal|note|picker|range|refresher|segment|show-hide-when|split-pane|spinner|toast|toggle|virtual-scroll|cordova)/i,
   ],
 
   /**
