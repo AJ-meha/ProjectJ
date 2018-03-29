@@ -36,6 +36,7 @@ export class AdminCreateJobsPage {
   questionsArray: Array<any> = [{question_name:"",option_type:"radio",options:[{val:""},{val:""}]}];
   max_option = GlobalVarsProvider.max_option;
   mobile_code = GlobalVarsProvider.mobile_code;
+  job_action = "Add a";
   formsaved =false;
   formsubmitted =false;
   edit_id: string;
@@ -210,6 +211,7 @@ export class AdminCreateJobsPage {
       //VIRAJ - Put inside to get saved data after everything loads
       if(this.navParams.get('action')=="edit")
       {
+        this.job_action = "Edit";
         this.getData();
       }
     });

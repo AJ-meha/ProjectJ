@@ -26,17 +26,17 @@ export class MyApp {
     this.authData.getUserEmail().then(useremail=>{
       if(useremail!=null)
       {
-        if((loc.indexOf('#/') == -1) || (loc[loc.indexOf('#/')+8]==undefined)){
+        if((loc.indexOf('#/') == -1) || (loc[loc.indexOf('#/')+2]==undefined)){
           self.nav.setRoot("admin-dashboard");
         }
         else{
-          console.log(loc.indexOf('#/admin/'));
-          console.log(loc[loc.indexOf('#/admin/')+8]);
+          //console.log(loc.indexOf('#/admin/'));
+          //console.log(loc[loc.indexOf('#/admin/')+8]);
         }
       }
       else
       {
-        if((loc.indexOf('#/') == -1) || (loc[loc.indexOf('#/')+8]==undefined)){
+        if((loc.indexOf('#/') == -1) || (loc[loc.indexOf('#/')+2]==undefined)){
           self.authData.setAdminInit("init");
         }
         else{
@@ -59,7 +59,7 @@ export class MyApp {
     // we wouldn't want the back button to show in this scenario
     if(page.name=="admin-create-jobs")
     {
-      window.location.href="/#/jobs/add/new"
+      this.nav.setRoot(page.name,{'action':'add','id':'new'});
     }
     else
     {
