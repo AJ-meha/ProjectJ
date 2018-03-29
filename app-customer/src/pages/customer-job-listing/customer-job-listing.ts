@@ -28,13 +28,7 @@ export class CustomerJobListingPage {
     console.log('ionViewDidLoad CustomerJobListingPage');
   }
 
-  logOut(){
-    this.authData.logoutUser().then(authData=>{
-      this.navCtrl.setRoot("home");
-      //this.navCtrl.popAll();
-      //this.navCtrl.push("home");
-    });
-  }
+ 
 
   openModal() {
     let modal = this.modalCtrl.create('ModalPage');
