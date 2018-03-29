@@ -34,21 +34,21 @@ export class CustomerDashboardPage {
   constructor(public navCtrl: NavController, public navParams: NavParams, afAuth: AngularFireAuth,public customerAuthData:CustomerAuthProvider) {
 
     let self=this;
-    // const authObserver=afAuth.authState.subscribe(user=>{
-    //   if(user){
-    //     this.customerAuthData.getUserPhone().then(userphone=>{
-    //       if(userphone==null)
-    //       {
-    //         self.navCtrl.setRoot("login");
-    //         authObserver.unsubscribe();
-    //       }
-    //     });
-    //   }
-    //   else{
-    //     self.navCtrl.setRoot("login");
-    //     authObserver.unsubscribe();
-    //   }
-    // });
+    const authObserver=afAuth.authState.subscribe(user=>{
+      if(user){
+        this.customerAuthData.getUserPhone().then(userphone=>{
+          if(userphone==null)
+          {
+            self.navCtrl.setRoot("login");
+            authObserver.unsubscribe();
+          }
+        });
+      }
+      else{
+        self.navCtrl.setRoot("login");
+        authObserver.unsubscribe();
+      }
+    });
   }
 
   ionViewDidLoad() {
