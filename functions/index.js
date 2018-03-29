@@ -250,7 +250,7 @@ exports.jobdetails = functions.https.onRequest((req, res) => {
           if(job_emp_benefits_id ===""){
             response["success"]=true;
             response["message"]="Job Details fetched successfully";
-            response["data"]={"key":itemSnap.key,"designation":designation,"employment_type":employment_type,"type":type,"workplace_name":jobContactSnap.val().workplace_name,
+            response["data"]={"id":itemSnap.key,"designation":designation,"employment_type":employment_type,"type":type,"workplace_name":jobContactSnap.val().workplace_name,
             "workplace_address":jobContactSnap.val().workplace_address,"salary_amount":salary_amount,"salary_unit":salary_unit,"industry":industry,"sub_industry":sub_industry,"employee_benefits":employee_benefits};
             // response["total_count"]=total_count;
             // response["count"]=count;
@@ -263,7 +263,7 @@ exports.jobdetails = functions.https.onRequest((req, res) => {
               console.log(employee_benefits)
               response["success"]=true;
               response["message"]="Job Details fetched successfully";
-              response["data"]={"key":itemSnap.key,"designation":designation,"employment_type":employment_type,"type":type,"workplace_name":jobContactSnap.val().workplace_name,
+              response["data"]={"id":itemSnap.key,"designation":designation,"employment_type":employment_type,"type":type,"workplace_name":jobContactSnap.val().workplace_name,
               "workplace_address":jobContactSnap.val().workplace_address,"salary_amount":salary_amount,"salary_unit":salary_unit,"industry":industry,"sub_industry":sub_industry,"employee_benefits":employee_benefits};
               // response["total_count"]=total_count;
               // response["count"]=count;
