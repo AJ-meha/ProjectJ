@@ -12,7 +12,6 @@ import { CustomerAuthProvider } from '../../providers/customer-auth/customer-aut
  * Ionic pages and navigation.
  */
 
-@IonicPage()
 @Component({
   selector: 'page-customer-verification',
   templateUrl: 'customer-verification.html',
