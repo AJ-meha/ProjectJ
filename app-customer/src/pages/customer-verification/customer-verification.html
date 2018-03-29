@@ -17,7 +17,7 @@
     Please type the verification code sent to
     +852 7733 8839
   </p>
-
+<div id="recaptcha-container"></div>
   <!--
     /////////////////////////////////////////
       On entering invalid OTP, add an attribute ''invalid'' to the form tag
@@ -25,17 +25,17 @@
   -->
   <form>
     <div class="otp-wrapper">
-      <ion-input type="tel" #otp1 class="otp" pattern="[0-9]{6}" maxlength="1" size="1" (keyup)="next(otp2)">
+      <ion-input [(ngModel)]="otpCode['otp1']" [ngModelOptions]="{standalone: true}" type="tel" #otp1 class="otp" pattern="[0-9]{6}" maxlength="1" size="1" (keyup)="next(otp2)">
       </ion-input>
-      <ion-input type="tel" #otp2 class="otp" pattern="[0-9]{6}" maxlength="1" size="1" (keyup)="next(otp3)">
+      <ion-input [(ngModel)]="otpCode['otp2']" [ngModelOptions]="{standalone: true}" type="tel" #otp2 class="otp" pattern="[0-9]{6}" maxlength="1" size="1" (keyup)="next(otp3)">
       </ion-input>
-      <ion-input type="tel" #otp3 class="otp" pattern="[0-9]{6}" maxlength="1" size="1" (keyup)="next(otp4)">
+      <ion-input [(ngModel)]="otpCode['otp3']" [ngModelOptions]="{standalone: true}" type="tel" #otp3 class="otp" pattern="[0-9]{6}" maxlength="1" size="1" (keyup)="next(otp4)">
       </ion-input>
-      <ion-input type="tel" #otp4 class="otp" pattern="[0-9]{6}" maxlength="1" size="1" (keyup)="next(otp5)">
+      <ion-input [(ngModel)]="otpCode['otp4']" [ngModelOptions]="{standalone: true}" type="tel" #otp4 class="otp" pattern="[0-9]{6}" maxlength="1" size="1" (keyup)="next(otp5)">
       </ion-input>
-      <ion-input type="tel" #otp5 class="otp" pattern="[0-9]{6}" maxlength="1" size="1" (keyup)="next(otp6)">
+      <ion-input [(ngModel)]="otpCode['otp5']" [ngModelOptions]="{standalone: true}" type="tel" #otp5 class="otp" pattern="[0-9]{6}" maxlength="1" size="1" (keyup)="next(otp6)">
       </ion-input>
-      <ion-input type="tel" #otp6 class="otp" pattern="[0-9]{6}" maxlength="1" size="1">
+      <ion-input [(ngModel)]="otpCode['otp6']" [ngModelOptions]="{standalone: true}" type="tel" #otp6 class="otp" pattern="[0-9]{6}" maxlength="1" size="1">
       </ion-input>
     </div>
 

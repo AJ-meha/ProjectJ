@@ -11,6 +11,8 @@ import 'rxjs/add/operator/map';
 
 import { TranslateService } from '@ngx-translate/core';
 
+import { CustomerVerificationPage } from '../customer-verification/customer-verification';
+
 /**
  * Generated class for the CustomerLoginPage page.
  *
@@ -164,7 +166,7 @@ export class CustomerLoginPage {
 
   // Temporary click action. TO BE REMOVED
   tempOTP(){
-    this.navCtrl.push('CustomerVerificationPage');
+    this.navCtrl.push(CustomerVerificationPage,{'mobile':'+919766519526'});
   }
 
 }
