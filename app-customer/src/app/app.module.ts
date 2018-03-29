@@ -53,7 +53,7 @@ const firebaseConfig = {
   imports: [
     BrowserModule,
     IonicModule.forRoot(MyApp, {
-      mode: 'ios'
+      mode: 'ios',
       locationStrategy:window.location.hostname == 'localhost' ? 'hash' :'path'
     }),
     AngularFireModule.initializeApp(firebaseConfig),
