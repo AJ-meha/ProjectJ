@@ -28,6 +28,7 @@ import { FavouritePage } from '../pages/favourite/favourite';
 import { MessagePage } from '../pages/message/message';
 import { ProfilePage } from '../pages/profile/profile';
 import { CustomerJobListingPage } from '../pages/customer-job-listing/customer-job-listing';
+import { LocationStrategy, PathLocationStrategy } from '@angular/common';
 
 export function HttpLoaderFactory(http: HttpClient) {
     return new TranslateHttpLoader(http);
@@ -56,7 +57,8 @@ const firebaseConfig = {
     BrowserModule,
     HttpModule,
     IonicModule.forRoot(MyApp, {
-      mode: 'ios'
+      mode: 'ios',
+      locationStrategy:window.location.hostname == 'localhost' ? 'hash' :'path'
     }),
     AngularFireModule.initializeApp(firebaseConfig),
     AngularFireAuthModule,
