@@ -1,6 +1,11 @@
 <ion-header no-border>
   <ion-navbar>
     <ion-title>{{ 'PROFILE_PAGE.PROFILE' | translate }}</ion-title>
+    <ion-buttons right>
+      <button ion-button  type="button" (click)="logOut()" title="Logout">
+        {{ 'LOGOUT' | translate }}
+      </button>
+    </ion-buttons>
   </ion-navbar>
 </ion-header>
 
@@ -23,4 +28,7 @@
         {{ 'PROFILE_PAGE.BUTTONS.BTN_MR' | translate }}
     </ion-segment-button>
   </ion-segment>
+  <button ion-button  type="button" (click)="getAPI()" >
+   TEST AUTH TOKEN
+  </button>
 </ion-content>
