@@ -21,11 +21,16 @@ import { Http,Headers } from '@angular/http';
 })
 export class CustomerSingleJobViewPage {
   public id:string;
-  public savedJobsRef: firebase.database.Reference = firebase.database().ref('jobs');
   public empTypeRef: firebase.database.Reference = firebase.database().ref('employment_type');
+  public typeRef: firebase.database.Reference = firebase.database().ref('type');
+  public industryRef: firebase.database.Reference = firebase.database().ref('industry');
+  public subindustryRef: firebase.database.Reference = firebase.database().ref('industry_subindustry');
   public dbRef: firebase.database.Reference = firebase.database().ref();
   public job: Array<any> = [];
   public empTypes: Array<any> = [];
+  public types: Array<any> = [];
+  public industries: Array<any> = [];
+  public subindustries: Array<any> = [];
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public viewCtrl: ViewController,private http:Http) {
     console.log("id="+ this.navParams.get('id'))
@@ -58,6 +63,27 @@ export class CustomerSingleJobViewPage {
         return false;
       });
     });
+
+    this.typeRef.on('value', itemSnapshot => {
+      itemSnapshot.forEach( itemSnap => {
+        let ikey=itemSnap.key
+        let ival=itemSnap.val()
+        this.types[ikey]=ival["text"]
+        return false;
+      });
+      console.log(this.types)
+    });
+
+    this.industryRef.on('value', itemSnapshot => {
+      itemSnapshot.forEach( itemSnap => {
+        let ikey=itemSnap.key
+        let ival=itemSnap.val()
+        this.industries[ikey]=ival
+        return false;
+      });
+      console.log(this.industries)
+    });
+
     var headers = new Headers();
     headers.append('Access-Control-Allow-Origin' , '*');
     headers.append('Accept' , 'application/json');
@@ -69,6 +95,15 @@ export class CustomerSingleJobViewPage {
       console.log('data==')
       console.log(data.json().data);
       this.job = data.json().data;
+      this.dbRef.child('industry_subindustry/').child(this.job['industry']).on('value', itemSnapshot => {
+        itemSnapshot.forEach( itemSnap => {
+          let ikey=itemSnap.key
+          let ival=itemSnap.val()
+          this.subindustries[ikey]=ival
+          return false;
+        });
+        console.log(this.subindustries)
+      });
     })
 
   }

@@ -68,19 +68,19 @@
 	  <ion-item>
 	    Industry
 	    <span item-end class="font-weight-medium">
-	    	{{job['industry']}}
+	    	{{industries[job['industry']]}},{{subindustries[job['sub_industry']]}}
 	    </span>
 	  </ion-item>
 	  <ion-item>
 	    Type
 	    <span item-end class="font-weight-medium">
-	    	{{job['type']}}
+	    	{{types[job['type']]}}
 	    </span>
 	  </ion-item>
 	  <ion-item>
 	    Salary
 	    <span item-end class="font-weight-medium">
-	    	HK$ {{job['salary_amount']}} / mo
+	    	HK$ {{job['salary_amount']}} / {{job['salary_unit']}}
 	    </span>
 	  </ion-item>
 	  <ion-item>
