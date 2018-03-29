@@ -42,16 +42,7 @@ export class CustomerJobListingPage {
   }
 
   openJob(idval) {
-    firebase.auth().currentUser.getIdToken()
-    .then(authToken => {
-      const headers = new Headers({'Authorization': 'Bearer ' + authToken });
-      console.log("authToken==="+authToken)
 
-      const myUID    = { uid: 'current-user-uid' };    // success 200 response
-      const notMyUID = { uid: 'some-other-user-uid' }; // error 403 response
-      
-      // return this.http.get(url, { headers: headers }).toPromise()
-    })
     this.navCtrl.push("job",{
       id: idval
     });
