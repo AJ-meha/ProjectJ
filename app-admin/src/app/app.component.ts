@@ -6,7 +6,6 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { AngularFireAuth } from 'angularfire2/auth';
 
 import { AuthProvider } from '../providers/auth/auth';
-import { CustomerAuthProvider } from '../providers/customer-auth/customer-auth';
 
 @Component({
   templateUrl: 'app.html'
@@ -15,63 +14,37 @@ export class MyApp {
   @ViewChild(Nav) nav: Nav;
   rootPage:any;
   pages: Array<{title:string,name:any}>;
-  public is_admin:boolean=false
-  constructor(public app:App,platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen, afAuth: AngularFireAuth,public authData:AuthProvider,public customerAuthData:CustomerAuthProvider) {
+  constructor(public app:App,platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen, afAuth: AngularFireAuth,public authData:AuthProvider) {
     this.pages=[
       {title:'Dashboard',name:"admin-dashboard"},
       {title:'Add Job',name:"admin-create-jobs"},
-      {title:'List Jobs',name:"admin-list-jobs"},
-      {title:'Home (WIP)',name:"home"},
-      {title:'Onboarding (WIP)',name:"onboarding"}
+      {title:'List Jobs',name:"admin-list-jobs"}
     ];
-    console.log("loc="+window.location.href)
-    let loc=window.location.href;
-    if(loc.indexOf('#/admin') != -1){
-      this.is_admin=true
-    }
 
     let self=this;
-    if(this.is_admin == true){
-      this.authData.getUserEmail().then(useremail=>{
-        if(useremail!=null)
-        {
-          if((loc.indexOf('#/admin/') == -1) || (loc[loc.indexOf('#/admin/')+8]==undefined)){
-            self.nav.setRoot("admin-list-jobs");
-          }
-          else{
-            console.log(loc.indexOf('#/admin/'));
-            console.log(loc[loc.indexOf('#/admin/')+8]);
-          }
-        }
-        else
-        {
-          self.authData.setAdminInit("init");
-          self.nav.setRoot("admin-login");
-        }
-      });
-    }
-    else{
-      const authObserver=afAuth.authState.subscribe(user=>{
-        if(user){
-          this.customerAuthData.getUserPhone().then(userphone=>{
-            if(userphone==null)
-            {
-              self.nav.setRoot("login");
-              authObserver.unsubscribe();
-            }
-            else
-            {
-              self.nav.setRoot("dashboard");
-              authObserver.unsubscribe();
-            }
-          });
+    let loc=window.location.href;
+    this.authData.getUserEmail().then(useremail=>{
+      if(useremail!=null)
+      {
+        if((loc.indexOf('#/') == -1) || (loc[loc.indexOf('#/')+2]==undefined)){
+          self.nav.setRoot("admin-dashboard");
         }
         else{
-          this.nav.setRoot("login");
-          authObserver.unsubscribe();
+          //console.log(loc.indexOf('#/admin/'));
+          //console.log(loc[loc.indexOf('#/admin/')+8]);
         }
-      });
-    }
+      }
+      else
+      {
+        if((loc.indexOf('#/') == -1) || (loc[loc.indexOf('#/')+2]==undefined)){
+          self.authData.setAdminInit("init");
+        }
+        else{
+          self.authData.setAdminInit(window.location.href);
+        }
+        self.nav.setRoot("admin-login");
+      }
+    });
 
     platform.ready().then(() => {
       // Okay, so the platform is ready and our plugins are available.
@@ -86,7 +59,7 @@ export class MyApp {
     // we wouldn't want the back button to show in this scenario
     if(page.name=="admin-create-jobs")
     {
-      window.location.href="/#/admin/jobs/add/new"
+      this.nav.setRoot(page.name,{'action':'add','id':'new'});
     }
     else
     {

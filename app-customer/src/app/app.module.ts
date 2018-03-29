@@ -30,6 +30,9 @@ import { ProfilePage } from '../pages/profile/profile';
 import { CustomerJobListingPage } from '../pages/customer-job-listing/customer-job-listing';
 import { LocationStrategy, PathLocationStrategy } from '@angular/common';
 
+import { CustomerVerificationPage } from '../pages/customer-verification/customer-verification';
+
+
 export function HttpLoaderFactory(http: HttpClient) {
     return new TranslateHttpLoader(http);
 }
@@ -51,7 +54,8 @@ const firebaseConfig = {
     CustomerJobListingPage,
     FavouritePage,
     MessagePage,
-    ProfilePage
+    ProfilePage,
+    CustomerVerificationPage
   ],
   imports: [
     BrowserModule,
@@ -80,7 +84,8 @@ const firebaseConfig = {
     CustomerJobListingPage,
     FavouritePage,
     MessagePage,
-    ProfilePage
+    ProfilePage,
+    CustomerVerificationPage
   ],
   providers: [
     StatusBar,

@@ -1,0 +1,39 @@
+{
+    "PROFILE_PAGE" :        {
+                                "PROFILE" : "प्रोफाइल",
+                                "MY_PROFILE" : "माझे प्रोफाइल",
+                                "SELECT_LANG" : "भाषा निवडा",
+                                "BUTTONS" : {
+                                    "BTN_ENG" : "English",
+                                    "BTN_ZH_CN" : "广东话",
+                                    "BTN_MR" : "मराठी"
+                                }
+                            },
+    "FAVOURITES_PAGE" :     {
+                                "FAVOURITES" : "आवडते",
+                                "SAVED_JOBS" : "जतन केलेल्या नोकर्या"
+                            },
+    "MESSAGES_PAGE" :       {
+                                "MESSAGES" : "संदेश"
+                            },
+    "JOB_LIST_PAGE" :       {
+                                "SEARCH" : "शोध",
+                                "LIST_OF_JOBS" : "रोजगारांची यादी",
+                                "VIEW_JOB" : "जॉब पहा"
+                            },
+    "LOGIN_PAGE" :          {
+                                "LOGIN" : "लॉग इन",
+                                "PHONE_NUMBER" : "फोन नंबर",
+                                "ENTER_VALID_NUMBER" : "कृपया एक वैध नंबर प्रविष्ट करा",
+                                "ENTER_CONFIRM_CODE" : "पुष्टीकरण कोड प्रविष्ट करा",
+                                "CONFIRM_CODE" : "पुष्टीकरण कोड",
+                                "INVALID_OTP" : "अवैध एक वेळचा संकेतशब्द. वापरकर्ता प्रमाणीकरण अयशस्वी!"
+                            },
+    "GLOBAL" :              {
+                                "LOGOUT" : "बाहेर पडणे",
+                                "CONTINUE" : "सुरू",
+                                "CANCEL" : "रद्द करा",
+                                "SEND" : "पाठवा",
+                                "ERROR" : "त्रुटी"
+                            }
+}

@@ -12,7 +12,7 @@ import { AuthProvider } from '../../providers/auth/auth';
 @IonicPage(
   {
     name: 'admin-dashboard',
-    segment:'admin/dashboard'
+    segment:'dashboard'
   }
 )
 @Component({

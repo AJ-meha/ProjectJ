@@ -1,23 +1,26 @@
 <ion-header no-border>
   <ion-navbar>
-    <ion-title>{{ 'PROFILE' | translate }}</ion-title>
+    <ion-title>{{ 'PROFILE_PAGE.PROFILE' | translate }}</ion-title>
   </ion-navbar>
 </ion-header>
 
 <ion-content padding>
   <p>
-    {{ 'MY_PROFILE' | translate }}
+    {{ 'PROFILE_PAGE.MY_PROFILE' | translate }}
   </p>
 
   <h3>
-    {{ 'SELECT_LANG' | translate }}
+    {{ 'PROFILE_PAGE.SELECT_LANG' | translate }}
   </h3>
   <ion-segment [(ngModel)]="relationship" color="primary" (ionChange)="segmentChanged($event)">
     <ion-segment-button value="en">
-        {{ 'BUTTONS.btn_eng' | translate }}
+        {{ 'PROFILE_PAGE.BUTTONS.BTN_ENG' | translate }}
     </ion-segment-button>
-    <ion-segment-button value="zh">
-        {{ 'BUTTONS.btn_can' | translate }}
+    <ion-segment-button value="zh_cn">
+        {{ 'PROFILE_PAGE.BUTTONS.BTN_ZH_CN' | translate }}
+    </ion-segment-button>
+    <ion-segment-button value="mr">
+        {{ 'PROFILE_PAGE.BUTTONS.BTN_MR' | translate }}
     </ion-segment-button>
   </ion-segment>
 </ion-content>

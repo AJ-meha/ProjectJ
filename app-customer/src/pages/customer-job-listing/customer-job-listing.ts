@@ -30,9 +30,9 @@ export class CustomerJobListingPage {
 
   logOut(){
     this.authData.logoutUser().then(authData=>{
-      this.navCtrl.setRoot("login");
+      this.navCtrl.setRoot("home");
       //this.navCtrl.popAll();
-      //this.navCtrl.push("login");
+      //this.navCtrl.push("home");
     });
   }
 

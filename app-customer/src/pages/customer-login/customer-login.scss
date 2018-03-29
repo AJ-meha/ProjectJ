@@ -24,6 +24,9 @@ page-customer-login {
     .label{
       margin-top: 11px;
     }
+    .text-input{
+      margin-right: 0;
+    }
     .select{
       padding: 0;
       // margin-right: 0;
@@ -37,6 +40,7 @@ page-customer-login {
     &.item-block{
       .item-inner{
         border-bottom: 0;
+        padding-right: 0;
       }
     }
   }
