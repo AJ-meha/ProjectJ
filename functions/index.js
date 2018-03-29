@@ -198,7 +198,7 @@ app.get('/jobs', (req, res) => {
   
   // });
 });
-app.use('/api', router);
+// app.use('/api', router);
 exports.main = functions.https.onRequest(app);
 exports.jobs = functions.https.onRequest((req, res) => {
   // if(req.method === 'GET'){
