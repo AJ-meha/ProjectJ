@@ -24,9 +24,11 @@ export class CustomerVerificationPage {
   confirmationCode:any;
 
   otpCode = {otp1:"",otp2:"",otp3:"",otp4:"",otp5:"",otp6:""}
+  mobile_no:any;
+  valid_otp=true;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public viewCtrl: ViewController,public authData:CustomerAuthProvider) {
-    console.log(this.navParams.get('mobile'))
+    this.mobile_no = this.navParams.get('mobile');
     this.recaptchaVerifier= new firebase.auth.RecaptchaVerifier('recaptcha-container', {
       size: 'invisible',
       'callback': function (response) {
@@ -61,13 +63,33 @@ export class CustomerVerificationPage {
   }
 
   // Focus on next input field for OTP
-  next(el) {
-    el.setFocus();
+  next(event: KeyboardEvent,el1,el2) {
+    console.log(event);
+    if(event.key=="Backspace")
+    {
+      el1.setFocus();
+    }
+    else
+    {
+      el2.setFocus();
+    }
+  }
+
+  check_OTP()
+  {
+    if(this.otpCode.otp1=='' || this.otpCode.otp2=='' || this.otpCode.otp3=='' || this.otpCode.otp4=='' || this.otpCode.otp5=='' || this.otpCode.otp6=='')
+    {
+      return true;
+    }
   }
 
   // Temporary click action. TO BE REMOVED
   tempListing(){
     let self=this;
+    if(this.confirmationResult==undefined)
+    {
+      return false;
+    }
     this.confirmationCode=this.otpCode.otp1+this.otpCode.otp2+this.otpCode.otp3+this.otpCode.otp4+this.otpCode.otp5+this.otpCode.otp6
     this.confirmationResult.confirm(this.confirmationCode)
     .then(function (result) {
@@ -79,6 +101,7 @@ export class CustomerVerificationPage {
     }).catch(function (error) {
       // User couldn't sign in (bad verification code?)
       // ...
+      self.valid_otp=false;
       console.log("ERROR :"+error);
     });
   }
