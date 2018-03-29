@@ -12,7 +12,7 @@
   	    <ion-icon name="ios-arrow-round-back" svgversion showWhen="android, windows, ios, core"></ion-icon>
   	  </button>
   	</ion-buttons>
-    <ion-title>Summary</ion-title>
+    <ion-title>{{job['designation']}}</ion-title>
     <ion-buttons right>
       <button ion-button color="dark">
         <ion-icon name="ios-cloud-upload-outline" svgversion showWhen="android, windows, ios, core"></ion-icon>
@@ -28,43 +28,109 @@
 
 <ion-content>
 
+	<ion-list>
+		<ion-slides>
+		  <ion-slide>
+		  	<img src="assets/imgs/map-img.png">
+		  </ion-slide>
+		  <ion-slide centeredSlides="true">
+		  	<img src="assets/imgs/pacific-coffee_logo.jpg">
+		  </ion-slide>
+		</ion-slides>
+	</ion-list>
+
 	<ion-list class="page-banner-section">
+		<ion-item>
+			<h6 class="font-weight-medium">Full Time</h6>
+			<h1 class="font-weight-heavy">
+				{{job['designation']}}
+			</h1>
+		</ion-item>
+
 	  <ion-item>
-	    <ion-avatar item-start>
+	    <ion-avatar item-end>
 	      <img src="assets/imgs/pacific-coffee_logo.jpg">
 	    </ion-avatar>
-	    <h3 class="font-weight-medium">{{job["workplace_name"]}}</h3>
+	    <h3 class="">{{job['workplace_name']}}</h3>
+	  </ion-item>
+
+	  <ion-item text-wrap>
+	  	<p class="dark-text">
+	  		Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.
+	  	</p>
 	  </ion-item>
 	</ion-list>
 
 	<ion-list >
-	  <button ion-item (click)="openDetails()">
-	    <ion-icon name="ios-calendar-outline" showWhen="android, windows, ios, core" color="primary" item-start></ion-icon>
-	    Job details
-	  </button>
-	  <button ion-item (click)="openBenefits()">
-	    <ion-icon name="ios-calendar-outline" showWhen="android, windows, ios, core" color="primary" item-start></ion-icon>
-	    Benefits
-	  </button>
+		<ion-list-header>
+		    Job Details
+		</ion-list-header>
+	  <ion-item>
+	    Industry
+	    <span item-end class="font-weight-medium">
+	    	{{job['industry']}}
+	    </span>
+	  </ion-item>
+	  <ion-item>
+	    Type
+	    <span item-end class="font-weight-medium">
+	    	{{job['type']}}
+	    </span>
+	  </ion-item>
+	  <ion-item>
+	    Salary
+	    <span item-end class="font-weight-medium">
+	    	HK$ {{job['salary_amount']}} / mo
+	    </span>
+	  </ion-item>
+	  <ion-item>
+	    Timings
+	    <span item-end class="font-weight-medium">
+	    	Mon-Fri, 2pm - 10pm
+	    </span>
+	  </ion-item>
 	</ion-list>
 
 	<ion-list >
+		<ion-list-header>
+		    Job Benefits
+		</ion-list-header>
 	  <ion-item>
-	    <ion-icon name="ios-calendar-outline" showWhen="android, windows, ios, core" color="primary" item-start></ion-icon>
-	    {{job["designation"]}}
+		  <ion-row>
+		  	<ion-col no-padding margin-bottom col-6>
+		  		<ion-icon name="ios-calendar-outline" showWhen="android, windows, ios, core" color="primary" item-start></ion-icon>
+		  		Food Coupon
+		  	</ion-col>
+		  	<ion-col no-padding margin-bottom col-6>
+		  		<ion-icon name="ios-calendar-outline" showWhen="android, windows, ios, core" color="primary" item-start></ion-icon>
+		  		Health Insurance
+		  	</ion-col>
+		  	<ion-col no-padding margin-bottom col-6>
+		  		<ion-icon name="ios-calendar-outline" showWhen="android, windows, ios, core" color="primary" item-start></ion-icon>
+		  		Increment
+		  	</ion-col>
+		  	<ion-col no-padding margin-bottom col-6>
+		  		<ion-icon name="ios-calendar-outline" showWhen="android, windows, ios, core" color="primary" item-start></ion-icon>
+		  		Social Security
+		  	</ion-col>
+		  </ion-row>
 	  </ion-item>
-	  <ion-item>
-	    <ion-icon name="ios-calendar-outline" showWhen="android, windows, ios, core" color="primary" item-start></ion-icon>
-	    {{empTypes[job["employment_type"]]}}
-	  </ion-item>
-	  <ion-item>
-	    <ion-icon name="ios-calendar-outline" showWhen="android, windows, ios, core" color="primary" item-start></ion-icon>
-	    {{job["workplace_address"]}}
-	  </ion-item>
-	  <ion-item>
-	    <ion-icon name="ios-calendar-outline" showWhen="android, windows, ios, core" color="primary" item-start></ion-icon>
-			{{job["salary_amount"]}}
-	  </ion-item>
+	</ion-list>
+
+	<ion-list >
+		<ion-list-header>
+		    Location
+		</ion-list-header>
+
+		<ion-item text-wrap>
+			<p class="dark-text">
+				{{job['workplace_address']}}
+			</p>
+		</ion-item>
+
+		<ion-item>
+			<iframe src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d15380.389873951384!2d73.83837989999999!3d15.47918855!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sen!2sin!4v1521121540271" width="400" height="300" frameborder="0" style="border:0" allowfullscreen></iframe>
+		</ion-item>
 	</ion-list>
 
 </ion-content>
@@ -73,7 +139,7 @@
 <ion-footer>
   <ion-toolbar>
     <button ion-button block color="primary">
-    	Apply now
+    	Apply Now
     </button>
   </ion-toolbar>
 </ion-footer>

@@ -69,23 +69,6 @@ export class CustomerJobListingPage {
     .subscribe((data) => {
       console.log('data=='+data.json().data);
       this.jobs = data.json().data;
-    })
-    this.jobRef.on('value', function (snapshot) {
-
-      snapshot.forEach( itemSnap => {
-        console.log(itemSnap.key)
-        let job_details_id=itemSnap.val().job_details_id
-        let designation='';
-        self.dbRef.child('job_details/').child(job_details_id).once('value').then( function(mediaSnap) {
-            // console.log(mediaSnap.val());
-            designation=mediaSnap.val().designation
-            self.jobs.push({'key':itemSnap.key,'value':itemSnap.val(),'designation':designation})
-
-        });
-        // self.jobs.push({'key':itemSnap.key,'value':itemSnap.val()})
-        return false;
-      });
-
     });
   }
 

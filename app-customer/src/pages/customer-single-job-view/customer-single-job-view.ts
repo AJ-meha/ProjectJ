@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, ViewController } from 'ionic-angular';
 import firebase  from 'firebase';
+import { Http,Headers } from '@angular/http';
 /**
  * Generated class for the CustomerSingleJobViewPage page.
  *
@@ -26,7 +27,7 @@ export class CustomerSingleJobViewPage {
   public job: Array<any> = [];
   public empTypes: Array<any> = [];
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public viewCtrl: ViewController) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public viewCtrl: ViewController,private http:Http) {
     console.log("id="+ this.navParams.get('id'))
     this.id=this.navParams.get('id')
   }
@@ -57,38 +58,19 @@ export class CustomerSingleJobViewPage {
         return false;
       });
     });
+    var headers = new Headers();
+    headers.append('Access-Control-Allow-Origin' , '*');
+    headers.append('Accept' , 'application/json');
+    headers.append('Content-Type' , 'application/json');
+    // headers.append('Access-Control-Allow-Methods','GET, POST, PATCH, PUT, DELETE, OPTIONS');
+    // headers.append("Access-Control-Allow-Headers", "Access-Control-Allow-Headers, Origin,Accept, X-Auth-Token, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers");
+    this.http.get(' https://us-central1-project-j-main.cloudfunctions.net/jobdetails?job_id='+this.id,{ headers: headers })
+    .subscribe((data) => {
+      console.log('data==')
+      console.log(data.json().data);
+      this.job = data.json().data;
+    })
 
-    this.dbRef.child('jobs/').child(this.id).once('value').then( function(itemSnap) {
-          console.log(itemSnap.val())
-          let job_details_id=itemSnap.val().job_details_id
-          let job_contact_workplace_id=itemSnap.val().jobs_contact_workplace_id
-          let designation='';
-          let employment_type='';
-          let salary_amount='';
-          // var userId = snapshot.val().userId; // line 1 (results like 1,2,3,4,5,6)
-          // console.log("job_details_id=="+job_details_id)
-          // console.log(this.jobDetailsRef.child('job_details').child(job_details_id).val())
-          // console.log(self.jobDetailsRef.child('job_details'))
-          self.dbRef.child('job_details/').child(job_details_id).once('value').then( function(mediaSnap) {
-              // console.log(mediaSnap.val());
-              designation=mediaSnap.val().designation
-              employment_type=mediaSnap.val().employment_type
-              salary_amount=mediaSnap.val().salary_amount
-
-              self.dbRef.child('jobs_contact_workplace/').child(job_contact_workplace_id).once('value').then( function(jobContactSnap) {
-                self.job['key']=itemSnap.key;
-                self.job['value']=itemSnap.val();
-                self.job['designation']=designation;
-                self.job['employment_type']=employment_type;
-                self.job['workplace_name']=jobContactSnap.val().workplace_name
-                self.job['workplace_address']=jobContactSnap.val().workplace_address
-                self.job['salary_amount']=salary_amount
-              });
-              
-              
-          });
-      console.log(self.job)
-    });
   }
 
 }
