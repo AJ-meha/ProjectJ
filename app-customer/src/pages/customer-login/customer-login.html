@@ -12,7 +12,7 @@
         <ion-icon name="ios-arrow-round-back" svgversion></ion-icon>
       </button>
     </ion-buttons>
-    <ion-title>{{ 'LOGIN' | translate }}</ion-title>
+    <ion-title>{{ 'LOGIN_PAGE.LOGIN' | translate }}</ion-title>
   </ion-navbar>
 
 </ion-header>
@@ -20,7 +20,7 @@
 
 <ion-content padding>
 
-  <p class="light-text font-weight-medium login-help" text-center>{{ 'PHONE_NUMBER' | translate }}</p>
+  <p class="light-text font-weight-medium login-help" text-center>{{ 'LOGIN_PAGE.PHONE_NUMBER' | translate }}</p>
 
   <form [formGroup]="loginForm">
     <div id="recaptcha-container" style="display:none"></div>
@@ -34,7 +34,7 @@
     </ion-item>
     <div class="error-message" *ngIf="!loginForm.controls.mobile.valid  &&
       submitted">
-      <div>{{ 'ENTER_VALID_NUMBER' | translate }}</div>
+      <div>{{ 'LOGIN_PAGE.ENTER_VALID_NUMBER' | translate }}</div>
     </div>
 
   </form>
@@ -43,7 +43,7 @@
 <ion-footer>
   <ion-toolbar>
     <button ion-button block color="primary" id="sign-in-button" [disabled]="phoneNumber.length<5" (click)="submitted=true;signIn(phoneNumber)">
-      {{ 'SIGN_IN' | translate }}
+      {{ 'GLOBAL.CONTINUE' | translate }}
     </button>
   </ion-toolbar>
 </ion-footer>

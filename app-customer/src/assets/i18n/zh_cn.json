@@ -1,0 +1,39 @@
+{
+    "PROFILE_PAGE" :        {
+                                "PROFILE" : "轮廓",
+                                "MY_PROFILE" : "我的简历",
+                                "SELECT_LANG" : "选择语言",
+                                "BUTTONS" : {
+                                    "BTN_ENG" : "English",
+                                    "BTN_ZH_CN" : "广东话",
+                                    "BTN_MR" : "मराठी"
+                                }
+                            },
+    "FAVOURITES_PAGE" :     {
+                                "FAVOURITES" : "收藏",
+                                "SAVED_JOBS" : "保存的工作卡片"
+                            },
+    "MESSAGES_PAGE" :       {
+                                "MESSAGES" : "报文"
+                            },
+    "JOB_LIST_PAGE" :       {
+                                "SEARCH" : "搜索",
+                                "LIST_OF_JOBS" : "工作",
+                                "VIEW_JOB" : "查看作业"
+                            },
+    "LOGIN_PAGE" :          {
+                                "LOGIN" : "登录",
+                                "PHONE_NUMBER" : "手机号码",
+                                "ENTER_VALID_NUMBER" : "请输入一个有效的电话号码",
+                                "ENTER_CONFIRM_CODE" : "输入确认码",
+                                "CONFIRM_CODE" : "验证码",
+                                "INVALID_OTP" : "无效的密码"
+                            },
+    "GLOBAL" :              {
+                                "LOGOUT" : "登出",
+                                "CONTINUE" : "继续",
+                                "CANCEL" : "取消",
+                                "SEND" : "发送",
+                                "ERROR" : "错误"
+                            }
+}
