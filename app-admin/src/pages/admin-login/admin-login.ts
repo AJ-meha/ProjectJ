@@ -13,7 +13,7 @@ import { EmailValidator } from '../../validators/email';
 
 @IonicPage({
   name: 'admin-login',
-  segment:'admin/login'
+  segment:'login'
 })
 @Component({
   selector: 'page-admin-login',
@@ -54,7 +54,7 @@ export class AdminLoginPage {
           self.authData.unsetAdminInit();
           if(admin_init=="init" || admin_init==null)
           {
-            self.navCtrl.setRoot("admin-list-jobs");
+            self.navCtrl.setRoot("admin-dashboard");
           }
           else
           {

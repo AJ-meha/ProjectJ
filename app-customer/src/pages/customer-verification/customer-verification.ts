@@ -12,7 +12,6 @@ import { CustomerAuthProvider } from '../../providers/customer-auth/customer-aut
  * Ionic pages and navigation.
  */
 
-@IonicPage()
 @Component({
   selector: 'page-customer-verification',
   templateUrl: 'customer-verification.html',
@@ -96,7 +95,7 @@ export class CustomerVerificationPage {
       // User signed in successfully.
       // console.log(result.user);
       self.authData.loginWithPhone(firebase.auth().currentUser.phoneNumber);
-      self.navCtrl.setRoot('page-search');
+      self.navCtrl.setRoot('dashboard');
       // ...
     }).catch(function (error) {
       // User couldn't sign in (bad verification code?)

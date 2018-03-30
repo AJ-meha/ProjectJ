@@ -12,7 +12,7 @@ import { AuthProvider } from '../../providers/auth/auth';
 
 @IonicPage({
   name: "admin-list-jobs",
-  segment: "admin/jobs"
+  segment: "jobs"
 })
 @Component({
   selector: 'page-admin-list-jobs',
@@ -60,7 +60,11 @@ export class AdminListJobsPage {
   }
 
   goToAddJob(){
-    window.location.href="/#/admin/jobs/add/new"
+    this.navCtrl.setRoot("admin-create-jobs",{'action':'add','id':'new'});
+  }
+
+  editJob(key){
+    this.navCtrl.setRoot("admin-create-jobs",{'action':'edit','id':key});
   }
 
 

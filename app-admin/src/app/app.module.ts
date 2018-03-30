@@ -16,15 +16,9 @@ import { Camera } from '@ionic-native/camera';
 import { CommonFunctionsProvider } from '../providers/common-functions/common-functions';
 import { GlobalVarsProvider } from '../providers/global-vars/global-vars';
 import { AuthProvider } from '../providers/auth/auth';
-import { CustomerAuthProvider } from '../providers/customer-auth/customer-auth';
 import { JobsProvider } from '../providers/jobs/jobs';
 import { ImageProvider } from '../providers/image/image';
 import { PreloaderProvider } from '../providers/preloader/preloader';
-
-import { CustomerJobListingPage } from '../pages/customer-job-listing/customer-job-listing';
-import { FavouritePage } from '../pages/favourite/favourite';
-import { MessagePage } from '../pages/message/message';
-import { ProfilePage } from '../pages/profile/profile';
 
 // AF2 Settings
 const firebaseConfig = {
@@ -50,11 +44,7 @@ const firebaseConfig = {
 
 @NgModule({
   declarations: [
-    MyApp,
-    CustomerJobListingPage,
-    FavouritePage,
-    MessagePage,
-    ProfilePage
+    MyApp
   ],
   imports: [
     BrowserModule,
@@ -68,11 +58,7 @@ const firebaseConfig = {
   ],
   bootstrap: [IonicApp],
   entryComponents: [
-    MyApp,
-    CustomerJobListingPage,
-    FavouritePage,
-    MessagePage,
-    ProfilePage
+    MyApp
   ],
   providers: [
     StatusBar,
@@ -83,7 +69,6 @@ const firebaseConfig = {
     GlobalVarsProvider,
     AuthProvider,
     JobsProvider,
-    CustomerAuthProvider,
     ImageProvider,
     PreloaderProvider
   ]

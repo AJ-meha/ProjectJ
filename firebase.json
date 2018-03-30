@@ -1,14 +1,15 @@
 {
   "hosting": {
-    "public": "www",
+    "public": "release",
     "ignore": [
       "firebase.json",
       "**/.*",
       "**/node_modules/**"
     ],
     "rewrites":[
-      {"source":"/api/*", "function":"main"}
+      { "source": "**", "destination": "/index.html" }
     ]
+
   },
   "functions": {
     "predeploy": [
