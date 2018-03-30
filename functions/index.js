@@ -187,8 +187,10 @@ app.use(validateFirebaseIdToken);
 // build multiple CRUD interfaces:
 app.get('/jobs', (req, res) => {
   // if(req.method === 'GET'){
+  cors(req, res, () => {
   res.setHeader("Access-Control-Allow-Origin", "*");
   res.status(200).json({success: true});
+  });
   // }
   // else{
   //   res.status(500).send({ error: 'Method not supported!!!' });
