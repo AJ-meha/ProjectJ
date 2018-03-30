@@ -14,7 +14,7 @@ import { CustomerAuthProvider } from '../providers/customer-auth/customer-auth';
 export class MyApp {
   rootPage:any='home';
   @ViewChild(Nav) nav: Nav;
-  public is_admin:boolean=true
+  public is_admin:boolean=false;
 
   constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen, afAuth: AngularFireAuth,public customerAuthData:CustomerAuthProvider, private translateService: TranslateService) {
 

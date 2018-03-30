@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, ViewController } from 'ionic-angular';
 import firebase  from 'firebase';
 import { Http,Headers } from '@angular/http';
+import { CustomerAuthProvider } from '../../providers/customer-auth/customer-auth';
 /**
  * Generated class for the CustomerSingleJobViewPage page.
  *
@@ -32,7 +33,7 @@ export class CustomerSingleJobViewPage {
   public industries: Array<any> = [];
   public subindustries: Array<any> = [];
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public viewCtrl: ViewController,private http:Http) {
+  constructor(public navCtrl: NavController, public navParams: NavParams,public authData:CustomerAuthProvider, public viewCtrl: ViewController,private http:Http) {
     console.log("id="+ this.navParams.get('id'))
     this.id=this.navParams.get('id')
   }
@@ -85,26 +86,30 @@ export class CustomerSingleJobViewPage {
     });
 
     var headers = new Headers();
-    headers.append('Access-Control-Allow-Origin' , '*');
-    headers.append('Accept' , 'application/json');
-    headers.append('Content-Type' , 'application/json');
-    // headers.append('Access-Control-Allow-Methods','GET, POST, PATCH, PUT, DELETE, OPTIONS');
-    // headers.append("Access-Control-Allow-Headers", "Access-Control-Allow-Headers, Origin,Accept, X-Auth-Token, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers");
-    this.http.get(' https://us-central1-project-j-main.cloudfunctions.net/jobdetails?job_id='+this.id,{ headers: headers })
-    .subscribe((data) => {
-      console.log('data==')
-      console.log(data.json().data);
-      this.job = data.json().data;
-      this.dbRef.child('industry_subindustry/').child(this.job['industry']).on('value', itemSnapshot => {
-        itemSnapshot.forEach( itemSnap => {
-          let ikey=itemSnap.key
-          let ival=itemSnap.val()
-          this.subindustries[ikey]=ival
-          return false;
+    this.authData.getUserAuthToken().then(authtoken=>{
+      console.log("auth token==="+authtoken); 
+      headers.append('Authorization','Bearer '+authtoken)
+      headers.append('Access-Control-Allow-Origin' , '*');
+      headers.append('Accept' , 'application/json');
+      headers.append('Content-Type' , 'application/json');
+      // headers.append('Access-Control-Allow-Methods','GET, POST, PATCH, PUT, DELETE, OPTIONS');
+      // headers.append("Access-Control-Allow-Headers", "Access-Control-Allow-Headers, Origin,Accept, X-Auth-Token, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers");
+      this.http.get(' https://us-central1-project-j-main.cloudfunctions.net/jobdetails?job_id='+this.id,{ headers: headers })
+      .subscribe((data) => {
+        console.log('data==')
+        console.log(data.json().data);
+        this.job = data.json().data;
+        this.dbRef.child('industry_subindustry/').child(this.job['industry']).on('value', itemSnapshot => {
+          itemSnapshot.forEach( itemSnap => {
+            let ikey=itemSnap.key
+            let ival=itemSnap.val()
+            this.subindustries[ikey]=ival
+            return false;
+          });
+          console.log(this.subindustries)
         });
-        console.log(this.subindustries)
-      });
-    })
+      })
+    });
 
   }
 
