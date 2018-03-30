@@ -45,16 +45,39 @@ export class CustomerJobListingPage {
   ngOnInit(){
     let self=this
     var headers = new Headers();
-    headers.append('Access-Control-Allow-Origin' , '*');
-    headers.append('Accept' , 'application/json');
-    headers.append('Content-Type' , 'application/json');
-    // headers.append('Access-Control-Allow-Methods','GET, POST, PATCH, PUT, DELETE, OPTIONS');
-    // headers.append("Access-Control-Allow-Headers", "Access-Control-Allow-Headers, Origin,Accept, X-Auth-Token, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers");
-    this.http.get(' https://us-central1-project-j-main.cloudfunctions.net/jobs',{ headers: headers })
-    .subscribe((data) => {
-      console.log('data=='+data.json().data);
-      this.jobs = data.json().data;
+    this.authData.getUserAuthToken().then(authtoken=>{
+      console.log("auth token==="+authtoken); 
+      headers.append('Authorization','Bearer '+authtoken)
+      headers.append('Access-Control-Allow-Origin' , '*');
+      headers.append('Accept' , 'application/json');
+      headers.append('Content-Type' , 'application/json');
+      // headers.append('Access-Control-Allow-Methods','GET, POST, PATCH, PUT, DELETE, OPTIONS');
+      // headers.append("Access-Control-Allow-Headers", "Access-Control-Allow-Headers, Origin,Accept, X-Auth-Token, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers");
+      this.http.get(' https://us-central1-project-j-main.cloudfunctions.net/jobs',{ headers: headers })
+      .subscribe((data) => {
+        console.log('data=='+data.json().data);
+        this.jobs = data.json().data;
+      });
     });
+    
+    console.log(firebase.auth().currentUser)
+    if(firebase.auth().currentUser !== null){
+      firebase.auth().currentUser.getIdToken()
+      .then(authToken => {
+        const headers = new Headers({'Authorization': 'Bearer ' + authToken });
+        console.log("authToken==="+authToken)
+  
+        const myUID    = { uid: 'current-user-uid' };    // success 200 response
+        const notMyUID = { uid: 'some-other-user-uid' }; // error 403 response
+        
+        // return this.http.get(url, { headers: headers }).toPromise()
+      })
+    }
+
+    
+    
+    
+
   }
 
   openJob2() {
