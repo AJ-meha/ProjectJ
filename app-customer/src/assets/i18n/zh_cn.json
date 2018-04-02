@@ -2,12 +2,7 @@
     "PROFILE_PAGE" :        {
                                 "PROFILE" : "轮廓",
                                 "MY_PROFILE" : "我的简历",
-                                "SELECT_LANG" : "选择语言",
-                                "BUTTONS" : {
-                                    "BTN_ENG" : "English",
-                                    "BTN_ZH_CN" : "广东话",
-                                    "BTN_MR" : "मराठी"
-                                }
+                                "SELECT_LANG" : "选择语言"
                             },
     "FAVOURITES_PAGE" :     {
                                 "FAVOURITES" : "收藏",
@@ -29,11 +24,21 @@
                                 "CONFIRM_CODE" : "验证码",
                                 "INVALID_OTP" : "无效的密码"
                             },
+    "HOME_PAGE" :              {
+                                "UNLIMITED_APPL" : "无限申请"
+                            },
     "GLOBAL" :              {
                                 "LOGOUT" : "登出",
                                 "CONTINUE" : "继续",
                                 "CANCEL" : "取消",
                                 "SEND" : "发送",
-                                "ERROR" : "错误"
+                                "ERROR" : "错误",
+                                "PAGE_TITLE" : "项目J",
+                                "META_DESCRIPTION" : "项目J描述",
+                                "BUTTONS" : {
+                                    "BTN_ENG" : "English",
+                                    "BTN_ZH_CN" : "广东话",
+                                    "BTN_MR" : "मराठी"
+                                }
                             }
 }

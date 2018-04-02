@@ -13,49 +13,59 @@
 
 
 <ion-content padding>
-	<p class="light-text font-weight-medium login-help" text-center>
-    Please type the verification code sent to
-    {{mobile_no}}
-  </p>
-  <form>
-    <div class="otp-wrapper">
-      <ion-input [(ngModel)]="otpCode['otp1']" [ngModelOptions]="{standalone: true}" type="tel" #otp1 class="otp" pattern="[0-9]{6}" maxlength="1" size="1" (keyup)="next($event,otp1,otp2)">
-      </ion-input>
-      <ion-input [(ngModel)]="otpCode['otp2']" [ngModelOptions]="{standalone: true}" type="tel" #otp2 class="otp" pattern="[0-9]{6}" maxlength="1" size="1" (keyup)="next($event,otp1,otp3)">
-      </ion-input>
-      <ion-input [(ngModel)]="otpCode['otp3']" [ngModelOptions]="{standalone: true}" type="tel" #otp3 class="otp" pattern="[0-9]{6}" maxlength="1" size="1" (keyup)="next($event,otp2,otp4)">
-      </ion-input>
-      <ion-input [(ngModel)]="otpCode['otp4']" [ngModelOptions]="{standalone: true}" type="tel" #otp4 class="otp" pattern="[0-9]{6}" maxlength="1" size="1" (keyup)="next($event,otp3,otp5)">
-      </ion-input>
-      <ion-input [(ngModel)]="otpCode['otp5']" [ngModelOptions]="{standalone: true}" type="tel" #otp5 class="otp" pattern="[0-9]{6}" maxlength="1" size="1" (keyup)="next($event,otp4,otp6)">
-      </ion-input>
-      <ion-input [(ngModel)]="otpCode['otp6']" [ngModelOptions]="{standalone: true}" type="tel" #otp6 class="otp" pattern="[0-9]{6}" maxlength="1" size="1" (keyup)="next($event,otp5,otp6)">
-      </ion-input>
+  <div id="recaptcha-container" style="display:none"></div>
+  <div *ngIf="initContent">
+    <p class="light-text font-weight-medium login-help" text-center>
+      Sending verification code to
+      {{mobile_no}} <a href="" *ngIf="!valid_number" (click)="goBack();"><font color="red">!</font></a>
+    </p>
+    <div *ngIf="!valid_number" class="error-message otp-error" text-center>Incorrect mobile number</div>
+  </div>
+  <div *ngIf="codeContent">
+  	<p class="light-text font-weight-medium login-help" text-center>
+      Please type the verification code sent to
+      {{mobile_no}}
+    </p>
+    <form>
+      <div class="otp-wrapper">
+        <ion-input [(ngModel)]="otpCode['otp1']" [ngModelOptions]="{standalone: true}" type="tel" #otp1 class="otp" pattern="[0-9]{6}" maxlength="1" size="1" (keyup)="next($event,otp1,otp2)">
+        </ion-input>
+        <ion-input [(ngModel)]="otpCode['otp2']" [ngModelOptions]="{standalone: true}" type="tel" #otp2 class="otp" pattern="[0-9]{6}" maxlength="1" size="1" (keyup)="next($event,otp1,otp3)">
+        </ion-input>
+        <ion-input [(ngModel)]="otpCode['otp3']" [ngModelOptions]="{standalone: true}" type="tel" #otp3 class="otp" pattern="[0-9]{6}" maxlength="1" size="1" (keyup)="next($event,otp2,otp4)">
+        </ion-input>
+        <ion-input [(ngModel)]="otpCode['otp4']" [ngModelOptions]="{standalone: true}" type="tel" #otp4 class="otp" pattern="[0-9]{6}" maxlength="1" size="1" (keyup)="next($event,otp3,otp5)">
+        </ion-input>
+        <ion-input [(ngModel)]="otpCode['otp5']" [ngModelOptions]="{standalone: true}" type="tel" #otp5 class="otp" pattern="[0-9]{6}" maxlength="1" size="1" (keyup)="next($event,otp4,otp6)">
+        </ion-input>
+        <ion-input [(ngModel)]="otpCode['otp6']" [ngModelOptions]="{standalone: true}" type="tel" #otp6 class="otp" pattern="[0-9]{6}" maxlength="1" size="1" (keyup)="next($event,otp5,otp6)">
+        </ion-input>
+      </div>
+
+      <div *ngIf="!valid_otp" class="error-message otp-error" text-center>Incorrect verification code</div>
+
+    </form>
+
+    <div class="timer-resend-wrapper">
+      <div class="light-text font-weight-medium" text-center>Didn't receive a code?</div>
+
+      <!--
+        /////////////////////////////////////////
+          The below line to be hidden when the timer expires
+        /////////////////////////////////////////
+      -->
+      <div *ngIf="countDown" class="light-text font-weight-medium" text-center>Please wait <span class="text-ios-primary">{{timer}}</span></div>
+
+
+      <!--
+        /////////////////////////////////////////
+          The below line to be uncommented and displayed when the timer expires.
+          Just add a click action to the div. No need for a button.
+        /////////////////////////////////////////
+      -->
+      <div *ngIf="resend" class="text-ios-primary font-weight-medium resend-action" text-center (click)="sendOTP();">RESEND SMS</div>
+
     </div>
-
-    <div  *ngIf="!valid_otp" class="error-message otp-error" text-center>Incorrect verification code</div>
-
-  </form>
-
-  <div class="timer-resend-wrapper">
-    <div class="light-text font-weight-medium" text-center>Didn't receive a code?</div>
-
-    <!--
-      /////////////////////////////////////////
-        The below line to be hidden when the timer expires
-      /////////////////////////////////////////
-    -->
-    <div class="light-text font-weight-medium" text-center>Please wait <span class="text-ios-primary">0:29</span></div>
-
-
-    <!--
-      /////////////////////////////////////////
-        The below line to be uncommented and displayed when the timer expires.
-        Just add a click action to the div. No need for a button.
-      /////////////////////////////////////////
-    -->
-    <!-- <div class="text-ios-primary font-weight-medium resend-action" text-center>RESEND SMS</div> -->
-
   </div>
 </ion-content>
 

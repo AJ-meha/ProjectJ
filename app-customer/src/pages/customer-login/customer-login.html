@@ -23,7 +23,7 @@
   <p class="light-text font-weight-medium login-help" text-center>{{ 'LOGIN_PAGE.PHONE_NUMBER' | translate }}</p>
 
   <form [formGroup]="loginForm">
-    <div id="recaptcha-container" style="display:none"></div>
+    
 
     <ion-item class="mob-input" no-padding>
       <ion-select [(ngModel)]="mobile_code" [ngModelOptions]="{standalone: true}" item-start interface="popover" placeholder="--">

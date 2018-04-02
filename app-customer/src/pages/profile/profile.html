@@ -17,17 +17,12 @@
   <h3>
     {{ 'PROFILE_PAGE.SELECT_LANG' | translate }}
   </h3>
-  <ion-segment [(ngModel)]="relationship" color="primary" (ionChange)="segmentChanged($event)">
-    <ion-segment-button value="en">
-        {{ 'PROFILE_PAGE.BUTTONS.BTN_ENG' | translate }}
-    </ion-segment-button>
-    <ion-segment-button value="zh_cn">
-        {{ 'PROFILE_PAGE.BUTTONS.BTN_ZH_CN' | translate }}
-    </ion-segment-button>
-    <ion-segment-button value="mr">
-        {{ 'PROFILE_PAGE.BUTTONS.BTN_MR' | translate }}
-    </ion-segment-button>
-  </ion-segment>
+  <ion-select  [(ngModel)]="language_selection" (ionChange)="segmentChanged($event)">
+    <ion-option value="en">{{ 'GLOBAL.BUTTONS.BTN_ENG' | translate }}</ion-option>
+    <ion-option value="zh_cn">{{ 'GLOBAL.BUTTONS.BTN_ZH_CN' | translate }}</ion-option>
+    <ion-option value="mr">{{ 'GLOBAL.BUTTONS.BTN_MR' | translate }}</ion-option>
+  </ion-select>
+
   <button ion-button  type="button" (click)="getAPI()" >
    TEST AUTH TOKEN
   </button>

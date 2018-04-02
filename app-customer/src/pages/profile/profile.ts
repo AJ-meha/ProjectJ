@@ -12,20 +12,26 @@ import firebase  from 'firebase';
 })
 export class ProfilePage {
 
-  constructor(public http:Http,public navCtrl: NavController, private translateService: TranslateService,public customerAuthData:CustomerAuthProvider) {
+  language_selection:any;
 
+  constructor(public http:Http,public navCtrl: NavController, private translateService: TranslateService,public customerAuthData:CustomerAuthProvider) {
+    let self=this;
+    this.customerAuthData.getLanguage().then(customer_lang=>{
+      self.language_selection=customer_lang;
+    });
   }
 
   segmentChanged(event) {
-  	this.customerAuthData.setLanguage(event._value)
-    this.translateService.use(event._value);
+    this.customerAuthData.setLanguage(event)
+    this.translateService.use(event);
+    this.customerAuthData.setLanguagePref(event);
   }
 
   logOut(){
     this.customerAuthData.logoutUser().then(authData=>{
-      this.navCtrl.setRoot("home");
+      this.navCtrl.setRoot('home',{"lang":this.language_selection});
       //this.navCtrl.popAll();
-      //this.navCtrl.push("home");
+      //this.navCtrl.push('home',{"lang":this.language_selection});
     });
   }
 
