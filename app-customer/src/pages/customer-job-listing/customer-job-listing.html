@@ -29,12 +29,13 @@
   <div class="card-slides">
     <ion-slides spaceBetween="-13">
 
-      <ion-slide *ngFor="let job of jobs">
+      <ion-slide *ngFor="let job of jobsfinal">
         <ion-card class="single-card" no-margin  (click)="openJob(job.job_id)">
 
           <div class="card-header">
-            <div *ngIf="job.finalLogo">
-              <img [(src)]="job.finalLogo" class="job-logo">
+            <div [innerHTML]="job.jobstring">
+            
+              <!-- <img [src]="logoImages[job.job_id]" class="job-logo"> -->
             </div>
             <div>
               <h5>{{job.designation}}</h5>
