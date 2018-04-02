@@ -2,7 +2,7 @@ import { Component, ViewChild } from '@angular/core';
 import { Platform, Nav } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
-
+import firebase  from 'firebase';
 import { TranslateService } from '@ngx-translate/core';
 
 import { HomePage } from '../pages/home/home';
@@ -36,6 +36,8 @@ export class MyApp {
             else
             {
               self.nav.setRoot("dashboard");
+              console.log("refresh token==")
+              console.log(firebase.auth().currentUser.providerData)
               authObserver.unsubscribe();
             }
           });
@@ -45,6 +47,8 @@ export class MyApp {
           authObserver.unsubscribe();
         }
       });
+
+      
     }
     platform.ready().then(() => {
       // Okay, so the platform is ready and our plugins are available.

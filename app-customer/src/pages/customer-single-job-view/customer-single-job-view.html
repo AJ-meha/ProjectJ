@@ -33,8 +33,8 @@
 		  <ion-slide>
 		  	<img src="assets/imgs/map-img.png">
 		  </ion-slide>
-		  <ion-slide centeredSlides="true">
-		  	<img src="assets/imgs/pacific-coffee_logo.jpg">
+		  <ion-slide centeredSlides="true" *ngIf="bigThumbLogo">
+		  	<img [src]="bigThumbLogo">
 		  </ion-slide>
 		</ion-slides>
 	</ion-list>
@@ -48,15 +48,15 @@
 		</ion-item>
 
 	  <ion-item>
-	    <ion-avatar item-end>
-	      <img src="assets/imgs/pacific-coffee_logo.jpg">
+	    <ion-avatar item-end *ngIf="smallThumbLogo">
+	      <img [src]="smallThumbLogo">
 	    </ion-avatar>
 	    <h3 class="">{{job['workplace_name']}}</h3>
 	  </ion-item>
 
 	  <ion-item text-wrap>
 	  	<p class="dark-text">
-	  		Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.
+	  		{{job['additional_info']}}
 	  	</p>
 	  </ion-item>
 	</ion-list>
@@ -79,15 +79,20 @@
 	  </ion-item>
 	  <ion-item>
 	    Salary
-	    <span item-end class="font-weight-medium">
+	    <span item-end class="font-weight-medium" *ngIf="job['salary_amount']">
 	    	HK$ {{job['salary_amount']}} / {{job['salary_unit']}}
+			</span>
+			<span item-end class="font-weight-medium" *ngIf="!job['salary_amount']">
+	    	-
 	    </span>
 	  </ion-item>
 	  <ion-item>
 	    Timings
-	    <span item-end class="font-weight-medium">
-	    	Mon-Fri, 2pm - 10pm
-	    </span>
+				<!-- Mon-Fri, 2pm - 10pm -->
+				<ion-col no-padding margin-bottom col-6 *ngFor="let workItem of job['work_data']" item-end>
+		  		<span item-end class="font-weight-medium">{{workItem}}</span>
+		  	</ion-col>
+	    
 	  </ion-item>
 	</ion-list>
 
@@ -97,11 +102,11 @@
 		</ion-list-header>
 	  <ion-item>
 		  <ion-row>
-		  	<ion-col no-padding margin-bottom col-6>
+		  	<ion-col no-padding margin-bottom col-6 *ngFor="let empBenItem of empBen">
 		  		<ion-icon name="ios-calendar-outline" showWhen="android, windows, ios, core" color="primary" item-start></ion-icon>
-		  		Food Coupon
+		  		{{empBenefits[empBenItem]}}
 		  	</ion-col>
-		  	<ion-col no-padding margin-bottom col-6>
+		  	<!-- <ion-col no-padding margin-bottom col-6>
 		  		<ion-icon name="ios-calendar-outline" showWhen="android, windows, ios, core" color="primary" item-start></ion-icon>
 		  		Health Insurance
 		  	</ion-col>
@@ -112,7 +117,7 @@
 		  	<ion-col no-padding margin-bottom col-6>
 		  		<ion-icon name="ios-calendar-outline" showWhen="android, windows, ios, core" color="primary" item-start></ion-icon>
 		  		Social Security
-		  	</ion-col>
+		  	</ion-col> -->
 		  </ion-row>
 	  </ion-item>
 	</ion-list>

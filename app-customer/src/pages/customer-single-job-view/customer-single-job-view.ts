@@ -26,12 +26,17 @@ export class CustomerSingleJobViewPage {
   public typeRef: firebase.database.Reference = firebase.database().ref('type');
   public industryRef: firebase.database.Reference = firebase.database().ref('industry');
   public subindustryRef: firebase.database.Reference = firebase.database().ref('industry_subindustry');
+  public empBenRef: firebase.database.Reference = firebase.database().ref('employee_benefits');
   public dbRef: firebase.database.Reference = firebase.database().ref();
   public job: Array<any> = [];
   public empTypes: Array<any> = [];
   public types: Array<any> = [];
+  public empBenefits: Array<any> = [];
   public industries: Array<any> = [];
   public subindustries: Array<any> = [];
+  public empBen: Array<any> =[];
+  public smallThumbLogo='';
+  public bigThumbLogo='';
 
   constructor(public navCtrl: NavController, public navParams: NavParams,public authData:CustomerAuthProvider, public viewCtrl: ViewController,private http:Http) {
     console.log("id="+ this.navParams.get('id'))
@@ -85,10 +90,21 @@ export class CustomerSingleJobViewPage {
       console.log(this.industries)
     });
 
+    this.empBenRef.on('value', itemSnapshot => {
+      itemSnapshot.forEach( itemSnap => {
+        let ikey=itemSnap.key
+        let ival=itemSnap.val()
+        this.empBenefits[ikey]=ival["text"]
+        return false;
+      });
+      console.log(this.empBenefits)
+    });
+
     var headers = new Headers();
-    this.authData.getUserAuthToken().then(authtoken=>{
-      console.log("auth token==="+authtoken); 
-      headers.append('Authorization','Bearer '+authtoken)
+    if(firebase.auth().currentUser !== null){
+      firebase.auth().currentUser.getIdToken()
+      .then(authToken => {
+        headers.append('Authorization','Bearer '+authToken)
       headers.append('Access-Control-Allow-Origin' , '*');
       headers.append('Accept' , 'application/json');
       headers.append('Content-Type' , 'application/json');
@@ -99,6 +115,40 @@ export class CustomerSingleJobViewPage {
         console.log('data==')
         console.log(data.json().data);
         this.job = data.json().data;
+        if(this.job['employee_benefits'] !== undefined){
+          console.log(this.job['employee_benefits'])
+          var jobkey;
+          for(jobkey in this.job['employee_benefits']){
+            console.log("key=="+jobkey)
+            this.empBen.push(jobkey)
+          }
+        }
+        if(this.job['logos'] !== undefined){
+          console.log("logos exist!!!")
+          console.log( this.job['logos'])
+          for(var logokey in this.job['logos']){
+            console.log("logo==="+logokey+"---"+this.job["logos"][logokey])
+            let keyvalue=logokey
+            firebase.storage().ref().child(this.job["logos"][logokey]).getDownloadURL().then(function(url) {
+              console.log("thumb logo==="+parseInt(keyvalue))
+              if(parseInt(keyvalue) == 40){
+                console.log("size 40===")
+                self.smallThumbLogo=url
+              }
+              else{
+                self.bigThumbLogo=url
+              }
+              console.log("smallThumbLogo=="+self.smallThumbLogo)
+              console.log("bigThumbLogo==="+self.bigThumbLogo)
+              
+            }).catch(function(error) {
+              // Handle any errors here
+            });
+          }
+
+        }
+
+        
         this.dbRef.child('industry_subindustry/').child(this.job['industry']).on('value', itemSnapshot => {
           itemSnapshot.forEach( itemSnap => {
             let ikey=itemSnap.key
@@ -109,7 +159,9 @@ export class CustomerSingleJobViewPage {
           console.log(this.subindustries)
         });
       })
-    });
+       })
+    }
+    
 
   }
 
