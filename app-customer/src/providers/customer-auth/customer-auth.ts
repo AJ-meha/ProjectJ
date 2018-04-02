@@ -82,12 +82,19 @@ export class CustomerAuthProvider {
 
   loginWithPhone(phone) {
     this.storage.set(this.CUSTOMER_HAS_LOGGED_IN, true);
-    firebase.auth().onIdTokenChanged( user => {
-        if (user) {  user.getIdToken().then( (token:string) => {
-          this.storage.set('customer_auth_token', token);
-        })
-      }
-    })
+    if(firebase.auth().currentUser !== null){
+      firebase.auth().currentUser.getIdToken()
+      .then(authToken => {
+        this.storage.set('customer_auth_token', authToken);
+       })
+    }
+    // firebase.auth().onIdTokenChanged( user => {
+    //     console.log("token changed===")
+    //     if (user) {  user.getIdToken().then( (token:string) => {
+    //       this.storage.set('customer_auth_token', token);
+    //     })
+    //   }
+    // })
     this.setUserPhone(phone);
 
     let self=this;

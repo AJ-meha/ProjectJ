@@ -45,9 +45,11 @@ export class CustomerJobListingPage {
   ngOnInit(){
     let self=this
     var headers = new Headers();
-    this.authData.getUserAuthToken().then(authtoken=>{
-      console.log("auth token==="+authtoken); 
-      headers.append('Authorization','Bearer '+authtoken)
+    if(firebase.auth().currentUser !== null){
+      firebase.auth().currentUser.getIdToken()
+      .then(authToken => {
+        console.log("auth token==="+authToken); 
+      headers.append('Authorization','Bearer '+authToken)
       headers.append('Access-Control-Allow-Origin' , '*');
       headers.append('Accept' , 'application/json');
       headers.append('Content-Type' , 'application/json');
@@ -57,26 +59,19 @@ export class CustomerJobListingPage {
       .subscribe((data) => {
         console.log('data=='+data.json().data);
         this.jobs = data.json().data;
+        for(var item in this.jobs){
+          if(this.jobs[item]["logo"] !== undefined ){
+            firebase.storage().ref().child(this.jobs[item]["logo"]).getDownloadURL().then(function(url) {
+              this.jobs[item]["finalLogo"]=url
+              console.log("url=="+url)
+            }).catch(function(error) {
+              // Handle any errors here
+            });
+          }
+        }
       });
-    });
-    
-    console.log(firebase.auth().currentUser)
-    if(firebase.auth().currentUser !== null){
-      firebase.auth().currentUser.getIdToken()
-      .then(authToken => {
-        const headers = new Headers({'Authorization': 'Bearer ' + authToken });
-        console.log("authToken==="+authToken)
-  
-        const myUID    = { uid: 'current-user-uid' };    // success 200 response
-        const notMyUID = { uid: 'some-other-user-uid' }; // error 403 response
-        
-        // return this.http.get(url, { headers: headers }).toPromise()
       })
     }
-
-    
-    
-    
 
   }
 
