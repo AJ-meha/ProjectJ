@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { Storage } from '@ionic/storage';
 import firebase from 'firebase/app';
+
+import { Events } from 'ionic-angular';
 /*
   Generated class for the CustomerAuthProvider provider.
 
@@ -14,7 +16,7 @@ export class CustomerAuthProvider {
 
   public usersRef: firebase.database.Reference = firebase.database().ref();
   
-  constructor(public afAuth: AngularFireAuth, public storage: Storage) {
+  constructor(public afAuth: AngularFireAuth, public storage: Storage, public events: Events) {
   }
 
   loginUser(newEmail:string,newPassword:string): Promise<any> {
@@ -84,13 +86,29 @@ export class CustomerAuthProvider {
       let val=snapshot.val();
       if(val == null)
       {
-        let userArr={role:"employee"};
-        role = "employee";
-        self.usersRef.child("users").child(phone).set(userArr);
+        self.getLanguage().then(customer_lang=>{
+          let userArr={role:"employee",language:customer_lang};
+          role = "employee";
+          self.usersRef.child("users").child(phone).set(userArr);
+        });
       }
       else
       {
         role = val.role;
+        self.usersRef.child("users").child(phone).child("language").once('value', function(snapshot) {
+          let val=snapshot.val();
+          if(val == null)
+          {
+            self.getLanguage().then(customer_lang=>{
+              self.setLanguagePref(customer_lang);
+            });
+          }
+          else
+          {
+            self.setLanguage(val)
+            self.events.publish("app:localize",val);
+          }
+        });
       }
       self.setUserRole(role);
     });
@@ -110,6 +128,13 @@ export class CustomerAuthProvider {
   getLanguage(){
     return this.storage.get('customer_lang').then((value)=>{
       return value;
+    });
+  }
+
+  setLanguagePref(lang) {
+    let self=this;
+    this.getUserPhone().then(phone=>{
+      self.usersRef.child("users").child(phone).child("language").set(lang);
     });
   }
 

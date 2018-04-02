@@ -5,7 +5,6 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { StatusBar } from '@ionic-native/status-bar';
 
 import { MyApp } from './app.component';
-import { HomePage } from '../pages/home/home';
 
 import { AngularFireModule } from 'angularfire2';
 import { AngularFireAuthModule } from 'angularfire2/auth';
@@ -24,13 +23,12 @@ import { HttpModule } from '@angular/http';
 import { CommonFunctionsProvider } from '../providers/common-functions/common-functions';
 import { GlobalVarsProvider } from '../providers/global-vars/global-vars';
 import { CustomerAuthProvider } from '../providers/customer-auth/customer-auth';
+import { LocationStrategy, PathLocationStrategy } from '@angular/common';
+
+import { CustomerJobListingPage } from '../pages/customer-job-listing/customer-job-listing';
 import { FavouritePage } from '../pages/favourite/favourite';
 import { MessagePage } from '../pages/message/message';
 import { ProfilePage } from '../pages/profile/profile';
-import { CustomerJobListingPage } from '../pages/customer-job-listing/customer-job-listing';
-import { LocationStrategy, PathLocationStrategy } from '@angular/common';
-
-import { CustomerVerificationPage } from '../pages/customer-verification/customer-verification';
 
 
 export function HttpLoaderFactory(http: HttpClient) {
@@ -54,8 +52,7 @@ const firebaseConfig = {
     CustomerJobListingPage,
     FavouritePage,
     MessagePage,
-    ProfilePage,
-    CustomerVerificationPage
+    ProfilePage
   ],
   imports: [
     BrowserModule,
@@ -84,8 +81,7 @@ const firebaseConfig = {
     CustomerJobListingPage,
     FavouritePage,
     MessagePage,
-    ProfilePage,
-    CustomerVerificationPage
+    ProfilePage
   ],
   providers: [
     StatusBar,

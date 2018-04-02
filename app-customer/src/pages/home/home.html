@@ -1,24 +1,30 @@
 <ion-content class="tutorial-page">
 
+  <ion-select  [(ngModel)]="language_selection" (ionChange)="segmentChanged($event)">
+    <ion-option value="en">{{ 'HOME_PAGE.BUTTONS.BTN_ENG' | translate }}</ion-option>
+    <ion-option value="zh_cn">{{ 'HOME_PAGE.BUTTONS.BTN_ZH_CN' | translate }}</ion-option>
+    <ion-option value="mr">{{ 'HOME_PAGE.BUTTONS.BTN_MR' | translate }}</ion-option>
+  </ion-select>
+
   <ion-slides pager>
     <ion-slide>
-      <img class="slide-image top-space" src="assets/imgs/onboarding1.jpg" />
-      <h5 class="slide-title">Unlimited Applications</h5>
+      <img class="slide-image top-space" src="assets/imgs/onboarding1-{{language_selection}}.jpg" />
+      <h5 class="slide-title">{{ 'HOME_PAGE.UNLIMITED_APPL' | translate }}</h5>
       <p>Lorem ipsum dolor sit amet, vix ut luptatum erroribus efficiantur.</p>
     </ion-slide>
     <ion-slide>
-      <img class="slide-image" src="assets/imgs/onboarding2.jpg" />
-      <h5 class="slide-title">Unlimited Applications</h5>
+      <img class="slide-image" src="assets/imgs/onboarding2-{{language_selection}}.jpg" />
+      <h5 class="slide-title">{{ 'HOME_PAGE.UNLIMITED_APPL' | translate }}</h5>
       <p>Lorem ipsum dolor sit amet, vix ut luptatum erroribus efficiantur.</p>
     </ion-slide>
     <ion-slide>
-      <img class="slide-image top-space" src="assets/imgs/onboarding1.jpg" />
-      <h5 class="slide-title">Unlimited Applications</h5>
+      <img class="slide-image top-space" src="assets/imgs/onboarding1-{{language_selection}}.jpg" />
+      <h5 class="slide-title">{{ 'HOME_PAGE.UNLIMITED_APPL' | translate }}</h5>
       <p>Lorem ipsum dolor sit amet, vix ut luptatum erroribus efficiantur.</p>
     </ion-slide>
     <ion-slide>
-      <img class="slide-image" src="assets/imgs/onboarding2.jpg" />
-      <h5 class="slide-title">Unlimited Applications</h5>
+      <img class="slide-image" src="assets/imgs/onboarding2-{{language_selection}}.jpg" />
+      <h5 class="slide-title">{{ 'HOME_PAGE.UNLIMITED_APPL' | translate }}</h5>
       <p>Lorem ipsum dolor sit amet, vix ut luptatum erroribus efficiantur.</p>
     </ion-slide>
   </ion-slides>

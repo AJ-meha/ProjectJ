@@ -15,6 +15,7 @@ export class GlobalVarsProvider {
   static max_option = 4;
   //static mobile_code: string= "+91";
   static mobile_code = [{key:"+91",value:"+91"},{key:"+66",value:"+66"},{key:"+852",value:"+852"}];
+  static langArray = ['en', 'zh_cn', 'mr'];
 
   constructor() {
   }

@@ -12,6 +12,12 @@ import { CustomerAuthProvider } from '../../providers/customer-auth/customer-aut
  * Ionic pages and navigation.
  */
 
+@IonicPage(
+  {
+    name: "customer-verification",
+    segment: "verify/:lang"
+  }
+)
 @Component({
   selector: 'page-customer-verification',
   templateUrl: 'customer-verification.html',
@@ -25,6 +31,9 @@ export class CustomerVerificationPage {
   otpCode = {otp1:"",otp2:"",otp3:"",otp4:"",otp5:"",otp6:""}
   mobile_no:any;
   valid_otp=true;
+  valid_number=true;
+  codeContent=false;
+  initContent=true;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public viewCtrl: ViewController,public authData:CustomerAuthProvider) {
     this.mobile_no = this.navParams.get('mobile');
@@ -38,8 +47,11 @@ export class CustomerVerificationPage {
     const appVerifier = this.recaptchaVerifier;
     const phoneNumberString = this.navParams.get('mobile');
     let self=this;
+    firebase.auth().languageCode = this.navParams.get('lang');
     firebase.auth().signInWithPhoneNumber(phoneNumberString, appVerifier)
       .then( confirmationResult => {
+        this.codeContent=true;
+        this.initContent=false;
         // SMS sent. Prompt user to type the code from the message, then sign the
         // user in with confirmationResult.confirm(code).
         this.confirmationResult=confirmationResult;
@@ -47,6 +59,7 @@ export class CustomerVerificationPage {
 
     })
     .catch(function (error) {
+      self.valid_number=false;
       console.error("SMS not sent", error);
     });
 

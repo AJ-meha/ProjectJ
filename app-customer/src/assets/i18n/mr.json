@@ -2,12 +2,7 @@
     "PROFILE_PAGE" :        {
                                 "PROFILE" : "प्रोफाइल",
                                 "MY_PROFILE" : "माझे प्रोफाइल",
-                                "SELECT_LANG" : "भाषा निवडा",
-                                "BUTTONS" : {
-                                    "BTN_ENG" : "English",
-                                    "BTN_ZH_CN" : "广东话",
-                                    "BTN_MR" : "मराठी"
-                                }
+                                "SELECT_LANG" : "भाषा निवडा"
                             },
     "FAVOURITES_PAGE" :     {
                                 "FAVOURITES" : "आवडते",
@@ -29,11 +24,21 @@
                                 "CONFIRM_CODE" : "पुष्टीकरण कोड",
                                 "INVALID_OTP" : "अवैध एक वेळचा संकेतशब्द. वापरकर्ता प्रमाणीकरण अयशस्वी!"
                             },
+    "HOME_PAGE" :              {
+                                "UNLIMITED_APPL" : "अमर्यादित अनुप्रयोग",
+                                "BUTTONS" : {
+                                    "BTN_ENG" : "English",
+                                    "BTN_ZH_CN" : "广东话",
+                                    "BTN_MR" : "मराठी"
+                                }
+                            },
     "GLOBAL" :              {
                                 "LOGOUT" : "बाहेर पडणे",
                                 "CONTINUE" : "सुरू",
                                 "CANCEL" : "रद्द करा",
                                 "SEND" : "पाठवा",
-                                "ERROR" : "त्रुटी"
+                                "ERROR" : "त्रुटी",
+                                "PAGE_TITLE" : "प्रकल्प जे",
+                                "META_DESCRIPTION" : "प्रकल्प जे वर्णन"
                             }
 }

@@ -2,12 +2,7 @@
     "PROFILE_PAGE" :        {
                                 "PROFILE" : "Profile",
                                 "MY_PROFILE" : "My Profile",
-                                "SELECT_LANG" : "Select Language",
-                                "BUTTONS" : {
-                                    "BTN_ENG" : "English",
-                                    "BTN_ZH_CN" : "广东话",
-                                    "BTN_MR" : "मराठी"
-                                }
+                                "SELECT_LANG" : "Select Language"
                             },
     "FAVOURITES_PAGE" :     {
                                 "FAVOURITES" : "Favourites",
@@ -29,11 +24,21 @@
                                 "CONFIRM_CODE" : "Confirmation Code",
                                 "INVALID_OTP" : "Invalid OTP. User authentication failed!"
                             },
+    "HOME_PAGE" :              {
+                                "UNLIMITED_APPL" : "Unlimited Applications",
+                                "BUTTONS" : {
+                                    "BTN_ENG" : "English",
+                                    "BTN_ZH_CN" : "广东话",
+                                    "BTN_MR" : "मराठी"
+                                }
+                            },
     "GLOBAL" :              {
                                 "LOGOUT" : "Logout",
                                 "CONTINUE" : "Continue",
                                 "CANCEL" : "Cancel",
                                 "SEND" : "Send",
-                                "ERROR" : "Error"
+                                "ERROR" : "Error",
+                                "PAGE_TITLE" : "Project J",
+                                "META_DESCRIPTION" : "Project J description"
                             }
 }

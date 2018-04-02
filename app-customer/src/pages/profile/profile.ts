@@ -16,11 +16,6 @@ export class ProfilePage {
 
   }
 
-  segmentChanged(event) {
-  	this.customerAuthData.setLanguage(event._value)
-    this.translateService.use(event._value);
-  }
-
   logOut(){
     this.customerAuthData.logoutUser().then(authData=>{
       this.navCtrl.setRoot("home");
