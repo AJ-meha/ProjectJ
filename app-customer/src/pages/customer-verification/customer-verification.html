@@ -15,36 +15,25 @@
 <ion-content padding>
 	<p class="light-text font-weight-medium login-help" text-center>
     Please type the verification code sent to
-    +852 7733 8839
+    {{mobile_no}}
   </p>
-
-  <!--
-    /////////////////////////////////////////
-      On entering invalid OTP, add an attribute ''invalid'' to the form tag
-    /////////////////////////////////////////
-  -->
   <form>
     <div class="otp-wrapper">
-      <ion-input type="tel" #otp1 class="otp" pattern="[0-9]{6}" maxlength="1" size="1" (keyup)="next(otp2)">
+      <ion-input [(ngModel)]="otpCode['otp1']" [ngModelOptions]="{standalone: true}" type="tel" #otp1 class="otp" pattern="[0-9]{6}" maxlength="1" size="1" (keyup)="next($event,otp1,otp2)">
       </ion-input>
-      <ion-input type="tel" #otp2 class="otp" pattern="[0-9]{6}" maxlength="1" size="1" (keyup)="next(otp3)">
+      <ion-input [(ngModel)]="otpCode['otp2']" [ngModelOptions]="{standalone: true}" type="tel" #otp2 class="otp" pattern="[0-9]{6}" maxlength="1" size="1" (keyup)="next($event,otp1,otp3)">
       </ion-input>
-      <ion-input type="tel" #otp3 class="otp" pattern="[0-9]{6}" maxlength="1" size="1" (keyup)="next(otp4)">
+      <ion-input [(ngModel)]="otpCode['otp3']" [ngModelOptions]="{standalone: true}" type="tel" #otp3 class="otp" pattern="[0-9]{6}" maxlength="1" size="1" (keyup)="next($event,otp2,otp4)">
       </ion-input>
-      <ion-input type="tel" #otp4 class="otp" pattern="[0-9]{6}" maxlength="1" size="1" (keyup)="next(otp5)">
+      <ion-input [(ngModel)]="otpCode['otp4']" [ngModelOptions]="{standalone: true}" type="tel" #otp4 class="otp" pattern="[0-9]{6}" maxlength="1" size="1" (keyup)="next($event,otp3,otp5)">
       </ion-input>
-      <ion-input type="tel" #otp5 class="otp" pattern="[0-9]{6}" maxlength="1" size="1" (keyup)="next(otp6)">
+      <ion-input [(ngModel)]="otpCode['otp5']" [ngModelOptions]="{standalone: true}" type="tel" #otp5 class="otp" pattern="[0-9]{6}" maxlength="1" size="1" (keyup)="next($event,otp4,otp6)">
       </ion-input>
-      <ion-input type="tel" #otp6 class="otp" pattern="[0-9]{6}" maxlength="1" size="1">
+      <ion-input [(ngModel)]="otpCode['otp6']" [ngModelOptions]="{standalone: true}" type="tel" #otp6 class="otp" pattern="[0-9]{6}" maxlength="1" size="1" (keyup)="next($event,otp5,otp6)">
       </ion-input>
     </div>
 
-    <!--
-      /////////////////////////////////////////
-        The below commented line to be displayed when the OTP is invalid
-      /////////////////////////////////////////
-    -->
-    <!-- <div class="error-message otp-error" text-center>Incorrect verification code.</div> -->
+    <div  *ngIf="!valid_otp" class="error-message otp-error" text-center>Incorrect verification code</div>
 
   </form>
 
@@ -72,12 +61,7 @@
 
 <ion-footer>
   <ion-toolbar>
-    <!--
-      /////////////////////////////////////////
-        Button should have attribute ''disabled'' by default. Attribute to be removed when OTP is entered.
-      /////////////////////////////////////////
-    -->
-    <button ion-button block color="primary" (click)="tempListing();">
+    <button ion-button block color="primary" [disabled]="check_OTP()" (click)="tempListing();">
       Continue
     </button>
   </ion-toolbar>

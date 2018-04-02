@@ -4,5 +4,12 @@
   "type": "ionic-angular",
   "integrations": {
     "cordova": {}
-  }
+  },
+  "proxies": [
+    {
+      "path": "/jobs",
+      "proxyUrl": "https://us-central1-project-j-main.cloudfunctions.net/jobs"
+    }
+  ]
+
 }

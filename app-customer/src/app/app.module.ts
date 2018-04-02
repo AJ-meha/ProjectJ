@@ -13,11 +13,13 @@ import { AngularFireAuthModule } from 'angularfire2/auth';
 import { AngularFireDatabaseModule } from 'angularfire2/database';
 import { IonicStorageModule } from '@ionic/storage';
 
+
 import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 
 import { HttpModule } from '@angular/http';
+
 
 import { CommonFunctionsProvider } from '../providers/common-functions/common-functions';
 import { GlobalVarsProvider } from '../providers/global-vars/global-vars';
@@ -26,6 +28,10 @@ import { FavouritePage } from '../pages/favourite/favourite';
 import { MessagePage } from '../pages/message/message';
 import { ProfilePage } from '../pages/profile/profile';
 import { CustomerJobListingPage } from '../pages/customer-job-listing/customer-job-listing';
+import { LocationStrategy, PathLocationStrategy } from '@angular/common';
+
+import { CustomerVerificationPage } from '../pages/customer-verification/customer-verification';
+
 
 export function HttpLoaderFactory(http: HttpClient) {
     return new TranslateHttpLoader(http);
@@ -48,10 +54,12 @@ const firebaseConfig = {
     CustomerJobListingPage,
     FavouritePage,
     MessagePage,
-    ProfilePage
+    ProfilePage,
+    CustomerVerificationPage
   ],
   imports: [
     BrowserModule,
+    HttpModule,
     IonicModule.forRoot(MyApp, {
       mode: 'ios',
       locationStrategy:window.location.hostname == 'localhost' ? 'hash' :'path'
@@ -76,7 +84,8 @@ const firebaseConfig = {
     CustomerJobListingPage,
     FavouritePage,
     MessagePage,
-    ProfilePage
+    ProfilePage,
+    CustomerVerificationPage
   ],
   providers: [
     StatusBar,

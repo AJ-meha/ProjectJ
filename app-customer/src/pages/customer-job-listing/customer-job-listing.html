@@ -4,39 +4,59 @@
   See http://ionicframework.com/docs/components/#navigation for more info on
   Ionic pages and navigation.
 -->
-<ion-header>
+<!-- <ion-header>
 
   <ion-navbar>
-    <ion-title>{{ 'SEARCH' | translate }}</ion-title>
+    <ion-title>{{ 'JOB_LIST_PAGE.SEARCH' | translate }}</ion-title>
     <ion-buttons right>
       <button ion-button  type="button" (click)="logOut()" title="Logout">
-        {{ 'LOGOUT' | translate }}
+        {{ 'GLOBAL.LOGOUT' | translate }}
       </button>
     </ion-buttons>
   </ion-navbar>
 
+</ion-header> -->
+
+
+<ion-header no-border>
+  <ion-searchbar placeholder="Search jobs"></ion-searchbar>
 </ion-header>
 
+<ion-content fullscreen="true">
+  <div class="map-wrapper">
+    <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d29532.572458008657!2d114.17355568984159!3d22.29421382924334!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sen!2sin!4v1521635070685" width="400" height="300" frameborder="0" style="border:0; width:100%; height:100%;" allowfullscreen></iframe>
+  </div>
+  <div class="card-slides">
+    <ion-slides spaceBetween="-13">
 
-<ion-content >
-  <p padding>
-    {{ 'LIST_OF_JOBS' | translate }}
-  </p>
-  <!-- <button ion-button small (click)="openModal()">
-      View Modal
-  </button> -->
+      <ion-slide *ngFor="let job of jobs">
+        <ion-card class="single-card" no-margin  (click)="openJob(job.job_id)">
 
-  <ion-card padding *ngFor="let job of jobs">
-    <h5>{{job.designation}}</h5>
-    <button ion-button small (click)="openJob(job.key)">
-        {{ 'VIEW_JOB' | translate }}
-    </button>
-  </ion-card>
+          <div class="card-header">
+            <div>
+              <img src="assets/imgs/pacific-coffee_logo.jpg" class="job-logo">
+            </div>
+            <div>
+              <h5>{{job.designation}}</h5>
+              <h6>{{job.workplace_name}}</h6>
+            </div>
+            <div class="new">New</div>
+          </div>
 
-  <ion-card padding>
-    <h5>Dummy Job UI-2</h5>
-    <button ion-button small (click)="openJob2()">
-        {{ 'VIEW_JOB' | translate }}
-    </button>
-  </ion-card>
+          <div class="card-footer">
+            <div class="light-text">
+              Posted 24 days ago
+            </div>
+            <div class="card-action">
+              <ion-icon ios="ios-more"></ion-icon>
+            </div>
+          </div>
+        </ion-card>
+      </ion-slide>
+
+    </ion-slides>
+  </div>
+
+
 </ion-content>
+

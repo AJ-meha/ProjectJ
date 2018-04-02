@@ -69,6 +69,12 @@ export class CustomerAuthProvider {
     });
   }
 
+  getUserAuthToken(){
+    return this.storage.get('customer_auth_token').then((value)=>{
+      return value;
+    });
+  }
+
   loginWithEmail(email) {
     this.storage.set(this.CUSTOMER_HAS_LOGGED_IN, true);
     this.setUserEmail(email);
@@ -76,6 +82,12 @@ export class CustomerAuthProvider {
 
   loginWithPhone(phone) {
     this.storage.set(this.CUSTOMER_HAS_LOGGED_IN, true);
+    firebase.auth().onIdTokenChanged( user => {
+        if (user) {  user.getIdToken().then( (token:string) => {
+          this.storage.set('customer_auth_token', token);
+        })
+      }
+    })
     this.setUserPhone(phone);
 
     let self=this;
