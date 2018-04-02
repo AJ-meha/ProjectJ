@@ -1,0 +1,36 @@
+<!--
+  Generated template for the CustomerLanguagePage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>Language (語言)</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content class="bg-gray">
+	<ion-list radio-group class="language-list">
+		<ion-item>
+		    <ion-label>English</ion-label>
+		    <ion-radio checked="true" value="english"></ion-radio>
+		</ion-item>
+
+		<ion-item>
+		    <ion-label>廣東話</ion-label>
+		    <ion-radio value="chinese"></ion-radio>
+		</ion-item>
+	</ion-list>
+</ion-content>
+
+<ion-footer>
+  <ion-toolbar>
+    <button ion-button block color="primary" (click)="dismiss()">
+    	Continue
+    </button>
+  </ion-toolbar>
+</ion-footer>

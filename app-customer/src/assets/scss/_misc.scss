@@ -1,8 +1,10 @@
 
 .show-page{
 	.content{
-		// background-color: $background;
 		color: $dark-text;
+		&.bg-gray{
+			background-color: $background;
+		}
 	}
 }
 

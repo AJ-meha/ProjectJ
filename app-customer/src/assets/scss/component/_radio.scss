@@ -1,0 +1,14 @@
+.radio{
+	.radio-checked{
+		.radio-inner{
+			background-image: url('../assets/svgs/tickmark.svg');
+			background-position-x: 100%;
+			background-size: 17px;
+			width: 17px;
+			height: 17px;
+			border: none;
+			transform: rotate(0deg);
+			left: 0;
+		}
+	}
+}

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController } from 'ionic-angular';
+import { NavController, ModalController } from 'ionic-angular';
 
 import { TranslateService } from '@ngx-translate/core';
 
@@ -12,7 +12,7 @@ import firebase  from 'firebase';
 })
 export class ProfilePage {
 
-  constructor(public http:Http,public navCtrl: NavController, private translateService: TranslateService,public customerAuthData:CustomerAuthProvider) {
+  constructor(public http:Http,public navCtrl: NavController, private translateService: TranslateService,public customerAuthData:CustomerAuthProvider, public modalCtrl: ModalController) {
 
   }
 
@@ -45,7 +45,12 @@ export class ProfilePage {
               return this.http.get(url, { headers: headers }).toPromise()
             })
             .then(res => console.log(res))
-    
+
+  }
+
+  selectLang() {
+    let modal = this.modalCtrl.create("CustomerLanguagePage");
+    modal.present();
   }
 
 }

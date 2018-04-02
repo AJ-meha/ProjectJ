@@ -1,0 +1,21 @@
+page-customer-language {
+	.language-list{
+		margin-top: 12px;
+		& > .item-block:first-child{
+			border-top-width: 1px;
+		}
+		& > .item-block{
+			border-top: 1px solid $lining;
+		}
+		.item{
+			.label{
+				margin: 17px 8px 17px 4px;
+				font-size: 14px;
+				color: $dark-text;
+			}
+			.radio{
+				margin: 8px;
+			}
+		}
+	}
+}
