@@ -60,7 +60,7 @@ export class CustomerLoginPage {
     }
 
     this.loginForm=formBuilder.group({
-      mobile:['',Validators.compose([Validators.required,Validators.pattern('\\d{8,}$')])]
+      mobile:['',Validators.compose([Validators.required,Validators.pattern('\\d{8,11}$')])]
     });
 
   }

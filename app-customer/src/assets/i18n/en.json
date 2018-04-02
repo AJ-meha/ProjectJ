@@ -25,12 +25,7 @@
                                 "INVALID_OTP" : "Invalid OTP. User authentication failed!"
                             },
     "HOME_PAGE" :              {
-                                "UNLIMITED_APPL" : "Unlimited Applications",
-                                "BUTTONS" : {
-                                    "BTN_ENG" : "English",
-                                    "BTN_ZH_CN" : "广东话",
-                                    "BTN_MR" : "मराठी"
-                                }
+                                "UNLIMITED_APPL" : "Unlimited Applications"
                             },
     "GLOBAL" :              {
                                 "LOGOUT" : "Logout",
@@ -39,6 +34,11 @@
                                 "SEND" : "Send",
                                 "ERROR" : "Error",
                                 "PAGE_TITLE" : "Project J",
-                                "META_DESCRIPTION" : "Project J description"
+                                "META_DESCRIPTION" : "Project J description",
+                                "BUTTONS" : {
+                                    "BTN_ENG" : "English",
+                                    "BTN_ZH_CN" : "广东话",
+                                    "BTN_MR" : "मराठी"
+                                }
                             }
 }

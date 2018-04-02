@@ -25,12 +25,7 @@
                                 "INVALID_OTP" : "अवैध एक वेळचा संकेतशब्द. वापरकर्ता प्रमाणीकरण अयशस्वी!"
                             },
     "HOME_PAGE" :              {
-                                "UNLIMITED_APPL" : "अमर्यादित अनुप्रयोग",
-                                "BUTTONS" : {
-                                    "BTN_ENG" : "English",
-                                    "BTN_ZH_CN" : "广东话",
-                                    "BTN_MR" : "मराठी"
-                                }
+                                "UNLIMITED_APPL" : "अमर्यादित अनुप्रयोग"
                             },
     "GLOBAL" :              {
                                 "LOGOUT" : "बाहेर पडणे",
@@ -39,6 +34,11 @@
                                 "SEND" : "पाठवा",
                                 "ERROR" : "त्रुटी",
                                 "PAGE_TITLE" : "प्रकल्प जे",
-                                "META_DESCRIPTION" : "प्रकल्प जे वर्णन"
+                                "META_DESCRIPTION" : "प्रकल्प जे वर्णन",
+                                "BUTTONS" : {
+                                    "BTN_ENG" : "English",
+                                    "BTN_ZH_CN" : "广东话",
+                                    "BTN_MR" : "मराठी"
+                                }
                             }
 }

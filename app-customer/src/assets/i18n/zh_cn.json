@@ -25,12 +25,7 @@
                                 "INVALID_OTP" : "无效的密码"
                             },
     "HOME_PAGE" :              {
-                                "UNLIMITED_APPL" : "无限申请",
-                                "BUTTONS" : {
-                                    "BTN_ENG" : "English",
-                                    "BTN_ZH_CN" : "广东话",
-                                    "BTN_MR" : "मराठी"
-                                }
+                                "UNLIMITED_APPL" : "无限申请"
                             },
     "GLOBAL" :              {
                                 "LOGOUT" : "登出",
@@ -39,6 +34,11 @@
                                 "SEND" : "发送",
                                 "ERROR" : "错误",
                                 "PAGE_TITLE" : "项目J",
-                                "META_DESCRIPTION" : "项目J描述"
+                                "META_DESCRIPTION" : "项目J描述",
+                                "BUTTONS" : {
+                                    "BTN_ENG" : "English",
+                                    "BTN_ZH_CN" : "广东话",
+                                    "BTN_MR" : "मराठी"
+                                }
                             }
 }

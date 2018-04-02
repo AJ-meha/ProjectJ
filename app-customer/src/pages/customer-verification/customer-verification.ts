@@ -34,16 +34,15 @@ export class CustomerVerificationPage {
   valid_number=true;
   codeContent=false;
   initContent=true;
+  timer="00:30";
+  resend=false;
+  countDown=true;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public viewCtrl: ViewController,public authData:CustomerAuthProvider) {
     this.mobile_no = this.navParams.get('mobile');
-    this.recaptchaVerifier= new firebase.auth.RecaptchaVerifier('recaptcha-container', {
-      size: 'invisible',
-      'callback': function (response) {
-        // reCAPTCHA solved, allow signInWithPhoneNumber.
-      }
-    });
+  }
 
+  sendOTP() {
     const appVerifier = this.recaptchaVerifier;
     const phoneNumberString = this.navParams.get('mobile');
     let self=this;
@@ -52,6 +51,27 @@ export class CustomerVerificationPage {
       .then( confirmationResult => {
         this.codeContent=true;
         this.initContent=false;
+        this.timer="00:30";
+        this.resend=false;
+        this.countDown=true;
+        var countDown = 30;
+        var x = setInterval(function() {
+          countDown--;
+          if (countDown < 10) {
+            self.timer = "00:0" + countDown;
+          }
+          else
+          {
+            self.timer = "00:" + countDown;
+          }
+
+          if (countDown <= 0) {
+            clearInterval(x);
+            self.resend=true;
+            self.countDown=false;
+          }
+        }, 1000);
+        //this.timer="";
         // SMS sent. Prompt user to type the code from the message, then sign the
         // user in with confirmationResult.confirm(code).
         this.confirmationResult=confirmationResult;
@@ -62,11 +82,24 @@ export class CustomerVerificationPage {
       self.valid_number=false;
       console.error("SMS not sent", error);
     });
-
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad CustomerVerificationPage');
+
+    if(this.mobile_no==undefined)
+    {
+      return false;
+    }
+
+    this.recaptchaVerifier= new firebase.auth.RecaptchaVerifier('recaptcha-container', {
+      size: 'invisible',
+      'callback': function (response) {
+        // reCAPTCHA solved, allow signInWithPhoneNumber.
+      }
+    });
+    this.sendOTP();
+
     this.viewCtrl.showBackButton(false);
   }
 
@@ -76,7 +109,6 @@ export class CustomerVerificationPage {
 
   // Focus on next input field for OTP
   next(event: KeyboardEvent,el1,el2) {
-    console.log(event);
     if(event.key=="Backspace")
     {
       el1.setFocus();

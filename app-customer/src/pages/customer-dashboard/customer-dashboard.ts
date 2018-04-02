@@ -39,13 +39,13 @@ export class CustomerDashboardPage {
         this.customerAuthData.getUserPhone().then(userphone=>{
           if(userphone==null)
           {
-            self.navCtrl.setRoot("login");
+            self.navCtrl.setRoot("home");
             authObserver.unsubscribe();
           }
         });
       }
       else{
-        self.navCtrl.setRoot("login");
+        self.navCtrl.setRoot("home");
         authObserver.unsubscribe();
       }
     });

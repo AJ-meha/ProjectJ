@@ -13,12 +13,13 @@
 
 
 <ion-content padding>
+  <div id="recaptcha-container" style="display:none"></div>
   <div *ngIf="initContent">
     <p class="light-text font-weight-medium login-help" text-center>
       Sending verification code to
-      {{mobile_no}}
+      {{mobile_no}} <a href="" *ngIf="!valid_number" (click)="goBack();"><font color="red">!</font></a>
     </p>
-    <div *ngIf="!valid_number" class="error-message otp-error" text-center>Incorrect verification code</div>
+    <div *ngIf="!valid_number" class="error-message otp-error" text-center>Incorrect mobile number</div>
   </div>
   <div *ngIf="codeContent">
   	<p class="light-text font-weight-medium login-help" text-center>
@@ -53,7 +54,7 @@
           The below line to be hidden when the timer expires
         /////////////////////////////////////////
       -->
-      <div class="light-text font-weight-medium" text-center>Please wait <span class="text-ios-primary">0:29</span></div>
+      <div *ngIf="countDown" class="light-text font-weight-medium" text-center>Please wait <span class="text-ios-primary">{{timer}}</span></div>
 
 
       <!--
@@ -62,7 +63,7 @@
           Just add a click action to the div. No need for a button.
         /////////////////////////////////////////
       -->
-      <!-- <div class="text-ios-primary font-weight-medium resend-action" text-center>RESEND SMS</div> -->
+      <div *ngIf="resend" class="text-ios-primary font-weight-medium resend-action" text-center (click)="sendOTP();">RESEND SMS</div>
 
     </div>
   </div>
