@@ -61,9 +61,11 @@ export class CustomerJobListingPage {
         this.jobs = data.json().data;
         for(var item in this.jobs){
           if(this.jobs[item]["logo"] !== undefined ){
+            // console.log("logo get----")
             firebase.storage().ref().child(this.jobs[item]["logo"]).getDownloadURL().then(function(url) {
-              this.jobs[item]["finalLogo"]=url
-              console.log("url=="+url)
+              // console.log("url=="+url)
+              self.jobs[item]["finalLogo"]=url
+              // console.log(self.jobs[item]["finalLogo"])
             }).catch(function(error) {
               // Handle any errors here
             });
