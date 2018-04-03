@@ -29,12 +29,13 @@
   <div class="card-slides">
     <ion-slides spaceBetween="-13">
 
-      <ion-slide *ngFor="let job of jobs">
+      <ion-slide *ngFor="let job of jobsfinal">
         <ion-card class="single-card" no-margin  (click)="openJob(job.job_id)">
 
           <div class="card-header">
-            <div>
-              <img src="assets/imgs/pacific-coffee_logo.jpg" class="job-logo">
+            <div [innerHTML]="job.jobstring">
+            
+              <!-- <img [src]="logoImages[job.job_id]" class="job-logo"> -->
             </div>
             <div>
               <h5>{{job.designation}}</h5>
@@ -45,7 +46,7 @@
 
           <div class="card-footer">
             <div class="light-text">
-              Posted 24 days ago
+              Posted {{job.datestring}} ago
             </div>
             <div class="card-action">
               <ion-icon ios="ios-more"></ion-icon>

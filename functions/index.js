@@ -50,7 +50,7 @@ exports.generateThumbnail = functions.storage.object().onChange((event) => {
     const resourceState = object.resourceState; // The resourceState is 'exists' or 'not_exists' (for file/folder deletions).
     const metageneration = object.metageneration; // Number of times metadata has been generated. New objects have a value of 1.
     
-    const SIZES = [64, 256, 512]; // Resize target width in pixels
+    const SIZES = [40, 50, 200]; // Resize target width in pixels
   
     if (!contentType.startsWith('image/') || resourceState === 'not_exists') {
       console.log('This is not an image.');
@@ -102,41 +102,9 @@ exports.generateThumbnail = functions.storage.object().onChange((event) => {
                 return ref.child('uploadThumbs').push({path:fileName,thumburl:thumbsArr})
               else
                 return true;
-              // return Promise.all([
-              //     thumbFile.getSignedUrl(config),
-              //     file.getSignedUrl(config)
-              // ])
-              // .then(results=>{
-              //   const thumbResult=results[0]
-              //   const originalResult=results[1]
-              //   const thumbFileUrl=thumbResult[0]
-              //   const fileUrl=originalResult[0]
-              //   console.log(fileUrl+"=="+thumbFileUrl)
-              //   return ref.child('uploadThumbs').push({path:fileName,thumburl:thumbFileUrl})
-            // }).catch(err => console.error(err));
-          }).catch(err => console.error(err));
-                 
-                
-  
-          })
-          // .then(()=>{
-          //       const thumbFile=bucket.file(newFilePath);
-          //       const config={
-          //           action:'read',
-          //           expires:'03-09-2491'
-          //       };
-          //       return thumbFile.then(signedUrls => {
-          //         // signedUrls[0] contains the file's public URL
-          //         file.getSignedUrl(config).then(filesignedUrls => {
-          //           // signedUrls[0] contains the file's public URL
-          //           const thumbFileUrl=signedUrls[0]
-          //           const fileUrl=filesignedUrls[0]
-          //           return ref.child('uploadThumbs').push({path:fileUrl,thumburl:thumbFileUrl})
-          //         });
-          //       });
-          //   }).catch(err => console.error(err));
 
-  
+          }).catch(err => console.error(err));
+          })  
       })
       return true;
     }).then(() => fs.unlinkSync(tempFilePath));
@@ -148,11 +116,10 @@ exports.generateThumbnail = functions.storage.object().onChange((event) => {
 // The Firebase ID token needs to be passed as a Bearer token in the Authorization HTTP header like this:
 // `Authorization: Bearer <Firebase ID Token>`.
 // when decoded successfully, the ID Token content will be added as `req.user`.
-const validateFirebaseIdToken = (req, res, next) => {
+const validateFirebaseIdToken = (req, res) => {
   console.log('Check if request is authorized with Firebase ID token');
 
-  if ((!req.headers.authorization || !req.headers.authorization.startsWith('Bearer ')) &&
-      !req.cookies.__session) {
+  if ((!req.headers.authorization || !req.headers.authorization.startsWith('Bearer '))) {
     console.error('No Firebase ID token was passed as a Bearer token in the Authorization header.',
         'Make sure you authorize your request by providing the following HTTP header:',
         'Authorization: Bearer <Firebase ID Token>',
@@ -166,29 +133,27 @@ const validateFirebaseIdToken = (req, res, next) => {
     console.log('Found "Authorization" header');
     // Read the ID Token from the Authorization header.
     idToken = req.headers.authorization.split('Bearer ')[1];
-  } else {
-    console.log('Found "__session" cookie');
-    // Read the ID Token from cookie.
-    idToken = req.cookies.__session;
-  }
+  } 
   admin.auth().verifyIdToken(idToken).then((decodedIdToken) => {
     console.log('ID Token correctly decoded', decodedIdToken);
     req.user = decodedIdToken;
-    return next();
+    return true;
   }).catch((error) => {
     console.error('Error while verifying Firebase ID token:', error);
     res.status(403).send('Unauthorized');
   });
 };
 
-app.use(cors);
-app.use(cookieParser);
+// app.use(cors);
+// app.use(cookieParser);
 app.use(validateFirebaseIdToken);
 // build multiple CRUD interfaces:
 app.get('/jobs', (req, res) => {
   // if(req.method === 'GET'){
+  cors(req, res, () => {
   res.setHeader("Access-Control-Allow-Origin", "*");
   res.status(200).json({success: true});
+  });
   // }
   // else{
   //   res.status(500).send({ error: 'Method not supported!!!' });
@@ -204,12 +169,9 @@ exports.main = functions.https.onRequest(app);
 exports.jobs = functions.https.onRequest((req, res) => {
   // if(req.method === 'GET'){
   cors(req, res, () => {
-  // res.header("Access-Control-Allow-Origin", "*");
-  // res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept")
+    
+    validateFirebaseIdToken(req,res);
   res.setHeader("Access-Control-Allow-Origin", "*");
-  // res.setHeader('Access-Control-Allow-Methods','GET, POST, PATCH, PUT, DELETE, OPTIONS');
-  // res.setHeader('Access-Control-Allow-Headers','Origin, Content-Type, X-Auth-Token');
-  // res.setHeader("Access-Control-Allow-Headers", "Access-Control-Allow-Headers, Origin,Accept, X-Auth-Token, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers");
   let data=[];
   let response={};
   
@@ -221,27 +183,87 @@ exports.jobs = functions.https.onRequest((req, res) => {
     let jobs=[];
     total_count=snapshot.numChildren();  
     snapshot.forEach( itemSnap => {
+      let logoImage=itemSnap.val().image
+      console.log("logoImage==="+logoImage)
       let job_details_id=itemSnap.val().job_details_id
       let job_contact_workplace_id=itemSnap.val().jobs_contact_workplace_id
+      let job_added_date=itemSnap.val().date
+      let date1=new Date()
+      let date2=new Date(job_added_date)
+      var diff = Math.abs(date1.getTime() - date2.getTime());
+      var diffYear = Math.ceil(diff / (1000 * 3600 * 24 * 365));
+      var diffMonths = Math.ceil(diff / (1000 * 3600 * 24 * 30));
+      var diffDays = Math.ceil(diff / (1000 * 3600 * 24)); 
+      var diffHours = Math.ceil(diff / (1000 * 3600)); 
+      var diffMins = Math.ceil(diff / (1000 * 60)); 
       let designation='';
       dbRef.child('job_details/').child(job_details_id).once('value').then( function(mediaSnap) {
           // console.log(mediaSnap.val());         
           designation=mediaSnap.val().designation
           dbRef.child('jobs_contact_workplace/').child(job_contact_workplace_id).once('value').then( function(jobContactSnap) {
-            count +=1;
+            
             // console.log("count=="+count)
-            jobs.push({'job_id':itemSnap.key,'workplace_name':jobContactSnap.val().workplace_name,'designation':designation})
-            response["success"]=true;
-            response["message"]="Job listing fetched successfully";
-            response["data"]=jobs;
+            let datestring='';
+            if(diffMins<60){
+              datestring=(diffMins === 1)?(diffMins+' minute'):(diffMins+' minutes')
+            }
+            else if(diffMins>=60 && diffHours<24){
+              datestring=(diffHours === 1)?(diffHours+' hour'):(diffHours+' hours')
+            }
+            else if(diffHours>=24 && diffDays<31){
+              datestring=(diffDays === 1)?(diffDays+' day'):(diffDays+' days')
+            }
+            else if(diffDays>=31 && diffMonths<12){
+              datestring=(diffMonths === 1)?(diffMonths+' month'):(diffMonths+' months')
+            }
+            else if(diffMonths>=12){
+              
+              datestring=(diffYear === 1)?(diffYear+' year'):(diffYear+' years')
+            }
+            if(logoImage !== undefined){
+              dbRef.child('uploads/').child(logoImage).once('value').then( function(imageSnap) {
+                count +=1;
+                let logo=''  
+                let logoImg=imageSnap.val().name        
+                if(logoImg !== undefined){
+                  console.log("logoImg==="+logoImg)              
+                  logo='/thumbs/50/'+logoImg+'_thumb.png';  
+                }
+                else{
+                  logo=''
+                }
+                                    
+                jobs.push({'job_id':itemSnap.key,'logo':logo,'workplace_name':jobContactSnap.val().workplace_name,'designation':designation,'datestring':datestring})
+                response["success"]=true;
+                response["message"]="Job listing fetched successfully";
+                response["data"]=jobs;
+                if(count === total_count){
+                  return res.status(200).json(response);
+                }
+                else{
+                  return 0;
+                }    
+              }).catch(err => console.error(err));
+              return false;
+            }
+            else
+            {
+              count +=1;
+              jobs.push({'job_id':itemSnap.key,'workplace_name':jobContactSnap.val().workplace_name,'designation':designation,'datestring':datestring})
+              response["success"]=true;
+              response["message"]="Job listing fetched successfully";
+              response["data"]=jobs;
+              if(count === total_count){
+                return res.status(200).json(response);
+              }
+              else{
+                return 0;
+              }    
+            }
+            
             // response["total_count"]=total_count;
             // response["count"]=count;
-            if(count === total_count){
-              return res.status(200).json(response);
-            }
-            else{
-              return 0;
-            }        
+                
           }).catch(err => console.error(err));
           return false;
       }).catch(err => console.error(err));   
@@ -251,81 +273,184 @@ exports.jobs = functions.https.onRequest((req, res) => {
 });
 });
 
+const capitalizeFirstLetter = (string) => {
+  return string.charAt(0).toUpperCase() + string.slice(1);
+}
+
+const generateWorkSchedule = (days) => {
+  const alldays=["mon","tue","wed","thu","fri","sat","sun"];
+  let data=[];
+  let contdata={};
+  let consec=[]
+  let start_time='';
+  let end_time='';
+  console.log(days)
+  let con=[]
+  for(let i=0;i<alldays.length;i++){
+    let daystring=''
+    let singleday=alldays[i]
+    if(days[singleday]["holiday"] === false){
+      if(i !== 0){
+        let new_start_time=twelvehrformat(days[singleday]["start_time"])
+        let new_end_time=twelvehrformat(days[singleday]["end_time"])
+        if((start_time === new_start_time) && (end_time === new_end_time)){
+          con.push(singleday)
+        }
+        else{
+          consec.push(con)
+          con=[]
+          con.push(singleday)
+          if(i === (alldays.length-1)){
+            consec.push(con)
+          }
+        }
+      }
+      else{
+        con.push(singleday)
+      }
+      start_time=twelvehrformat(days[singleday]["start_time"])
+      end_time=twelvehrformat(days[singleday]["end_time"])
+      daystring=singleday+" "+start_time+"-"+end_time
+      data.push(daystring)
+      contdata[singleday]=start_time+"-"+end_time
+    } 
+  }
+  data.push(consec)
+  let finaldata=[];
+  for(let i=0;i<consec.length;i++){
+    let daystr='';
+    if(consec[i].length === 1){
+      daystr=capitalizeFirstLetter(consec[i][0])+", "+contdata[consec[i][0]]
+    }
+    else{
+      daystr=capitalizeFirstLetter(consec[i][0])+"-"+capitalizeFirstLetter(consec[i][(consec[i].length-1)])+", "+contdata[consec[i][0]]
+    }
+    finaldata.push(daystr)
+
+  }
+  return finaldata;
+
+}
+
+const twelvehrformat = (time) => {
+  var timeString = time;
+  var H = +timeString.substr(0, 2);
+  var h = (H % 12) || 12;
+  var ampm = H < 12 ? "am" : "pm";
+  timeString = h + timeString.substr(2, 3) + ampm;
+  return timeString
+}
+
 exports.jobdetails = functions.https.onRequest((req, res) => {
   cors(req, res, () => {
-  let job_id=req.query.job_id
-  res.setHeader("Access-Control-Allow-Origin", "*");
-  let data=[];
-  let response={};
-  
-  
-  var jobRef=admin.database().ref('jobs');
-  var dbRef=admin.database().ref();
-  var count=0;
-  let total_count=0;
-  dbRef.child('jobs/').child(job_id).once('value').then( function(itemSnap) {
-    console.log(itemSnap.val())
+    validateFirebaseIdToken(req,res);
+    let job_id=req.query.job_id
+    res.setHeader("Access-Control-Allow-Origin", "*");
+    let data=[];
+    let response={};
     
-    // total_count=itemSnap.numChildren();
-    let job_details_id=itemSnap.val().job_details_id
-    let job_contact_workplace_id=itemSnap.val().jobs_contact_workplace_id
-    let job_emp_benefits_id=itemSnap.val().job_emp_benefits_id
-    let designation='';
-    let employment_type='';
-    let employment_type_val=''
-    let salary_amount='';
-    let salary_unit='';
-    let industry='';
-    let type='';
-    let sub_industry='';
-    let employee_benefits='';
-    dbRef.child('job_details/').child(job_details_id).once('value').then( function(mediaSnap) {
-        designation=mediaSnap.val().designation
-        employment_type=mediaSnap.val().employment_type
-        type=mediaSnap.val().type
-        salary_unit=mediaSnap.val().salary_unit
-        salary_amount=mediaSnap.val().salary_amount
-        industry=mediaSnap.val().industry
-        sub_industry=mediaSnap.val().sub_industry
-        dbRef.child('jobs_contact_workplace/').child(job_contact_workplace_id).once('value').then( function(jobContactSnap) {
-          // count +=1;
-          if(job_emp_benefits_id ===""){
-            response["success"]=true;
-            response["message"]="Job Details fetched successfully";
-            // employment_type_val=dbRef.child('employment_type/').get(employment_type)
-            response["data"]={"id":itemSnap.key,"designation":designation,"employment_type":employment_type,"type":type,"workplace_name":jobContactSnap.val().workplace_name,
-            "workplace_address":jobContactSnap.val().workplace_address,"salary_amount":salary_amount,"salary_unit":salary_unit,"industry":industry,"sub_industry":sub_industry,"employee_benefits":employee_benefits};
-            // response["total_count"]=total_count;
-            // response["count"]=count;
-            // if(count === total_count){
-            return res.status(200).json(response);
-          }
-          else{
-            dbRef.child('job_employee_benefits/').child(job_emp_benefits_id).once('value').then( function(jobEmpBenSnap) {
-              employee_benefits=jobEmpBenSnap.val().employee_benefits
-              // employment_type_val=dbRef.child('employment_type/').get(employment_type)
-              console.log(employee_benefits)
-              response["success"]=true;
-              response["message"]="Job Details fetched successfully";
-              response["data"]={"id":itemSnap.key,"designation":designation,"employment_type":employment_type,"type":type,"workplace_name":jobContactSnap.val().workplace_name,
-              "workplace_address":jobContactSnap.val().workplace_address,"salary_amount":salary_amount,"salary_unit":salary_unit,"industry":industry,"sub_industry":sub_industry,"employee_benefits":employee_benefits};
-              // response["total_count"]=total_count;
-              // response["count"]=count;
-              // if(count === total_count){
-              return res.status(200).json(response);
+    
+    var jobRef=admin.database().ref('jobs');
+    var dbRef=admin.database().ref();
+    var count=0;
+    let total_count=0;
+    dbRef.child('jobs/').child(job_id).once('value').then( function(itemSnap) {
+      console.log(itemSnap.val())
+      let logoImage=itemSnap.val().image
+      // total_count=itemSnap.numChildren();
+      let job_details_id=itemSnap.val().job_details_id
+      let job_contact_workplace_id=itemSnap.val().jobs_contact_workplace_id
+      let job_emp_benefits_id=itemSnap.val().job_emp_benefits_id
+      let job_work_schedule_id=itemSnap.val().job_work_schedule_id
+      let designation='';
+      let employment_type='';
+      let employment_type_val=''
+      let salary_amount='';
+      let salary_unit='';
+      let industry='';
+      let type='';
+      let sub_industry='';
+      let employee_benefits='';
+      dbRef.child('job_details/').child(job_details_id).once('value').then( function(mediaSnap) {
+          designation=mediaSnap.val().designation
+          employment_type=mediaSnap.val().employment_type
+          type=mediaSnap.val().type
+          salary_unit=mediaSnap.val().salary_unit
+          salary_amount=mediaSnap.val().salary_amount
+          industry=mediaSnap.val().industry
+          sub_industry=mediaSnap.val().sub_industry
+          dbRef.child('jobs_contact_workplace/').child(job_contact_workplace_id).once('value').then( function(jobContactSnap) {
+            dbRef.child('job_work_schedule/').child(job_work_schedule_id).once('value').then( function(jobWorkSnap) {
+              // count +=1;
+              let work_schedule=jobWorkSnap.val()
+              let work_data=generateWorkSchedule(work_schedule)
+              if(job_emp_benefits_id ===""){
+                if(logoImage !== undefined){
+                  dbRef.child('uploads/').child(logoImage).once('value').then( function(imageSnap) {
+                    let logos={}  
+                    let logoImg=imageSnap.val().name                      
+                    logos['40']='/thumbs/40/'+logoImg+'_thumb.png';                      
+                    logos['200']='/thumbs/200/'+logoImg+'_thumb.png';
+                    console.log(employee_benefits)
+                    response["success"]=true;
+                    response["message"]="Job Details fetched successfully";
+                    response["data"]={"id":itemSnap.key,"designation":designation,"employment_type":employment_type,"type":type,"workplace_name":jobContactSnap.val().workplace_name,
+                    "workplace_address":jobContactSnap.val().workplace_address,"salary_amount":salary_amount,"salary_unit":salary_unit,"industry":industry,"sub_industry":sub_industry,"employee_benefits":employee_benefits,"work_data":work_data,"logos":logos};
+                    return res.status(200).json(response);
+                  }).catch(err => console.error(err)); 
+                  return false;
+                }
+                else{
+                  response["success"]=true;
+                  response["message"]="Job Details fetched successfully";
+                  response["data"]={"id":itemSnap.key,"designation":designation,"employment_type":employment_type,"type":type,"workplace_name":jobContactSnap.val().workplace_name,
+                  "workplace_address":jobContactSnap.val().workplace_address,"salary_amount":salary_amount,"salary_unit":salary_unit,"industry":industry,"sub_industry":sub_industry,"employee_benefits":employee_benefits,"work_data":work_data};
+                  return res.status(200).json(response);
+                }
+                
+              }
+              else{
+                dbRef.child('job_employee_benefits/').child(job_emp_benefits_id).once('value').then( function(jobEmpBenSnap) {
+                  employee_benefits=jobEmpBenSnap.val().employee_benefits
+                  if(logoImage !== undefined){
+                    console.log("image exists!!!")
+                    dbRef.child('uploads/').child(logoImage).once('value').then( function(imageSnap) {
+                      let logos={}  
+                      let logoImg=imageSnap.val().name                  
+                      logos['40']='/thumbs/40/'+logoImg+'_thumb.png';                      
+                      logos['200']='/thumbs/200/'+logoImg+'_thumb.png';
+                      console.log(employee_benefits)
+                      response["success"]=true;
+                      response["message"]="Job Details fetched successfully";
+                      response["data"]={"id":itemSnap.key,"designation":designation,"employment_type":employment_type,"type":type,"workplace_name":jobContactSnap.val().workplace_name,
+                      "workplace_address":jobContactSnap.val().workplace_address,"salary_amount":salary_amount,"salary_unit":salary_unit,"industry":industry,"sub_industry":sub_industry,"employee_benefits":employee_benefits,"additional_info":jobEmpBenSnap.val().additional_info,"work_data":work_data,"logos":logos};
+                      return res.status(200).json(response);
+                    }).catch(err => console.error(err));  
+                    return false;             
+                  }
+                  else{
+                    console.log(employee_benefits)
+                    response["success"]=true;
+                    response["message"]="Job Details fetched successfully";
+                    response["data"]={"id":itemSnap.key,"designation":designation,"employment_type":employment_type,"type":type,"workplace_name":jobContactSnap.val().workplace_name,
+                    "workplace_address":jobContactSnap.val().workplace_address,"salary_amount":salary_amount,"salary_unit":salary_unit,"industry":industry,"sub_industry":sub_industry,"employee_benefits":employee_benefits,"additional_info":jobEmpBenSnap.val().additional_info,"work_data":work_data};
+                    return res.status(200).json(response);
+                  }
+                  
+                }).catch(err => console.error(err));
+                return false;
+              }
             }).catch(err => console.error(err));
+            // }
+            // else{
+            //   return 0;
+            // }  
             return false;
-          }
+          }).catch(err => console.error(err));
+        return false;
           
-          // }
-          // else{
-          //   return 0;
-          // }  
-        }).catch(err => console.error(err));
+      }).catch(err => console.error(err));
       return false;
-        
     }).catch(err => console.error(err));
-    return false;
-  }).catch(err => console.error(err));
-});
+  });
 });
