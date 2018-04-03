@@ -69,7 +69,7 @@ export class CustomerJobListingPage {
        
         while(this.jobs[this.initialInd]["logo"] == undefined ){ 
           console.log("loop=="+this.jobs[0]["logo"])    
-          
+          self.jobsfinal.push({'jobstring':'','datestring':self.jobs[this.initialInd]["datestring"],'designation':self.jobs[this.initialInd]["designation"],'job_id':self.jobs[this.initialInd]["job_id"],'workplace_name':self.jobs[this.initialInd]["workplace_name"]})
           this.initialInd +=1
                    
         }
@@ -96,16 +96,31 @@ export class CustomerJobListingPage {
 
   recFunc(item){
     let self=this
-    firebase.storage().ref().child(this.jobs[item]["logo"]).getDownloadURL().then(function(url) {
-      console.log("url=="+url)
-      self.jobs[item]["finalLogo"]=url
-      
-      self.logoImages[self.jobs[item]["job_id"]]=url
-      self.jobs["jobstring"]='<img src="'+url+'" class="job-logo"/>';
-      let jobstring='<img src="'+url+'" class="job-logo"/>';
-      self.jobsfinal.push({'jobstring':jobstring,'datestring':self.jobs[item]["datestring"],'designation':self.jobs[item]["designation"],'job_id':self.jobs[item]["job_id"],'workplace_name':self.jobs[item]["workplace_name"]})
-      console.log(self.jobsfinal)
-      console.log(self.jobs.length+"=="+self.initialInd)
+    if(this.jobs[this.initialInd]["logo"] !== undefined ){ 
+      firebase.storage().ref().child(this.jobs[item]["logo"]).getDownloadURL().then(function(url) {
+        console.log("url=="+url)
+        self.jobs[item]["finalLogo"]=url
+        
+        self.logoImages[self.jobs[item]["job_id"]]=url
+        self.jobs["jobstring"]='<img src="'+url+'" class="job-logo"/>';
+        let jobstring='<img src="'+url+'" class="job-logo"/>';
+        self.jobsfinal.push({'jobstring':jobstring,'datestring':self.jobs[item]["datestring"],'designation':self.jobs[item]["designation"],'job_id':self.jobs[item]["job_id"],'workplace_name':self.jobs[item]["workplace_name"]})
+        console.log(self.jobsfinal)
+        console.log(self.jobs.length+"=="+self.initialInd)
+        if(self.jobs.length>self.initialInd){
+          self.initialInd +=1
+          return self.recFunc(self.initialInd)
+        }
+        else{
+          return self.jobsfinal;
+        }
+        
+      }).catch(function(error) {
+        // Handle any errors here
+      });
+    }
+    else{
+      self.jobsfinal.push({'jobstring':'','datestring':self.jobs[this.initialInd]["datestring"],'designation':self.jobs[this.initialInd]["designation"],'job_id':self.jobs[this.initialInd]["job_id"],'workplace_name':self.jobs[this.initialInd]["workplace_name"]})
       if(self.jobs.length>self.initialInd){
         self.initialInd +=1
         return self.recFunc(self.initialInd)
@@ -113,10 +128,7 @@ export class CustomerJobListingPage {
       else{
         return self.jobsfinal;
       }
-      
-    }).catch(function(error) {
-      // Handle any errors here
-    });
+    }
   }
             
 
