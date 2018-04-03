@@ -2,8 +2,12 @@
 <html lang="en" dir="ltr">
 <head>
   <meta charset="UTF-8">
-  <title>Ionic App</title>
-  <meta name="viewport" content="viewport-fit=cover, width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Project J</title>
+
+  <meta name="description" content="Project J description">
+  <meta property="og:title" content="Project J description">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <meta name="format-detection" content="telephone=no">
   <meta name="msapplication-tap-highlight" content="no">
 
@@ -16,24 +20,33 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
 
   <!-- cordova.js required for cordova apps (remove if not needed) -->
-  <script src="cordova.js"></script>
+  <!-- <script src="cordova.js"></script> -->
 
-  <!-- un-comment this code to enable service worker
+  <!-- un-comment this code to enable service worker-->
   <script>
     if ('serviceWorker' in navigator) {
       navigator.serviceWorker.register('service-worker.js')
         .then(() => console.log('service worker installed'))
         .catch(err => console.error('Error', err));
     }
-  </script>-->
+  </script>
 
   <link href="build/main.css" rel="stylesheet">
 
 </head>
-<body>
+<body style="background-color: #fff; background-image: url('assets/imgs/J_logo.png'); background-position: center; background-repeat: no-repeat; background-size: 25%;">
 
   <!-- Ionic's root component and where the app will load -->
   <ion-app></ion-app>
+
+  <div class="orientation-box" style="display: none">
+    <img src="assets/svgs/portrait_mode.svg">
+    <h5>Catch us on the flipside</h5>
+    <div>
+      We don't currently support landscape mode.<br>
+      Please switch back to portrait mode.
+    </div>
+  </div>
 
   <!-- The polyfills js is generated during the build process -->
   <script src="build/polyfills.js"></script>
@@ -44,6 +57,11 @@
 
   <!-- The main bundle js is generated during the build process -->
   <script src="build/main.js"></script>
+
+  <noscript>
+    <h1>You don’t have javascript enabled.</h1>
+    <p>Please enable it to get the full experience.</p>
+  </noscript>
 
 </body>
 </html>

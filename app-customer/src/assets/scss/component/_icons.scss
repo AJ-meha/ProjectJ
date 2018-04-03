@@ -1,0 +1,14 @@
+ion-icon[svgversion] {
+	height: 26px;
+	width: 26px;
+}
+
+ion-icon[name="ios-arrow-round-back"][svgversion] {
+	content: url("../assets/svgs/Back.svg");
+}
+ion-icon[name="ios-cloud-upload-outline"][svgversion] {
+	content: url("../assets/svgs/Share.svg");
+}
+ion-icon[name="md-heart"][svgversion] {
+	content: url("../assets/svgs/Saved.svg");
+}

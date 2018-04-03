@@ -1,0 +1,150 @@
+<!--
+  Generated template for the SingleJobPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar>
+  	<ion-buttons left>
+  	  <button ion-button color="dark" (click)="goBack()">
+  	    <ion-icon name="ios-arrow-round-back" svgversion showWhen="android, windows, ios, core"></ion-icon>
+  	  </button>
+  	</ion-buttons>
+    <ion-title>{{job['designation']}}</ion-title>
+    <ion-buttons right>
+      <button ion-button color="dark">
+        <ion-icon name="ios-cloud-upload-outline" svgversion showWhen="android, windows, ios, core"></ion-icon>
+      </button>
+      <button ion-button color="primary">
+        <ion-icon name="md-heart" svgversion showWhen="android, windows, ios, core"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content>
+
+	<ion-list>
+		<ion-slides>
+		  <ion-slide>
+		  	<img src="assets/imgs/map-img.png">
+		  </ion-slide>
+		  <ion-slide centeredSlides="true" *ngIf="bigThumbLogo">
+		  	<img [src]="bigThumbLogo">
+		  </ion-slide>
+		</ion-slides>
+	</ion-list>
+
+	<ion-list class="page-banner-section">
+		<ion-item>
+			<h6 class="font-weight-medium">Full Time</h6>
+			<h1 class="font-weight-heavy">
+				{{job['designation']}}
+			</h1>
+		</ion-item>
+
+	  <ion-item>
+	    <ion-avatar item-end *ngIf="smallThumbLogo">
+	      <img [src]="smallThumbLogo">
+	    </ion-avatar>
+	    <h3 class="">{{job['workplace_name']}}</h3>
+	  </ion-item>
+
+	  <ion-item text-wrap>
+	  	<p class="dark-text">
+	  		{{job['additional_info']}}
+	  	</p>
+	  </ion-item>
+	</ion-list>
+
+	<ion-list >
+		<ion-list-header>
+		    Job Details
+		</ion-list-header>
+	  <ion-item>
+	    Industry
+	    <span item-end class="font-weight-medium">
+	    	{{industries[job['industry']]}},{{subindustries[job['sub_industry']]}}
+	    </span>
+	  </ion-item>
+	  <ion-item>
+	    Type
+	    <span item-end class="font-weight-medium">
+	    	{{types[job['type']]}}
+	    </span>
+	  </ion-item>
+	  <ion-item>
+	    Salary
+	    <span item-end class="font-weight-medium" *ngIf="job['salary_amount']">
+	    	HK$ {{job['salary_amount']}} / {{job['salary_unit']}}
+			</span>
+			<span item-end class="font-weight-medium" *ngIf="!job['salary_amount']">
+	    	-
+	    </span>
+	  </ion-item>
+	  <ion-item>
+	    Timings
+				<!-- Mon-Fri, 2pm - 10pm -->
+				<ion-col no-padding margin-bottom col-6 *ngFor="let workItem of job['work_data']" item-end>
+		  		<span item-end class="font-weight-medium">{{workItem}}</span>
+		  	</ion-col>
+	    
+	  </ion-item>
+	</ion-list>
+
+	<ion-list >
+		<ion-list-header>
+		    Job Benefits
+		</ion-list-header>
+	  <ion-item>
+		  <ion-row>
+		  	<ion-col no-padding margin-bottom col-6 *ngFor="let empBenItem of empBen">
+		  		<ion-icon name="ios-calendar-outline" showWhen="android, windows, ios, core" color="primary" item-start></ion-icon>
+		  		{{empBenefits[empBenItem]}}
+		  	</ion-col>
+		  	<!-- <ion-col no-padding margin-bottom col-6>
+		  		<ion-icon name="ios-calendar-outline" showWhen="android, windows, ios, core" color="primary" item-start></ion-icon>
+		  		Health Insurance
+		  	</ion-col>
+		  	<ion-col no-padding margin-bottom col-6>
+		  		<ion-icon name="ios-calendar-outline" showWhen="android, windows, ios, core" color="primary" item-start></ion-icon>
+		  		Increment
+		  	</ion-col>
+		  	<ion-col no-padding margin-bottom col-6>
+		  		<ion-icon name="ios-calendar-outline" showWhen="android, windows, ios, core" color="primary" item-start></ion-icon>
+		  		Social Security
+		  	</ion-col> -->
+		  </ion-row>
+	  </ion-item>
+	</ion-list>
+
+	<ion-list >
+		<ion-list-header>
+		    Location
+		</ion-list-header>
+
+		<ion-item text-wrap>
+			<p class="dark-text">
+				{{job['workplace_address']}}
+			</p>
+		</ion-item>
+
+		<ion-item>
+			<iframe src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d15380.389873951384!2d73.83837989999999!3d15.47918855!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sen!2sin!4v1521121540271" width="400" height="300" frameborder="0" style="border:0" allowfullscreen></iframe>
+		</ion-item>
+	</ion-list>
+
+</ion-content>
+
+
+<ion-footer>
+  <ion-toolbar>
+    <button ion-button block color="primary">
+    	Apply Now
+    </button>
+  </ion-toolbar>
+</ion-footer>

@@ -14,3 +14,27 @@
 // To declare rules for a specific mode, create a child rule
 // for the .md, .ios, or .wp mode classes. The mode class is
 // automatically applied to the <body> element in the app.
+
+@import './assets/scss/all';
+
+@media(min-width: 768px){
+	.app-root{
+		.ion-page.show-page{
+			& ~ .nav-decor{
+				background-color: $lining;
+				// background-image: url(../assets/imgs/dummy-bg.jpg);
+				background-position: center;
+				background-size: cover;
+			}
+		}
+	}
+}
+
+.ion-page{
+	@media(min-width: 768px){
+		max-width: 550px;
+		.scroll-content{
+			overflow-y: auto;
+		}
+	}
+}

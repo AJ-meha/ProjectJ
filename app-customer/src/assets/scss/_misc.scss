@@ -1,0 +1,90 @@
+
+.show-page{
+	.content{
+		// background-color: $background;
+		color: $dark-text;
+	}
+}
+
+.flex {
+	display: flex;
+}
+.space-between{
+	justify-content: space-between;
+}
+
+.vertical-align-center{
+	align-items: center;
+}
+
+.font-weight-medium{
+	font-weight: 500 !important;
+}
+.font-weight-heavy{
+	font-weight: 700 !important;
+}
+
+.dark-text{
+	color: $dark-text !important;
+}
+.light-text{
+	color: $light-text;
+}
+
+.swiper-wrapper{
+	align-items: center;
+}
+
+@media(max-width: 767px){
+	.mobile-hidden{
+		display: none;
+	}
+}
+
+.alert-message{
+	overflow-y: auto;
+}
+
+.error-message{
+	color: $notifications;
+	font-weight: 500;
+	margin-top: 15px;
+}
+
+// Orientaton Lock
+@media screen and (max-device-height: 480px) and (orientation: landscape){
+	.orientation-box{
+		position: fixed;
+	    height: 100%;
+	    width: 100%;
+	    z-index: 100000;
+	    background-color: #f5f5f5;
+	    // background-image: url('../assets/imgs/orientation_lock.png');
+	    background-size: contain;
+	    background-position: center;
+	    top: 0;
+	    text-align: center;
+	    max-width: 550px;
+	    margin: 0;
+	    // display: block;
+	    left: 0;
+	    max-width: 100%;
+	    font-family: 'AvenirNext';
+	    font-size: 16px;
+	    color: $light-text;
+	    display: flex !important;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        font-weight: 500;
+	    h5{
+	    	font-size: 19px;
+	    	color: $dark-text;
+	    	margin-top: 13px;
+	    	margin-bottom: 4px;
+	    }
+	    img{
+	    	max-width: 77px;
+	    }
+	}
+}

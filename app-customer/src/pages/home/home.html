@@ -1,14 +1,40 @@
-<ion-header>
-  <ion-navbar>
-    <ion-title>
-      Ionic Blank
-    </ion-title>
-  </ion-navbar>
-</ion-header>
+<ion-content class="tutorial-page">
 
-<ion-content padding>
-  The world is your oyster.
-  <p>
-    If you get lost, the <a href="http://ionicframework.com/docs/v2">docs</a> will be your guide.
-  </p>
+  <ion-select  [(ngModel)]="language_selection" (ionChange)="segmentChanged($event)">
+    <ion-option value="en">{{ 'GLOBAL.BUTTONS.BTN_ENG' | translate }}</ion-option>
+    <ion-option value="zh_cn">{{ 'GLOBAL.BUTTONS.BTN_ZH_CN' | translate }}</ion-option>
+    <ion-option value="mr">{{ 'GLOBAL.BUTTONS.BTN_MR' | translate }}</ion-option>
+  </ion-select>
+
+  <ion-slides pager>
+    <ion-slide>
+      <img class="slide-image top-space" src="assets/imgs/onboarding1-{{language_selection}}.jpg" />
+      <h5 class="slide-title">{{ 'HOME_PAGE.UNLIMITED_APPL' | translate }}</h5>
+      <p>Lorem ipsum dolor sit amet, vix ut luptatum erroribus efficiantur.</p>
+    </ion-slide>
+    <ion-slide>
+      <img class="slide-image" src="assets/imgs/onboarding2-{{language_selection}}.jpg" />
+      <h5 class="slide-title">{{ 'HOME_PAGE.UNLIMITED_APPL' | translate }}</h5>
+      <p>Lorem ipsum dolor sit amet, vix ut luptatum erroribus efficiantur.</p>
+    </ion-slide>
+    <ion-slide>
+      <img class="slide-image top-space" src="assets/imgs/onboarding1-{{language_selection}}.jpg" />
+      <h5 class="slide-title">{{ 'HOME_PAGE.UNLIMITED_APPL' | translate }}</h5>
+      <p>Lorem ipsum dolor sit amet, vix ut luptatum erroribus efficiantur.</p>
+    </ion-slide>
+    <ion-slide>
+      <img class="slide-image" src="assets/imgs/onboarding2-{{language_selection}}.jpg" />
+      <h5 class="slide-title">{{ 'HOME_PAGE.UNLIMITED_APPL' | translate }}</h5>
+      <p>Lorem ipsum dolor sit amet, vix ut luptatum erroribus efficiantur.</p>
+    </ion-slide>
+  </ion-slides>
+
 </ion-content>
+
+<ion-footer>
+  <ion-toolbar>
+    <button ion-button block color="primary" (click)="openPage();">
+    	Continue
+    </button>
+  </ion-toolbar>
+</ion-footer>

@@ -1,0 +1,49 @@
+<!--
+  Generated template for the CustomerLoginPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar>
+    <ion-buttons left>
+      <button ion-button color="dark" (click)="goBack()">
+        <ion-icon name="ios-arrow-round-back" svgversion></ion-icon>
+      </button>
+    </ion-buttons>
+    <ion-title>{{ 'LOGIN_PAGE.LOGIN' | translate }}</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+
+  <p class="light-text font-weight-medium login-help" text-center>{{ 'LOGIN_PAGE.PHONE_NUMBER' | translate }}</p>
+
+  <form [formGroup]="loginForm">
+    
+
+    <ion-item class="mob-input" no-padding>
+      <ion-select [(ngModel)]="mobile_code" [ngModelOptions]="{standalone: true}" item-start interface="popover" placeholder="--">
+        <ion-option *ngFor="let code of mobile_codeArr" value="{{code.key}}">{{code.value}}</ion-option>
+      </ion-select>
+      <ion-input #mobile formControlName="mobile" type="tel" clearInput="true" [(ngModel)]="phoneNumber" [class.invalid]="!loginForm.controls.mobile.valid &&
+            submitted"></ion-input>
+    </ion-item>
+    <div class="error-message" *ngIf="!loginForm.controls.mobile.valid  &&
+      submitted">
+      <div>{{ 'LOGIN_PAGE.ENTER_VALID_NUMBER' | translate }}</div>
+    </div>
+
+  </form>
+</ion-content>
+
+<ion-footer>
+  <ion-toolbar>
+    <button ion-button block color="primary" id="sign-in-button" [disabled]="phoneNumber.length<5" (click)="submitted=true;signIn(phoneNumber)">
+      {{ 'GLOBAL.CONTINUE' | translate }}
+    </button>
+  </ion-toolbar>
+</ion-footer>

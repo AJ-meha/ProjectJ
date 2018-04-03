@@ -1,0 +1,149 @@
+page-customer-dashboard {
+    .footer-md::before{
+        top: 0;
+        height: 0;
+      }
+
+      .tabs{
+        @media(min-width: 768px){
+          max-width: 550px;
+          .scroll-content{
+            overflow-y: auto;
+          }
+        }
+        .tab-button{
+          min-height: 4rem;
+        }
+        .tabbar{
+          background: #ffffff;
+          border-top: 1px solid $lining;
+        }
+      }
+
+      .tabbar, .tabs-ios, .tabs-md , .tabs-wp{
+        .tab-button-icon {
+            height: 49px;
+            width: 49px;
+            background-size: 118%;
+            background-position: center;
+            margin-top: 0;
+            &:before {
+                display:none;
+            }
+        }
+      }
+
+      .has-icon .tab-badge {
+          right: calc(50% - 20px);
+      }
+      .tab-badge{
+        top: 14%;
+        &.badge{
+          border-radius: 50%;
+          width: 19px;
+          height: 19px;
+          font-weight: 500;
+          font-size: 14px;
+          line-height: 20px;
+          background-color: $notifications;
+          padding: 0;
+        }
+      }
+
+      .tabs-ios {
+        a[aria-selected=false]{
+           .tab-button-icon[ng-reflect-name=search], .tab-button-icon[aria-label="search outline"] {
+            background-image: url(../assets/svgs/Search-Thin.svg);
+          }
+          .tab-button-icon[ng-reflect-name=heart], .tab-button-icon[aria-label="heart outline"] {
+            // content: url(../assets/svgs/Saved-Jobs-Thin.svg);
+            background-image: url(../assets/svgs/Saved-Jobs-Thin.svg);
+          }
+          .tab-button-icon[ng-reflect-name=mail], .tab-button-icon[aria-label="mail outline"] {
+            background-image: url(../assets/svgs/Messages-Thin.svg);
+          }
+          .tab-button-icon[ng-reflect-name=person], .tab-button-icon[aria-label="person outline"] {
+            background-image: url(../assets/svgs/Account-Thin.svg);
+          }
+        }
+       a[aria-selected=true] {
+         //führ eventuellen text
+         //span {
+            //color: #f00; //whatever colour you want to use for the text
+          //}
+          .tab-button-icon[ng-reflect-name=search], .tab-button-icon[aria-label=search] {
+            background-image: url(../assets/svgs/Search-Bold.svg);
+          }
+          .tab-button-icon[ng-reflect-name=heart], .tab-button-icon[aria-label=heart] {
+            background-image: url(../assets/svgs/Saved-Jobs-Bold.svg);
+          }
+          .tab-button-icon[ng-reflect-name=mail], .tab-button-icon[aria-label=mail] {
+            background-image: url(../assets/svgs/Messages-Bold.svg);
+          }
+          .tab-button-icon[ng-reflect-name=person], .tab-button-icon[aria-label=person] {
+            background-image: url(../assets/svgs/Account-Bold.svg);
+          }
+        }
+      }
+
+
+      // Temp css fix for search page
+
+      .searchbar{
+        padding: 12px 9px;
+        border: 0;
+        background: rgba(0, 0, 0, 0.1);
+        .searchbar-input{
+          height: 4.8rem;
+          border-radius: 2px;
+          padding-left: 20px !important;
+          font-weight: 500;
+          &::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+            color: #5A5B5B;
+          }
+          &::-moz-placeholder { /* Firefox 19+ */
+            color: #5A5B5B;
+          }
+          &:-ms-input-placeholder { /* IE 10+ */
+            color: #5A5B5B;
+          }
+          &:-moz-placeholder { /* Firefox 18- */
+            color: #5A5B5B;
+          }
+        }
+        .searchbar-search-icon{
+          left: initial;
+          right: 17px;
+          top: 16px;
+          width: 16px;
+          height: 17px;
+          background-size: contain;
+          background-image: url(../assets/svgs/search-bar-search.svg);
+        }
+
+        .searchbar-clear-icon{
+          right: 30px;
+        }
+      }
+
+      .scroll-content{
+        padding-top: 0 !important;
+      }
+      .fixed-content{
+        margin-top: 0 !important;
+      }
+
+      .map-wrapper{
+        // height: 49.25vh;
+        height: calc(100vh - 300px);
+        overflow: hidden;
+      }
+
+      &.show-page{
+        .content{
+          background-color: $background;
+        }
+      }
+
+
+}

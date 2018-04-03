@@ -1,0 +1,44 @@
+{
+    "PROFILE_PAGE" :        {
+                                "PROFILE" : "Profile",
+                                "MY_PROFILE" : "My Profile",
+                                "SELECT_LANG" : "Select Language"
+                            },
+    "FAVOURITES_PAGE" :     {
+                                "FAVOURITES" : "Favourites",
+                                "SAVED_JOBS" : "Saved jobs"
+                            },
+    "MESSAGES_PAGE" :       {
+                                "MESSAGES" : "Messages"
+                            },
+    "JOB_LIST_PAGE" :       {
+                                "SEARCH" : "Search",
+                                "LIST_OF_JOBS" : "List of jobs",
+                                "VIEW_JOB" : "View Job"
+                            },
+    "LOGIN_PAGE" :          {
+                                "LOGIN" : "Login",
+                                "PHONE_NUMBER" : "Phone Number",
+                                "ENTER_VALID_NUMBER" : "Please enter a valid number",
+                                "ENTER_CONFIRM_CODE" : "Enter the Confirmation code",
+                                "CONFIRM_CODE" : "Confirmation Code",
+                                "INVALID_OTP" : "Invalid OTP. User authentication failed!"
+                            },
+    "HOME_PAGE" :              {
+                                "UNLIMITED_APPL" : "Unlimited Applications"
+                            },
+    "GLOBAL" :              {
+                                "LOGOUT" : "Logout",
+                                "CONTINUE" : "Continue",
+                                "CANCEL" : "Cancel",
+                                "SEND" : "Send",
+                                "ERROR" : "Error",
+                                "PAGE_TITLE" : "Project J",
+                                "META_DESCRIPTION" : "Project J description",
+                                "BUTTONS" : {
+                                    "BTN_ENG" : "English",
+                                    "BTN_ZH_CN" : "广东话",
+                                    "BTN_MR" : "मराठी"
+                                }
+                            }
+}

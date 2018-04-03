@@ -216,25 +216,12 @@ export class AdminCreateJobsPage {
       }
     });
 
-    // let cformContact=this.jobsForm.get('contactViaList') as FormArray
-    // console.log(cformContact)
-    // console.log(contactViaArray)
-
-    // let cformContact=this.jobsForm.get('contactViaList') as FormArray
-    // console.log(cformContact)
-    // this.contactViaList=cformContact
-    // for (let contactVia of this.contactViaList.controls) {
-    //   console.log(contactVia)
-    // }
 
     let self=this
     this.dbRef.child('uploadThumbs/').on("child_added", function(snapshot, prevChildKey) {
       var newchildthumb = snapshot.val();
-      console.log("-----CHILD ADDED----")
-      console.log(newchildthumb);
-      // console.log(self.currentUpload.name);
       if(typeof self.currentUpload !== 'undefined'){
-        firebase.storage().ref().child('/thumbs/64/'+self.currentUpload.name+'_thumb.png').getDownloadURL().then(function(url) {
+        firebase.storage().ref().child('/thumbs/40/'+self.currentUpload.name+'_thumb.png').getDownloadURL().then(function(url) {
           console.log("URL==="+url);
           self.currentUpload.thumb=url;
           self.existingUpload='';
