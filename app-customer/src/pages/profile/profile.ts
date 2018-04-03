@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController } from 'ionic-angular';
+import { NavController, ModalController } from 'ionic-angular';
 
 import { TranslateService } from '@ngx-translate/core';
 
@@ -14,7 +14,7 @@ export class ProfilePage {
 
   language_selection:any;
 
-  constructor(public http:Http,public navCtrl: NavController, private translateService: TranslateService,public customerAuthData:CustomerAuthProvider) {
+  constructor(public http:Http,public navCtrl: NavController, private translateService: TranslateService,public customerAuthData:CustomerAuthProvider, public modalCtrl: ModalController) {
     let self=this;
     this.customerAuthData.getLanguage().then(customer_lang=>{
       self.language_selection=customer_lang;
@@ -51,7 +51,12 @@ export class ProfilePage {
               return this.http.get(url, { headers: headers }).toPromise()
             })
             .then(res => console.log(res))
-    
+
+  }
+
+  selectLang() {
+    let modal = this.modalCtrl.create("CustomerLanguagePage");
+    modal.present();
   }
 
 }
