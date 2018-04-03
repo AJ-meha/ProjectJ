@@ -20,6 +20,8 @@ import { JobsProvider } from '../providers/jobs/jobs';
 import { ImageProvider } from '../providers/image/image';
 import { PreloaderProvider } from '../providers/preloader/preloader';
 
+import { HttpModule } from '@angular/http';
+
 // AF2 Settings
 const firebaseConfig = {
   apiKey: "AIzaSyDMk-KBiuYXavz6yvoUk85oZ32JhN1IVVM",
@@ -55,6 +57,7 @@ const firebaseConfig = {
     AngularFireAuthModule,
     AngularFireDatabaseModule,
     IonicStorageModule.forRoot(),
+    HttpModule,
   ],
   bootstrap: [IonicApp],
   entryComponents: [

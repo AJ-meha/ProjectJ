@@ -71,13 +71,16 @@
                     <ion-label stacked>Mobile</ion-label>
                   </ion-item>
                   <ion-item>
-                    <ion-select [(ngModel)]="inputsArray['mobile_code']" [ngModelOptions]="{standalone: true}" item-start interface="popover" placeholder="--">
+                    <ion-select [(ngModel)]="inputsArray['mobile_code']" [ngModelOptions]="{standalone: true}" item-start interface="popover" placeholder="--" [disabled]="userVerify">
                       <ion-option *ngFor="let code of mobile_code" value="{{code.key}}">{{code.value}}</ion-option>
                     </ion-select>
-                    <ion-input item-end [(ngModel)]="inputsArray['mobile']" #mobile formControlName="mobile" type="tel" placeholder="Enter Mobile number" [class.invalid]="!jobsForm.controls.mobile.valid && (formsubmitted || (this.jobsForm.value.mobile!='' && formsaved))" (blur)="blurFunction()"></ion-input>
+                    <ion-input item-end [(ngModel)]="inputsArray['mobile']" #mobile formControlName="mobile" type="tel" placeholder="Enter Mobile number" [class.invalid]="!jobsForm.controls.mobile.valid && this.jobsForm.value.mobile!=''" (blur)="checkUser()" (focus)="clearError()" [disabled]="userVerify"></ion-input>
                   </ion-item>
-                  <ion-item class="error-message" *ngIf="!jobsForm.controls.mobile.valid  && (formsubmitted || (this.jobsForm.value.mobile!='' && formsaved))">
+                  <ion-item class="error-message" *ngIf="!jobsForm.controls.mobile.valid && this.jobsForm.value.mobile!=''">
                     <p>Please enter a valid mobile number</p>
+                  </ion-item>
+                  <ion-item class="error-message" *ngIf="userJS">
+                    <p>Please enter an alternate number</p>
                   </ion-item>
                 </ion-col>
 

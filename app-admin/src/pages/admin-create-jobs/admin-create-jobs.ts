@@ -29,7 +29,7 @@ import { Upload } from '../../app/models/upload';
   templateUrl: 'admin-create-jobs.html',
 })
 export class AdminCreateJobsPage {
-  inputsArray = {application_sent_mail:'',mobile_code:'+852',mobile:'',workplace:'',workplace_address:'',workplace_name:'',workplace_latitude:'',workplace_longitude:'',designation:'',industry:'',salary_amount:'',salary_unit:'',sub_industry:'',type:'',employment_type:'',additional_info:'',night_shift:false,question:"no"};
+  inputsArray = {application_sent_mail:'',mobile_code:'0852',mobile:'',workplace:'',workplace_address:'',workplace_name:'',workplace_latitude:'',workplace_longitude:'',designation:'',industry:'',salary_amount:'',salary_unit:'',sub_industry:'',type:'',employment_type:'',additional_info:'',night_shift:false,question:"no"};
   timeArray = {mon:{start_time:"",end_time:"",holiday:false,shift_end:"mon"},tue:{start_time:"",end_time:"",holiday:false,shift_end:"tue"},wed:{start_time:"",end_time:"",holiday:false,shift_end:"wed"},thu:{start_time:"",end_time:"",holiday:false,shift_end:"thu"},fri:{start_time:"",end_time:"",holiday:false,shift_end:"fri"},sat:{start_time:"",end_time:"",holiday:false,shift_end:"sat"},sun:{start_time:"",end_time:"",holiday:false,shift_end:"sun"}};
   daysArray = GlobalVarsProvider.daysArray;
   employeeBenefitsArray: Array<any> = [];
@@ -68,6 +68,9 @@ export class AdminCreateJobsPage {
   currentUpload: Upload;
   existingUpload:string;
 
+  userJS =false;
+  userVerify =false;
+
   constructor(public navCtrl: NavController, public navParams: NavParams,private af: AngularFireDatabase,public formBuilder:FormBuilder,public commonfunc:CommonFunctionsProvider, public authData:AuthProvider,private _IMG: ImageProvider, public modalCtrl: ModalController) {
 
     if(this.navParams.get('action')!="edit" && this.navParams.get('action')!="add")
@@ -93,7 +96,7 @@ export class AdminCreateJobsPage {
       workplace_address:['',Validators.compose([Validators.required])],
       workplace_latitude:['',Validators.compose([Validators.required])],
       workplace_longitude:['',Validators.compose([Validators.required])],
-      mobile:['',Validators.compose([Validators.required,Validators.pattern('\\d{10}$')])],
+      mobile:['',Validators.compose([Validators.required,Validators.pattern('\\d{8,11}$')])],
       designation:['',Validators.compose([Validators.required])],
       type:['',Validators.compose([Validators.required])],
       salary_amount:['',Validators.compose([Validators.required,Validators.min(1)])],
@@ -702,9 +705,37 @@ export class AdminCreateJobsPage {
 
   }
 
-  blurFunction(){
-    let modal = this.modalCtrl.create("ConfirmNumberPage", { params: '' }, {enableBackdropDismiss:false, cssClass:'confirm-modal'});
+  checkUser(){
+    if(!this.jobsForm.controls.mobile.valid){
+      return false;
+    }
+    let modal = this.modalCtrl.create("ConfirmNumberPage", { code: this.inputsArray.mobile_code, number: this.jobsForm.value.mobile }, {enableBackdropDismiss:false, cssClass:'confirm-modal'});
+
+    modal.onDidDismiss(data => {
+        console.log(data);
+        if(data.action == "confirm")
+        {
+          if(data.type == "NA")
+          {
+            this.userVerify =true;
+          }
+          if(data.type == "employer")
+          {
+            this.userVerify =true;
+          }
+          if(data.type == "jobseeker")
+          {
+            this.userJS =true;
+          }
+        }
+    });
+
     modal.present();
+  }
+
+  clearError(){
+    console.log("clearError");
+    return false;
   }
 
 }

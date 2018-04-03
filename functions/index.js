@@ -454,3 +454,25 @@ exports.jobdetails = functions.https.onRequest((req, res) => {
     }).catch(err => console.error(err));
   });
 });
+
+
+//ADMIN
+exports.usercheck = functions.https.onRequest((req, res) => {
+  cors(req, res, () => {
+    let mobileCode = req.query.code;
+    let mobileNumber = req.query.number;
+
+    var usersRef=admin.database().ref('users');
+    usersRef.child(mobileCode+""+mobileNumber).once('value', function (snapshot) {
+      let val=snapshot.val();
+      if(val === null)
+      {
+        return res.status(200).json({"exists":false,"id":"","type":""});
+      }
+      else
+      {
+        return res.status(200).json({"exists":true,"id":snapshot.key,"type":val.type});
+      }
+    });
+  });
+});

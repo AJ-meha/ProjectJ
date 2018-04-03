@@ -16,51 +16,41 @@
 <ion-content padding text-center>
 	<ion-grid>
 		<ion-row align-items-center>
+		    <ion-col *ngIf="userType==''">
+		    	<div class="loader"></div>
+		    </ion-col>
 
-			<!--
-				Case 1
-			-->
-		    <!-- <ion-col>
+		    <ion-col *ngIf="userType=='NA'">
 		    	<p class="light-text font-weight-medium">
 		    		Please confirm that you have entered the correct number.<br><br>
 		    	</p>
-		    	<h3 class="font-weight-heavy">+852 1112223333</h3><br>
+		    	<h3 class="font-weight-heavy">{{code}} {{number}}</h3><br>
 		    	<p class="">
 		    		A user will be created with this number and you will not be able to edit this field.
 		    	</p>
 		    	<p class="font-weight-medium">
 		    		Are you sure the number is correct?
 		    	</p>
-		    </ion-col> -->
+		    </ion-col>
 
-
-
-		    <!--
-		    	Case 2
-		    -->
-		    <!-- <ion-col>
+		    <ion-col *ngIf="userType=='employer'">
 		    	<p class="light-text font-weight-medium">
 		    		Please check the number that you have entered.<br><br>
 		    	</p>
-		    	<h3 class="font-weight-heavy">+852 1112223333</h3><br>
+		    	<h3 class="font-weight-heavy">{{code}} {{number}}</h3><br>
 		    	<p class="">
 		    		This number is already associated with an employer.
 		    	</p>
 		    	<p class="font-weight-medium">
 		    		Are you sure you wish to proceed with the same number?
 		    	</p>
-		    </ion-col> -->
+		    </ion-col>
 
-
-
-		    <!--
-		    	Case 3
-		    -->
-		    <ion-col>
+		    <ion-col *ngIf="userType=='jobseeker'">
 		    	<p class="light-text font-weight-medium">
 		    		Please check the number that you have entered.<br><br>
 		    	</p>
-		    	<h3 class="font-weight-heavy">+852 1112223333</h3><br>
+		    	<h3 class="font-weight-heavy">{{code}} {{number}}</h3><br>
 		    	<p class="">
 		    		This number is associated with a customer.
 		    	</p>
@@ -80,7 +70,7 @@
 	    </button>
     </ion-buttons>
     <ion-buttons end>
-	    <button ion-button color="primary">
+	    <button ion-button color="primary" (click)="confirm()">
 	    	Confirm
 	    </button>
     </ion-buttons>
