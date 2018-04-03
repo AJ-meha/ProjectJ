@@ -74,7 +74,7 @@
                     <ion-select [(ngModel)]="inputsArray['mobile_code']" [ngModelOptions]="{standalone: true}" item-start interface="popover" placeholder="--">
                       <ion-option *ngFor="let code of mobile_code" value="{{code.key}}">{{code.value}}</ion-option>
                     </ion-select>
-                    <ion-input item-end [(ngModel)]="inputsArray['mobile']" #mobile formControlName="mobile" type="tel" placeholder="Enter Mobile number" [class.invalid]="!jobsForm.controls.mobile.valid && (formsubmitted || (this.jobsForm.value.mobile!='' && formsaved))"></ion-input>
+                    <ion-input item-end [(ngModel)]="inputsArray['mobile']" #mobile formControlName="mobile" type="tel" placeholder="Enter Mobile number" [class.invalid]="!jobsForm.controls.mobile.valid && (formsubmitted || (this.jobsForm.value.mobile!='' && formsaved))" (blur)="blurFunction()"></ion-input>
                   </ion-item>
                   <ion-item class="error-message" *ngIf="!jobsForm.controls.mobile.valid  && (formsubmitted || (this.jobsForm.value.mobile!='' && formsaved))">
                     <p>Please enter a valid mobile number</p>
