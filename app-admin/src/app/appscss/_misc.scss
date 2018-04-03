@@ -5,6 +5,14 @@
 		color: $dark-text;
 	}
 }
+.scroll-content{
+	overflow-y: auto;
+}
+.alert-ios{
+	.alert-radio-group, .alert-checkbox-group{
+		overflow: auto;
+	}
+}
 
 .flex {
 	display: flex;

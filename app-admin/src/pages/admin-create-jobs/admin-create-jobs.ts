@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ModalController } from 'ionic-angular';
 import { FormGroup, FormBuilder, Validators, FormControl, FormArray } from '@angular/forms';
 import { AngularFireDatabase } from 'angularfire2/database';
 import firebase  from 'firebase';
@@ -63,12 +63,12 @@ export class AdminCreateJobsPage {
   public dbRef: firebase.database.Reference = firebase.database().ref();
   public savedJobsRef: firebase.database.Reference = firebase.database().ref('jobs');
   public jobImage  	   : any;
-  
+
   selectedFiles: FileList;
   currentUpload: Upload;
   existingUpload:string;
-  
-  constructor(public navCtrl: NavController, public navParams: NavParams,private af: AngularFireDatabase,public formBuilder:FormBuilder,public commonfunc:CommonFunctionsProvider, public authData:AuthProvider,private _IMG: ImageProvider) {
+
+  constructor(public navCtrl: NavController, public navParams: NavParams,private af: AngularFireDatabase,public formBuilder:FormBuilder,public commonfunc:CommonFunctionsProvider, public authData:AuthProvider,private _IMG: ImageProvider, public modalCtrl: ModalController) {
 
     if(this.navParams.get('action')!="edit" && this.navParams.get('action')!="add")
     {
@@ -182,7 +182,7 @@ export class AdminCreateJobsPage {
 //          isChecked=false;
 //        }
         this.contactVias.push({"key":ikey,"value":ival,"checked":isChecked})
-        
+
 //        stepCounter +=1;
         let cform=this.formBuilder.group({
           contact_via: false,
@@ -229,7 +229,7 @@ export class AdminCreateJobsPage {
           // Handle any errors here
         });
       }
-      
+
     });
 
   }
@@ -547,7 +547,7 @@ export class AdminCreateJobsPage {
         if(typeof this.currentUpload !== 'undefined'){
           firebase.database().ref('jobs/'+this.edit_id+'/image').set(this.currentUpload.fileId);
         }
-        
+
         firebase.database().ref('jobs/'+this.edit_id+'/date').set(date);
 
         for (let itemSnap in idArr) {
@@ -665,7 +665,7 @@ export class AdminCreateJobsPage {
     const index: number = this.selectedContactViaArray.indexOf(key);
     if (index !== -1) {
         this.selectedContactViaArray.splice(index, 1);
-    }   
+    }
    }
    console.log(this.selectedContactViaArray)
  }
@@ -697,9 +697,14 @@ export class AdminCreateJobsPage {
       // }).catch(function(error) {
       //   // Handle any errors here
       // });
-       
+
     });
-    
+
+  }
+
+  blurFunction(){
+    let modal = this.modalCtrl.create("ConfirmNumberPage", { params: '' }, {enableBackdropDismiss:false, cssClass:'confirm-modal'});
+    modal.present();
   }
 
 }
